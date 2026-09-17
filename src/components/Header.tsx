@@ -12,13 +12,22 @@ import {
   Users,
   Factory,
   CheckCircle2,
+  Zap,
 } from 'lucide-react';
-import { CurrencyCode, CategoryId, PersonaMode } from '../types';
+import {
+  CurrencyCode,
+  CategoryId,
+  PersonaMode,
+  LanguageCode,
+} from '../types';
 import { CURRENCIES, CATEGORIES } from '../data/mockData';
+import { getTranslation } from '../i18n/translations';
 
 interface HeaderProps {
   currentCurrency: CurrencyCode;
   onCurrencyChange: (curr: CurrencyCode) => void;
+  lang: LanguageCode;
+  onLanguageChange: (lang: LanguageCode) => void;
   selectedCategory: CategoryId;
   onSelectCategory: (cat: CategoryId) => void;
   searchQuery: string;
@@ -26,17 +35,22 @@ interface HeaderProps {
   onOpenRfq: () => void;
   onOpenShippingCalc: () => void;
   onOpenInquiries: () => void;
+  onOpenAutomation: () => void;
   inquiryCount: number;
-  activeView: 'products' | 'suppliers' | 'insights';
-  onViewChange: (view: 'products' | 'suppliers' | 'insights') => void;
+  activeView: 'products' | 'suppliers' | 'customers' | 'insights';
+  onViewChange: (view: 'products' | 'suppliers' | 'customers' | 'insights') => void;
   persona: PersonaMode;
   onPersonaChange: (p: PersonaMode) => void;
   apiSource?: 'live' | 'fallback';
+  onForceSync?: () => void;
+  isSyncing?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentCurrency,
   onCurrencyChange,
+  lang,
+  onLanguageChange,
   selectedCategory,
   onSelectCategory,
   searchQuery,
@@ -44,13 +58,18 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenRfq,
   onOpenShippingCalc,
   onOpenInquiries,
+  onOpenAutomation,
   inquiryCount,
   activeView,
   onViewChange,
   persona,
   onPersonaChange,
   apiSource = 'live',
+  onForceSync,
+  isSyncing = false,
 }) => {
+  const t = getTranslation(lang);
+
   return (
     <header className="sticky top-0 z-40 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl">
       {/* Top Nexus Ecosystem & Trust Bar */}
@@ -58,15 +77,22 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           {/* Left: Nexus Status & Discrete Ecosystem Cross-Routing */}
           <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#ff5500]/10 text-[#ff5500] border border-[#ff5500]/30 tracking-wide uppercase">
+            <span
+              onClick={onForceSync}
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#ff5500]/10 text-[#ff5500] border border-[#ff5500]/30 tracking-wide uppercase cursor-pointer hover:bg-[#ff5500]/20 transition-colors"
+              title="Click to force live real-time synchronization"
+            >
               <span className="w-1.5 h-1.5 rounded-full bg-[#ff5500] mr-1.5 animate-ping"></span>
-              Nexus {apiSource === 'live' ? 'Live Connected' : 'Fail-Safe Sync'}
+              {apiSource === 'live' ? t.nexusLive : t.nexusFallback}
+              {isSyncing && <span className="ml-1 text-[9px] text-white">...</span>}
             </span>
 
             {/* Discrete Ecosystem Cross-Links */}
             <div className="hidden lg:flex items-center space-x-2 text-[11px] text-slate-400">
               <span className="text-slate-600">|</span>
-              <span className="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">Ecosystem:</span>
+              <span className="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">
+                {t.ecosystem}:
+              </span>
               <a
                 href="https://admin.handsandhead.com"
                 target="_blank"
@@ -102,16 +128,49 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
 
-          {/* Right: Shipping Matrix & Currency Selector */}
+          {/* Right: Language Toggle, Shipping Matrix & Currency Selector */}
           <div className="flex items-center space-x-3 text-xs">
+            {/* EN / বাংলা Language Toggle */}
+            <div
+              id="language-toggle-group"
+              className="flex items-center bg-[#171717] rounded-lg border border-white/10 p-0.5 text-[11px] font-bold"
+            >
+              <button
+                id="lang-btn-en"
+                onClick={() => onLanguageChange('EN')}
+                className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
+                  lang === 'EN'
+                    ? 'bg-[#ff5500] text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                id="lang-btn-bn"
+                onClick={() => onLanguageChange('BN')}
+                className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
+                  lang === 'BN'
+                    ? 'bg-[#ff5500] text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                বাংলা
+              </button>
+            </div>
+
+            <span className="text-slate-800">|</span>
+
             <button
               onClick={onOpenShippingCalc}
               className="flex items-center space-x-1.5 text-slate-300 hover:text-white cursor-pointer transition-colors"
             >
               <Ship className="w-3.5 h-3.5 text-[#ff5500]" />
-              <span className="hidden sm:inline">Port Freight Matrix</span>
+              <span className="hidden sm:inline">{t.freightMatrix}</span>
             </button>
+
             <span className="text-slate-800">|</span>
+
             <div className="flex items-center space-x-1">
               <Globe2 className="w-3.5 h-3.5 text-slate-400" />
               <select
@@ -150,7 +209,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div>
                 <div className="flex items-center space-x-1.5">
                   <span className="font-black text-lg tracking-tight text-white">
-                    Made in BD
+                    {t.portalTitle}
                   </span>
                   <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30">
                     B2B Portal
@@ -175,7 +234,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Users className={`w-3.5 h-3.5 ${persona === 'buyer' ? 'text-[#ff5500]' : ''}`} />
-              <span>Buyer Portal</span>
+              <span>{t.buyerPortal}</span>
             </button>
 
             <button
@@ -188,7 +247,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Factory className="w-3.5 h-3.5" />
-              <span>Manufacturer Hub</span>
+              <span>{t.manufacturerHub}</span>
             </button>
           </div>
 
@@ -215,8 +274,8 @@ export const Header: React.FC<HeaderProps> = ({
                   type="text"
                   placeholder={
                     persona === 'buyer'
-                      ? 'Search HS codes (e.g. 6109), products, or bonded mills...'
-                      : 'Search buyer RFQs, tech packs, or buyer companies...'
+                      ? t.searchPlaceholderBuyer
+                      : t.searchPlaceholderSeller
                   }
                   value={searchQuery}
                   onChange={(e) => onSearchChange(e.target.value)}
@@ -227,22 +286,33 @@ export const Header: React.FC<HeaderProps> = ({
                     onClick={() => onSearchChange('')}
                     className="mr-2 text-xs text-slate-400 hover:text-white px-1.5 py-0.5 rounded cursor-pointer"
                   >
-                    Clear
+                    {t.clearFilter}
                   </button>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Action CTAs */}
-          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+          {/* Action CTAs: Super Automation, Post RFQ, and Inquiries */}
+          <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
+            {/* Super Automation Desk Trigger */}
+            <button
+              id="header-super-automation-button"
+              onClick={onOpenAutomation}
+              className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-[#ff5500]/15 to-[#ff7700]/20 hover:bg-[#ff5500]/30 text-[#ff5500] border border-[#ff5500]/40 text-xs sm:text-sm font-bold shadow-md transition-all cursor-pointer group"
+              title={t.superAutomationDesc}
+            >
+              <Zap className="w-4 h-4 fill-[#ff5500] text-[#ff5500] group-hover:scale-110 transition-transform" />
+              <span className="hidden xl:inline">{t.superAutomation}</span>
+            </button>
+
             <button
               id="header-post-rfq-button"
               onClick={onOpenRfq}
               className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs sm:text-sm font-bold shadow-lg shadow-[#ff5500]/25 hover:shadow-[#ff5500]/40 transition-all cursor-pointer"
             >
               <FileText className="w-4 h-4" />
-              <span>Post RFQ</span>
+              <span>{t.postRfq}</span>
             </button>
 
             <button
@@ -269,7 +339,7 @@ export const Header: React.FC<HeaderProps> = ({
               persona === 'buyer' ? 'bg-white text-black' : 'text-slate-400'
             }`}
           >
-            Buyer Portal
+            {t.buyerPortal}
           </button>
           <button
             onClick={() => onPersonaChange('seller')}
@@ -277,7 +347,7 @@ export const Header: React.FC<HeaderProps> = ({
               persona === 'seller' ? 'bg-[#ff5500] text-white' : 'text-slate-400'
             }`}
           >
-            Manufacturer Hub
+            {t.manufacturerHub}
           </button>
         </div>
 
@@ -288,7 +358,7 @@ export const Header: React.FC<HeaderProps> = ({
             <input
               id="mobile-product-search-input"
               type="text"
-              placeholder="Search HS codes, products, or mills..."
+              placeholder={persona === 'buyer' ? t.searchPlaceholderBuyer : t.searchPlaceholderSeller}
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-white/10 bg-[#141414] text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
@@ -296,51 +366,63 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Navigation Tabs (Products vs. Suppliers vs. Export Insights) */}
+        {/* Navigation Tabs (Products vs. Suppliers vs. Customers vs. Export Insights) */}
         <div className="flex items-center justify-between border-t border-white/[0.08] mt-2.5 pt-2">
-          <nav className="flex space-x-1 sm:space-x-2 text-xs font-bold">
+          <nav className="flex space-x-1 sm:space-x-2 text-xs font-bold overflow-x-auto pb-1 sm:pb-0">
             <button
               id="nav-tab-products"
               onClick={() => onViewChange('products')}
-              className={`px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
                 activeView === 'products'
                   ? 'bg-white text-black shadow-xs'
                   : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
               }`}
             >
-              Wholesale Catalog
+              {t.wholesaleCatalog}
             </button>
             <button
               id="nav-tab-suppliers"
               onClick={() => onViewChange('suppliers')}
-              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer ${
                 activeView === 'suppliers'
                   ? 'bg-white text-black shadow-xs'
                   : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
               }`}
             >
               <Building2 className="w-3.5 h-3.5" />
-              <span>Verified EPB Factories</span>
+              <span>{t.verifiedFactories}</span>
+            </button>
+            <button
+              id="nav-tab-customers"
+              onClick={() => onViewChange('customers')}
+              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer ${
+                activeView === 'customers'
+                  ? 'bg-white text-black shadow-xs'
+                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+              }`}
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>{t.globalCustomers}</span>
             </button>
             <button
               id="nav-tab-insights"
               onClick={() => onViewChange('insights')}
-              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer ${
                 activeView === 'insights'
                   ? 'bg-white text-black shadow-xs'
                   : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-[#ff5500]" />
-              <span>BD Export Advantage</span>
+              <span>{t.bdExportAdvantage}</span>
             </button>
           </nav>
 
           <div className="hidden lg:flex items-center space-x-2 text-xs text-slate-400 font-medium">
             <ShieldCheck className="w-4 h-4 text-[#ff5500]" />
-            <span className="text-white">50% Advance JIT Escrow</span>
+            <span className="text-white">{t.escrowBadge}</span>
             <span className="text-slate-700">•</span>
-            <span>ICC Incoterms 2020</span>
+            <span>{t.incotermsBadge}</span>
           </div>
         </div>
       </div>

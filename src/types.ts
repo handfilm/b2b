@@ -1,4 +1,5 @@
 export type CurrencyCode = 'USD' | 'EUR' | 'GBP' | 'BDT' | 'JPY';
+export type LanguageCode = 'EN' | 'BN';
 
 export interface CurrencyConfig {
   code: CurrencyCode;
@@ -159,4 +160,68 @@ export interface FactoryProductionLine {
   nextOpenSlotDate: string;
   status: 'Open' | 'Partially Booked' | 'Fully Booked';
   operatorCount: number;
+}
+
+export interface Customer {
+  id: string;
+  companyName: string;
+  contactPerson: string;
+  role: string;
+  country: string;
+  countryCode: string;
+  flag: string;
+  logoUrl: string;
+  annualSourcingBudgetUSD: string;
+  sectorsOfInterest: CategoryId[];
+  verifiedStatus: 'Gold Verified Enterprise' | 'Retail Conglomerate' | 'Chamber Registered' | 'Global Sourcing Agent';
+  totalOrdersPlaced: number;
+  activeLcs: number;
+  totalVolumeExported: string;
+  joinedYear: number;
+  recentInquiry: string;
+  preferredIncoterms: ('FOB' | 'CIF' | 'CFR' | 'DDP' | 'EXW')[];
+  testimonial: {
+    quote: string;
+    quoteBn: string;
+    rating: number;
+    date: string;
+  };
+}
+
+export interface LiveTradeEvent {
+  id: string;
+  timestamp: string;
+  type: 'rfq_broadcast' | 'sample_dispatched' | 'lc_opened' | 'container_shipped' | 'quote_placed';
+  title: string;
+  titleBn: string;
+  details: string;
+  detailsBn: string;
+  valueUSD?: number;
+  partyName: string;
+  targetFactory?: string;
+  country: string;
+  flag: string;
+}
+
+export interface AutomationWorkflow {
+  id: string;
+  name: string;
+  nameBn: string;
+  description: string;
+  descriptionBn: string;
+  status: 'active' | 'standby';
+  triggersCount: number;
+  lastExecution: string;
+  latencyMs: number;
+}
+
+export interface AutomationLog {
+  id: string;
+  timestamp: string;
+  workflowId: string;
+  workflowName: string;
+  status: 'success' | 'processing' | 'routed';
+  details: string;
+  detailsBn: string;
+  payloadPreview?: string;
 }

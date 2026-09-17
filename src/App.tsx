@@ -5,6 +5,8 @@ import { HeroBanner } from './components/HeroBanner';
 import { ProductCard } from './components/ProductCard';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { SupplierCard } from './components/SupplierCard';
+import { CustomerTradeHub } from './components/CustomerTradeHub';
+import { SuperAutomationModal } from './components/SuperAutomationModal';
 import { RfqModal } from './components/RfqModal';
 import { ShippingCalculatorModal } from './components/ShippingCalculatorModal';
 import { SampleOrderModal } from './components/SampleOrderModal';
@@ -17,18 +19,25 @@ import {
   CategoryId,
   Product,
   Supplier,
+  Customer,
+  LiveTradeEvent,
   RfqSubmission,
   SampleInquiry,
   PersonaMode,
   MarketplaceStats,
+  LanguageCode,
 } from './types';
 import {
   CURRENCIES,
   PRODUCTS,
   SUPPLIERS as INITIAL_SUPPLIERS,
+  CUSTOMERS as INITIAL_CUSTOMERS,
+  LIVE_TRADE_EVENTS as INITIAL_LIVE_EVENTS,
   CATEGORIES,
 } from './data/mockData';
 import { nexusApi } from './services/nexusApi';
+import { generateRandomTradeEvent } from './services/realtimeEngine';
+import { getTranslation } from './i18n/translations';
 import {
   Filter,
   Layers,
@@ -41,21 +50,27 @@ import {
   ShieldCheck,
   Loader2,
   Search,
+  Users,
+  Zap,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
+  const [lang, setLang] = useState<LanguageCode>('EN');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'insights'>('products');
+  const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'customers' | 'insights'>('products');
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
 
-  // Supplier filtering & dynamic data layer
+  // Supplier & Customer dynamic data layer
   const [suppliers, setSuppliers] = useState<Supplier[]>(INITIAL_SUPPLIERS);
+  const [customers, setCustomers] = useState<Customer[]>(INITIAL_CUSTOMERS);
+  const [liveEvents, setLiveEvents] = useState<LiveTradeEvent[]>(INITIAL_LIVE_EVENTS);
   const [marketplaceStats, setMarketplaceStats] = useState<MarketplaceStats | undefined>(undefined);
   const [apiSource, setApiSource] = useState<'live' | 'fallback'>('live');
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState<string>('all');
   const [bondedOnly, setBondedOnly] = useState<boolean>(false);
 
@@ -65,6 +80,7 @@ export const App: React.FC = () => {
   const [isRfqModalOpen, setIsRfqModalOpen] = useState(false);
   const [isShippingCalcOpen, setIsShippingCalcOpen] = useState(false);
   const [isInquiryDrawerOpen, setIsInquiryDrawerOpen] = useState(false);
+  const [isAutomationModalOpen, setIsAutomationModalOpen] = useState(false);
 
   // Active RFQs & Samples storage state
   const [rfqs, setRfqs] = useState<RfqSubmission[]>([
@@ -131,14 +147,14 @@ export const App: React.FC = () => {
     }, 4000);
   };
 
-  // Fetch live or fallback suppliers & stats via nexusApi
+  // Fetch live or fallback suppliers, customers, events & stats via nexusApi
   useEffect(() => {
     let isMounted = true;
 
     async function loadBackendData() {
       setIsLoadingData(true);
       try {
-        const [supplierRes, statsRes] = await Promise.all([
+        const [supplierRes, statsRes, customerRes, eventsRes] = await Promise.all([
           nexusApi.fetchSuppliers({
             category: selectedCategory !== 'all' ? selectedCategory : undefined,
             district: selectedDistrict !== 'all' ? selectedDistrict : undefined,
@@ -146,10 +162,14 @@ export const App: React.FC = () => {
             search: searchQuery || undefined,
           }),
           nexusApi.fetchMarketplaceStats(),
+          nexusApi.fetchCustomers(selectedCategory !== 'all' ? selectedCategory : undefined),
+          nexusApi.fetchLiveTradeEvents(),
         ]);
 
         if (isMounted) {
           setSuppliers(supplierRes.suppliers);
+          setCustomers(customerRes.customers);
+          setLiveEvents(eventsRes.events);
           setApiSource(supplierRes.source);
           setMarketplaceStats(statsRes.stats);
         }
@@ -162,10 +182,46 @@ export const App: React.FC = () => {
 
     loadBackendData();
 
+    // Pulse live trade event streaming every 20 seconds
+    const intervalTimer = setInterval(() => {
+      if (isMounted) {
+        const newEvt = generateRandomTradeEvent();
+        setLiveEvents((prev) => [newEvt, ...prev.slice(0, 9)]);
+      }
+    }, 20000);
+
     return () => {
       isMounted = false;
+      clearInterval(intervalTimer);
     };
   }, [selectedCategory, selectedDistrict, bondedOnly, searchQuery]);
+
+  const handleForceSync = async () => {
+    setIsSyncing(true);
+    try {
+      const [supplierRes, customerRes, eventsRes, statsRes] = await Promise.all([
+        nexusApi.fetchSuppliers({
+          category: selectedCategory !== 'all' ? selectedCategory : undefined,
+          district: selectedDistrict !== 'all' ? selectedDistrict : undefined,
+          bondedOnly: bondedOnly || undefined,
+          search: searchQuery || undefined,
+        }),
+        nexusApi.fetchCustomers(selectedCategory !== 'all' ? selectedCategory : undefined),
+        nexusApi.fetchLiveTradeEvents(),
+        nexusApi.fetchMarketplaceStats(),
+      ]);
+      setSuppliers(supplierRes.suppliers);
+      setCustomers(customerRes.customers);
+      const freshEvt = generateRandomTradeEvent();
+      setLiveEvents([freshEvt, ...eventsRes.events]);
+      setMarketplaceStats(statsRes.stats);
+      showNotification(lang === 'BN' ? 'রিয়েল-টাইম ডাটা সফলভাবে সিঙ্ক হয়েছে!' : 'Realtime trade data synced with Master Nexus!');
+    } catch (e) {
+      console.warn('Sync failed:', e);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   // Filtered Products
   const filteredProducts = useMemo(() => {
@@ -283,6 +339,8 @@ export const App: React.FC = () => {
       <Header
         currentCurrency={currency}
         onCurrencyChange={setCurrency}
+        lang={lang}
+        onLanguageChange={setLang}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
         searchQuery={searchQuery}
@@ -290,6 +348,7 @@ export const App: React.FC = () => {
         onOpenRfq={() => setIsRfqModalOpen(true)}
         onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
         onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+        onOpenAutomation={() => setIsAutomationModalOpen(true)}
         inquiryCount={rfqs.length + samples.length}
         activeView={activeView}
         onViewChange={(v) => {
@@ -299,6 +358,8 @@ export const App: React.FC = () => {
         persona={persona}
         onPersonaChange={setPersona}
         apiSource={apiSource}
+        onForceSync={handleForceSync}
+        isSyncing={isSyncing}
       />
 
       {/* Sector Categories Bar (Buyer Mode) */}
@@ -308,7 +369,7 @@ export const App: React.FC = () => {
           onSelectCategory={(cat) => {
             setSelectedCategory(cat);
             setSupplierFilter(null);
-            if (activeView !== 'products') setActiveView('products');
+            if (activeView !== 'products' && activeView !== 'customers') setActiveView('products');
           }}
         />
       )}
@@ -319,7 +380,9 @@ export const App: React.FC = () => {
           onOpenRfq={() => setIsRfqModalOpen(true)}
           onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
           onExploreFactories={() => setActiveView('suppliers')}
+          onOpenAutomation={() => setIsAutomationModalOpen(true)}
           stats={marketplaceStats}
+          lang={lang}
         />
       )}
 
@@ -508,7 +571,20 @@ export const App: React.FC = () => {
               </div>
             )}
 
-            {/* View 3: BD Export Advantage & Insights */}
+            {/* View 3: Verified Global Customers & Buyers Hub */}
+            {activeView === 'customers' && (
+              <CustomerTradeHub
+                customers={customers}
+                liveEvents={liveEvents}
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+                lang={lang}
+                onOpenRfq={() => setIsRfqModalOpen(true)}
+                onOpenAutomation={() => setIsAutomationModalOpen(true)}
+              />
+            )}
+
+            {/* View 4: BD Export Advantage & Insights */}
             {activeView === 'insights' && (
               <InsightsView
                 onOpenRfq={() => setIsRfqModalOpen(true)}
@@ -555,6 +631,13 @@ export const App: React.FC = () => {
         isOpen={isShippingCalcOpen}
         onClose={() => setIsShippingCalcOpen(false)}
         currency={currentCurrencyConfig}
+      />
+
+      {/* Super Automation Desk Modal */}
+      <SuperAutomationModal
+        isOpen={isAutomationModalOpen}
+        onClose={() => setIsAutomationModalOpen(false)}
+        lang={lang}
       />
 
       {/* Inquiries & Samples Tracking Drawer */}

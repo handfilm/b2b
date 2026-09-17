@@ -10,21 +10,27 @@ import {
   TrendingUp,
   Zap,
 } from 'lucide-react';
-import { MarketplaceStats } from '../types';
+import { MarketplaceStats, LanguageCode } from '../types';
+import { getTranslation } from '../i18n/translations';
 
 interface HeroBannerProps {
   onOpenRfq: () => void;
   onOpenShippingCalc: () => void;
   onExploreFactories: () => void;
+  onOpenAutomation?: () => void;
   stats?: MarketplaceStats;
+  lang?: LanguageCode;
 }
 
 export const HeroBanner: React.FC<HeroBannerProps> = ({
   onOpenRfq,
   onOpenShippingCalc,
   onExploreFactories,
+  onOpenAutomation,
   stats,
+  lang = 'EN',
 }) => {
+  const t = getTranslation(lang);
   return (
     <div className="relative bg-[#0a0a0a] text-white overflow-hidden border-b border-white/10">
       {/* Subtle Electric Orange Ambient Glows */}
@@ -41,11 +47,21 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-              Direct Sourcing from <span className="text-[#ff5500]">Bangladesh’s Premier</span> Export Manufacturers
+              {lang === 'BN' ? (
+                <>
+                  বাংলাদেশের <span className="text-[#ff5500]">শীর্ষস্থানীয় রপ্তানিকারকদের</span> সাথে সরাসরি পাইকারি বাণিজ্য
+                </>
+              ) : (
+                <>
+                  Direct Sourcing from <span className="text-[#ff5500]">Bangladesh’s Premier</span> Export Manufacturers
+                </>
+              )}
             </h1>
 
             <p className="text-slate-300 text-sm sm:text-base max-w-2xl font-normal leading-relaxed">
-              Connect directly with 2,400+ verified EPB bonded RMG mills, organic cotton, biodegradable golden jute, premium Savar crust leather, and fine tableware ceramics. 50% advance JIT escrow protection and FOB/CIF shipping from Chattogram Port.
+              {lang === 'BN'
+                ? '২,৪০০+ ভেরিফায়েড ইপিবি বন্ডেড আরএমজি মিল, অর্গানিক কটন, সোনালী পাট, প্রিমিয়াম চামড়া ও ফাইন সিরামিকের সরাসরি উৎস। ৫০% অগ্রিম জেআইটি এসক্রো এবং চট্টগ্রাম বন্দর থেকে এফওবি/সিআইএফ লজিস্টিক সুবিধা।'
+                : 'Connect directly with 2,400+ verified EPB bonded RMG mills, organic cotton, biodegradable golden jute, premium Savar crust leather, and fine tableware ceramics. 50% advance JIT escrow protection and FOB/CIF shipping from Chattogram Port.'}
             </p>
 
             {/* Value Checkmarks */}
@@ -84,7 +100,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white font-bold text-sm shadow-xl shadow-[#ff5500]/25 transition-all hover:translate-y-[-1px] cursor-pointer"
               >
                 <FileCheck className="w-4 h-4" />
-                <span>Post Sourcing RFQ</span>
+                <span>{t.postRfq}</span>
                 <ArrowRight className="w-4 h-4 ml-1" />
               </button>
 
@@ -94,7 +110,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 className="inline-flex items-center space-x-2 px-5 py-3 rounded-xl bg-[#171717] hover:bg-[#222222] text-white font-semibold text-sm border border-white/10 transition-colors cursor-pointer"
               >
                 <Building2 className="w-4 h-4 text-slate-400" />
-                <span>Filter EPB Bonded Mills</span>
+                <span>{t.verifiedFactories}</span>
               </button>
 
               <button
@@ -103,8 +119,19 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 className="inline-flex items-center space-x-2 px-4 py-3 rounded-xl bg-transparent hover:bg-white/5 text-slate-300 hover:text-white font-semibold text-sm border border-white/10 transition-colors cursor-pointer"
               >
                 <Ship className="w-4 h-4 text-[#ff5500]" />
-                <span>Ocean Freight Matrix</span>
+                <span>{t.freightMatrix}</span>
               </button>
+
+              {onOpenAutomation && (
+                <button
+                  id="hero-automation-button"
+                  onClick={onOpenAutomation}
+                  className="inline-flex items-center space-x-1.5 px-4 py-3 rounded-xl bg-[#ff5500]/15 hover:bg-[#ff5500]/25 text-[#ff5500] font-bold text-sm border border-[#ff5500]/30 transition-all cursor-pointer"
+                >
+                  <Zap className="w-4 h-4 fill-[#ff5500]" />
+                  <span>{t.superAutomation}</span>
+                </button>
+              )}
             </div>
           </div>
 
