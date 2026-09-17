@@ -4,13 +4,17 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "tsx server.ts",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "start": "node dist/server.cjs",
     "lint": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/genai": "^2.23.0",
     "clsx": "^2.1.1",
+    "express": "^5.2.1",
+    "firebase": "^12.19.0",
     "lucide-react": "^1.47.0",
     "motion": "^13.4.0",
     "react": "^18.3.1",
@@ -19,10 +23,13 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
+    "@types/express": "^5.0.6",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "esbuild": "^0.28.2",
     "tailwindcss": "^4.0.0",
+    "tsx": "^4.23.13",
     "typescript": "^5.5.3",
     "vite": "^5.4.2"
   }

@@ -9,6 +9,69 @@ export interface CurrencyConfig {
 
 export type PersonaMode = 'buyer' | 'seller';
 
+export interface ProductionSla {
+  totalLines: number;
+  bookedCapacityPercentage: number;
+  sampleLeadDays: number;
+  productionLeadDays: number;
+  nextAvailableSlot: string;
+}
+
+export interface ComplianceVaultRecord {
+  certificateId: string;
+  auditDate: string;
+  validUntil: string;
+  auditorName: string;
+  environmentalRating: string;
+  waterTreatment: string;
+  epbRegNo: string;
+  bgmeaRegNo?: string;
+  bkmeaRegNo?: string;
+  auditScore?: string;
+}
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  countryCode: string;
+  companyName: string;
+  role: PersonaMode;
+  country: string;
+  avatarUrl?: string;
+  verified: boolean;
+  whatsappEnabled?: boolean;
+  memberSince: string;
+  loginMethod: 'google' | 'email_magic' | 'password';
+}
+
+export interface TechPackSpec {
+  id: string;
+  productType: string;
+  productCategory: CategoryId;
+  fabricWeight: string;
+  colorTcx: string;
+  colorName: string;
+  colorHex: string;
+  sizes: {
+    XS: number;
+    S: number;
+    M: number;
+    L: number;
+    XL: number;
+    XXL: number;
+  };
+  totalPieces: number;
+  stitchingNotes: string;
+  incoterms: 'FOB' | 'CIF' | 'EXW' | 'CFR';
+  targetDate: string;
+  attachedFiles: TechPackAttachment[];
+  submittedAt?: string;
+  buyerCompany?: string;
+  buyerEmail?: string;
+}
+
 export type CategoryId =
   | 'all'
   | 'rmg-apparel'
@@ -76,12 +139,18 @@ export interface Supplier {
   bondedWarehouse: boolean;
   epbRegistered: boolean;
   exportMarkets: string[];
+  exportDestinations: string[];
   annualCapacity: string;
   certifications: string[];
+  compliance: string[];
+  complianceVault?: ComplianceVaultRecord;
+  productionSla: ProductionSla;
+  bankLcAccepted: boolean;
   responseRatePercent: number;
   verified: boolean;
   contactEmail: string;
   phone: string;
+  whatsapp?: string;
   about: string;
   avatarUrl: string;
   activeLines?: number;

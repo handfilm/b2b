@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "collection": "users",
+      "fields": {
+        "userId": { "type": "string", "required": true },
+        "name": { "type": "string", "required": true },
+        "email": { "type": "string", "required": true },
+        "companyName": { "type": "string" },
+        "role": { "type": "string" },
+        "phone": { "type": "string" },
+        "country": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "updatedAt": { "type": "string" }
+      }
+    },
+    "Rfq": {
+      "collection": "rfqs",
+      "fields": {
+        "buyerName": { "type": "string" },
+        "companyName": { "type": "string" },
+        "productRequirement": { "type": "string" },
+        "targetQuantity": { "type": "number" },
+        "targetUnitPriceUSD": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "Sample": {
+      "collection": "samples",
+      "fields": {
+        "productId": { "type": "string" },
+        "productTitle": { "type": "string" },
+        "supplierName": { "type": "string" },
+        "quantity": { "type": "number" },
+        "status": { "type": "string" },
+        "trackingNumber": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "AiInquiry": {
+      "collection": "ai_inquiries",
+      "fields": {
+        "userId": { "type": "string" },
+        "query": { "type": "string" },
+        "response": { "type": "string" },
+        "contextType": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    }
+  }
+}

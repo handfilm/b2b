@@ -13,7 +13,18 @@ import { SampleOrderModal } from './components/SampleOrderModal';
 import { InquiryDrawer } from './components/InquiryDrawer';
 import { InsightsView } from './components/InsightsView';
 import { ManufacturerHub } from './components/ManufacturerHub';
+import { AuthModal } from './components/AuthModal';
+import { TechPackModal } from './components/TechPackModal';
+import { ComplianceVaultDrawer } from './components/ComplianceVaultDrawer';
+import { AiAssistantModal } from './components/AiAssistantModal';
 import { Footer } from './components/Footer';
+import {
+  saveRfqToFirestore,
+  saveSampleToFirestore,
+  subscribeToRfqs,
+  subscribeToSamples,
+  logoutUser,
+} from './firebase';
 import {
   CurrencyCode,
   CategoryId,
@@ -26,6 +37,8 @@ import {
   PersonaMode,
   MarketplaceStats,
   LanguageCode,
+  AuthUser,
+  TechPackSpec,
 } from './types';
 import {
   CURRENCIES,
@@ -52,6 +65,7 @@ import {
   Search,
   Users,
   Zap,
+  Bot,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -81,6 +95,25 @@ export const App: React.FC = () => {
   const [isShippingCalcOpen, setIsShippingCalcOpen] = useState(false);
   const [isInquiryDrawerOpen, setIsInquiryDrawerOpen] = useState(false);
   const [isAutomationModalOpen, setIsAutomationModalOpen] = useState(false);
+
+  // Enterprise Auth, TechPack Studio, and Compliance Vault States
+  const [authUser, setAuthUser] = useState<AuthUser | null>(() => {
+    try {
+      const saved = localStorage.getItem('nexus_b2b_auth_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isTechPackModalOpen, setIsTechPackModalOpen] = useState(false);
+  const [vaultSupplier, setVaultSupplier] = useState<Supplier | null>(null);
+  const [isVaultOpen, setIsVaultOpen] = useState(false);
+
+  // AI Assistant States (Alibaba / IndiaMART Instant Sourcing Assistant)
+  const [isAiAssistantOpen, setIsAiAssistantOpen] = useState(false);
+  const [aiProductContext, setAiProductContext] = useState<Product | null>(null);
+  const [aiSupplierContext, setAiSupplierContext] = useState<Supplier | null>(null);
 
   // Active RFQs & Samples storage state
   const [rfqs, setRfqs] = useState<RfqSubmission[]>([
@@ -196,6 +229,34 @@ export const App: React.FC = () => {
     };
   }, [selectedCategory, selectedDistrict, bondedOnly, searchQuery]);
 
+  // Real-time Firestore synchronization for RFQs and Samples
+  useEffect(() => {
+    const unsubRfqs = subscribeToRfqs((firestoreRfqs) => {
+      if (firestoreRfqs && firestoreRfqs.length > 0) {
+        setRfqs((prev) => {
+          const existingIds = new Set(prev.map((r) => r.id));
+          const newOnes = firestoreRfqs.filter((r) => !existingIds.has(r.id));
+          return [...newOnes, ...prev];
+        });
+      }
+    });
+
+    const unsubSamples = subscribeToSamples((firestoreSamples) => {
+      if (firestoreSamples && firestoreSamples.length > 0) {
+        setSamples((prev) => {
+          const existingIds = new Set(prev.map((s) => s.id));
+          const newOnes = firestoreSamples.filter((s) => !existingIds.has(s.id));
+          return [...newOnes, ...prev];
+        });
+      }
+    });
+
+    return () => {
+      unsubRfqs();
+      unsubSamples();
+    };
+  }, []);
+
   const handleForceSync = async () => {
     setIsSyncing(true);
     try {
@@ -270,6 +331,12 @@ export const App: React.FC = () => {
   }, [suppliers, bondedOnly, selectedDistrict, searchQuery]);
 
   // Handlers
+  const handleOpenAiAssistant = (product?: Product | null, supplier?: Supplier | null) => {
+    setAiProductContext(product || null);
+    setAiSupplierContext(supplier || null);
+    setIsAiAssistantOpen(true);
+  };
+
   const handleOpenSampleModal = (product: Product) => {
     setSampleProduct(product);
   };
@@ -284,23 +351,26 @@ export const App: React.FC = () => {
       sampleFeeUSD: 0,
       courierFeeUSD: 0,
       customNotes: customMessage || `General wholesale quote request for ${product.moq} units`,
-      buyerEmail: 'international.buyer@trade.com',
-      shippingCountry: 'International Dispatch',
+      buyerEmail: authUser?.email || 'international.buyer@trade.com',
+      shippingCountry: authUser?.country || 'International Dispatch',
       createdAt: new Date().toLocaleDateString(),
       trackingNumber: `INQ-BD-${Math.floor(100000 + Math.random() * 900000)}`,
       status: 'Factory Bid Pending',
     };
     setSamples((prev) => [newInquiry, ...prev]);
+    saveSampleToFirestore(newInquiry);
     showNotification(`Inquiry dispatched to ${product.supplierName}! View in Inquiries drawer.`);
   };
 
   const handleSubmitRfq = (rfq: RfqSubmission) => {
     setRfqs((prev) => [rfq, ...prev]);
+    saveRfqToFirestore(rfq);
     showNotification(`RFQ for "${rfq.productRequirement}" broadcasted to verified factories!`);
   };
 
   const handleConfirmSampleOrder = (order: SampleInquiry) => {
     setSamples((prev) => [order, ...prev]);
+    saveSampleToFirestore(order);
     showNotification(`Sample order dispatched via DHL Air Courier!`);
   };
 
@@ -316,6 +386,58 @@ export const App: React.FC = () => {
       )
     );
     showNotification(`Formal quotation submitted for ${rfqId}`);
+  };
+
+  const handleLogin = (user: AuthUser) => {
+    setAuthUser(user);
+    try {
+      localStorage.setItem('nexus_b2b_auth_user', JSON.stringify(user));
+    } catch {}
+    setPersona(user.role);
+    showNotification(`Welcome, ${user.name}! (${user.role === 'buyer' ? 'Buyer Mode' : 'Exporter Console'} active)`);
+  };
+
+  const handleLogout = () => {
+    setAuthUser(null);
+    try {
+      localStorage.removeItem('nexus_b2b_auth_user');
+      logoutUser();
+    } catch {}
+    showNotification('Session terminated. You are now browsing as Guest.');
+  };
+
+  const handleBroadcastTechPack = (spec: TechPackSpec) => {
+    const newRfq: RfqSubmission = {
+      id: `BD-TP-${Date.now().toString().slice(-4)}`,
+      buyerName: authUser?.name || 'International Sourcing Partner',
+      companyName: authUser?.companyName || spec.buyerCompany || 'Global Brand Enterprise',
+      buyerCountry: authUser?.country || 'Germany',
+      email: authUser?.email || spec.buyerEmail || 'sourcing@brandenterprise.com',
+      categoryId: spec.productCategory || 'rmg-apparel',
+      productRequirement: `${spec.productType} - ${spec.totalPieces.toLocaleString()} units (${spec.colorName} / ${spec.colorTcx})`,
+      targetQuantity: spec.totalPieces,
+      targetUnitPriceUSD: 3.25,
+      incoterms: `${spec.incoterms} Chattogram Port`,
+      destinationPort: 'Hamburg / Rotterdam / New York Hub',
+      targetTimelineDays: 45,
+      specNotes: `CAD TechPack Spec: ${spec.fabricWeight}, Pantone: ${spec.colorName} (${spec.colorTcx}). Stitching: ${spec.stitchingNotes || 'Standard reinforced double-needle seams'}. Size Breakdown: ${Object.entries(spec.sizes).map(([k, v]) => `${k}:${v}`).join(', ')}. Target Delivery: ${spec.targetDate || 'ASAP'}`,
+      status: `Broadcast to 12 Verified Factories`,
+      createdAt: new Date().toISOString().split('T')[0],
+    };
+    setRfqs((prev) => [newRfq, ...prev]);
+    saveRfqToFirestore(newRfq);
+    showNotification(`TechPack for "${spec.productType}" dispatched to verified factories!`);
+  };
+
+  const handleOpenComplianceVault = (supplier: Supplier) => {
+    setVaultSupplier(supplier);
+    setIsVaultOpen(true);
+  };
+
+  const handleReserveLineSlot = (supplier: Supplier) => {
+    setVaultSupplier(supplier);
+    setIsRfqModalOpen(true);
+    showNotification(`Initiated Expedited Line Reservation with ${supplier.name}`);
   };
 
   const activeSupplier = selectedProduct
@@ -335,7 +457,7 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* Primary Header with Persona Switcher and Ecosystem Links */}
+      {/* Primary Header with Persona Switcher, Auth User Pill and Ecosystem Links */}
       <Header
         currentCurrency={currency}
         onCurrencyChange={setCurrency}
@@ -360,6 +482,12 @@ export const App: React.FC = () => {
         apiSource={apiSource}
         onForceSync={handleForceSync}
         isSyncing={isSyncing}
+        authUser={authUser}
+        onOpenAuth={() => setIsAuthModalOpen(true)}
+        onLogout={handleLogout}
+        onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+        activeRfqCount={rfqs.length}
+        onOpenAiAssistant={() => handleOpenAiAssistant()}
       />
 
       {/* Sector Categories Bar (Buyer Mode) */}
@@ -475,6 +603,7 @@ export const App: React.FC = () => {
                         onSelectProduct={setSelectedProduct}
                         onRequestSample={handleOpenSampleModal}
                         onInquire={handleInquireProduct}
+                        onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
                       />
                     ))}
                   </div>
@@ -564,6 +693,9 @@ export const App: React.FC = () => {
                           setSupplierFilter(id);
                           setActiveView('products');
                         }}
+                        onOpenComplianceVault={handleOpenComplianceVault}
+                        onReserveLineSlot={handleReserveLineSlot}
+                        onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
                       />
                     ))}
                   </div>
@@ -607,6 +739,7 @@ export const App: React.FC = () => {
           setSelectedProduct(null);
           setIsShippingCalcOpen(true);
         }}
+        onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
       />
 
       {/* Sample Order Modal */}
@@ -640,7 +773,7 @@ export const App: React.FC = () => {
         lang={lang}
       />
 
-      {/* Inquiries & Samples Tracking Drawer */}
+      {/* Inquiries & Samples Tracking Drawer with JIT Escrow */}
       <InquiryDrawer
         isOpen={isInquiryDrawerOpen}
         onClose={() => setIsInquiryDrawerOpen(false)}
@@ -650,6 +783,80 @@ export const App: React.FC = () => {
         onOpenRfq={() => {
           setIsInquiryDrawerOpen(false);
           setIsRfqModalOpen(true);
+        }}
+      />
+
+      {/* Enterprise Authentication Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onLoginSuccess={handleLogin}
+        initialRole={persona}
+      />
+
+      {/* Interactive TechPack & CAD Studio Modal */}
+      <TechPackModal
+        isOpen={isTechPackModalOpen}
+        onClose={() => setIsTechPackModalOpen(false)}
+        onSubmitTechPack={handleBroadcastTechPack}
+      />
+
+      {/* Compliance & ESG Audit Vault Slide-Over Drawer */}
+      <ComplianceVaultDrawer
+        supplier={vaultSupplier}
+        isOpen={isVaultOpen}
+        onClose={() => setIsVaultOpen(false)}
+        onOpenRfq={(sup) => {
+          setIsVaultOpen(false);
+          setIsRfqModalOpen(true);
+        }}
+      />
+
+      {/* Floating Instant AI Assistant Button (Alibaba & IndiaMART style) */}
+      <button
+        id="floating-ai-assistant-btn"
+        onClick={() => handleOpenAiAssistant()}
+        className="fixed bottom-6 right-6 z-40 flex items-center space-x-2.5 px-4 py-3 rounded-full bg-[#0e0e0e] hover:bg-[#161616] text-white border border-[#ff5500]/50 shadow-2xl shadow-[#ff5500]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer group"
+        title="Instant Sourcing & Trade AI Assistant (Alibaba / IndiaMART Style)"
+      >
+        <div className="relative">
+          <div className="w-8 h-8 rounded-full bg-[#ff5500] flex items-center justify-center text-white shadow-md group-hover:rotate-12 transition-transform">
+            <Bot className="w-4 h-4" />
+          </div>
+          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#0e0e0e] animate-pulse" />
+        </div>
+        <div className="text-left hidden sm:block">
+          <div className="text-xs font-bold text-white flex items-center space-x-1">
+            <span>AI Trade Assistant</span>
+            <Sparkles className="w-3 h-3 text-[#ff5500]" />
+          </div>
+          <div className="text-[10px] text-slate-400 font-mono">Instant Sourcing & Queries</div>
+        </div>
+      </button>
+
+      {/* AI Assistant Modal */}
+      <AiAssistantModal
+        isOpen={isAiAssistantOpen}
+        onClose={() => {
+          setIsAiAssistantOpen(false);
+          setAiProductContext(null);
+          setAiSupplierContext(null);
+        }}
+        activeProduct={aiProductContext}
+        activeSupplier={aiSupplierContext}
+        currency={currentCurrencyConfig}
+        authUser={authUser}
+        onOpenRfqWithContext={() => {
+          setIsAiAssistantOpen(false);
+          setIsRfqModalOpen(true);
+        }}
+        onOpenSampleOrder={(prod) => {
+          setIsAiAssistantOpen(false);
+          handleOpenSampleModal(prod);
+        }}
+        onOpenComplianceVault={(sup) => {
+          setIsAiAssistantOpen(false);
+          handleOpenComplianceVault(sup);
         }}
       />
 
