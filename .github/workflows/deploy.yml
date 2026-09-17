@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -39,22 +39,19 @@ jobs:
           echo "b2b.handsandhead.com" > dist/CNAME
           if [ -f public/404.html ]; then cp public/404.html dist/404.html; fi
 
-      # Option 1: GitHub Actions deployment (when Settings -> Pages -> Source is set to 'GitHub Actions')
       - name: Upload artifact for GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: './dist'
 
-      - name: Deploy to GitHub Pages via Actions
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        continue-on-error: true
-
-      # Option 2: Fallback gh-pages branch deployment (in case user keeps 'Deploy from a branch')
-      - name: Deploy to gh-pages branch fallback
-        uses: JamesIves/github-pages-deploy-action@v4
-        continue-on-error: true
-        with:
-          folder: dist
-          branch: gh-pages
 
