@@ -15,6 +15,7 @@ import {
   FileCode,
   FileCheck,
   Calculator,
+  Printer,
 } from 'lucide-react';
 import { TechPackSpec, TechPackAttachment, CategoryId } from '../types';
 
@@ -173,6 +174,175 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const handleExportPdf = () => {
+    const activeColor = isCustomColor
+      ? { tcx: customPantoneTcx || 'Custom TCX', name: 'Custom Shade', hex: customColorHex }
+      : selectedPantone;
+
+    const specId = `TP-${Math.floor(10000 + Math.random() * 90000)}`;
+    const printDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TechPack Specification - ${specId} - ${selectedProduct.name}</title>
+  <style>
+    @page { size: A4 portrait; margin: 15mm; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #111; line-height: 1.4; padding: 20px; font-size: 13px; }
+    .header { border-bottom: 2px solid #ff5500; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .brand { font-size: 22px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
+    .brand span { color: #ff5500; }
+    .meta { text-align: right; font-size: 11px; color: #555; }
+    .title-box { background: #fdf5f0; border-left: 4px solid #ff5500; padding: 12px 16px; margin-bottom: 20px; }
+    .title-box h1 { margin: 0 0 4px 0; font-size: 18px; color: #111; }
+    .title-box p { margin: 0; font-size: 12px; color: #666; font-weight: 500; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; }
+    th { background: #f7f7f7; font-weight: 700; color: #333; }
+    .size-table th, .size-table td { text-align: center; }
+    .swatch { display: inline-block; width: 22px; height: 22px; border-radius: 4px; border: 1px solid #ccc; vertical-align: middle; margin-right: 8px; }
+    .notes-box { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 12px; font-family: monospace; font-size: 11px; margin-bottom: 20px; white-space: pre-wrap; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; background: #ff5500; color: #fff; font-weight: bold; font-size: 10px; }
+    .footer { margin-top: 30px; border-top: 1px solid #ddd; padding-top: 12px; font-size: 10px; color: #777; display: flex; justify-content: space-between; }
+    @media print {
+      body { padding: 0; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <div class="brand">HANDS & HEAD <span>B2B TECHPACK STUDIO</span></div>
+      <div style="font-size: 11px; color: #777; margin-top: 2px;">Export Promotion Bureau & BGMEA Production Specification</div>
+    </div>
+    <div class="meta">
+      <div><strong>Dossier ID:</strong> ${specId}</div>
+      <div><strong>Generated:</strong> ${printDate}</div>
+      <div><strong>Status:</strong> Approved for Factory Line Allocation</div>
+    </div>
+  </div>
+
+  <div class="title-box">
+    <h1>${selectedProduct.name}</h1>
+    <p>Target Category: ${selectedProduct.category.toUpperCase()} | Incoterms: ${incoterms} | Target Ex-Factory: ${targetDate || 'Standard SLA (45 Days)'}</p>
+  </div>
+
+  <h3>1. Fabric & Color Engineering Specifications</h3>
+  <table>
+    <tr>
+      <th style="width: 25%;">Fabric / Material Weight</th>
+      <td style="width: 25%;"><strong>${customFabric || fabricWeight}</strong></td>
+      <th style="width: 25%;">Target Incoterms</th>
+      <td style="width: 25%;">${incoterms} Chattogram / Dhaka Port</td>
+    </tr>
+    <tr>
+      <th>Color Standard (Pantone / TCX)</th>
+      <td>
+        <span class="swatch" style="background-color: ${activeColor.hex};"></span>
+        <strong>${activeColor.tcx}</strong> - ${activeColor.name}
+      </td>
+      <th>Color Hex Code</th>
+      <td><span style="font-family: monospace;">${activeColor.hex.toUpperCase()}</span></td>
+    </tr>
+  </table>
+
+  <h3>2. Graded Size Distribution & Unit Allocation</h3>
+  <table class="size-table">
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>XS</th>
+        <th>S</th>
+        <th>M</th>
+        <th>L</th>
+        <th>XL</th>
+        <th>XXL</th>
+        <th>TOTAL ORDER</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Units (Pcs)</strong></td>
+        <td>${sizes.XS}</td>
+        <td>${sizes.S}</td>
+        <td>${sizes.M}</td>
+        <td>${sizes.L}</td>
+        <td>${sizes.XL}</td>
+        <td>${sizes.XXL}</td>
+        <td><strong style="color: #ff5500; font-size: 14px;">${totalPieces.toLocaleString()} Pcs</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Ratio</strong></td>
+        <td>${totalPieces > 0 ? Math.round((sizes.XS / totalPieces) * 100) : 0}%</td>
+        <td>${totalPieces > 0 ? Math.round((sizes.S / totalPieces) * 100) : 0}%</td>
+        <td>${totalPieces > 0 ? Math.round((sizes.M / totalPieces) * 100) : 0}%</td>
+        <td>${totalPieces > 0 ? Math.round((sizes.L / totalPieces) * 100) : 0}%</td>
+        <td>${totalPieces > 0 ? Math.round((sizes.XL / totalPieces) * 100) : 0}%</td>
+        <td>${totalPieces > 0 ? Math.round((sizes.XXL / totalPieces) * 100) : 0}%</td>
+        <td>100%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3. Technical Stitching, Construction & Tolerance Notes</h3>
+  <div class="notes-box">${stitchingNotes || 'Standard AQL 1.5 Export Tolerance. Double needle chainstitch hem. Bartack stress points.'}</div>
+
+  <h3>4. CAD Pattern & Artwork Manifest</h3>
+  <table>
+    <tr>
+      <th style="width: 40%;">Attached Files</th>
+      <th>Specification Type</th>
+      <th>Routing Destination</th>
+    </tr>
+    ${attachments.length > 0 ? attachments.map(a => `
+      <tr>
+        <td><strong>${a.name}</strong> (${a.size})</td>
+        <td>${a.type || 'CAD Spec / Pattern File'}</td>
+        <td>Certified CAD Room & Plotter Station</td>
+      </tr>
+    `).join('') : `
+      <tr>
+        <td colspan="3" style="text-align: center; color: #888;">Standard factory CAD grading table applied. No external CAD overlays provided.</td>
+      </tr>
+    `}
+  </table>
+
+  <div class="footer">
+    <div>Authorized by Bangladesh Export Trade Desk • b2b.handsandhead.com</div>
+    <div>Page 1 of 1 • Escrow & SLA Guaranteed</div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      setTimeout(function() {
+        window.print();
+      }, 300);
+    };
+  </script>
+</body>
+</html>`;
+
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.open();
+      printWindow.document.write(htmlContent);
+      printWindow.document.close();
+    } else {
+      // If popup blocked, download HTML file
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `TechPack_${specId}_Printable.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -548,14 +718,26 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
 
         {/* Modal Footer Actions */}
         <div className="p-4 sm:p-5 border-t border-white/10 bg-[#121212] flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
-          <button
-            type="button"
-            onClick={handleDownloadSpec}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer border border-white/10"
-          >
-            <Download className="w-4 h-4 text-slate-300" />
-            <span>Export Spec Sheet (.JSON / Spec)</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={handleExportPdf}
+              className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all flex items-center justify-center space-x-2 cursor-pointer border border-white/10"
+              title="Generate printable PDF techpack dossier"
+            >
+              <Printer className="w-4 h-4 text-[#ff5500]" />
+              <span>Export PDF Dossier</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleDownloadSpec}
+              className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-medium transition-all flex items-center justify-center space-x-2 cursor-pointer border border-white/5"
+              title="Download CAD machine-readable JSON specification"
+            >
+              <Download className="w-3.5 h-3.5 text-slate-400" />
+              <span>JSON CAD</span>
+            </button>
+          </div>
 
           <div className="flex items-center space-x-3 w-full sm:w-auto">
             <button
