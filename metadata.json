@@ -1,0 +1,6 @@
+{
+  "name": "B2B Global Market Place - Made in BD",
+  "description": "Global B2B wholesale marketplace connecting international buyers with verified Bangladeshi manufacturers, RMG apparel, jute, leather, and export suppliers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
