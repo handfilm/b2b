@@ -19,15 +19,15 @@ interface CategoryBarProps {
 }
 
 const iconMap: Record<string, React.ReactNode> = {
-  LayoutGrid: <LayoutGrid className="w-4 h-4" />,
-  Shirt: <Shirt className="w-4 h-4" />,
-  Leaf: <Leaf className="w-4 h-4" />,
-  Footprints: <Footprints className="w-4 h-4" />,
-  Home: <Home className="w-4 h-4" />,
-  Coffee: <Coffee className="w-4 h-4" />,
-  Fish: <Fish className="w-4 h-4" />,
-  Pill: <Pill className="w-4 h-4" />,
-  Sparkles: <Sparkles className="w-4 h-4" />,
+  LayoutGrid: <LayoutGrid className="w-3.5 h-3.5" />,
+  Shirt: <Shirt className="w-3.5 h-3.5" />,
+  Leaf: <Leaf className="w-3.5 h-3.5" />,
+  Footprints: <Footprints className="w-3.5 h-3.5" />,
+  Home: <Home className="w-3.5 h-3.5" />,
+  Coffee: <Coffee className="w-3.5 h-3.5" />,
+  Fish: <Fish className="w-3.5 h-3.5" />,
+  Pill: <Pill className="w-3.5 h-3.5" />,
+  Sparkles: <Sparkles className="w-3.5 h-3.5" />,
 };
 
 export const CategoryBar: React.FC<CategoryBarProps> = ({
@@ -35,7 +35,7 @@ export const CategoryBar: React.FC<CategoryBarProps> = ({
   onSelectCategory,
 }) => {
   return (
-    <div className="bg-white border-b border-neutral-200">
+    <div className="bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/[0.08]">
       <div className="max-w-7xl mx-auto px-4 py-2.5 overflow-x-auto no-scrollbar">
         <div className="flex items-center space-x-2 min-w-max">
           {CATEGORIES.map((cat) => {
@@ -45,21 +45,21 @@ export const CategoryBar: React.FC<CategoryBarProps> = ({
                 key={cat.id}
                 id={`category-pill-${cat.id}`}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
+                className={`inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
                   isSelected
-                    ? 'bg-emerald-700 text-white shadow-xs font-semibold'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 hover:text-neutral-900'
+                    ? 'bg-[#ff5500] text-white shadow-lg shadow-[#ff5500]/25'
+                    : 'bg-[#141414] text-slate-300 hover:text-white hover:bg-[#202020] border border-white/5'
                 }`}
               >
-                <span className={isSelected ? 'text-white' : 'text-neutral-500'}>
-                  {iconMap[cat.iconName] || <LayoutGrid className="w-4 h-4" />}
+                <span className={isSelected ? 'text-white' : 'text-slate-400'}>
+                  {iconMap[cat.iconName] || <LayoutGrid className="w-3.5 h-3.5" />}
                 </span>
                 <span>{cat.name}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                     isSelected
-                      ? 'bg-emerald-800 text-emerald-100'
-                      : 'bg-neutral-200 text-neutral-600'
+                      ? 'bg-black/30 text-white'
+                      : 'bg-white/10 text-slate-400'
                   }`}
                 >
                   {cat.itemCount}

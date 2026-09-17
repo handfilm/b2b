@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Header } from './components/Header';
 import { CategoryBar } from './components/CategoryBar';
 import { HeroBanner } from './components/HeroBanner';
@@ -10,6 +10,7 @@ import { ShippingCalculatorModal } from './components/ShippingCalculatorModal';
 import { SampleOrderModal } from './components/SampleOrderModal';
 import { InquiryDrawer } from './components/InquiryDrawer';
 import { InsightsView } from './components/InsightsView';
+import { ManufacturerHub } from './components/ManufacturerHub';
 import { Footer } from './components/Footer';
 import {
   CurrencyCode,
@@ -18,13 +19,16 @@ import {
   Supplier,
   RfqSubmission,
   SampleInquiry,
+  PersonaMode,
+  MarketplaceStats,
 } from './types';
 import {
   CURRENCIES,
   PRODUCTS,
-  SUPPLIERS,
+  SUPPLIERS as INITIAL_SUPPLIERS,
   CATEGORIES,
 } from './data/mockData';
+import { nexusApi } from './services/nexusApi';
 import {
   Filter,
   Layers,
@@ -34,6 +38,9 @@ import {
   CheckCircle2,
   FileText,
   AlertCircle,
+  ShieldCheck,
+  Loader2,
+  Search,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
@@ -41,7 +48,16 @@ export const App: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'insights'>('products');
+  const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
+
+  // Supplier filtering & dynamic data layer
+  const [suppliers, setSuppliers] = useState<Supplier[]>(INITIAL_SUPPLIERS);
+  const [marketplaceStats, setMarketplaceStats] = useState<MarketplaceStats | undefined>(undefined);
+  const [apiSource, setApiSource] = useState<'live' | 'fallback'>('live');
+  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [selectedDistrict, setSelectedDistrict] = useState<string>('all');
+  const [bondedOnly, setBondedOnly] = useState<boolean>(false);
 
   // Modals & Drawers
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -53,7 +69,7 @@ export const App: React.FC = () => {
   // Active RFQs & Samples storage state
   const [rfqs, setRfqs] = useState<RfqSubmission[]>([
     {
-      id: 'rfq-init-1',
+      id: 'BD-RFQ-8821',
       buyerName: 'Alexander Lind',
       companyName: 'Nordic Apparel Group AB',
       buyerCountry: 'Sweden',
@@ -64,9 +80,27 @@ export const App: React.FC = () => {
       targetUnitPriceUSD: 2.85,
       incoterms: 'FOB Chattogram Port',
       destinationPort: 'Gothenburg Port, Sweden',
+      targetTimelineDays: 45,
       specNotes: 'GOTS Organic certified, custom dyed Pantone 19-4052 TCX Classic Blue.',
       status: 'Dispatched to 5 Factories',
       createdAt: '2026-09-15',
+    },
+    {
+      id: 'BD-RFQ-9142',
+      buyerName: 'Elena Rostova',
+      companyName: 'Kaufland Global Sourcing',
+      buyerCountry: 'Germany',
+      email: 'e.rostova@kaufland.de',
+      categoryId: 'jute-eco',
+      productRequirement: 'Biodegradable Hydrocarbon-Free Jute Coffee Bags (60kg capacity)',
+      targetQuantity: 25000,
+      targetUnitPriceUSD: 1.45,
+      incoterms: 'CIF Hamburg Port',
+      destinationPort: 'Hamburg Port, Germany',
+      targetTimelineDays: 60,
+      specNotes: 'Food-grade certified with organic botanical batch oil.',
+      status: 'Dispatched to 5 Factories',
+      createdAt: '2026-09-16',
     },
   ]);
 
@@ -97,6 +131,42 @@ export const App: React.FC = () => {
     }, 4000);
   };
 
+  // Fetch live or fallback suppliers & stats via nexusApi
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadBackendData() {
+      setIsLoadingData(true);
+      try {
+        const [supplierRes, statsRes] = await Promise.all([
+          nexusApi.fetchSuppliers({
+            category: selectedCategory !== 'all' ? selectedCategory : undefined,
+            district: selectedDistrict !== 'all' ? selectedDistrict : undefined,
+            bondedOnly: bondedOnly || undefined,
+            search: searchQuery || undefined,
+          }),
+          nexusApi.fetchMarketplaceStats(),
+        ]);
+
+        if (isMounted) {
+          setSuppliers(supplierRes.suppliers);
+          setApiSource(supplierRes.source);
+          setMarketplaceStats(statsRes.stats);
+        }
+      } catch (err) {
+        console.error('Data layer sync notice:', err);
+      } finally {
+        if (isMounted) setIsLoadingData(false);
+      }
+    }
+
+    loadBackendData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedCategory, selectedDistrict, bondedOnly, searchQuery]);
+
   // Filtered Products
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((p) => {
@@ -124,9 +194,13 @@ export const App: React.FC = () => {
     });
   }, [selectedCategory, supplierFilter, searchQuery]);
 
-  // Filtered Suppliers
+  // Filtered Suppliers List for Display
   const filteredSuppliers = useMemo(() => {
-    return SUPPLIERS.filter((s) => {
+    return suppliers.filter((s) => {
+      if (bondedOnly && !s.bondedWarehouse) return false;
+      if (selectedDistrict !== 'all' && s.district.toLowerCase() !== selectedDistrict.toLowerCase()) {
+        return false;
+      }
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchesName = s.name.toLowerCase().includes(query);
@@ -137,7 +211,7 @@ export const App: React.FC = () => {
       }
       return true;
     });
-  }, [searchQuery]);
+  }, [suppliers, bondedOnly, selectedDistrict, searchQuery]);
 
   // Handlers
   const handleOpenSampleModal = (product: Product) => {
@@ -145,7 +219,6 @@ export const App: React.FC = () => {
   };
 
   const handleInquireProduct = (product: Product, customMessage?: string) => {
-    // Add quick sample/inquiry to drawer
     const newInquiry: SampleInquiry = {
       id: `inq-${Date.now()}`,
       productId: product.id,
@@ -159,7 +232,7 @@ export const App: React.FC = () => {
       shippingCountry: 'International Dispatch',
       createdAt: new Date().toLocaleDateString(),
       trackingNumber: `INQ-BD-${Math.floor(100000 + Math.random() * 900000)}`,
-      status: 'Sample In Production',
+      status: 'Factory Bid Pending',
     };
     setSamples((prev) => [newInquiry, ...prev]);
     showNotification(`Inquiry dispatched to ${product.supplierName}! View in Inquiries drawer.`);
@@ -167,7 +240,7 @@ export const App: React.FC = () => {
 
   const handleSubmitRfq = (rfq: RfqSubmission) => {
     setRfqs((prev) => [rfq, ...prev]);
-    showNotification(`RFQ for "${rfq.productRequirement}" broadcasted to 5 verified factories!`);
+    showNotification(`RFQ for "${rfq.productRequirement}" broadcasted to verified factories!`);
   };
 
   const handleConfirmSampleOrder = (order: SampleInquiry) => {
@@ -175,23 +248,38 @@ export const App: React.FC = () => {
     showNotification(`Sample order dispatched via DHL Air Courier!`);
   };
 
+  const handleFactoryRespondToRfq = (rfqId: string, quoteUSD: number, leadTimeDays: number) => {
+    setRfqs((prev) =>
+      prev.map((r) =>
+        r.id === rfqId
+          ? {
+              ...r,
+              status: `Factory Quoted $${quoteUSD} FOB (${leadTimeDays}d)`,
+            }
+          : r
+      )
+    );
+    showNotification(`Formal quotation submitted for ${rfqId}`);
+  };
+
   const activeSupplier = selectedProduct
-    ? SUPPLIERS.find((s) => s.id === selectedProduct.supplierId)
+    ? suppliers.find((s) => s.id === selectedProduct.supplierId) ||
+      INITIAL_SUPPLIERS.find((s) => s.id === selectedProduct.supplierId)
     : undefined;
 
   const currentCurrencyConfig = CURRENCIES[currency] || CURRENCIES.USD;
 
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-50 text-neutral-900 font-['Plus_Jakarta_Sans',sans-serif]">
+    <div className="min-h-screen flex flex-col bg-[#0a0a0a] text-white font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#ff5500] selection:text-white">
       {/* Toast Notification */}
       {notification && (
-        <div className="fixed bottom-5 right-5 z-50 bg-neutral-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-xl border border-neutral-700 flex items-center space-x-2 animate-in fade-in slide-in-from-bottom-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 bg-[#141414] text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-[#ff5500]/40 flex items-center space-x-2 animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-4 h-4 text-[#ff5500] shrink-0" />
           <span>{notification}</span>
         </div>
       )}
 
-      {/* Primary Header */}
+      {/* Primary Header with Persona Switcher and Ecosystem Links */}
       <Header
         currentCurrency={currency}
         onCurrencyChange={setCurrency}
@@ -208,154 +296,226 @@ export const App: React.FC = () => {
           setActiveView(v);
           setSupplierFilter(null);
         }}
+        persona={persona}
+        onPersonaChange={setPersona}
+        apiSource={apiSource}
       />
 
-      {/* Sector Categories Bar */}
-      <CategoryBar
-        selectedCategory={selectedCategory}
-        onSelectCategory={(cat) => {
-          setSelectedCategory(cat);
-          setSupplierFilter(null);
-          if (activeView !== 'products') setActiveView('products');
-        }}
-      />
+      {/* Sector Categories Bar (Buyer Mode) */}
+      {persona === 'buyer' && (
+        <CategoryBar
+          selectedCategory={selectedCategory}
+          onSelectCategory={(cat) => {
+            setSelectedCategory(cat);
+            setSupplierFilter(null);
+            if (activeView !== 'products') setActiveView('products');
+          }}
+        />
+      )}
 
-      {/* Hero Announcement Banner (Shown on initial view or when searching) */}
-      {activeView === 'products' && !searchQuery && !supplierFilter && (
+      {/* Hero Announcement Banner (Shown in Buyer mode on initial view) */}
+      {persona === 'buyer' && activeView === 'products' && !searchQuery && !supplierFilter && (
         <HeroBanner
           onOpenRfq={() => setIsRfqModalOpen(true)}
           onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
           onExploreFactories={() => setActiveView('suppliers')}
+          stats={marketplaceStats}
         />
       )}
 
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
-        {/* Active Filters / Supplier Filter Notice */}
-        {supplierFilter && (
-          <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-xs text-emerald-900">
-              <Building2 className="w-4 h-4 text-emerald-700" />
-              <span>
-                Filtering items by factory: <strong>{SUPPLIERS.find((s) => s.id === supplierFilter)?.name}</strong>
-              </span>
-            </div>
-            <button
-              onClick={() => setSupplierFilter(null)}
-              className="text-xs text-emerald-800 font-bold hover:underline"
-            >
-              Clear Factory Filter
-            </button>
-          </div>
-        )}
-
-        {/* View 1: Wholesale Products Grid */}
-        {activeView === 'products' && (
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-200 pb-3">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-neutral-900 tracking-tight">
-                  {selectedCategory === 'all'
-                    ? 'All Export Sourcing Catalog'
-                    : CATEGORIES.find((c) => c.id === selectedCategory)?.name}
-                </h2>
-                <p className="text-xs text-neutral-500 mt-0.5">
-                  Showing {filteredProducts.length} verified export items with FOB/CIF port pricing
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-3 text-xs">
+        {/* SELLER / EXPORTER HUB WORKSPACE */}
+        {persona === 'seller' ? (
+          <ManufacturerHub
+            rfqs={rfqs}
+            currency={currentCurrencyConfig}
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onRespondToRfq={handleFactoryRespondToRfq}
+          />
+        ) : (
+          /* BUYER PORTAL WORKSPACE */
+          <>
+            {/* Active Filters / Supplier Filter Notice */}
+            {supplierFilter && (
+              <div className="mb-4 p-3.5 bg-[#141414] border border-[#ff5500]/30 rounded-xl flex items-center justify-between">
+                <div className="flex items-center space-x-2 text-xs text-white">
+                  <Building2 className="w-4 h-4 text-[#ff5500]" />
+                  <span>
+                    Filtering catalog by factory: <strong className="text-[#ff5500]">{suppliers.find((s) => s.id === supplierFilter)?.name}</strong>
+                  </span>
+                </div>
                 <button
-                  onClick={() => setIsRfqModalOpen(true)}
-                  className="text-emerald-700 hover:text-emerald-800 font-bold flex items-center space-x-1"
+                  onClick={() => setSupplierFilter(null)}
+                  className="text-xs text-[#ff5500] font-bold hover:underline cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Can't find your exact spec? Post an RFQ</span>
+                  Clear Factory Filter
                 </button>
               </div>
-            </div>
+            )}
 
-            {filteredProducts.length === 0 ? (
-              <div className="py-16 text-center space-y-3 bg-white rounded-2xl border border-neutral-200">
-                <div className="w-12 h-12 rounded-full bg-neutral-100 text-neutral-400 mx-auto flex items-center justify-center">
-                  <Filter className="w-6 h-6" />
+            {/* View 1: Wholesale Products Grid */}
+            {activeView === 'products' && (
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+                  <div>
+                    <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                      {selectedCategory === 'all'
+                        ? 'All Export Sourcing Catalog'
+                        : CATEGORIES.find((c) => c.id === selectedCategory)?.name}
+                    </h2>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Showing {filteredProducts.length} verified export items with FOB/CIF port pricing
+                    </p>
+                  </div>
+
+                  <div className="flex items-center space-x-3 text-xs">
+                    <button
+                      onClick={() => setIsRfqModalOpen(true)}
+                      className="text-[#ff5500] hover:text-[#ff6a1a] font-bold flex items-center space-x-1 cursor-pointer transition-colors"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>Custom spec needed? Post an RFQ</span>
+                    </button>
+                  </div>
                 </div>
-                <h3 className="font-bold text-base text-neutral-800">No matching export products found</h3>
-                <p className="text-xs text-neutral-500 max-w-sm mx-auto">
-                  Try clearing your search query or submit a custom Request for Quotation (RFQ) to our manufacturer trade desk.
-                </p>
-                <div className="pt-2">
-                  <button
-                    onClick={() => {
-                      setSearchQuery('');
-                      setSelectedCategory('all');
-                      setSupplierFilter(null);
-                    }}
-                    className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-xs font-semibold"
-                  >
-                    Reset Filters
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                {filteredProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    currency={currentCurrencyConfig}
-                    onSelectProduct={setSelectedProduct}
-                    onRequestSample={handleOpenSampleModal}
-                    onInquire={handleInquireProduct}
-                  />
-                ))}
+
+                {filteredProducts.length === 0 ? (
+                  <div className="py-16 text-center space-y-3 glass-panel rounded-2xl border border-white/10">
+                    <div className="w-12 h-12 rounded-xl bg-white/5 text-slate-400 mx-auto flex items-center justify-center">
+                      <Filter className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-base text-white">No matching export products found</h3>
+                    <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                      Try clearing your search query or submit a custom Request for Quotation (RFQ) to our manufacturer trade desk.
+                    </p>
+                    <div className="pt-2">
+                      <button
+                        onClick={() => {
+                          setSearchQuery('');
+                          setSelectedCategory('all');
+                          setSupplierFilter(null);
+                        }}
+                        className="px-4 py-2 rounded-xl bg-[#ff5500] text-white text-xs font-bold cursor-pointer"
+                      >
+                        Reset Filters
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                    {filteredProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        currency={currentCurrencyConfig}
+                        onSelectProduct={setSelectedProduct}
+                        onRequestSample={handleOpenSampleModal}
+                        onInquire={handleInquireProduct}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
-          </div>
-        )}
 
-        {/* View 2: Verified Bangladesh Suppliers / Mills */}
-        {activeView === 'suppliers' && (
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-200 pb-3">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-neutral-900 tracking-tight">
-                  Verified Bangladesh Exporters & Certified Green Mills
-                </h2>
-                <p className="text-xs text-neutral-500 mt-0.5">
-                  Direct contact with BGMEA, BKMEA, and USGBC LEED Platinum compliant factories
-                </p>
+            {/* View 2: Verified Bangladesh Suppliers / EPB Mills */}
+            {activeView === 'suppliers' && (
+              <div className="space-y-6">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                  <div>
+                    <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                      Verified Bangladesh Exporters & Certified Green Mills
+                    </h2>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Direct contact with BGMEA, BKMEA, and USGBC LEED Platinum compliant factories
+                    </p>
+                  </div>
+
+                  {/* Supplier Filters: District & EPB Bonded Warehouse */}
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs">
+                    <div className="flex items-center space-x-1.5 bg-[#141414] px-3 py-1.5 rounded-xl border border-white/10">
+                      <span className="text-slate-400">District:</span>
+                      <select
+                        value={selectedDistrict}
+                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                        className="bg-transparent text-white font-bold focus:outline-none cursor-pointer text-xs"
+                      >
+                        <option value="all" className="bg-[#121212]">All Districts</option>
+                        <option value="Narayanganj" className="bg-[#121212]">Narayanganj (Knit Hub)</option>
+                        <option value="Gazipur" className="bg-[#121212]">Gazipur (Woven & Denim)</option>
+                        <option value="Dhaka" className="bg-[#121212]">Dhaka (Apparel & Tech)</option>
+                        <option value="Chattogram" className="bg-[#121212]">Chattogram (Port Mills)</option>
+                        <option value="Savar" className="bg-[#121212]">Savar (Leather Tannery)</option>
+                      </select>
+                    </div>
+
+                    <button
+                      onClick={() => setBondedOnly(!bondedOnly)}
+                      className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 ${
+                        bondedOnly
+                          ? 'bg-[#ff5500] text-white border-[#ff5500]'
+                          : 'bg-[#141414] text-slate-400 border-white/10 hover:text-white'
+                      }`}
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5" />
+                      <span>EPB Bonded Only</span>
+                    </button>
+                  </div>
+                </div>
+
+                {isLoadingData ? (
+                  <div className="py-16 text-center text-slate-400 space-y-2">
+                    <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#ff5500]" />
+                    <div className="text-xs">Querying Nexus Supplier Registry...</div>
+                  </div>
+                ) : filteredSuppliers.length === 0 ? (
+                  <div className="py-16 text-center space-y-3 glass-panel rounded-2xl border border-white/10">
+                    <div className="w-12 h-12 rounded-xl bg-white/5 text-slate-400 mx-auto flex items-center justify-center">
+                      <Building2 className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold text-base text-white">No factories match your filter</h3>
+                    <div className="pt-2">
+                      <button
+                        onClick={() => {
+                          setSelectedDistrict('all');
+                          setBondedOnly(false);
+                          setSearchQuery('');
+                        }}
+                        className="px-4 py-2 rounded-xl bg-[#ff5500] text-white text-xs font-bold"
+                      >
+                        Reset District & Bond Filter
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {filteredSuppliers.map((supplier) => (
+                      <SupplierCard
+                        key={supplier.id}
+                        supplier={supplier}
+                        onContactSupplier={(s) => {
+                          setIsRfqModalOpen(true);
+                        }}
+                        onFilterBySupplier={(id) => {
+                          setSupplierFilter(id);
+                          setActiveView('products');
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
+            )}
 
-              <div className="text-xs text-emerald-800 font-semibold bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg">
-                100% Export Tax ID & Trade License Audited
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filteredSuppliers.map((supplier) => (
-                <SupplierCard
-                  key={supplier.id}
-                  supplier={supplier}
-                  onContactSupplier={(s) => {
-                    setIsRfqModalOpen(true);
-                  }}
-                  onFilterBySupplier={(id) => {
-                    setSupplierFilter(id);
-                    setActiveView('products');
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* View 3: BD Export Advantage & Insights */}
-        {activeView === 'insights' && (
-          <InsightsView
-            onOpenRfq={() => setIsRfqModalOpen(true)}
-            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
-          />
+            {/* View 3: BD Export Advantage & Insights */}
+            {activeView === 'insights' && (
+              <InsightsView
+                onOpenRfq={() => setIsRfqModalOpen(true)}
+                onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+              />
+            )}
+          </>
         )}
       </main>
 

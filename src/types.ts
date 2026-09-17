@@ -6,6 +6,8 @@ export interface CurrencyConfig {
   rate: number; // relative to USD
 }
 
+export type PersonaMode = 'buyer' | 'seller';
+
 export type CategoryId =
   | 'all'
   | 'rmg-apparel'
@@ -70,6 +72,8 @@ export interface Supplier {
   employeeCount: string;
   leedStatus?: 'Platinum' | 'Gold' | 'Certified';
   bgmeaMember: boolean;
+  bondedWarehouse: boolean;
+  epbRegistered: boolean;
   exportMarkets: string[];
   annualCapacity: string;
   certifications: string[];
@@ -79,6 +83,15 @@ export interface Supplier {
   phone: string;
   about: string;
   avatarUrl: string;
+  activeLines?: number;
+  lineAvailabilityPercentage?: number;
+}
+
+export interface TechPackAttachment {
+  name: string;
+  size: string;
+  type: string;
+  uploadedAt: string;
 }
 
 export interface RfqSubmission {
@@ -94,8 +107,11 @@ export interface RfqSubmission {
   incoterms: string;
   destinationPort: string;
   specNotes: string;
-  status: 'Received' | 'Quotes Compiling' | 'Dispatched to 5 Factories';
+  techPackFile?: TechPackAttachment;
+  status: 'Received' | 'Quotes Compiling' | 'Dispatched to 5 Factories' | 'Bid Placed' | string;
   createdAt: string;
+  targetTimelineDays?: number;
+  assignedFactories?: string[];
 }
 
 export interface SampleInquiry {
@@ -111,5 +127,36 @@ export interface SampleInquiry {
   shippingCountry: string;
   createdAt: string;
   trackingNumber: string;
-  status: 'Payment Pending' | 'Dispatched via Air Courier' | 'Sample In Production';
+  status: 'Payment Pending' | 'Dispatched via Air Courier' | 'Sample In Production' | 'Factory Bid Pending' | string;
+}
+
+export interface SupplierFilterParams {
+  category?: CategoryId;
+  district?: string;
+  bondedStatus?: boolean | 'all';
+  bondedOnly?: boolean;
+  searchTerm?: string;
+  search?: string;
+  leedOnly?: boolean;
+}
+
+export interface MarketplaceStats {
+  verifiedExporters: number;
+  bondedUnits: number;
+  activeLines: number;
+  annualExportUSD: string;
+  leedGreenFactories: string;
+  totalCatalogItems: number;
+  averageResponseTimeHours: number;
+}
+
+export interface FactoryProductionLine {
+  id: string;
+  lineName: string;
+  category: string;
+  monthlyCapacityPcs: number;
+  currentBookedPct: number;
+  nextOpenSlotDate: string;
+  status: 'Open' | 'Partially Booked' | 'Fully Booked';
+  operatorCount: number;
 }

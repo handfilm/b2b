@@ -2,27 +2,81 @@
 
 @layer base {
   * {
-    border-color: #e5e7eb;
+    border-color: rgba(255, 255, 255, 0.08);
   }
   body {
-    background-color: #f8fafc;
-    color: #0f172a;
+    background-color: #0a0a0a;
+    color: #f8fafc;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
-/* Custom subtle scrollbar */
+/* Elite Obsidian Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.2s ease;
+}
+.glass-panel-hover:hover {
+  background: rgba(24, 24, 24, 0.85);
+  border-color: rgba(255, 85, 0, 0.35);
+  box-shadow: 0 0 20px -5px rgba(255, 85, 0, 0.15);
+}
+
+.glass-card {
+  background: rgba(14, 14, 14, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card-interactive {
+  background: rgba(14, 14, 14, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.glass-card-interactive:hover {
+  border-color: rgba(255, 85, 0, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(255, 85, 0, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Electric Safety Orange Glow & Accent */
+.accent-glow-orange {
+  box-shadow: 0 0 25px -4px rgba(255, 85, 0, 0.35);
+}
+
+.text-electric-orange {
+  color: #ff5500;
+}
+
+.bg-electric-orange {
+  background-color: #ff5500;
+}
+
+.border-electric-orange {
+  border-color: #ff5500;
+}
+
+/* Custom subtle dark scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #0a0a0a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #27272a;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #ff5500;
 }

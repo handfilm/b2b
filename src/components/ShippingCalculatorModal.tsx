@@ -43,27 +43,29 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
   });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-neutral-950/70 backdrop-blur-xs overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div
         id="shipping-modal-container"
-        className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden my-auto max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-2xl bg-[#0e0e0e] text-white rounded-2xl shadow-2xl border border-white/10 overflow-hidden my-auto max-h-[92vh] flex flex-col"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 bg-neutral-900 text-white">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white">
-              <Ship className="w-4 h-4" />
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#141414]">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 rounded-xl bg-[#ff5500]/15 border border-[#ff5500]/30 flex items-center justify-center text-[#ff5500]">
+              <Ship className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold">Bangladesh Ocean Freight & Transit Matrix</h3>
-              <p className="text-xs text-neutral-400">
-                Direct container line routes from Chattogram & Mongla Ports
+              <h3 className="text-base font-extrabold text-white">
+                Bangladesh Ocean Freight & Transit Matrix
+              </h3>
+              <p className="text-xs text-slate-400">
+                Direct container line routes from Chattogram (CGP) & Mongla (MGL) Ports
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -74,33 +76,31 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
           {/* Port Origin & Destination Selector */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label className="text-xs font-bold text-neutral-700 block mb-1">
+              <label className="text-xs font-bold text-slate-300 block mb-1">
                 Port of Departure (Bangladesh)
               </label>
-              <div className="relative">
-                <select
-                  value={originPort}
-                  onChange={(e) => setOriginPort(e.target.value)}
-                  className="w-full bg-white border border-neutral-300 rounded-lg px-3 py-2 text-xs font-medium text-neutral-800 focus:outline-none focus:border-emerald-600"
-                >
-                  <option value="Chattogram Port (CGP)">Chattogram Seaport (CGP - 92% of Exports)</option>
-                  <option value="Mongla Port (MGL)">Mongla Seaport (MGL - Eco Jute & Agro)</option>
-                  <option value="Dhaka Air Cargo (DAC)">Hazrat Shahjalal Air Cargo (DAC - Urgent Garments)</option>
-                </select>
-              </div>
+              <select
+                value={originPort}
+                onChange={(e) => setOriginPort(e.target.value)}
+                className="w-full bg-[#171717] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
+              >
+                <option value="Chattogram Port (CGP)">Chattogram Seaport (CGP - 92% of Exports)</option>
+                <option value="Mongla Port (MGL)">Mongla Seaport (MGL - Eco Jute & Agro)</option>
+                <option value="Dhaka Air Cargo (DAC)">Hazrat Shahjalal Air Cargo (DAC - Garments)</option>
+              </select>
             </div>
 
             <div>
-              <label className="text-xs font-bold text-neutral-700 block mb-1">
+              <label className="text-xs font-bold text-slate-300 block mb-1">
                 Destination Discharge Port
               </label>
               <select
                 value={selectedDestinationIndex}
                 onChange={(e) => setSelectedDestinationIndex(Number(e.target.value))}
-                className="w-full bg-white border border-neutral-300 rounded-lg px-3 py-2 text-xs font-medium text-neutral-800 focus:outline-none focus:border-emerald-600"
+                className="w-full bg-[#171717] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
               >
                 {SHIPPING_DESTINATIONS.map((d, idx) => (
-                  <option key={idx} value={idx}>
+                  <option key={d.port} value={idx}>
                     {d.port} ({d.transitDays})
                   </option>
                 ))}
@@ -108,141 +108,108 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
             </div>
           </div>
 
-          {/* Shipment Mode Toggle */}
+          {/* Container Size Selector */}
           <div>
-            <label className="text-xs font-bold text-neutral-700 block mb-1.5">
-              Shipment Container Specification
+            <label className="text-xs font-bold text-slate-300 block mb-1.5">
+              Shipment Load Configuration
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
                 onClick={() => setContainerType('20ft')}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
                   containerType === '20ft'
-                    ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold ring-1 ring-emerald-600'
-                    : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                    ? 'border-[#ff5500] bg-[#ff5500]/10 text-white font-bold'
+                    : 'border-white/10 bg-[#141414] text-slate-400 hover:text-white'
                 }`}
               >
-                <div className="text-xs font-bold">20’ Standard FCL</div>
-                <div className="text-[11px] text-neutral-500 mt-0.5">33 CBM / 21,500 kg</div>
+                <div className="text-xs">20ft Standard FCL</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">~33 CBM / 28,000 kg</div>
               </button>
 
               <button
                 type="button"
                 onClick={() => setContainerType('40ft')}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
                   containerType === '40ft'
-                    ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold ring-1 ring-emerald-600'
-                    : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                    ? 'border-[#ff5500] bg-[#ff5500]/10 text-white font-bold'
+                    : 'border-white/10 bg-[#141414] text-slate-400 hover:text-white'
                 }`}
               >
-                <div className="text-xs font-bold">40’ High Cube FCL</div>
-                <div className="text-[11px] text-neutral-500 mt-0.5">76 CBM / 26,000 kg</div>
+                <div className="text-xs">40ft High Cube (HC)</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">~76 CBM / Best Value</div>
               </button>
 
               <button
                 type="button"
                 onClick={() => setContainerType('lcl')}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
                   containerType === 'lcl'
-                    ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold ring-1 ring-emerald-600'
-                    : 'border-neutral-200 hover:bg-neutral-50 text-neutral-700'
+                    ? 'border-[#ff5500] bg-[#ff5500]/10 text-white font-bold'
+                    : 'border-white/10 bg-[#141414] text-slate-400 hover:text-white'
                 }`}
               >
-                <div className="text-xs font-bold">LCL Consolidation</div>
-                <div className="text-[11px] text-neutral-500 mt-0.5">Per CBM Sharing</div>
+                <div className="text-xs">LCL Shared Pallet</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">Consolidated Cargo</div>
               </button>
             </div>
           </div>
 
           {containerType === 'lcl' && (
-            <div className="p-3 bg-neutral-50 rounded-xl border border-neutral-200 space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-neutral-700">Estimated Cargo Volume (CBM):</span>
-                <span className="font-bold text-neutral-900">{lclVolumeCBM} CBM</span>
-              </div>
+            <div className="p-3.5 bg-[#171717] rounded-xl border border-white/10">
+              <label className="text-xs font-bold text-slate-300 block mb-1">
+                LCL Volume in Cubic Meters (CBM): {lclVolumeCBM} CBM
+              </label>
               <input
                 type="range"
                 min={1}
                 max={20}
-                step={1}
                 value={lclVolumeCBM}
                 onChange={(e) => setLclVolumeCBM(Number(e.target.value))}
-                className="w-full accent-emerald-600"
+                className="w-full accent-[#ff5500]"
               />
             </div>
           )}
 
-          {/* Results Summary Box */}
-          <div className="p-4 bg-gradient-to-br from-emerald-900 to-neutral-900 text-white rounded-xl space-y-3">
-            <div className="flex items-center justify-between border-b border-emerald-800/80 pb-2.5">
-              <span className="text-xs font-semibold text-emerald-300">Route Overview:</span>
-              <span className="text-xs text-neutral-300 font-mono">
-                {originPort.split('(')[0].trim()} → {dest.port}
+          {/* Freight Estimation Output Card */}
+          <div className="p-4 rounded-xl bg-[#141414] border border-white/10 space-y-3 font-mono">
+            <div className="flex items-center justify-between pb-2 border-b border-white/10">
+              <span className="text-xs text-slate-400">Route Corridor:</span>
+              <span className="text-xs font-bold text-white">
+                {originPort.split(' ')[0]} → {dest.port}
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="text-[11px] text-neutral-400 block">Typical Ocean Transit</span>
-                <span className="text-lg font-bold text-emerald-300 flex items-center space-x-1 mt-0.5 font-mono">
-                  <Clock className="w-4 h-4" />
-                  <span>{dest.transitDays}</span>
+                <span className="text-[10px] text-slate-400 uppercase font-bold block">Ocean Transit Time</span>
+                <span className="text-sm font-black text-white flex items-center space-x-1.5 mt-0.5">
+                  <Clock className="w-3.5 h-3.5 text-[#ff5500]" />
+                  <span>{dest.transitDays} Days</span>
                 </span>
               </div>
 
               <div>
-                <span className="text-[11px] text-neutral-400 block">Indicative Sea Freight</span>
-                <span className="text-lg font-bold text-white mt-0.5 font-mono">
-                  {currency.symbol}{costConverted} <span className="text-xs text-neutral-400 font-normal">est.</span>
+                <span className="text-[10px] text-slate-400 uppercase font-bold block">Freight Range</span>
+                <span className="text-lg font-black text-[#ff5500]">
+                  {currency.symbol}{costConverted}
                 </span>
               </div>
             </div>
 
-            <p className="text-[11px] text-neutral-400 pt-1">
-              * Indicative index rates based on standard carrier spot contracts (Maersk, MSC, Hapag-Lloyd). Port handling, THC, and customs clearance quoted upon formal booking.
-            </p>
-          </div>
-
-          {/* Full Benchmark Ports Table */}
-          <div className="border border-neutral-200 rounded-xl overflow-hidden text-xs">
-            <div className="px-3.5 py-2 bg-neutral-100 font-bold text-neutral-800 border-b border-neutral-200">
-              Direct Bangladesh Seaport Schedules to Key Global Hubs
-            </div>
-            <div className="divide-y divide-neutral-200">
-              {SHIPPING_DESTINATIONS.map((item, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setSelectedDestinationIndex(idx)}
-                  className={`px-3.5 py-2.5 flex items-center justify-between cursor-pointer transition-colors ${
-                    selectedDestinationIndex === idx
-                      ? 'bg-emerald-50 text-emerald-950 font-bold'
-                      : 'hover:bg-neutral-50 text-neutral-700'
-                  }`}
-                >
-                  <div className="flex items-center space-x-2">
-                    <Anchor className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>{item.port}</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <span className="text-neutral-500 font-mono">{item.transitDays}</span>
-                    <span className="font-mono text-neutral-900 font-semibold">
-                      {currency.symbol}{(item.teusCostUSD * currency.rate).toFixed(0)} / 40'
-                    </span>
-                  </div>
-                </div>
-              ))}
+            <div className="pt-2 border-t border-white/5 text-[11px] font-sans text-slate-400">
+              Direct feeder vessel connects Chattogram to Singapore/Colombo transshipment hubs weekly.
             </div>
           </div>
         </div>
 
-        {/* Modal Footer */}
-        <div className="px-6 py-3 bg-neutral-100 border-t border-neutral-200 flex justify-end">
+        {/* Footer */}
+        <div className="p-4 border-t border-white/10 flex justify-end bg-[#141414]">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-semibold cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold shadow-lg shadow-[#ff5500]/25 cursor-pointer"
           >
-            Close Calculator
+            Apply Rate to Calculation
           </button>
         </div>
       </div>
