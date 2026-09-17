@@ -34,9 +34,9 @@ jobs:
       - name: Build Vite application
         run: npm run build
 
-      - name: Ensure CNAME in dist
+      - name: Ensure CNAME & 404 in dist
         run: |
-          if [ -f CNAME ]; then cp CNAME dist/CNAME; fi
+          echo "b2b.handsandhead.com" > dist/CNAME
           if [ -f public/404.html ]; then cp public/404.html dist/404.html; fi
 
       # Option 1: GitHub Actions deployment (when Settings -> Pages -> Source is set to 'GitHub Actions')
