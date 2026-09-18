@@ -157,8 +157,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
     try {
       // Attempt genuine Firebase Google Sign-In popup
-      const fbUser = await signInWithGooglePopup();
-      if (fbUser) {
+      const result = await signInWithGooglePopup();
+      if (result?.user) {
+        const fbUser = result.user;
         const enhancedUser: AuthUser = {
           ...fbUser,
           phone: fullPhone,

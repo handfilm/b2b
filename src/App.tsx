@@ -21,6 +21,9 @@ import { AiAssistantModal } from './components/AiAssistantModal';
 import { FloatingRightDock } from './components/FloatingRightDock';
 import { Footer } from './components/Footer';
 import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
+import { InquiryCartProvider } from './context/InquiryCartContext';
+import { InquiryCart } from './components/InquiryCart';
+import { RawxBotChat } from './components/RawxBotChat';
 import { NexosPipelineModal } from './components/NexosPipelineModal';
 import { MobileHighTechDock } from './components/MobileHighTechDock';
 import { BangladeshManufacturerMap } from './components/BangladeshManufacturerMap';
@@ -1328,6 +1331,22 @@ const AppContent: React.FC = () => {
           onHeightChange={(height) => setMobileDockHeight(height)}
         />
       )}
+
+      {/* B2B Inquiry Cart Drawer */}
+      <InquiryCart
+        authUser={authUser}
+        currency={currentCurrencyConfig}
+        onExploreProducts={() => {
+          setActiveView('products');
+          window.scrollTo({ top: 400, behavior: 'smooth' });
+        }}
+      />
+
+      {/* RAWx Autonomous Trade Agent Chat Window */}
+      <RawxBotChat
+        authUser={authUser}
+        onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+      />
     </div>
   );
 };
@@ -1335,7 +1354,9 @@ const AppContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <NexosSyncProvider>
-      <AppContent />
+      <InquiryCartProvider>
+        <AppContent />
+      </InquiryCartProvider>
     </NexosSyncProvider>
   );
 };

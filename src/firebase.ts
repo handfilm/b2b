@@ -32,17 +32,61 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
+// Google Workspace & Drive OAuth Scopes
+export const GOOGLE_DRIVE_SCOPES = [
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.activity',
+  'https://www.googleapis.com/auth/drive.activity.readonly',
+  'https://www.googleapis.com/auth/drive.appdata',
+  'https://www.googleapis.com/auth/drive.apps.readonly',
+  'https://www.googleapis.com/auth/drive.file',
+  'https://www.googleapis.com/auth/drive.install',
+  'https://www.googleapis.com/auth/drive.meet.readonly',
+  'https://www.googleapis.com/auth/drive.metadata',
+  'https://www.googleapis.com/auth/drive.metadata.readonly',
+  'https://www.googleapis.com/auth/drive.photos.readonly',
+  'https://www.googleapis.com/auth/drive.readonly',
+  'https://www.googleapis.com/auth/drive.scripts',
+];
+
+GOOGLE_DRIVE_SCOPES.forEach((scope) => {
+  googleProvider.addScope(scope);
+});
+
+// In-memory access token cache (required: do NOT store in localStorage)
+let cachedAccessToken: string | null = null;
+
+export const getAccessToken = async (): Promise<string | null> => {
+  return cachedAccessToken;
+};
+
+export const setCachedAccessToken = (token: string | null) => {
+  cachedAccessToken = token;
+};
+
+// Clear token on sign out
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    cachedAccessToken = null;
+  }
+});
+
 // Initialize Firestore (supporting specific databaseId if configured)
 export const db: Firestore = firebaseConfig.firestoreDatabaseId
   ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
   : getFirestore(app);
 
-// Google Sign-In
-export async function signInWithGooglePopup(): Promise<AuthUser | null> {
+// Google Sign-In with Workspace OAuth
+export async function signInWithGooglePopup(): Promise<{ user: AuthUser; accessToken: string } | null> {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
     if (!user) return null;
+
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    if (credential?.accessToken) {
+      cachedAccessToken = credential.accessToken;
+    }
 
     const authUser: AuthUser = {
       id: user.uid,
@@ -61,11 +105,26 @@ export async function signInWithGooglePopup(): Promise<AuthUser | null> {
 
     // Save/merge profile in Firestore
     await saveUserToFirestore(authUser);
-    return authUser;
+    return { user: authUser, accessToken: cachedAccessToken || '' };
   } catch (err: any) {
     console.error('Firebase Google Sign-In error:', err);
     throw err;
   }
+}
+
+/**
+ * Ensures an active Google Drive OAuth access token is available.
+ * If not already in memory, prompts user through the standard Google auth popup.
+ */
+export async function ensureGoogleDriveToken(): Promise<string> {
+  if (cachedAccessToken) {
+    return cachedAccessToken;
+  }
+  const res = await signInWithGooglePopup();
+  if (!res?.accessToken) {
+    throw new Error('Google Drive authorization was not completed. Please grant Google Drive access.');
+  }
+  return res.accessToken;
 }
 
 // Sign Out

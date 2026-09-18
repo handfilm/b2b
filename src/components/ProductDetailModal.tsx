@@ -16,8 +16,10 @@ import {
   Send,
   Sparkles,
   ExternalLink,
+  ShoppingCart,
 } from 'lucide-react';
 import { Product, Supplier, CurrencyConfig } from '../types';
+import { useInquiryCart } from '../context/InquiryCartContext';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -45,6 +47,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [selectedIncoterm, setSelectedIncoterm] = useState(product?.incoterms?.[0] || 'FOB');
   const [quickMsg, setQuickMsg] = useState('');
   const [sentNotice, setSentNotice] = useState(false);
+
+  const { addToCart } = useInquiryCart();
 
   React.useEffect(() => {
     if (product) {
@@ -310,15 +314,34 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 pt-3 border-t border-white/10">
+                {/* B2B Inquiry Cart Action */}
+                <button
+                  type="button"
+                  id="modal-add-to-inquiry-cart-btn"
+                  onClick={() => {
+                    addToCart(product, {
+                      requestedQty: calculatorQty,
+                      targetPrice: currentUnitPriceUSD,
+                      itemMessage: quickMsg.trim() || `Commercial inquiry for ${calculatorQty} ${product.unit} under ${selectedIncoterm}`,
+                    });
+                    onClose();
+                  }}
+                  className="px-4 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:opacity-95 text-white text-xs font-black flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer shadow-md shadow-[#e11d48]/20"
+                  title="Add to B2B Inquiry / RFQ Cart"
+                >
+                  <ShoppingCart className="w-3.5 h-3.5 text-white" />
+                  <span>Add to RFQ Cart</span>
+                </button>
+
                 {onOpenAiAssistant && (
                   <button
                     onClick={() => {
                       onClose();
                       onOpenAiAssistant(product);
                     }}
-                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#e11d48]/15 hover:bg-[#e11d48]/25 border border-[#e11d48]/30 text-[#e11d48] hover:text-white text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer shadow-sm"
+                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-slate-200 hover:text-white text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer shadow-sm"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#e11d48]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#10b981]" />
                     <span>RAWx Trade Agent</span>
                   </button>
                 )}

@@ -68,6 +68,18 @@
         "totalTradeVol": { "type": "string" },
         "bdtSalesVolume": { "type": "string" }
       }
+    },
+    "RfqThread": {
+      "collection": "rfq_threads",
+      "fields": {
+        "buyerId": { "type": "string", "required": true },
+        "supplierId": { "type": "string", "required": true },
+        "products": { "type": "array" },
+        "initialMessage": { "type": "string" },
+        "status": { "type": "string" },
+        "handledBy": { "type": "string" },
+        "createdAt": { "type": "timestamp" }
+      }
     }
   }
 }

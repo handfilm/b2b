@@ -396,3 +396,57 @@ export interface PipelineSyncEvent {
   message: string;
 }
 
+// ============================================================================
+// B2B INQUIRY CART & RAWX BOT RFQ THREAD TYPES
+// ============================================================================
+
+export interface InquiryCartItem {
+  id: string;
+  product: Product;
+  sku: string;
+  requestedQty: number;
+  targetPrice: number; // in USD
+  itemMessage: string;
+  selectedColor?: string;
+  supplierId?: string;
+  supplierName?: string;
+}
+
+export interface RfqThreadProduct {
+  sku: string;
+  title?: string;
+  productId?: string;
+  requestedQty: number;
+  targetPrice: number;
+  supplierId?: string;
+  supplierName?: string;
+  imageUrl?: string;
+  customNotes?: string;
+}
+
+export interface RfqThreadMessage {
+  id: string;
+  sender: 'buyer' | 'ai' | 'human';
+  senderName: string;
+  content: string;
+  timestamp: string;
+  isAutomated?: boolean;
+}
+
+export interface RfqThread {
+  id: string;
+  buyerId: string;
+  buyerName?: string;
+  buyerEmail?: string;
+  supplierId: string;
+  supplierName?: string;
+  products: RfqThreadProduct[];
+  initialMessage: string;
+  status: 'active' | 'pending_approval' | 'quote_issued' | 'closed';
+  handledBy: 'ai' | 'human';
+  createdAt: any;
+  updatedAt?: any;
+  messages?: RfqThreadMessage[];
+  lastMessage?: string;
+}
+

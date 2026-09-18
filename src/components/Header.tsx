@@ -20,7 +20,9 @@ import {
   Zap,
   LayoutDashboard,
   Bookmark,
+  ShoppingCart,
 } from 'lucide-react';
+import { useInquiryCart } from '../context/InquiryCartContext';
 import {
   CurrencyCode,
   CategoryId,
@@ -101,6 +103,8 @@ export const Header: React.FC<HeaderProps> = ({
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(searchQuery);
+
+  const { openCart, totalItems: cartCount } = useInquiryCart();
 
   const isDark = theme === 'dark';
 
@@ -540,6 +544,29 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="absolute -top-1 -right-1 bg-[#e11d48] text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full min-w-4 text-center">
               {inquiryCount > 0 ? inquiryCount : 4}
             </span>
+          </button>
+
+          {/* 4.5. B2B Inquiry Cart (RFQ Launcher) */}
+          <button
+            type="button"
+            id="header-inquiry-cart-btn"
+            onClick={openCart}
+            className={`relative p-2 rounded-xl border transition-all cursor-pointer flex items-center space-x-1.5 ${
+              cartCount > 0
+                ? 'bg-[#e11d48]/15 hover:bg-[#e11d48]/25 border-[#e11d48]/50 text-white shadow-md shadow-[#e11d48]/20'
+                : isDark
+                ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+            }`}
+            title="B2B Inquiry Cart (Launch RAWx Trade Agent)"
+          >
+            <ShoppingCart className={`w-4 h-4 ${cartCount > 0 ? 'text-[#ff1e42]' : 'text-slate-300'}`} />
+            <span className="hidden xl:inline text-xs font-bold">Inquiry Cart</span>
+            {cartCount > 0 && (
+              <span className="bg-[#e11d48] text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full min-w-4 text-center animate-pulse">
+                {cartCount}
+              </span>
+            )}
           </button>
 
           {/* 5. User Account / Sign In */}

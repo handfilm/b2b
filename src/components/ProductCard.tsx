@@ -13,9 +13,11 @@ import {
   ArrowUpRight,
   Building2,
   TrendingDown,
+  ShoppingCart,
 } from 'lucide-react';
 import { Product, CurrencyConfig } from '../types';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
+import { useInquiryCart } from '../context/InquiryCartContext';
 
 interface ProductCardProps {
   product: Product;
@@ -43,6 +45,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const [selectedSwatchIndex, setSelectedSwatchIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredTierIndex, setHoveredTierIndex] = useState<number | null>(null);
+
+  const { addToCart } = useInquiryCart();
 
   const handleOutboundSourcing = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -533,7 +537,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </div>
 
             {/* Bottom Quick-Action Buttons with Motion Tap feedback */}
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10">
+            <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-white/10">
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.02 }}
@@ -546,11 +550,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     onSelectProduct(product);
                   }
                 }}
-                className="py-2 px-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[11px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                className="py-2 px-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[10px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
                 title="Export Spec to CAD TechPack Studio"
               >
                 <FileText className="w-3 h-3 text-[#10b981]" />
-                <span className="truncate">TechPack Spec</span>
+                <span className="truncate">TechPack</span>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product);
+                }}
+                className="py-2 px-1.5 rounded-xl bg-[#e11d48]/20 hover:bg-[#e11d48]/35 border border-[#e11d48]/40 text-white text-[10px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                title="Add to B2B Inquiry Cart"
+              >
+                <ShoppingCart className="w-3 h-3 text-[#ff1e42]" />
+                <span className="truncate">+ RFQ Cart</span>
               </motion.button>
 
               <motion.button
@@ -558,11 +577,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={handleOutboundSourcing}
-                className="py-2 px-2.5 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[11px] font-black tracking-wide shadow-md transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                className="py-2 px-1.5 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[10px] font-black tracking-wide shadow-md transition-colors flex items-center justify-center space-x-1 cursor-pointer"
                 title="Procure Direct on Dedicated Node"
               >
-                <ArrowUpRight className="w-3.5 h-3.5" />
-                <span className="truncate">Procure Direct</span>
+                <ArrowUpRight className="w-3 h-3" />
+                <span className="truncate">Direct</span>
               </motion.button>
             </div>
           </motion.div>
