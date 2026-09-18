@@ -24,6 +24,8 @@ import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
 import { NexosPipelineModal } from './components/NexosPipelineModal';
 import { MobileHighTechDock } from './components/MobileHighTechDock';
 import { BangladeshManufacturerMap } from './components/BangladeshManufacturerMap';
+import { BuyerDashboardShell } from './pages/BuyerDashboard';
+import { SellerDashboardShell } from './pages/SellerDashboard';
 import {
   saveRfqToFirestore,
   saveSampleToFirestore,
@@ -114,12 +116,38 @@ const AppContent: React.FC = () => {
     setSortBy,
     syncStatus,
     triggerSync,
+    addPublishedProduct,
     isPipelineModalOpen,
     setIsPipelineModalOpen,
     hasMore,
     isLoadingMore,
     loadMore,
   } = useNexosSync();
+
+  // URL / Route Navigation State: supporting /buyer/dashboard and /seller/dashboard
+  const [currentPath, setCurrentPath] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.pathname || '/';
+    }
+    return '/';
+  });
+
+  const navigate = useCallback((path: string) => {
+    if (typeof window !== 'undefined') {
+      window.history.pushState({}, '', path);
+      setCurrentPath(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname || '/');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
   const [lang, setLang] = useState<LanguageCode>('EN');
@@ -555,44 +583,73 @@ const AppContent: React.FC = () => {
         </div>
       )}
 
-      {/* 1. TOP BAR: Consolidated 3-Tier Alibaba/Etsy Hybrid Header */}
-      <Header
-        currentCurrency={currency}
-        onCurrencyChange={setCurrency}
-        lang={lang}
-        onLanguageChange={setLang}
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-        selectedDivision={selectedDivision}
-        onSelectDivision={setSelectedDivision}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onOpenRfq={() => setIsRfqModalOpen(true)}
-        onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
-        onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
-        onOpenAutomation={() => setIsAutomationModalOpen(true)}
-        inquiryCount={rfqs.length + samples.length}
-        activeView={activeView}
-        onViewChange={(v) => {
-          setActiveView(v);
-          setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
-          setSupplierFilter(null);
-        }}
-        persona={persona}
-        onPersonaChange={setPersona}
-        apiSource={apiSource}
-        onForceSync={handleForceSync}
-        isSyncing={isSyncing}
-        authUser={authUser}
-        onOpenAuth={() => setIsAuthModalOpen(true)}
-        onLogout={handleLogout}
-        onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
-        activeRfqCount={rfqs.length}
-        onOpenAiAssistant={() => handleOpenAiAssistant()}
-        theme={theme}
-        onToggleTheme={toggleTheme}
-        onOpenPipeline={() => setIsPipelineModalOpen(true)}
-      />
+      {/* Route Switcher: Buyer Dashboard Shell */}
+      {currentPath.startsWith('/buyer') ? (
+        <BuyerDashboardShell
+          authUser={authUser}
+          onNavigateHome={() => navigate('/')}
+          onNavigateToSeller={() => navigate('/seller/dashboard')}
+          onOpenRfqModal={() => setIsRfqModalOpen(true)}
+          onOpenTechPackModal={() => setIsTechPackModalOpen(true)}
+          onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+          onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+          onLogout={handleLogout}
+          theme={theme}
+        />
+      ) : currentPath.startsWith('/seller') ? (
+        <SellerDashboardShell
+          authUser={authUser}
+          onNavigateHome={() => navigate('/')}
+          onNavigateToBuyer={() => navigate('/buyer/dashboard')}
+          onProductPublished={(newProd) => {
+            addPublishedProduct(newProd);
+            setNotification(`Published "${newProd.title}" live to federated catalog!`);
+          }}
+          onLogout={handleLogout}
+          theme={theme}
+        />
+      ) : (
+        <>
+          {/* 1. TOP BAR: Consolidated 3-Tier Alibaba/Etsy Hybrid Header */}
+          <Header
+            currentCurrency={currency}
+            onCurrencyChange={setCurrency}
+            lang={lang}
+            onLanguageChange={setLang}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+            selectedDivision={selectedDivision}
+            onSelectDivision={setSelectedDivision}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+            onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+            onOpenAutomation={() => setIsAutomationModalOpen(true)}
+            inquiryCount={rfqs.length + samples.length}
+            activeView={activeView}
+            onViewChange={(v) => {
+              setActiveView(v);
+              setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
+              setSupplierFilter(null);
+            }}
+            persona={persona}
+            onPersonaChange={setPersona}
+            apiSource={apiSource}
+            onForceSync={handleForceSync}
+            isSyncing={isSyncing}
+            authUser={authUser}
+            onOpenAuth={() => setIsAuthModalOpen(true)}
+            onLogout={handleLogout}
+            onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+            activeRfqCount={rfqs.length}
+            onOpenAiAssistant={() => handleOpenAiAssistant()}
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            onOpenPipeline={() => setIsPipelineModalOpen(true)}
+            onNavigateToBuyerDashboard={() => navigate('/buyer/dashboard')}
+            onNavigateToSellerDashboard={() => navigate('/seller/dashboard')}
+          />
 
       {/* 2. HERO SECTION: AI Mode, Products, BD Exporters, Global Buyer with Big Search Bar */}
       {persona === 'buyer' && (
@@ -1136,6 +1193,8 @@ const AppContent: React.FC = () => {
         onOpenAiAssistant={() => handleOpenAiAssistant()}
         theme={theme}
       />
+        </>
+      )}
 
       {/* Product Detail Modal */}
       <ProductDetailModal
@@ -1255,18 +1314,20 @@ const AppContent: React.FC = () => {
       />
 
       {/* High-Tech Mobile Bottom Dock */}
-      <MobileHighTechDock
-        activeView={activeView}
-        onViewChange={(v) => {
-          setActiveView(v);
-          setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
-        }}
-        onOpenAiAssistant={() => handleOpenAiAssistant()}
-        onOpenRfq={() => setIsRfqModalOpen(true)}
-        onOpenPipeline={() => setIsPipelineModalOpen(true)}
-        theme={theme}
-        onHeightChange={(height) => setMobileDockHeight(height)}
-      />
+      {!currentPath.startsWith('/buyer') && !currentPath.startsWith('/seller') && (
+        <MobileHighTechDock
+          activeView={activeView}
+          onViewChange={(v) => {
+            setActiveView(v);
+            setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
+          }}
+          onOpenAiAssistant={() => handleOpenAiAssistant()}
+          onOpenRfq={() => setIsRfqModalOpen(true)}
+          onOpenPipeline={() => setIsPipelineModalOpen(true)}
+          theme={theme}
+          onHeightChange={(height) => setMobileDockHeight(height)}
+        />
+      )}
     </div>
   );
 };

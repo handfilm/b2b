@@ -51,6 +51,7 @@ interface NexosSyncContextType {
   lastSyncedAt: string | null;
   syncEvents: PipelineSyncEvent[];
   triggerSync: (source?: 'all' | 'drive' | 'arutemika') => Promise<void>;
+  addPublishedProduct: (product: B2BProduct) => void;
   isPipelineModalOpen: boolean;
   setIsPipelineModalOpen: (open: boolean) => void;
 
@@ -289,6 +290,11 @@ export const NexosSyncProvider: React.FC<{ children: ReactNode }> = ({ children 
     return result;
   }, [products, selectedDivision, selectedCategory, searchQuery, sortBy]);
 
+  const addPublishedProduct = useCallback((newProduct: B2BProduct) => {
+    setProducts((prev) => [newProduct, ...prev]);
+    setTotalProductsCount((prev) => prev + 1);
+  }, []);
+
   const value = {
     products,
     filteredProducts,
@@ -314,6 +320,7 @@ export const NexosSyncProvider: React.FC<{ children: ReactNode }> = ({ children 
     lastSyncedAt,
     syncEvents,
     triggerSync,
+    addPublishedProduct,
     isPipelineModalOpen,
     setIsPipelineModalOpen,
     isMobileFiltersOpen,

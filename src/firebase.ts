@@ -24,7 +24,8 @@ import firebaseConfig from '../firebase-applet-config.json';
 import { AuthUser, RfqSubmission, SampleInquiry } from './types';
 
 // Initialize Firebase App instance safely
-export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const defaultApp = getApps().find((a) => a.name === '[DEFAULT]');
+export const app = defaultApp || initializeApp(firebaseConfig);
 
 // Initialize Auth
 export const auth = getAuth(app);

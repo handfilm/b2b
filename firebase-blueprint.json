@@ -47,6 +47,27 @@
         "contextType": { "type": "string" },
         "createdAt": { "type": "string" }
       }
+    },
+    "FederatedProduct": {
+      "collection": "federated_catalog",
+      "fields": {
+        "sku": { "type": "string" },
+        "title": { "type": "string", "required": true },
+        "categoryId": { "type": "string" },
+        "moq": { "type": "number" },
+        "baseRetailPrice": { "type": "number" },
+        "supplierName": { "type": "string" },
+        "publishedAt": { "type": "string" }
+      }
+    },
+    "SystemMetric": {
+      "collection": "system_metrics",
+      "fields": {
+        "activeBuyers": { "type": "number" },
+        "verifiedSuppliers": { "type": "number" },
+        "totalTradeVol": { "type": "string" },
+        "bdtSalesVolume": { "type": "string" }
+      }
     }
   }
 }

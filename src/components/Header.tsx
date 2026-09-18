@@ -18,6 +18,8 @@ import {
   Moon,
   ShieldCheck,
   Zap,
+  LayoutDashboard,
+  Bookmark,
 } from 'lucide-react';
 import {
   CurrencyCode,
@@ -62,6 +64,8 @@ interface HeaderProps {
   theme?: 'dark' | 'light';
   onToggleTheme?: () => void;
   onOpenPipeline?: () => void;
+  onNavigateToBuyerDashboard?: (tab?: string) => void;
+  onNavigateToSellerDashboard?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -91,6 +95,8 @@ export const Header: React.FC<HeaderProps> = ({
   theme = 'dark',
   onToggleTheme,
   onOpenPipeline,
+  onNavigateToBuyerDashboard,
+  onNavigateToSellerDashboard,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
@@ -557,28 +563,135 @@ export const Header: React.FC<HeaderProps> = ({
               {isUserMenuOpen && (
                 <div
                   onMouseLeave={() => setIsUserMenuOpen(false)}
-                  className={`absolute right-0 top-full mt-1 w-52 rounded-xl shadow-2xl border p-2 z-50 animate-in fade-in ${
+                  className={`absolute right-0 top-full mt-1.5 w-60 rounded-2xl shadow-2xl border p-2 z-50 animate-in fade-in ${
                     isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
                   }`}
                 >
-                  <div className="px-3 py-2 border-b border-inherit text-xs">
-                    <p className="font-bold">{authUser.name}</p>
-                    <p className="text-[10px] text-slate-400 truncate">{authUser.email}</p>
-                    <span className="text-[9px] font-mono font-bold text-[#10b981] mt-0.5 block">
-                      Role: {authUser.role === 'buyer' ? 'Global Buyer' : 'Manufacturer'}
-                    </span>
+                  {/* Buyer Profile Header */}
+                  <div className="px-3 py-2.5 border-b border-inherit text-xs">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-8 h-8 rounded-lg bg-[#e11d48] text-white font-black flex items-center justify-center text-xs">
+                        {authUser.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="truncate">
+                        <p className="font-bold text-sm leading-tight truncate">{authUser.name}</p>
+                        <p className="text-[10px] text-slate-400 truncate">{authUser.email}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-1.5 mt-2 pt-2 border-t border-inherit">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" />
+                      <span className="text-[10px] font-mono font-bold text-[#10b981]">
+                        {authUser.role === 'buyer' ? 'Verified Enterprise Buyer' : 'Verified Exporter Mill'}
+                      </span>
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onLogout?.();
-                      setIsUserMenuOpen(false);
-                    }}
-                    className="w-full text-left px-3 py-2 text-xs text-[#ff1e42] font-bold hover:bg-red-500/10 rounded-lg transition-colors flex items-center space-x-1.5 mt-1 cursor-pointer"
-                  >
-                    <LogOut className="w-3.5 h-3.5" />
-                    <span>Sign Out</span>
-                  </button>
+
+                  {/* Rich Navigation Links: Sourcing Hub, Orders, RFQs, Favorites */}
+                  <div className="py-1.5 space-y-0.5 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        if (onNavigateToBuyerDashboard) {
+                          onNavigateToBuyerDashboard('overview');
+                        } else {
+                          onViewChange('insights');
+                        }
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <LayoutDashboard className="w-3.5 h-3.5 text-[#10b981]" />
+                        <span>My Sourcing Hub</span>
+                      </div>
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#10b981]/20 text-[#10b981] font-mono font-bold">
+                        Live
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        if (onNavigateToBuyerDashboard) {
+                          onNavigateToBuyerDashboard('orders');
+                        }
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
+                        <span>Orders & Escrow</span>
+                      </div>
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-white/10 text-slate-300 font-mono">
+                        $142.5k
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        if (onNavigateToBuyerDashboard) {
+                          onNavigateToBuyerDashboard('rfqs');
+                        } else {
+                          onOpenInquiries();
+                        }
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between cursor-pointer"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <FileText className="w-3.5 h-3.5 text-[#e11d48]" />
+                        <span>RFQs & Live Quotes</span>
+                      </div>
+                      <span className="text-[9px] px-1.5 py-0.2 rounded bg-[#e11d48]/20 text-[#ff1e42] font-mono">
+                        8 Active
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        if (onNavigateToBuyerDashboard) {
+                          onNavigateToBuyerDashboard('favorites');
+                        }
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex items-center space-x-2 cursor-pointer"
+                    >
+                      <Bookmark className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Saved Products</span>
+                    </button>
+
+                    {onNavigateToSellerDashboard && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsUserMenuOpen(false);
+                          onNavigateToSellerDashboard();
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex items-center space-x-2 cursor-pointer"
+                      >
+                        <Building2 className="w-3.5 h-3.5 text-slate-400" />
+                        <span>Exporter Console</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Sign Out Action */}
+                  <div className="pt-1 border-t border-inherit">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onLogout?.();
+                        setIsUserMenuOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 text-xs text-[#ff1e42] font-bold hover:bg-red-500/10 rounded-lg transition-colors flex items-center space-x-2 cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
