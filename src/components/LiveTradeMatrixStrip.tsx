@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   ShieldCheck,
   Users,
@@ -9,6 +10,10 @@ import {
   CheckCircle2,
   Building2,
   Flame,
+  ArrowRight,
+  ExternalLink,
+  Award,
+  Globe2,
 } from 'lucide-react';
 
 interface LiveTradeMatrixStripProps {
@@ -29,156 +34,360 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
   const isDark = theme === 'dark';
   const handleShipping = onOpenFreightMatrix || onOpenShipping;
 
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [hoveredChip, setHoveredChip] = useState<string | null>(null);
+
   const metrics = [
     {
       id: 'exporters',
-      label: 'Verified EPB & Green Exporters',
+      label: 'Exporters',
       value: '5,000+',
-      subtext: 'LEED, OEKO-TEX, BGMEA & BKMEA Mills',
       badge: 'EPB Bonded',
       badgeColor: 'text-[#10b981] bg-[#10b981]/15 border-[#10b981]/30',
-      icon: <Building2 className="w-4 h-4 text-[#e11d48]" />,
+      icon: <Building2 className="w-3.5 h-3.5 text-[#e11d48]" />,
       action: onOpenFactories,
+      actionText: 'Explore 5,000+ Mills',
+      tooltip: {
+        title: 'Verified Bangladesh Exporters',
+        tagline: 'EPB Bonded & Fully Certified',
+        stats: [
+          { label: 'RMG Knitwear & Jersey', value: '2,850+ Mills' },
+          { label: 'Woven & Selvedge Denim', value: '1,200+ Plants' },
+          { label: 'Finished Leather & Shoes', value: '480+ Tannery/Mfr' },
+          { label: 'Diversified Jute & Agro', value: '320+ Eco Units' },
+        ],
+        compliance: 'OEKO-TEX 100 • GOTS • WRAP • SEDEX • BSCI',
+        turnaround: 'Counter-sample: 3-5 days • Bulk: 30-45 days',
+      },
     },
     {
       id: 'buyers',
-      label: 'Global Sourcing Accounts',
+      label: 'Buyers',
       value: 'Unlimited',
-      subtext: 'EU, US, UK, Japan Verified Brands & Retailers',
       badge: 'Active Hub',
       badgeColor: 'text-[#10b981] bg-[#10b981]/15 border-[#10b981]/30',
-      icon: <Users className="w-4 h-4 text-[#10b981]" />,
+      icon: <Users className="w-3.5 h-3.5 text-[#10b981]" />,
       action: onOpenBuyers,
+      actionText: 'View Buyer Hub',
+      tooltip: {
+        title: 'Global Sourcing Network',
+        tagline: 'Verified Purchasing Accounts',
+        stats: [
+          { label: 'European Union (EU)', value: '44% Volume' },
+          { label: 'North America (US/CA)', value: '36% Volume' },
+          { label: 'UK, Japan & Australia', value: '20% Volume' },
+          { label: 'Active Monthly RFQs', value: '120+ Tenders' },
+        ],
+        compliance: 'Bank L/C Verified • 50% JIT Escrow Coverage',
+        turnaround: 'Direct Buyer-to-Mill Matching with Zero Intermediary Markups',
+      },
     },
     {
       id: 'capacity',
-      label: 'Bangladesh Annual Export Capacity',
+      label: 'Annual Capacity',
       value: '$55.5B+',
-      subtext: 'RMG, Jute, Leather & Specialized Crafts',
       badge: 'Global #2',
       badgeColor: 'text-[#ff1e42] bg-[#e11d48]/15 border-[#e11d48]/30',
-      icon: <TrendingUp className="w-4 h-4 text-[#e11d48]" />,
-      action: onOpenShipping,
+      icon: <TrendingUp className="w-3.5 h-3.5 text-[#e11d48]" />,
+      action: handleShipping,
+      actionText: 'Calculate Freight Rates',
+      tooltip: {
+        title: 'Bangladesh Export Capacity',
+        tagline: '$55.5B+ Annual Output (#2 World RMG Exporter)',
+        stats: [
+          { label: 'RMG Ready-Made Garments', value: '$46.99B' },
+          { label: 'Home Textiles & Terry', value: '$1.62B' },
+          { label: 'Leather Goods & Footwear', value: '$1.70B' },
+          { label: 'Jute Fiber & Diversified', value: '$1.20B' },
+        ],
+        compliance: 'Duty-Free EU EBA (GSP) & UK DCTS Tariff Treatment',
+        turnaround: 'Direct Ocean Line to Rotterdam, Hamburg, NY/NJ & LA ports',
+      },
     },
     {
       id: 'leed',
-      label: 'USGBC LEED Platinum/Gold Facilities',
+      label: 'LEED Green Mills',
       value: '220+',
-      subtext: 'World-Leading Highest Concentration of Green RMG',
-      badge: 'Global #1 ESG',
+      badge: '#1 ESG World',
       badgeColor: 'text-[#10b981] bg-[#10b981]/15 border-[#10b981]/30',
-      icon: <Sparkles className="w-4 h-4 text-[#10b981]" />,
+      icon: <Sparkles className="w-3.5 h-3.5 text-[#10b981]" />,
       action: onOpenFactories,
+      actionText: 'Browse Green Mills',
+      tooltip: {
+        title: 'USGBC Green Certified Factories',
+        tagline: 'World Leader in Eco-Friendly RMG',
+        stats: [
+          { label: 'LEED Platinum Certified', value: '80+ Facilities' },
+          { label: 'LEED Gold Certified', value: '140+ Facilities' },
+          { label: 'Top 100 World Green RMG', value: '73 in Bangladesh' },
+          { label: 'Carbon & Water Footprint', value: '-40% CO2 / -50% H2O' },
+        ],
+        compliance: 'Zero Liquid Discharge (ZLD) • Solar Rooftop Integrated',
+        turnaround: 'Preferred by ESG-mandated retailers across EU and North America',
+      },
     },
   ];
 
   return (
     <section
       id="live-trade-matrix-strip"
-      className={`w-full transition-colors duration-200 ${
+      className={`w-full transition-colors duration-200 relative z-10 ${
         isDark
-          ? 'bg-[#0f0f0f] border-y border-white/10'
-          : 'bg-[#f1f5f9] border-y border-slate-200'
+          ? 'bg-[#0b0e14] border-y border-white/10'
+          : 'bg-[#f8fafc] border-y border-slate-200'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 py-3">
-        {/* Top Mini Header with Live Indicator */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-2 border-b border-inherit">
+      <div className="max-w-7xl mx-auto px-4 py-2 sm:py-2.5">
+        {/* Compact Bar with Live Indicator & Functional Status Chips */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2 pb-1.5 border-b border-inherit">
           <div className="flex items-center space-x-2">
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#10b981]"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
             </span>
             <span
-              className={`text-xs font-black uppercase tracking-wider ${
+              className={`text-[11px] font-black uppercase tracking-wider ${
                 isDark ? 'text-white' : 'text-slate-900'
               }`}
             >
               Live Trade Matrix
             </span>
             <span
-              className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+              className={`text-[9.5px] font-mono px-2 py-0.2 rounded border ${
                 isDark
                   ? 'bg-white/5 text-slate-300 border-white/10'
-                  : 'bg-white text-slate-600 border-slate-200 shadow-xs'
+                  : 'bg-white text-slate-600 border-slate-200'
               }`}
             >
-              Real-time EPB Customs & Port Sync
+              EPB Customs Synced
             </span>
           </div>
 
-          {/* Port Status Strip */}
-          <div className="flex items-center space-x-3 text-[11px]">
-            <div className="flex items-center space-x-1.5 text-slate-400">
-              <Ship className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>
-                <strong className={isDark ? 'text-white' : 'text-slate-800'}>
-                  Chattogram Port:
-                </strong>{' '}
-                Vessels Berth 3.2d AVG
-              </span>
+          {/* Interactive Chips with Animated Hover Cards */}
+          <div className="flex items-center space-x-2 text-[10.5px]">
+            {/* Chattogram Port Chip */}
+            <div
+              className="relative"
+              onMouseEnter={() => setHoveredChip('port')}
+              onMouseLeave={() => setHoveredChip(null)}
+            >
+              <button
+                type="button"
+                onClick={handleShipping}
+                className={`flex items-center space-x-1.5 px-2 py-0.5 rounded-lg border transition-all cursor-pointer ${
+                  isDark
+                    ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300 hover:text-white'
+                    : 'bg-white hover:bg-slate-100 border-slate-200 text-slate-700'
+                }`}
+              >
+                <Ship className="w-3 h-3 text-[#10b981]" />
+                <span>
+                  <strong>Chattogram Port:</strong> 3.2d AVG
+                </span>
+              </button>
+
+              <AnimatePresence>
+                {hoveredChip === 'port' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                    className="absolute top-full right-0 mt-1.5 z-50 pointer-events-none w-64"
+                  >
+                    <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#10b981]/50 rounded-xl p-2.5 shadow-2xl text-white text-[10.5px] space-y-1">
+                      <div className="font-bold text-[#10b981] flex items-center justify-between">
+                        <span>Chattogram Port (CGP) Hub</span>
+                        <span className="text-[9px] font-mono text-slate-400">92% Trade</span>
+                      </div>
+                      <p className="text-slate-300 text-[10px] leading-tight">
+                        Average vessel berth turnaround is 3.2 days with daily feeder departures to Singapore and Colombo deep-sea transshipment lines.
+                      </p>
+                      <div className="text-[9.5px] font-mono text-emerald-400 flex items-center space-x-1 pt-0.5">
+                        <ArrowRight className="w-3 h-3" />
+                        <span>Click to open Sea Freight Calculator</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-            <span className="text-slate-600 hidden md:inline">•</span>
-            <div className="flex items-center space-x-1.5 text-slate-400 hidden md:flex">
-              <Anchor className="w-3.5 h-3.5 text-[#e11d48]" />
-              <span>
-                <strong className={isDark ? 'text-white' : 'text-slate-800'}>
-                  Bank L/C Escrow:
-                </strong>{' '}
-                100% Guaranteed
-              </span>
+
+            {/* Escrow Guarantee Chip */}
+            <div
+              className="relative hidden sm:block"
+              onMouseEnter={() => setHoveredChip('escrow')}
+              onMouseLeave={() => setHoveredChip(null)}
+            >
+              <button
+                type="button"
+                onClick={handleShipping}
+                className={`flex items-center space-x-1.5 px-2 py-0.5 rounded-lg border transition-all cursor-pointer ${
+                  isDark
+                    ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300 hover:text-white'
+                    : 'bg-white hover:bg-slate-100 border-slate-200 text-slate-700'
+                }`}
+              >
+                <Anchor className="w-3 h-3 text-[#e11d48]" />
+                <span>
+                  <strong>Escrow & L/C:</strong> 100% Guaranteed
+                </span>
+              </button>
+
+              <AnimatePresence>
+                {hoveredChip === 'escrow' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                    className="absolute top-full right-0 mt-1.5 z-50 pointer-events-none w-64"
+                  >
+                    <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#e11d48]/50 rounded-xl p-2.5 shadow-2xl text-white text-[10.5px] space-y-1">
+                      <div className="font-bold text-[#e11d48] flex items-center justify-between">
+                        <span>Irrevocable Trade Escrow</span>
+                        <span className="text-[9px] font-mono text-slate-400">Bank-Backed</span>
+                      </div>
+                      <p className="text-slate-300 text-[10px] leading-tight">
+                        50% JIT payment release milestone is triggered upon verified on-board ocean Bill of Lading (B/L) inspection.
+                      </p>
+                      <div className="text-[9.5px] font-mono text-rose-400 flex items-center space-x-1 pt-0.5">
+                        <ArrowRight className="w-3 h-3" />
+                        <span>Click to view trade protection terms</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
 
-        {/* 4 Metric Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* 4 Compact, High-Density Metric Nodes with Next-Level Animated Hover Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
           {metrics.map((m) => (
             <div
               key={m.id}
-              onClick={m.action}
-              className={`group p-3 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
-                isDark
-                  ? 'bg-[#141414] hover:bg-[#1a1a1a] border-white/10 hover:border-[#e11d48]/50 shadow-md'
-                  : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-[#e11d48]/40 shadow-xs'
-              }`}
+              className="relative"
+              onMouseEnter={() => setHoveredCard(m.id)}
+              onMouseLeave={() => setHoveredCard(null)}
             >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center space-x-2">
-                  <div
-                    className={`p-1.5 rounded-lg ${
-                      isDark ? 'bg-white/5 border border-white/10' : 'bg-slate-100 border border-slate-200'
-                    }`}
-                  >
-                    {m.icon}
+              <motion.button
+                type="button"
+                whileHover={{ y: -2, scale: 1.015 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={m.action}
+                className={`w-full text-left p-2 sm:p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between group shadow-xs ${
+                  isDark
+                    ? 'bg-[#121620] hover:bg-[#161c2b] border-white/10 hover:border-[#e11d48]/60 shadow-black/40'
+                    : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-[#e11d48]/50 shadow-slate-200'
+                }`}
+              >
+                {/* Node Top: Icon + Label + Badge */}
+                <div className="flex items-center justify-between gap-1 w-full">
+                  <div className="flex items-center space-x-1.5 min-w-0">
+                    <div
+                      className={`p-1 rounded-md ${
+                        isDark ? 'bg-white/5 border border-white/10' : 'bg-slate-100 border border-slate-200'
+                      }`}
+                    >
+                      {m.icon}
+                    </div>
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-bold tracking-tight truncate ${
+                        isDark ? 'text-slate-300' : 'text-slate-700'
+                      }`}
+                    >
+                      {m.label}
+                    </span>
                   </div>
+
                   <span
-                    className={`text-[10px] font-bold uppercase tracking-wider line-clamp-1 ${
-                      isDark ? 'text-slate-400' : 'text-slate-600'
-                    }`}
+                    className={`text-[8.5px] sm:text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border shrink-0 ${m.badgeColor}`}
                   >
-                    {m.label}
+                    {m.badge}
                   </span>
                 </div>
-                <span
-                  className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border shrink-0 ${m.badgeColor}`}
-                >
-                  {m.badge}
-                </span>
-              </div>
 
-              <div className="mt-2 flex items-baseline justify-between">
-                <div
-                  className={`text-xl sm:text-2xl font-black tracking-tight group-hover:text-[#e11d48] transition-colors ${
-                    isDark ? 'text-white' : 'text-slate-900'
-                  }`}
-                >
-                  {m.value}
+                {/* Node Bottom: Value + Arrow */}
+                <div className="mt-1 flex items-baseline justify-between w-full">
+                  <div
+                    className={`text-lg sm:text-xl font-black tracking-tight group-hover:text-[#e11d48] transition-colors ${
+                      isDark ? 'text-white' : 'text-slate-900'
+                    }`}
+                  >
+                    {m.value}
+                  </div>
+                  <div className="flex items-center space-x-0.5 text-[9px] font-bold text-slate-400 group-hover:text-[#e11d48] transition-colors">
+                    <span className="hidden sm:inline">Details</span>
+                    <ArrowRight className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" />
+                  </div>
                 </div>
-                <span className="text-[10px] font-medium text-slate-500 line-clamp-1 max-w-[130px] text-right">
-                  {m.subtext}
-                </span>
-              </div>
+              </motion.button>
+
+              {/* Next-Level Hover Animated Card */}
+              <AnimatePresence>
+                {hoveredCard === m.id && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.95 }}
+                    transition={{ duration: 0.16, ease: 'easeOut' }}
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-72 sm:w-80"
+                  >
+                    <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#e11d48]/40 rounded-2xl p-3 sm:p-3.5 shadow-2xl text-white space-y-2">
+                      {/* Tooltip Header */}
+                      <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                        <div>
+                          <div className="font-extrabold text-xs text-white flex items-center space-x-1.5">
+                            <span>{m.tooltip.title}</span>
+                          </div>
+                          <div className="text-[9.5px] font-mono text-[#10b981]">
+                            {m.tooltip.tagline}
+                          </div>
+                        </div>
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300 border border-white/10">
+                          {m.badge}
+                        </span>
+                      </div>
+
+                      {/* Tooltip Stats Grid */}
+                      <div className="grid grid-cols-2 gap-1.5 py-0.5">
+                        {m.tooltip.stats.map((st, i) => (
+                          <div
+                            key={i}
+                            className="bg-white/5 rounded-lg p-1.5 border border-white/5"
+                          >
+                            <div className="text-[8.5px] text-slate-400 font-medium">
+                              {st.label}
+                            </div>
+                            <div className="text-[11px] font-mono font-bold text-slate-100">
+                              {st.value}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Compliance & Operations */}
+                      <div className="text-[9.5px] font-mono text-slate-300 bg-[#e11d48]/10 border border-[#e11d48]/20 rounded-lg p-1.5">
+                        <div className="text-[#ff4a68] font-bold text-[8.5px] uppercase tracking-wider mb-0.5">
+                          Standard & SLA
+                        </div>
+                        <div className="line-clamp-2 leading-tight">
+                          {m.tooltip.compliance}
+                        </div>
+                      </div>
+
+                      {/* Action Prompt */}
+                      <div className="flex items-center justify-between pt-1 border-t border-white/10 text-[10px] text-slate-400">
+                        <span>{m.tooltip.turnaround}</span>
+                        <span className="text-[#10b981] font-bold flex items-center space-x-1">
+                          <span>{m.actionText}</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ))}
         </div>

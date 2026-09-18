@@ -645,6 +645,15 @@ export const App: React.FC = () => {
       {persona === 'buyer' && (
         <LiveTradeMatrixStrip
           onOpenFreightMatrix={() => setIsShippingCalcOpen(true)}
+          onOpenShipping={() => setIsShippingCalcOpen(true)}
+          onOpenFactories={() => {
+            setActiveView('suppliers');
+            setActiveHeroTab('suppliers');
+          }}
+          onOpenBuyers={() => {
+            setActiveView('customers');
+            setActiveHeroTab('customers');
+          }}
           theme={theme}
         />
       )}

@@ -72,14 +72,14 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
           </span>
         </button>
 
-        {/* 2. RAWx Bot / AI Sourcing Agent */}
+        {/* 2. AI Agent / Sourcing Agent */}
         <button
           onClick={onOpenAiAssistant}
           className="w-10 h-10 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white flex flex-col items-center justify-center shadow-md hover:scale-105 transition-all cursor-pointer group"
-          title="RAWx Bot / Sourcing AI (Instant specs & quotes)"
+          title="AI Agent / Sourcing AI (Instant specs & quotes)"
         >
           <Sparkles className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
-          <span className="text-[9px] font-black uppercase tracking-tighter mt-0.5">RAWx</span>
+          <span className="text-[8.5px] font-black uppercase tracking-tighter mt-0.5">Agent</span>
         </button>
 
         {/* 3. RFQ Quick Post */}

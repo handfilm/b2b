@@ -643,7 +643,7 @@ export const Header: React.FC<HeaderProps> = ({
               title="EPB Certified Mills"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>EPB Factories</span>
+              <span>Exporters</span>
             </button>
 
             <button
