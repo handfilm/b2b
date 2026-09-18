@@ -1,82 +1,95 @@
 @import "tailwindcss";
 
+:root {
+  --brand-crimson: #e11d48;
+  --brand-crimson-hover: #ff1e42;
+  --brand-lime: #10b981;
+  --brand-lime-hover: #22c55e;
+}
+
+/* Dark Mode (Default Obsidian Deep Black) */
+html.dark,
+body.dark {
+  background-color: #0a0a0a;
+  color: #f8fafc;
+}
+
+/* Light Mode (Architectural Canvas) */
+html.light,
+body.light {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
 @layer base {
-  * {
-    border-color: rgba(255, 255, 255, 0.08);
-  }
   body {
-    background-color: #0a0a0a;
-    color: #f8fafc;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
-/* Elite Obsidian Glassmorphism Utilities */
-.glass-panel {
-  background: rgba(18, 18, 18, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Electric Crimson & Neon Lime Utility Buttons */
+.btn-crimson {
+  background-color: #e11d48;
+  color: #ffffff;
+  font-weight: 700;
+  transition: all 0.15s ease;
+}
+.btn-crimson:hover {
+  background-color: #ff1e42;
+  box-shadow: 0 4px 14px -2px rgba(225, 29, 72, 0.45);
 }
 
-.glass-panel-hover {
-  transition: all 0.2s ease;
+.btn-lime {
+  background-color: #10b981;
+  color: #042f2e;
+  font-weight: 700;
+  transition: all 0.15s ease;
 }
-.glass-panel-hover:hover {
-  background: rgba(24, 24, 24, 0.85);
-  border-color: rgba(255, 85, 0, 0.35);
-  box-shadow: 0 0 20px -5px rgba(255, 85, 0, 0.15);
-}
-
-.glass-card {
-  background: rgba(14, 14, 14, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+.btn-lime:hover {
+  background-color: #22c55e;
+  box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.4);
 }
 
-.glass-card-interactive {
-  background: rgba(14, 14, 14, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+/* Interactive Card Base */
+.portal-card-dark {
+  background-color: #121212;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.glass-card-interactive:hover {
-  border-color: rgba(255, 85, 0, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(255, 85, 0, 0.18);
-  transform: translateY(-2px);
-}
-
-/* Electric Safety Orange Glow & Accent */
-.accent-glow-orange {
-  box-shadow: 0 0 25px -4px rgba(255, 85, 0, 0.35);
+.portal-card-dark:hover {
+  border-color: rgba(225, 29, 72, 0.5);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7), 0 0 16px -2px rgba(225, 29, 72, 0.25);
 }
 
-.text-electric-orange {
-  color: #ff5500;
+.portal-card-light {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  color: #0f172a;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.portal-card-light:hover {
+  border-color: rgba(225, 29, 72, 0.45);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 0 12px -2px rgba(225, 29, 72, 0.15);
 }
 
-.bg-electric-orange {
-  background-color: #ff5500;
-}
-
-.border-electric-orange {
-  border-color: #ff5500;
-}
-
-/* Custom subtle dark scrollbar */
+/* Custom refined scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #475569;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff5500;
+  background: #e11d48;
 }
+

@@ -138,13 +138,13 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
         {/* Drawer Header */}
         <div className="p-4 border-b border-white/10 bg-[#141414] flex items-center justify-between">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#ff5500]/15 border border-[#ff5500]/30 flex items-center justify-center text-[#ff5500]">
+            <div className="w-8 h-8 rounded-lg bg-blue-600/15 border border-blue-500/30 flex items-center justify-center text-blue-400">
               <Inbox className="w-4 h-4" />
             </div>
             <div>
               <h3 className="font-bold text-sm text-white">Commercial Trade Desk</h3>
               <p className="text-[11px] text-slate-400">
-                JIT Escrow Milestones, RFQs & Physical Sample Tracking
+                Bank L/C Milestones, RFQs & Physical Sample Tracking
               </p>
             </div>
           </div>
@@ -162,19 +162,19 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
             onClick={() => setActiveTab('escrow')}
             className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
               activeTab === 'escrow'
-                ? 'bg-[#ff5500] text-white shadow-xs'
+                ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>JIT Escrow Track ({escrowOrders.length})</span>
+            <span>L/C Assurance ({escrowOrders.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('rfqs')}
             className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
               activeTab === 'rfqs'
-                ? 'bg-[#ff5500] text-white shadow-xs'
+                ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -186,7 +186,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
             onClick={() => setActiveTab('samples')}
             className={`flex-1 py-1.5 px-2 rounded-lg transition-all cursor-pointer flex items-center justify-center space-x-1.5 ${
               activeTab === 'samples'
-                ? 'bg-[#ff5500] text-white shadow-xs'
+                ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -197,22 +197,22 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
 
         {/* Drawer Body */}
         <div className="flex-1 overflow-y-auto p-4 space-y-5">
-          {/* TAB 1: JIT ESCROW MILESTONE TRACKER */}
+          {/* TAB 1: BANK L/C MILESTONE TRACKER */}
           {activeTab === 'escrow' && (
             <div className="space-y-4">
               {/* Escrow Rule Banner */}
-              <div className="p-3.5 bg-gradient-to-r from-[#181818] to-[#121212] border border-[#ff5500]/30 rounded-xl space-y-2">
+              <div className="p-3.5 bg-gradient-to-r from-[#181818] to-[#121212] border border-blue-500/30 rounded-xl space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-xs font-black text-white">
-                    <ShieldCheck className="w-4 h-4 text-[#ff5500]" />
-                    <span>JIT 4-Stage Milestone Escrow Standard</span>
+                    <ShieldCheck className="w-4 h-4 text-blue-400" />
+                    <span>Bank L/C 4-Stage Milestone Assurance</span>
                   </div>
-                  <span className="text-[10px] font-mono bg-[#ff5500]/20 text-[#ff5500] px-2 py-0.5 rounded border border-[#ff5500]/30 font-bold">
-                    ESCROW PROTECTED
+                  <span className="text-[10px] font-mono bg-blue-600/20 text-sky-400 px-2 py-0.5 rounded border border-blue-500/30 font-bold">
+                    TRADE ASSURANCE
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400 leading-relaxed">
-                  Funds remain locked in international escrow until independent inspection protocols and shipping documentation are mathematically verified.
+                  Funds remain secured via international Bank Letter of Credit protocols until independent inspection certificates and shipping documentation are verified.
                 </p>
                 <div className="pt-1.5 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400">
                   <span>Standard Bank L/C Support</span>
@@ -232,7 +232,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <span className="text-[10px] font-mono text-[#ff5500] font-bold block">
+                        <span className="text-[10px] font-mono text-sky-400 font-bold block">
                           {order.poNumber} • {order.id}
                         </span>
                         <h4 className="font-extrabold text-white text-xs mt-0.5">{order.productName}</h4>
@@ -246,7 +246,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
                           ${order.totalValueUSD.toLocaleString()}
                         </span>
                         {order.bankLcVerified && (
-                          <span className="text-[9px] font-bold text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">
+                          <span className="text-[9px] font-bold text-sky-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20">
                             Bank L/C Verified
                           </span>
                         )}
@@ -264,7 +264,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
                       <div className="w-full bg-[#202020] h-2 rounded-full overflow-hidden flex">
                         <div
                           style={{ width: `${(order.currentMilestoneIndex + 1) * 25}%` }}
-                          className="bg-[#ff5500] h-full transition-all"
+                          className="bg-blue-600 h-full transition-all"
                         />
                       </div>
                     </div>
@@ -279,7 +279,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
                             key={m.stage}
                             className={`p-2.5 rounded-lg border text-xs transition-all ${
                               isCurrent
-                                ? 'bg-[#ff5500]/10 border-[#ff5500]/40'
+                                ? 'bg-blue-600/15 border-blue-500/40'
                                 : isDone
                                 ? 'bg-emerald-500/5 border-emerald-500/20'
                                 : 'bg-[#181818] border-white/5 opacity-60'
@@ -292,7 +292,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
                                     isDone
                                       ? 'bg-emerald-500 text-black'
                                       : isCurrent
-                                      ? 'bg-[#ff5500] text-white animate-pulse'
+                                      ? 'bg-blue-600 text-white animate-pulse'
                                       : 'bg-white/10 text-slate-400'
                                   }`}
                                 >
@@ -328,12 +328,12 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center space-x-1.5">
-                  <FileCheck className="w-4 h-4 text-[#ff5500]" />
+                  <FileCheck className="w-4 h-4 text-sky-400" />
                   <span>Active Commercial RFQs ({rfqs.length})</span>
                 </h4>
                 <button
                   onClick={onOpenRfq}
-                  className="text-xs text-[#ff5500] font-bold hover:underline cursor-pointer"
+                  className="text-xs text-sky-400 font-bold hover:underline cursor-pointer"
                 >
                   + New RFQ
                 </button>
@@ -354,7 +354,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
                         <span className="font-bold text-xs text-white line-clamp-1">
                           {rfq.productRequirement}
                         </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30 shrink-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-600/15 text-sky-400 border border-blue-500/30 shrink-0">
                           {rfq.status}
                         </span>
                       </div>
@@ -382,7 +382,7 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
           {activeTab === 'samples' && (
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center space-x-1.5">
-                <Package className="w-4 h-4 text-[#ff5500]" />
+                <Package className="w-4 h-4 text-sky-400" />
                 <span>Couriers & Physical Samples ({samples.length})</span>
               </h4>
 

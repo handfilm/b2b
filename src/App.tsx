@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Header } from './components/Header';
-import { CategoryBar } from './components/CategoryBar';
 import { HeroBanner } from './components/HeroBanner';
+import { LiveTradeMatrixStrip } from './components/LiveTradeMatrixStrip';
+import { CategoriesSlidersSection } from './components/CategoriesSlidersSection';
 import { ProductCard } from './components/ProductCard';
 import { ProductDetailModal } from './components/ProductDetailModal';
 import { SupplierCard } from './components/SupplierCard';
@@ -17,6 +18,7 @@ import { AuthModal } from './components/AuthModal';
 import { TechPackModal } from './components/TechPackModal';
 import { ComplianceVaultDrawer } from './components/ComplianceVaultDrawer';
 import { AiAssistantModal } from './components/AiAssistantModal';
+import { FloatingRightDock } from './components/FloatingRightDock';
 import { Footer } from './components/Footer';
 import {
   saveRfqToFirestore,
@@ -42,33 +44,53 @@ import {
 } from './types';
 import {
   CURRENCIES,
-  PRODUCTS,
   SUPPLIERS as INITIAL_SUPPLIERS,
   CUSTOMERS as INITIAL_CUSTOMERS,
   LIVE_TRADE_EVENTS as INITIAL_LIVE_EVENTS,
   CATEGORIES,
 } from './data/mockData';
+import { generateMoreProducts } from './data/unlimitedCatalog';
+import { FEDERATED_DIVISIONS } from './data/divisions';
 import { nexusApi } from './services/nexusApi';
 import { generateRandomTradeEvent } from './services/realtimeEngine';
 import { getTranslation } from './i18n/translations';
 import {
   Filter,
-  Layers,
-  Sparkles,
   Building2,
-  PackageCheck,
   CheckCircle2,
   FileText,
-  AlertCircle,
   ShieldCheck,
   Loader2,
   Search,
-  Users,
-  Zap,
-  Bot,
+  Sparkles,
+  ArrowUpDown,
+  Layers,
+  Globe2,
 } from 'lucide-react';
 
 export const App: React.FC = () => {
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const saved = localStorage.getItem('portal_theme');
+      return saved === 'light' ? 'light' : 'dark';
+    } catch {
+      return 'dark';
+    }
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    try {
+      localStorage.setItem('portal_theme', theme);
+    } catch (e) {
+      // ignore
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
   const [lang, setLang] = useState<LanguageCode>('EN');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
@@ -77,7 +99,22 @@ export const App: React.FC = () => {
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
 
-  // Supplier & Customer dynamic data layer
+  // Alibaba Hero Tab ('ai' | 'products' | 'suppliers' | 'customers')
+  const [activeHeroTab, setActiveHeroTab] = useState<'ai' | 'products' | 'suppliers' | 'customers'>('products');
+
+  // Federated Division and Domain Source State
+  const [selectedDivision, setSelectedDivision] = useState<string>('all');
+  const [selectedDomainSource, setSelectedDomainSource] = useState<'all' | 'shop.handsandhead.com' | 'arutemika.handsandhead.com'>('all');
+  const [catalogPage, setCatalogPage] = useState(1);
+  const [unlimitedProducts, setUnlimitedProducts] = useState<Product[]>(() => {
+    return generateMoreProducts(1, 24, undefined, undefined);
+  });
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [sortBy, setSortBy] = useState<'ranking' | 'moq' | 'leadTime' | 'reorder'>('ranking');
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // Suppliers & Customers dynamic data layer
   const [suppliers, setSuppliers] = useState<Supplier[]>(INITIAL_SUPPLIERS);
   const [customers, setCustomers] = useState<Customer[]>(INITIAL_CUSTOMERS);
   const [liveEvents, setLiveEvents] = useState<LiveTradeEvent[]>(INITIAL_LIVE_EVENTS);
@@ -110,12 +147,12 @@ export const App: React.FC = () => {
   const [vaultSupplier, setVaultSupplier] = useState<Supplier | null>(null);
   const [isVaultOpen, setIsVaultOpen] = useState(false);
 
-  // AI Assistant States (Alibaba / IndiaMART Instant Sourcing Assistant)
+  // AI Assistant States (RAWx Bot / Sourcing Assistant)
   const [isAiAssistantOpen, setIsAiAssistantOpen] = useState(false);
   const [aiProductContext, setAiProductContext] = useState<Product | null>(null);
   const [aiSupplierContext, setAiSupplierContext] = useState<Supplier | null>(null);
 
-  // Active RFQs & Samples storage state
+  // Active RFQs & Samples
   const [rfqs, setRfqs] = useState<RfqSubmission[]>([
     {
       id: 'BD-RFQ-8821',
@@ -180,7 +217,67 @@ export const App: React.FC = () => {
     }, 4000);
   };
 
-  // Fetch live or fallback suppliers, customers, events & stats via nexusApi
+  // Reset infinite catalog when division or domain source filter changes
+  useEffect(() => {
+    setCatalogPage(1);
+    setUnlimitedProducts(
+      generateMoreProducts(
+        1,
+        24,
+        selectedDomainSource === 'all' ? undefined : selectedDomainSource,
+        selectedDivision === 'all' ? undefined : selectedDivision
+      )
+    );
+    setHasMore(true);
+  }, [selectedDivision, selectedDomainSource]);
+
+  // Infinite Scroll Handler: loads federated items across satellite domains
+  const handleLoadMore = useCallback(() => {
+    if (isLoadingMore || !hasMore) return;
+    setIsLoadingMore(true);
+
+    setTimeout(() => {
+      const nextPage = catalogPage + 1;
+      const nextBatch = generateMoreProducts(
+        nextPage,
+        12,
+        selectedDomainSource === 'all' ? undefined : selectedDomainSource,
+        selectedDivision === 'all' ? undefined : selectedDivision
+      );
+
+      if (nextBatch.length === 0) {
+        setHasMore(false);
+      } else {
+        setUnlimitedProducts((prev) => {
+          // Avoid duplicate product IDs
+          const existingIds = new Set(prev.map((p) => p.id));
+          const newProducts = nextBatch.filter((p) => !existingIds.has(p.id));
+          return [...prev, ...newProducts];
+        });
+        setCatalogPage(nextPage);
+      }
+      setIsLoadingMore(false);
+    }, 350);
+  }, [catalogPage, isLoadingMore, hasMore, selectedDomainSource, selectedDivision]);
+
+  // Observer for automatic infinite scrolling as user reaches bottom
+  useEffect(() => {
+    if (!sentinelRef.current || activeView !== 'products') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoadingMore && hasMore) {
+          handleLoadMore();
+        }
+      },
+      { threshold: 0.1, rootMargin: '300px' }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [handleLoadMore, isLoadingMore, hasMore, activeView]);
+
+  // Sync backend suppliers and customer events
   useEffect(() => {
     let isMounted = true;
 
@@ -207,7 +304,7 @@ export const App: React.FC = () => {
           setMarketplaceStats(statsRes.stats);
         }
       } catch (err) {
-        console.error('Data layer sync notice:', err);
+        console.error('Data layer notice:', err);
       } finally {
         if (isMounted) setIsLoadingData(false);
       }
@@ -215,7 +312,6 @@ export const App: React.FC = () => {
 
     loadBackendData();
 
-    // Pulse live trade event streaming every 20 seconds
     const intervalTimer = setInterval(() => {
       if (isMounted) {
         const newEvt = generateRandomTradeEvent();
@@ -276,7 +372,7 @@ export const App: React.FC = () => {
       const freshEvt = generateRandomTradeEvent();
       setLiveEvents([freshEvt, ...eventsRes.events]);
       setMarketplaceStats(statsRes.stats);
-      showNotification(lang === 'BN' ? 'রিয়েল-টাইম ডাটা সফলভাবে সিঙ্ক হয়েছে!' : 'Realtime trade data synced with Master Nexus!');
+      showNotification('Realtime trade data synchronized with Master Nexus!');
     } catch (e) {
       console.warn('Sync failed:', e);
     } finally {
@@ -284,9 +380,17 @@ export const App: React.FC = () => {
     }
   };
 
-  // Filtered Products
-  const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => {
+  // Filtered & Sorted Products from Unlimited Catalog
+  const displayedProducts = useMemo(() => {
+    let result = unlimitedProducts.filter((p) => {
+      // Division filter
+      if (selectedDivision !== 'all' && p.divisionSlug !== selectedDivision) {
+        return false;
+      }
+      // Domain filter
+      if (selectedDomainSource !== 'all' && p.sourceDomain !== selectedDomainSource) {
+        return false;
+      }
       // Category check
       if (selectedCategory !== 'all' && p.categoryId !== selectedCategory) {
         return false;
@@ -303,15 +407,27 @@ export const App: React.FC = () => {
         const matchesHs = p.hsCode.toLowerCase().includes(query);
         const matchesSupplier = p.supplierName.toLowerCase().includes(query);
         const matchesMaterials = p.materials.some((m) => m.toLowerCase().includes(query));
-        if (!matchesTitle && !matchesDesc && !matchesHs && !matchesSupplier && !matchesMaterials) {
+        const matchesDivision = p.divisionTitle?.toLowerCase().includes(query);
+        if (!matchesTitle && !matchesDesc && !matchesHs && !matchesSupplier && !matchesMaterials && !matchesDivision) {
           return false;
         }
       }
       return true;
     });
-  }, [selectedCategory, supplierFilter, searchQuery]);
 
-  // Filtered Suppliers List for Display
+    // Sorting
+    if (sortBy === 'moq') {
+      result = [...result].sort((a, b) => (a?.moq || 0) - (b?.moq || 0));
+    } else if (sortBy === 'leadTime') {
+      result = [...result].sort((a, b) => (a?.leadTimeDays || 0) - (b?.leadTimeDays || 0));
+    } else if (sortBy === 'reorder') {
+      result = [...result].sort((a, b) => (b?.reorderRate || 0) - (a?.reorderRate || 0));
+    }
+
+    return result;
+  }, [unlimitedProducts, selectedDivision, selectedDomainSource, selectedCategory, supplierFilter, searchQuery, sortBy]);
+
+  // Filtered Suppliers List
   const filteredSuppliers = useMemo(() => {
     return suppliers.filter((s) => {
       if (bondedOnly && !s.bondedWarehouse) return false;
@@ -331,6 +447,15 @@ export const App: React.FC = () => {
   }, [suppliers, bondedOnly, selectedDistrict, searchQuery]);
 
   // Handlers
+  const handleHeroTabChange = (tab: 'ai' | 'products' | 'suppliers' | 'customers') => {
+    setActiveHeroTab(tab);
+    if (tab === 'ai') {
+      handleOpenAiAssistant();
+    } else {
+      setActiveView(tab);
+    }
+  };
+
   const handleOpenAiAssistant = (product?: Product | null, supplier?: Supplier | null) => {
     setAiProductContext(product || null);
     setAiSupplierContext(supplier || null);
@@ -448,16 +573,20 @@ export const App: React.FC = () => {
   const currentCurrencyConfig = CURRENCIES[currency] || CURRENCIES.USD;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0a0a] text-white font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#ff5500] selection:text-white">
+    <div
+      className={`min-h-screen flex flex-col font-sans transition-colors duration-200 selection:bg-[#e11d48] selection:text-white ${
+        theme === 'dark' ? 'bg-[#0a0a0a] text-white' : 'bg-[#f8fafc] text-slate-900'
+      }`}
+    >
       {/* Toast Notification */}
       {notification && (
-        <div className="fixed bottom-5 right-5 z-50 bg-[#141414] text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-[#ff5500]/40 flex items-center space-x-2 animate-in fade-in slide-in-from-bottom-2">
-          <CheckCircle2 className="w-4 h-4 text-[#ff5500] shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center space-x-2 animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-4 h-4 text-[#10b981] shrink-0" />
           <span>{notification}</span>
         </div>
       )}
 
-      {/* Primary Header with Persona Switcher, Auth User Pill and Ecosystem Links */}
+      {/* 1. TOP BAR: Consolidated 3-Tier Alibaba/Etsy Hybrid Header */}
       <Header
         currentCurrency={currency}
         onCurrencyChange={setCurrency}
@@ -465,6 +594,8 @@ export const App: React.FC = () => {
         onLanguageChange={setLang}
         selectedCategory={selectedCategory}
         onSelectCategory={setSelectedCategory}
+        selectedDivision={selectedDivision}
+        onSelectDivision={setSelectedDivision}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onOpenRfq={() => setIsRfqModalOpen(true)}
@@ -475,6 +606,7 @@ export const App: React.FC = () => {
         activeView={activeView}
         onViewChange={(v) => {
           setActiveView(v);
+          setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
           setSupplierFilter(null);
         }}
         persona={persona}
@@ -488,34 +620,60 @@ export const App: React.FC = () => {
         onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
         activeRfqCount={rfqs.length}
         onOpenAiAssistant={() => handleOpenAiAssistant()}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
-      {/* Sector Categories Bar (Buyer Mode) */}
+      {/* 2. HERO SECTION: AI Mode, Products, BD Exporters, Global Buyer with Big Search Bar */}
       {persona === 'buyer' && (
-        <CategoryBar
+        <HeroBanner
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          activeHeroTab={activeHeroTab}
+          onHeroTabChange={handleHeroTabChange}
+          onOpenRfq={() => setIsRfqModalOpen(true)}
+          onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+          onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+          onOpenAiAssistant={() => handleOpenAiAssistant()}
+          authUser={authUser}
+          lang={lang}
+          theme={theme}
+        />
+      )}
+
+      {/* 2.5 LIVE COMMODITY & EXPORT LOGISTICS MATRIX STRIP */}
+      {persona === 'buyer' && (
+        <LiveTradeMatrixStrip
+          onOpenFreightMatrix={() => setIsShippingCalcOpen(true)}
+          theme={theme}
+        />
+      )}
+
+      {/* 3. FEDERATED PAVILIONS & PRODUCT CARD SLIDERS */}
+      {persona === 'buyer' && activeView === 'products' && !searchQuery && !supplierFilter && (
+        <CategoriesSlidersSection
           selectedCategory={selectedCategory}
           onSelectCategory={(cat) => {
             setSelectedCategory(cat);
             setSupplierFilter(null);
-            if (activeView !== 'products' && activeView !== 'customers') setActiveView('products');
           }}
-        />
-      )}
-
-      {/* Hero Announcement Banner (Shown in Buyer mode on initial view) */}
-      {persona === 'buyer' && activeView === 'products' && !searchQuery && !supplierFilter && (
-        <HeroBanner
-          onOpenRfq={() => setIsRfqModalOpen(true)}
-          onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
-          onExploreFactories={() => setActiveView('suppliers')}
-          onOpenAutomation={() => setIsAutomationModalOpen(true)}
-          stats={marketplaceStats}
-          lang={lang}
+          selectedDivision={selectedDivision}
+          onSelectDivision={setSelectedDivision}
+          currency={currentCurrencyConfig}
+          onSelectProduct={setSelectedProduct}
+          onRequestSample={handleOpenSampleModal}
+          onInquire={handleInquireProduct}
+          onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
+          onExploreFactories={() => {
+            setActiveView('suppliers');
+            setActiveHeroTab('suppliers');
+          }}
+          theme={theme}
         />
       )}
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+      <main className="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
         {/* SELLER / EXPORTER HUB WORKSPACE */}
         {persona === 'seller' ? (
           <ManufacturerHub
@@ -527,75 +685,192 @@ export const App: React.FC = () => {
         ) : (
           /* BUYER PORTAL WORKSPACE */
           <>
-            {/* Active Filters / Supplier Filter Notice */}
+            {/* Active Factory Filter Notice */}
             {supplierFilter && (
-              <div className="mb-4 p-3.5 bg-[#141414] border border-[#ff5500]/30 rounded-xl flex items-center justify-between">
-                <div className="flex items-center space-x-2 text-xs text-white">
-                  <Building2 className="w-4 h-4 text-[#ff5500]" />
+              <div
+                className={`mb-4 p-3 rounded-xl flex items-center justify-between shadow-xs border ${
+                  theme === 'dark'
+                    ? 'bg-[#141414] border-[#e11d48]/40 text-white'
+                    : 'bg-white border-[#e11d48]/40 text-slate-800'
+                }`}
+              >
+                <div className="flex items-center space-x-2 text-xs">
+                  <Building2 className="w-4 h-4 text-[#e11d48]" />
                   <span>
-                    Filtering catalog by factory: <strong className="text-[#ff5500]">{suppliers.find((s) => s.id === supplierFilter)?.name}</strong>
+                    Filtering catalog by factory: <strong className="text-[#e11d48]">{suppliers.find((s) => s.id === supplierFilter)?.name}</strong>
                   </span>
                 </div>
                 <button
                   onClick={() => setSupplierFilter(null)}
-                  className="text-xs text-[#ff5500] font-bold hover:underline cursor-pointer"
+                  className="text-xs text-[#e11d48] font-bold hover:underline cursor-pointer"
                 >
                   Clear Factory Filter
                 </button>
               </div>
             )}
 
-            {/* View 1: Wholesale Products Grid */}
+            {/* View 1: 4. UNLIMITED PRODUCTS GRID LOADING THROUGH SCROLLING */}
             {activeView === 'products' && (
-              <div className="space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
-                  <div>
-                    <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
-                      {selectedCategory === 'all'
-                        ? 'All Export Sourcing Catalog'
-                        : CATEGORIES.find((c) => c.id === selectedCategory)?.name}
-                    </h2>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Showing {filteredProducts.length} verified export items with FOB/CIF port pricing
-                    </p>
+              <div className="space-y-4">
+                {/* Control Bar: Source Domains, Sort By & Product Count */}
+                <div
+                  className={`rounded-2xl border p-3 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 ${
+                    theme === 'dark'
+                      ? 'bg-[#141414] border-white/10 text-white'
+                      : 'bg-white border-slate-200 text-slate-800'
+                  }`}
+                >
+                  {/* Sourcing Feeds Filter Tabs: Federated Divisions */}
+                  <div className="flex flex-wrap items-center gap-1.5 text-xs overflow-x-auto no-scrollbar py-0.5 max-w-2xl">
+                    <span className="font-bold text-slate-400 mr-1 text-[11px] uppercase tracking-wider font-mono shrink-0">
+                      Sourcing Node:
+                    </span>
+                    <button
+                      onClick={() => {
+                        setSelectedDivision('all');
+                        setSelectedDomainSource('all');
+                      }}
+                      className={`px-3 py-1.5 rounded-full font-bold transition-all cursor-pointer shrink-0 ${
+                        selectedDivision === 'all' && selectedDomainSource === 'all'
+                          ? 'bg-[#e11d48] text-white shadow-xs'
+                          : theme === 'dark'
+                          ? 'bg-white/10 text-slate-300 hover:bg-white/20'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      All Verticals ({unlimitedProducts.length})
+                    </button>
+                    {FEDERATED_DIVISIONS.slice(1, 8).map((div) => {
+                      const isActive = selectedDivision === div.slug;
+                      return (
+                        <button
+                          key={div.slug}
+                          onClick={() => {
+                            setSelectedDivision(div.slug);
+                            if (div.slug === 'rmg-knits' || div.slug === 'commercial-blanks') {
+                              setSelectedDomainSource('shop.handsandhead.com');
+                            } else if (div.slug === 'flagship-leather' || div.slug === 'leather-cuffs') {
+                              setSelectedDomainSource('arutemika.handsandhead.com');
+                            } else {
+                              setSelectedDomainSource('all');
+                            }
+                          }}
+                          className={`px-3 py-1.5 rounded-full font-bold transition-all cursor-pointer shrink-0 flex items-center space-x-1.5 ${
+                            isActive
+                              ? 'bg-[#e11d48] text-white shadow-xs'
+                              : theme === 'dark'
+                              ? 'bg-white/5 text-slate-300 hover:bg-white/15 border border-white/10'
+                              : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              isActive ? 'bg-white' : 'bg-[#e11d48]'
+                            }`}
+                          />
+                          <span>{div.divisionTitle}</span>
+                        </button>
+                      );
+                    })}
                   </div>
 
-                  <div className="flex items-center space-x-3 text-xs">
-                    <button
-                      onClick={() => setIsRfqModalOpen(true)}
-                      className="text-[#ff5500] hover:text-[#ff6a1a] font-bold flex items-center space-x-1 cursor-pointer transition-colors"
-                    >
-                      <FileText className="w-3.5 h-3.5" />
-                      <span>Custom spec needed? Post an RFQ</span>
-                    </button>
+                  {/* Right: Sort By Dropdown & Count */}
+                  <div className="flex items-center space-x-3 text-xs shrink-0">
+                    <div className="flex items-center space-x-1">
+                      <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+                      <span className="text-[11px] text-slate-400">Sort:</span>
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value as any)}
+                        className={`rounded-lg px-2 py-1 text-xs font-bold focus:outline-none cursor-pointer border ${
+                          theme === 'dark'
+                            ? 'bg-[#1c1c1c] border-white/10 text-white'
+                            : 'bg-slate-50 border-slate-200 text-slate-800'
+                        }`}
+                      >
+                        <option value="ranking">Top Ranking</option>
+                        <option value="moq">Lowest MOQ</option>
+                        <option value="leadTime">Fastest SLA Lead Time</option>
+                        <option value="reorder">Reorder Rate</option>
+                      </select>
+                    </div>
+
+                    <span className="text-slate-400 hidden sm:inline">|</span>
+                    <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
+                      {displayedProducts.length} items
+                    </span>
                   </div>
                 </div>
 
-                {filteredProducts.length === 0 ? (
-                  <div className="py-16 text-center space-y-3 glass-panel rounded-2xl border border-white/10">
-                    <div className="w-12 h-12 rounded-xl bg-white/5 text-slate-400 mx-auto flex items-center justify-center">
+                {/* Active Division Banner (if filtered) */}
+                {selectedDivision !== 'all' && (
+                  <div
+                    className={`p-3 rounded-xl flex items-center justify-between text-xs border ${
+                      theme === 'dark'
+                        ? 'bg-[#181818] border-white/10 text-white'
+                        : 'bg-rose-50/60 border-rose-200 text-slate-800'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <span className="w-2 h-2 rounded-full bg-[#e11d48] animate-pulse" />
+                      <span>
+                        Sourcing Pavilion:{' '}
+                        <strong className="text-[#e11d48]">
+                          {FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.divisionTitle || selectedDivision}
+                        </strong>{' '}
+                        —{' '}
+                        <span className="text-slate-400">
+                          {FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.tagline}
+                        </span>
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setSelectedDivision('all');
+                        setSelectedDomainSource('all');
+                      }}
+                      className="text-xs font-bold text-[#e11d48] hover:underline cursor-pointer"
+                    >
+                      Show All Pavilions
+                    </button>
+                  </div>
+                )}
+
+                {/* Empty State */}
+                {displayedProducts.length === 0 ? (
+                  <div
+                    className={`py-16 text-center space-y-3 rounded-2xl border shadow-xs ${
+                      theme === 'dark'
+                        ? 'bg-[#141414] border-white/10 text-white'
+                        : 'bg-white border-slate-200 text-slate-800'
+                    }`}
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-white/10 text-slate-400 mx-auto flex items-center justify-center">
                       <Filter className="w-6 h-6" />
                     </div>
-                    <h3 className="font-bold text-base text-white">No matching export products found</h3>
+                    <h3 className="font-bold text-base">No matching export products found</h3>
                     <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                      Try clearing your search query or submit a custom Request for Quotation (RFQ) to our manufacturer trade desk.
+                      Try clearing your search query or reset your domain feed filter to discover verified Bangladesh products.
                     </p>
                     <div className="pt-2">
                       <button
                         onClick={() => {
                           setSearchQuery('');
                           setSelectedCategory('all');
+                          setSelectedDivision('all');
+                          setSelectedDomainSource('all');
                           setSupplierFilter(null);
                         }}
-                        className="px-4 py-2 rounded-xl bg-[#ff5500] text-white text-xs font-bold cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold cursor-pointer transition-colors"
                       >
-                        Reset Filters
+                        Reset All Filters
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                    {filteredProducts.map((product) => (
+                  /* Unlimited Products Grid (Alibaba/Shein/Etsy Style 4-columns 1:1 Cards) */
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {displayedProducts.map((product) => (
                       <ProductCard
                         key={product.id}
                         product={product}
@@ -604,19 +879,76 @@ export const App: React.FC = () => {
                         onRequestSample={handleOpenSampleModal}
                         onInquire={handleInquireProduct}
                         onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
+                        onAddToTechPack={(p) => {
+                          setSelectedProduct(p);
+                          setIsTechPackModalOpen(true);
+                        }}
+                        onProcureDirect={(p) => {
+                          const target =
+                            p.targetRoutingUrl ||
+                            `https://${p.sourceDomain || 'b2b.handsandhead.com'}/order?sku=${encodeURIComponent(
+                              p.sku || p.id
+                            )}&ref=b2b_portal&utm_source=b2b_hub`;
+                          window.open(target, '_blank', 'noopener,noreferrer');
+                        }}
+                        theme={theme}
                       />
                     ))}
                   </div>
                 )}
+
+                {/* Infinite Scroll Trigger Sentinel & Loading Indicator */}
+                <div
+                  ref={sentinelRef}
+                  className="py-8 flex flex-col items-center justify-center space-y-2"
+                >
+                  {isLoadingMore && (
+                    <div
+                      className={`flex items-center space-x-2 text-xs px-4 py-2 rounded-full border shadow-xs animate-in fade-in ${
+                        theme === 'dark'
+                          ? 'bg-[#141414] border-white/10 text-white'
+                          : 'bg-white border-slate-200 text-slate-600'
+                      }`}
+                    >
+                      <Loader2 className="w-4 h-4 animate-spin text-[#e11d48]" />
+                      <span>Loading more products from shop.handsandhead.com & arutemika.handsandhead.com...</span>
+                    </div>
+                  )}
+
+                  {!isLoadingMore && hasMore && (
+                    <button
+                      onClick={handleLoadMore}
+                      className={`px-5 py-2 rounded-full border text-xs font-bold shadow-xs transition-colors cursor-pointer ${
+                        theme === 'dark'
+                          ? 'bg-[#141414] hover:bg-white/10 border-white/20 text-white hover:text-[#ff1e42]'
+                          : 'bg-white hover:bg-slate-50 border-slate-300 text-slate-700 hover:text-[#e11d48]'
+                      }`}
+                    >
+                      Load More Products (or keep scrolling)
+                    </button>
+                  )}
+
+                  {!hasMore && displayedProducts.length > 0 && (
+                    <div className="text-xs text-slate-400 font-medium font-mono">
+                      You've browsed all current live export lots from Bangladesh mills.
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
             {/* View 2: Verified Bangladesh Suppliers / EPB Mills */}
             {activeView === 'suppliers' && (
-              <div className="space-y-6">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-white/10 pb-4">
+              <div className="space-y-4">
+                <div
+                  className={`rounded-2xl border p-4 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-4 ${
+                    theme === 'dark'
+                      ? 'bg-[#141414] border-white/10 text-white'
+                      : 'bg-white border-slate-200 text-slate-900'
+                  }`}
+                >
                   <div>
-                    <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                    <h2 className="text-lg font-black tracking-tight">
                       Verified Bangladesh Exporters & Certified Green Mills
                     </h2>
                     <p className="text-xs text-slate-400 mt-0.5">
@@ -624,21 +956,27 @@ export const App: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Supplier Filters: District & EPB Bonded Warehouse */}
-                  <div className="flex flex-wrap items-center gap-2.5 text-xs">
-                    <div className="flex items-center space-x-1.5 bg-[#141414] px-3 py-1.5 rounded-xl border border-white/10">
+                  {/* Supplier Filters */}
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    <div
+                      className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border ${
+                        theme === 'dark'
+                          ? 'bg-white/5 border-white/10'
+                          : 'bg-slate-50 border-slate-200'
+                      }`}
+                    >
                       <span className="text-slate-400">District:</span>
                       <select
                         value={selectedDistrict}
                         onChange={(e) => setSelectedDistrict(e.target.value)}
-                        className="bg-transparent text-white font-bold focus:outline-none cursor-pointer text-xs"
+                        className="bg-transparent font-bold focus:outline-none cursor-pointer text-xs"
                       >
-                        <option value="all" className="bg-[#121212]">All Districts</option>
-                        <option value="Narayanganj" className="bg-[#121212]">Narayanganj (Knit Hub)</option>
-                        <option value="Gazipur" className="bg-[#121212]">Gazipur (Woven & Denim)</option>
-                        <option value="Dhaka" className="bg-[#121212]">Dhaka (Apparel & Tech)</option>
-                        <option value="Chattogram" className="bg-[#121212]">Chattogram (Port Mills)</option>
-                        <option value="Savar" className="bg-[#121212]">Savar (Leather Tannery)</option>
+                        <option value="all" className="bg-[#141414] text-white">All Districts</option>
+                        <option value="Narayanganj" className="bg-[#141414] text-white">Narayanganj (Knit Hub)</option>
+                        <option value="Gazipur" className="bg-[#141414] text-white">Gazipur (Woven & Denim)</option>
+                        <option value="Dhaka" className="bg-[#141414] text-white">Dhaka (Apparel & Tech)</option>
+                        <option value="Chattogram" className="bg-[#141414] text-white">Chattogram (Port Mills)</option>
+                        <option value="Savar" className="bg-[#141414] text-white">Savar (Leather Tannery)</option>
                       </select>
                     </div>
 
@@ -646,8 +984,10 @@ export const App: React.FC = () => {
                       onClick={() => setBondedOnly(!bondedOnly)}
                       className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 ${
                         bondedOnly
-                          ? 'bg-[#ff5500] text-white border-[#ff5500]'
-                          : 'bg-[#141414] text-slate-400 border-white/10 hover:text-white'
+                          ? 'bg-[#e11d48] text-white border-[#e11d48]'
+                          : theme === 'dark'
+                          ? 'bg-white/5 text-slate-300 border-white/10 hover:text-white'
+                          : 'bg-slate-50 text-slate-600 border-slate-200 hover:text-slate-900'
                       }`}
                     >
                       <ShieldCheck className="w-3.5 h-3.5" />
@@ -657,16 +997,28 @@ export const App: React.FC = () => {
                 </div>
 
                 {isLoadingData ? (
-                  <div className="py-16 text-center text-slate-400 space-y-2">
-                    <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#ff5500]" />
+                  <div
+                    className={`py-16 text-center space-y-2 rounded-2xl border ${
+                      theme === 'dark'
+                        ? 'bg-[#141414] border-white/10 text-slate-400'
+                        : 'bg-white border-slate-200 text-slate-500'
+                    }`}
+                  >
+                    <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#e11d48]" />
                     <div className="text-xs">Querying Nexus Supplier Registry...</div>
                   </div>
                 ) : filteredSuppliers.length === 0 ? (
-                  <div className="py-16 text-center space-y-3 glass-panel rounded-2xl border border-white/10">
-                    <div className="w-12 h-12 rounded-xl bg-white/5 text-slate-400 mx-auto flex items-center justify-center">
+                  <div
+                    className={`py-16 text-center space-y-3 rounded-2xl border ${
+                      theme === 'dark'
+                        ? 'bg-[#141414] border-white/10 text-white'
+                        : 'bg-white border-slate-200 text-slate-800'
+                    }`}
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-white/10 text-slate-400 mx-auto flex items-center justify-center">
                       <Building2 className="w-6 h-6" />
                     </div>
-                    <h3 className="font-bold text-base text-white">No factories match your filter</h3>
+                    <h3 className="font-bold text-base">No factories match your filter</h3>
                     <div className="pt-2">
                       <button
                         onClick={() => {
@@ -674,19 +1026,19 @@ export const App: React.FC = () => {
                           setBondedOnly(false);
                           setSearchQuery('');
                         }}
-                        className="px-4 py-2 rounded-xl bg-[#ff5500] text-white text-xs font-bold"
+                        className="px-4 py-2 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold cursor-pointer"
                       >
                         Reset District & Bond Filter
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {filteredSuppliers.map((supplier) => (
                       <SupplierCard
                         key={supplier.id}
                         supplier={supplier}
-                        onContactSupplier={(s) => {
+                        onContactSupplier={() => {
                           setIsRfqModalOpen(true);
                         }}
                         onFilterBySupplier={(id) => {
@@ -696,6 +1048,7 @@ export const App: React.FC = () => {
                         onOpenComplianceVault={handleOpenComplianceVault}
                         onReserveLineSlot={handleReserveLineSlot}
                         onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
+                        theme={theme}
                       />
                     ))}
                   </div>
@@ -713,6 +1066,7 @@ export const App: React.FC = () => {
                 lang={lang}
                 onOpenRfq={() => setIsRfqModalOpen(true)}
                 onOpenAutomation={() => setIsAutomationModalOpen(true)}
+                theme={theme}
               />
             )}
 
@@ -727,6 +1081,25 @@ export const App: React.FC = () => {
         )}
       </main>
 
+      {/* Floating Right Dock (Alibaba Style) */}
+      <FloatingRightDock
+        onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+        onOpenAiAssistant={() => handleOpenAiAssistant()}
+        onOpenRfq={() => setIsRfqModalOpen(true)}
+        onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+        inquiryCount={rfqs.length + samples.length > 0 ? rfqs.length + samples.length : 64}
+        theme={theme}
+      />
+
+      {/* 5. FOOTER: Like Alibaba but relevant to handsandhead.com */}
+      <Footer
+        onOpenRfq={() => setIsRfqModalOpen(true)}
+        onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+        onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+        onOpenAiAssistant={() => handleOpenAiAssistant()}
+        theme={theme}
+      />
+
       {/* Product Detail Modal */}
       <ProductDetailModal
         product={selectedProduct}
@@ -735,7 +1108,7 @@ export const App: React.FC = () => {
         onClose={() => setSelectedProduct(null)}
         onRequestSample={handleOpenSampleModal}
         onInquire={handleInquireProduct}
-        onOpenShippingCalc={(port) => {
+        onOpenShippingCalc={() => {
           setSelectedProduct(null);
           setIsShippingCalcOpen(true);
         }}
@@ -756,29 +1129,22 @@ export const App: React.FC = () => {
         isOpen={isRfqModalOpen}
         onClose={() => setIsRfqModalOpen(false)}
         onSubmitRfq={handleSubmitRfq}
-        defaultCategoryId={selectedCategory}
+        defaultCategoryId={selectedCategory !== 'all' ? selectedCategory : 'rmg-apparel'}
       />
 
-      {/* Shipping / Freight Calculator Modal */}
+      {/* 50% JIT Trade Escrow & Chattogram Port Shipping Calculator Modal */}
       <ShippingCalculatorModal
         isOpen={isShippingCalcOpen}
         onClose={() => setIsShippingCalcOpen(false)}
         currency={currentCurrencyConfig}
       />
 
-      {/* Super Automation Desk Modal */}
-      <SuperAutomationModal
-        isOpen={isAutomationModalOpen}
-        onClose={() => setIsAutomationModalOpen(false)}
-        lang={lang}
-      />
-
-      {/* Inquiries & Samples Tracking Drawer with JIT Escrow */}
+      {/* Inquiries & RFQs Drawer */}
       <InquiryDrawer
         isOpen={isInquiryDrawerOpen}
         onClose={() => setIsInquiryDrawerOpen(false)}
-        samples={samples}
         rfqs={rfqs}
+        samples={samples}
         currency={currentCurrencyConfig}
         onOpenRfq={() => {
           setIsInquiryDrawerOpen(false);
@@ -786,55 +1152,43 @@ export const App: React.FC = () => {
         }}
       />
 
+      {/* Super Automation Modal */}
+      <SuperAutomationModal
+        isOpen={isAutomationModalOpen}
+        onClose={() => setIsAutomationModalOpen(false)}
+        lang={lang}
+      />
+
       {/* Enterprise Authentication Modal */}
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         onLoginSuccess={handleLogin}
-        initialRole={persona}
       />
 
-      {/* Interactive TechPack & CAD Studio Modal */}
+      {/* TechPack Studio Modal */}
       <TechPackModal
         isOpen={isTechPackModalOpen}
         onClose={() => setIsTechPackModalOpen(false)}
         onSubmitTechPack={handleBroadcastTechPack}
       />
 
-      {/* Compliance & ESG Audit Vault Slide-Over Drawer */}
+      {/* Compliance & ESG Vault Drawer */}
       <ComplianceVaultDrawer
-        supplier={vaultSupplier}
         isOpen={isVaultOpen}
-        onClose={() => setIsVaultOpen(false)}
-        onOpenRfq={(sup) => {
+        onClose={() => {
           setIsVaultOpen(false);
-          setIsRfqModalOpen(true);
+          setVaultSupplier(null);
         }}
+        supplier={vaultSupplier}
+        onOpenRfq={(s: Supplier) => {
+          setIsVaultOpen(false);
+          handleReserveLineSlot(s);
+        }}
+        theme={theme}
       />
 
-      {/* Floating Instant AI Assistant Button (Alibaba & IndiaMART style) */}
-      <button
-        id="floating-ai-assistant-btn"
-        onClick={() => handleOpenAiAssistant()}
-        className="fixed bottom-6 right-6 z-40 flex items-center space-x-2.5 px-4 py-3 rounded-full bg-[#0e0e0e] hover:bg-[#161616] text-white border border-[#ff5500]/50 shadow-2xl shadow-[#ff5500]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer group"
-        title="Instant Sourcing & Trade AI Assistant (Alibaba / IndiaMART Style)"
-      >
-        <div className="relative">
-          <div className="w-8 h-8 rounded-full bg-[#ff5500] flex items-center justify-center text-white shadow-md group-hover:rotate-12 transition-transform">
-            <Bot className="w-4 h-4" />
-          </div>
-          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#0e0e0e] animate-pulse" />
-        </div>
-        <div className="text-left hidden sm:block">
-          <div className="text-xs font-bold text-white flex items-center space-x-1">
-            <span>AI Trade Assistant</span>
-            <Sparkles className="w-3 h-3 text-[#ff5500]" />
-          </div>
-          <div className="text-[10px] text-slate-400 font-mono">Instant Sourcing & Queries</div>
-        </div>
-      </button>
-
-      {/* AI Assistant Modal */}
+      {/* RAWx Bot AI Sourcing Modal */}
       <AiAssistantModal
         isOpen={isAiAssistantOpen}
         onClose={() => {
@@ -846,24 +1200,14 @@ export const App: React.FC = () => {
         activeSupplier={aiSupplierContext}
         currency={currentCurrencyConfig}
         authUser={authUser}
-        onOpenRfqWithContext={() => {
+        onOpenRfqWithContext={(notes) => {
           setIsAiAssistantOpen(false);
           setIsRfqModalOpen(true);
         }}
-        onOpenSampleOrder={(prod) => {
+        onOpenSampleOrder={(p) => {
           setIsAiAssistantOpen(false);
-          handleOpenSampleModal(prod);
+          setSampleProduct(p);
         }}
-        onOpenComplianceVault={(sup) => {
-          setIsAiAssistantOpen(false);
-          handleOpenComplianceVault(sup);
-        }}
-      />
-
-      {/* Footer */}
-      <Footer
-        onOpenRfq={() => setIsRfqModalOpen(true)}
-        onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
       />
     </div>
   );

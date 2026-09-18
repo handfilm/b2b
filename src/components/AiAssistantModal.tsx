@@ -85,7 +85,7 @@ What would you like an instant breakdown on?`;
 
 How can I assist your order today? (e.g. FOB quotation, production slot reservation, Accord compliance certificate)`;
     } else {
-      initialGreeting = `👋 Welcome to the **Made in BD Instant Trade AI Desk** (Alibaba & IndiaMART style).
+      initialGreeting = `👋 Welcome to **RAWx Bot Trade Desk** (Direct Factory Sourcing AI).
 
 I can instantly:
 1. **Estimate bulk FOB unit costs & quantity discounts** across 50+ RMG, Jute, & Leather factories.
@@ -192,14 +192,14 @@ What product or requirement are you sourcing today?`;
         {/* Header Bar */}
         <div className="px-5 py-3.5 bg-[#141414] border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-[#ff5500]/20 border border-[#ff5500]/40 flex items-center justify-center text-[#ff5500] shadow-sm">
+            <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 shadow-sm">
               <Bot className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="font-bold text-sm text-white flex items-center">
-                  <span>TradeNexus AI Assistant</span>
-                  <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30 uppercase tracking-wider font-mono">
+                  <span>RAWx Bot</span>
+                  <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-600/20 text-sky-400 border border-blue-500/30 uppercase tracking-wider font-mono">
                     Instant 24/7
                   </span>
                 </h3>
@@ -209,7 +209,7 @@ What product or requirement are you sourcing today?`;
                   ? `Product Context: ${activeProduct.title}`
                   : activeSupplier
                   ? `Supplier Context: ${activeSupplier.name}`
-                  : 'Instant queries & quotation assistant for global buyers'}
+                  : 'Autonomous sourcing agent & factory quotation engine'}
               </p>
             </div>
           </div>
@@ -232,7 +232,7 @@ What product or requirement are you sourcing today?`;
             </span>
             <span>•</span>
             <span>
-              Port: <strong className="text-[#ff5500]">{activeProduct?.portOfLoading || 'Chattogram Sea Port'}</strong>
+              Port: <strong className="text-sky-400">{activeProduct?.portOfLoading || 'Chattogram Sea Port'}</strong>
             </span>
           </div>
 
@@ -241,7 +241,7 @@ What product or requirement are you sourcing today?`;
             <select
               value={destinationCountry}
               onChange={(e) => setDestinationCountry(e.target.value)}
-              className="bg-[#181818] border border-white/10 rounded px-2 py-0.5 text-[11px] text-slate-200 focus:outline-none focus:border-[#ff5500]"
+              className="bg-[#181818] border border-white/10 rounded px-2 py-0.5 text-[11px] text-slate-200 focus:outline-none focus:border-blue-500"
             >
               <option value="Germany (Europe Hub)">Germany (EU)</option>
               <option value="United States (New York / Savannah)">USA (East Coast)</option>
@@ -272,17 +272,17 @@ What product or requirement are you sourcing today?`;
                 <div
                   className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${
                     msg.sender === 'user'
-                      ? 'bg-[#ff5500] text-white'
+                      ? 'bg-blue-600 text-white'
                       : 'bg-white/10 text-slate-300 border border-white/10'
                   }`}
                 >
-                  {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4 text-[#ff5500]" />}
+                  {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4 text-sky-400" />}
                 </div>
 
                 <div
                   className={`p-3.5 rounded-2xl border text-xs leading-relaxed whitespace-pre-wrap ${
                     msg.sender === 'user'
-                      ? 'bg-[#ff5500] text-white border-[#ff5500]/50 rounded-tr-xs'
+                      ? 'bg-blue-600 text-white border-blue-500/50 rounded-tr-xs'
                       : 'bg-[#151515] text-slate-200 border-white/10 rounded-tl-xs'
                   }`}
                 >
@@ -301,9 +301,9 @@ What product or requirement are you sourcing today?`;
                     <button
                       key={idx}
                       onClick={() => handleSendMessage(action)}
-                      className="px-2.5 py-1 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] border border-white/10 hover:border-[#ff5500]/40 text-slate-300 hover:text-white text-[11px] transition-all flex items-center space-x-1 cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-[#1a1a1a] hover:bg-[#252525] border border-white/10 hover:border-blue-500/40 text-slate-300 hover:text-white text-[11px] transition-all flex items-center space-x-1 cursor-pointer"
                     >
-                      <Sparkles className="w-3 h-3 text-[#ff5500]" />
+                      <Sparkles className="w-3 h-3 text-sky-400" />
                       <span>{action}</span>
                     </button>
                   ))}
@@ -315,11 +315,11 @@ What product or requirement are you sourcing today?`;
           {isTyping && (
             <div className="flex items-center space-x-2 text-slate-400 pl-2">
               <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-[#ff5500]" />
+                <Bot className="w-4 h-4 text-sky-400" />
               </div>
               <div className="px-3 py-2 rounded-xl bg-[#151515] border border-white/10 flex items-center space-x-2">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#ff5500]" />
-                <span className="text-[11px] text-slate-400">TradeNexus AI is analyzing export databases...</span>
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-500" />
+                <span className="text-[11px] text-slate-400">RAWx Bot is analyzing factory pricing & specs...</span>
               </div>
             </div>
           )}
@@ -327,14 +327,14 @@ What product or requirement are you sourcing today?`;
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Action Shortcuts Bar (Alibaba/IndiaMART style) */}
+        {/* Action Shortcuts Bar */}
         <div className="px-4 py-2 bg-[#121212] border-t border-white/10 flex flex-wrap items-center gap-2">
           {activeProduct && activeProduct.sampleAvailable && onOpenSampleOrder && (
             <button
               onClick={() => onOpenSampleOrder(activeProduct)}
               className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white text-[11px] font-bold flex items-center space-x-1.5 transition-colors cursor-pointer"
             >
-              <Box className="w-3.5 h-3.5 text-[#ff5500]" />
+              <Box className="w-3.5 h-3.5 text-sky-400" />
               <span>Order Courier Sample (${(activeProduct.samplePriceUSD * currency.rate).toFixed(2)})</span>
             </button>
           )}
@@ -342,7 +342,7 @@ What product or requirement are you sourcing today?`;
           {onOpenRfqWithContext && (
             <button
               onClick={() => onOpenRfqWithContext(`AI Assistant inquiry for ${activeProduct?.title || activeSupplier?.name || 'wholesale requirement'}`)}
-              className="px-3 py-1.5 rounded-lg bg-[#ff5500]/15 hover:bg-[#ff5500]/25 border border-[#ff5500]/30 text-[#ff5500] text-[11px] font-bold flex items-center space-x-1.5 transition-colors cursor-pointer"
+              className="px-3 py-1.5 rounded-lg bg-blue-600/15 hover:bg-blue-600/25 border border-blue-500/30 text-sky-400 text-[11px] font-bold flex items-center space-x-1.5 transition-colors cursor-pointer"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>Convert to Formal RFQ</span>
@@ -354,7 +354,7 @@ What product or requirement are you sourcing today?`;
               onClick={() => onOpenComplianceVault(activeSupplier)}
               className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-[11px] font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#ff5500]" />
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span>Audit Vault (Accord/LEED)</span>
             </button>
           )}
@@ -373,20 +373,20 @@ What product or requirement are you sourcing today?`;
               type="text"
               placeholder={
                 activeProduct
-                  ? `Ask anything about ${activeProduct.title} (MOQ, custom dyeing, packing)...`
-                  : 'Ask about pricing, shipping lead times, factory certifications...'
+                  ? `Ask RAWx Bot about ${activeProduct.title} (MOQ, custom dyeing, packing)...`
+                  : 'Ask RAWx Bot about pricing, shipping lead times, factory certifications...'
               }
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              className="flex-1 bg-[#1a1a1a] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
+              className="flex-1 bg-[#1a1a1a] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
             />
             <button
               type="submit"
               disabled={!inputText.trim() || isTyping}
-              className="px-4 py-2.5 bg-[#ff5500] hover:bg-[#ff6a1a] disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-md shadow-[#ff5500]/20 transition-all cursor-pointer"
+              className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-md shadow-blue-600/20 transition-all cursor-pointer"
             >
               <Send className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Ask AI</span>
+              <span className="hidden sm:inline">Ask RAWx</span>
             </button>
           </form>
           <div className="mt-1.5 flex items-center justify-between text-[10px] text-slate-500 font-mono">

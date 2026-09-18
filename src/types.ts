@@ -126,6 +126,25 @@ export interface Product {
   sampleAvailable: boolean;
   samplePriceUSD: number;
   customizationOffered: boolean;
+  sourceDomain?: string;
+  divisionTitle?: string;
+  divisionSlug?: string;
+  targetRoutingUrl?: string;
+  sku?: string;
+  provenance?: string;
+  fobPort?: string;
+  gsmSpec?: string;
+  reorderRate?: number;
+  deliveryDate?: string;
+  yearsInBusiness?: number;
+  totalSold?: number;
+  colorVariants?: { name: string; hex: string; inStock?: boolean }[];
+  colors?: { name: string; hex: string }[];
+  customizationOptions?: string[];
+  category?: string;
+  bestseller?: boolean;
+  trendingRank?: string;
+  artisanDirect?: boolean;
 }
 
 export interface Supplier {
@@ -153,6 +172,10 @@ export interface Supplier {
   whatsapp?: string;
   about: string;
   avatarUrl: string;
+  coverUrl?: string;
+  oekoTexCertified?: boolean;
+  bsciAudited?: boolean;
+  gotsCertified?: boolean;
   activeLines?: number;
   lineAvailabilityPercentage?: number;
 }
@@ -241,6 +264,8 @@ export interface Customer {
   flag: string;
   logoUrl: string;
   annualSourcingBudgetUSD: string;
+  sourcingBudgetUSD?: number | string;
+  minOrderQty?: number;
   sectorsOfInterest: CategoryId[];
   verifiedStatus: 'Gold Verified Enterprise' | 'Retail Conglomerate' | 'Chamber Registered' | 'Global Sourcing Agent';
   totalOrdersPlaced: number;
@@ -265,8 +290,10 @@ export interface LiveTradeEvent {
   titleBn: string;
   details: string;
   detailsBn: string;
+  description?: string;
   valueUSD?: number;
   partyName: string;
+  partner?: string;
   targetFactory?: string;
   country: string;
   flag: string;

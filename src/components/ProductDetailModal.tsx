@@ -39,16 +39,27 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   onOpenShippingCalc,
   onOpenAiAssistant,
 }) => {
-  if (!product) return null;
-
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [calculatorQty, setCalculatorQty] = useState(product.moq);
-  const [selectedIncoterm, setSelectedIncoterm] = useState(product.incoterms[0]);
+  const [calculatorQty, setCalculatorQty] = useState(product?.moq || 100);
+  const [selectedIncoterm, setSelectedIncoterm] = useState(product?.incoterms?.[0] || 'FOB');
   const [quickMsg, setQuickMsg] = useState('');
   const [sentNotice, setSentNotice] = useState(false);
 
+  React.useEffect(() => {
+    if (product) {
+      setActiveImageIndex(0);
+      setCalculatorQty(product.moq || 100);
+      setSelectedIncoterm(product.incoterms?.[0] || 'FOB');
+      setQuickMsg('');
+      setSentNotice(false);
+    }
+  }, [product]);
+
+  if (!product) return null;
+
   // Determine pricing based on entered quantity
   const getUnitPrice = (qty: number) => {
+    if (!product.priceTiers || product.priceTiers.length === 0) return 0;
     let unit = product.priceTiers[0].priceUSD;
     for (const tier of product.priceTiers) {
       if (qty >= tier.minQty) {
@@ -76,7 +87,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto">
       <div
         id="product-detail-modal-container"
         className="relative w-full max-w-4xl bg-[#0e0e0e] text-white rounded-2xl shadow-2xl border border-white/10 overflow-hidden my-auto max-h-[92vh] flex flex-col"
@@ -88,8 +99,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               HS Code {product.hsCode}
             </span>
             {product.ecoFriendly && (
-              <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30 flex items-center space-x-1">
-                <Leaf className="w-3.5 h-3.5 mr-1" />
+              <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 flex items-center space-x-1">
+                <Leaf className="w-3.5 h-3.5 mr-1 text-[#10b981]" />
                 <span>Green Eco Export</span>
               </span>
             )}
@@ -125,7 +136,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
                       className={`w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer ${
-                        activeImageIndex === idx ? 'border-[#ff5500]' : 'border-white/10 opacity-70'
+                        activeImageIndex === idx ? 'border-[#e11d48]' : 'border-white/10 opacity-70'
                       }`}
                     >
                       <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -138,7 +149,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="p-4 rounded-xl bg-[#141414] border border-white/10 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono text-slate-500 uppercase">Manufacturer</span>
-                  <div className="flex items-center space-x-1 text-[11px] text-[#ff5500] font-bold font-mono">
+                  <div className="flex items-center space-x-1 text-[11px] text-[#10b981] font-bold font-mono">
                     <span>★</span>
                     <span>{product.supplierRating} Rating</span>
                   </div>
@@ -146,14 +157,14 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="font-bold text-sm text-white flex items-center space-x-1.5">
                   <span>{product.supplierName}</span>
                   {product.supplierVerified && (
-                    <ShieldCheck className="w-4 h-4 text-[#ff5500]" />
+                    <ShieldCheck className="w-4 h-4 text-[#10b981]" />
                   )}
                 </div>
                 {supplier && (
                   <div className="text-xs text-slate-400 space-y-1">
                     <div>Location: {supplier.district}</div>
                     {supplier.leedStatus && (
-                      <div className="text-[#ff5500] font-semibold">LEED {supplier.leedStatus} Certified Mill</div>
+                      <div className="text-[#10b981] font-semibold">LEED {supplier.leedStatus} Certified Mill</div>
                     )}
                   </div>
                 )}
@@ -187,10 +198,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         <div className="text-[10px] text-slate-500">
                           {tier.maxQty ? `${tier.minQty.toLocaleString()} - ${tier.maxQty.toLocaleString()}` : `${tier.minQty.toLocaleString()}+`} pcs
                         </div>
-                        <div className="text-base font-black text-white mt-0.5">
+                        <div className="text-base font-black text-[#10b981] mt-0.5">
                           {currency.symbol}{tierConverted}
                         </div>
-                        <div className="text-[10px] text-[#ff5500]">FOB Chattogram</div>
+                        <div className="text-[10px] text-slate-400">FOB Chattogram</div>
                       </div>
                     );
                   })}
@@ -201,7 +212,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               <div className="p-4 rounded-xl bg-[#141414] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-white flex items-center space-x-1.5">
-                    <DollarSign className="w-3.5 h-3.5 text-[#ff5500]" />
+                    <DollarSign className="w-3.5 h-3.5 text-[#10b981]" />
                     <span>Instant Order Cost Estimator</span>
                   </span>
                   <span className="text-xs font-mono text-slate-400">
@@ -220,7 +231,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       step={100}
                       value={calculatorQty}
                       onChange={(e) => setCalculatorQty(Math.max(product.moq, parseInt(e.target.value) || product.moq))}
-                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#ff5500]"
+                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#e11d48]"
                     />
                   </div>
 
@@ -231,7 +242,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     <select
                       value={selectedIncoterm}
                       onChange={(e) => setSelectedIncoterm(e.target.value as any)}
-                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
+                      className="w-full bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[#e11d48] cursor-pointer"
                     >
                       {product.incoterms.map((inco) => (
                         <option key={inco} value={inco} className="bg-[#121212]">
@@ -249,7 +260,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] text-slate-400 block">Estimated FOB Total:</span>
-                    <span className="font-mono text-lg font-black text-[#ff5500]">{currency.symbol}{totalConverted}</span>
+                    <span className="font-mono text-lg font-black text-[#10b981]">{currency.symbol}{totalConverted}</span>
                   </div>
                 </div>
               </div>
@@ -277,11 +288,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     placeholder="Enter custom specifications, Pantone shade, or inquiry notes..."
                     value={quickMsg}
                     onChange={(e) => setQuickMsg(e.target.value)}
-                    className="flex-1 bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
+                    className="flex-1 bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#e11d48]"
                   />
                   <button
                     type="submit"
-                    className="px-5 py-2.5 bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold rounded-xl shadow-lg shadow-[#ff5500]/25 flex items-center space-x-1.5 transition-all cursor-pointer shrink-0"
+                    className="px-5 py-2.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold rounded-xl shadow-lg shadow-[#e11d48]/25 flex items-center space-x-1.5 transition-all cursor-pointer shrink-0"
                   >
                     <Send className="w-3.5 h-3.5" />
                     <span>Inquire Now</span>
@@ -289,7 +300,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
 
                 {sentNotice && (
-                  <div className="text-xs text-[#ff5500] flex items-center space-x-1 font-semibold animate-in fade-in">
+                  <div className="text-xs text-[#10b981] flex items-center space-x-1 font-semibold animate-in fade-in">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span>Inquiry dispatched! Track status in Inquiries drawer.</span>
                   </div>
@@ -304,19 +315,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       onClose();
                       onOpenAiAssistant(product);
                     }}
-                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#ff5500]/15 hover:bg-[#ff5500]/25 border border-[#ff5500]/30 text-[#ff5500] hover:text-white text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer shadow-sm"
+                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#e11d48]/15 hover:bg-[#e11d48]/25 border border-[#e11d48]/30 text-[#e11d48] hover:text-white text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer shadow-sm"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#ff5500]" />
-                    <span>Instant AI Query</span>
+                    <Sparkles className="w-3.5 h-3.5 text-[#e11d48]" />
+                    <span>RAWx Trade Agent</span>
                   </button>
                 )}
 
                 {product.sampleAvailable && (
                   <button
                     onClick={() => onRequestSample(product)}
-                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-white/10 hover:border-[#ff5500]/50 text-white bg-[#171717] hover:bg-[#202020] text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer"
+                    className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-white/10 hover:border-[#e11d48]/50 text-white bg-[#171717] hover:bg-[#202020] text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer"
                   >
-                    <Box className="w-3.5 h-3.5 text-[#ff5500]" />
+                    <Box className="w-3.5 h-3.5 text-[#e11d48]" />
                     <span>Sample ({currency.symbol}{(product.samplePriceUSD * currency.rate).toFixed(2)})</span>
                   </button>
                 )}
@@ -325,7 +336,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   onClick={() => onOpenShippingCalc(product.portOfLoading)}
                   className="px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-transparent border border-white/10 text-slate-300 hover:text-white hover:bg-white/5 text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
                 >
-                  <Truck className="w-3.5 h-3.5 text-[#ff5500]" />
+                  <Truck className="w-3.5 h-3.5 text-[#10b981]" />
                   <span>Freight Rates</span>
                 </button>
               </div>

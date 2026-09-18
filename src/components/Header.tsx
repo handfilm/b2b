@@ -2,25 +2,22 @@ import React, { useState } from 'react';
 import {
   Globe2,
   Search,
-  ShieldCheck,
+  Camera,
   FileText,
   Ship,
-  Inbox,
   Sparkles,
   Building2,
   ExternalLink,
   Users,
   Factory,
-  CheckCircle2,
-  Zap,
   LogIn,
   LogOut,
-  Layers,
-  UserCheck,
   ChevronDown,
-  Phone,
   MessageCircle,
-  Bot,
+  Sun,
+  Moon,
+  ShieldCheck,
+  Zap,
 } from 'lucide-react';
 import {
   CurrencyCode,
@@ -29,7 +26,8 @@ import {
   LanguageCode,
   AuthUser,
 } from '../types';
-import { CURRENCIES, CATEGORIES } from '../data/mockData';
+import { CURRENCIES } from '../data/mockData';
+import { FEDERATED_DIVISIONS } from '../data/divisions';
 import { getTranslation } from '../i18n/translations';
 
 interface HeaderProps {
@@ -39,6 +37,8 @@ interface HeaderProps {
   onLanguageChange: (lang: LanguageCode) => void;
   selectedCategory: CategoryId;
   onSelectCategory: (cat: CategoryId) => void;
+  selectedDivision?: string;
+  onSelectDivision?: (slug: string) => void;
   searchQuery: string;
   onSearchChange: (q: string) => void;
   onOpenRfq: () => void;
@@ -59,6 +59,8 @@ interface HeaderProps {
   onOpenTechPackStudio?: () => void;
   activeRfqCount?: number;
   onOpenAiAssistant?: () => void;
+  theme?: 'dark' | 'light';
+  onToggleTheme?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -68,112 +70,204 @@ export const Header: React.FC<HeaderProps> = ({
   onLanguageChange,
   selectedCategory,
   onSelectCategory,
+  selectedDivision = 'all',
+  onSelectDivision,
   searchQuery,
   onSearchChange,
   onOpenRfq,
   onOpenShippingCalc,
   onOpenInquiries,
-  onOpenAutomation,
   inquiryCount,
   activeView,
   onViewChange,
   persona,
   onPersonaChange,
-  apiSource = 'live',
-  onForceSync,
-  isSyncing = false,
   authUser,
   onOpenAuth,
   onLogout,
   onOpenTechPackStudio,
-  activeRfqCount = 3,
   onOpenAiAssistant,
+  theme = 'dark',
+  onToggleTheme,
 }) => {
-  const t = getTranslation(lang);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState(searchQuery);
+
+  const isDark = theme === 'dark';
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearchChange(searchInput);
+    if (activeView !== 'products') {
+      onViewChange('products');
+    }
+  };
+
+  const handleDivisionClick = (slug: string) => {
+    if (onSelectDivision) {
+      onSelectDivision(slug);
+    }
+    // Also synchronize selectedCategory where applicable
+    if (slug === 'all') {
+      onSelectCategory('all');
+    } else if (slug === 'rmg-knits' || slug === 'heavy-outerwear' || slug === 'commercial-blanks') {
+      onSelectCategory('rmg-apparel');
+    } else if (slug === 'golden-jute') {
+      onSelectCategory('jute-eco');
+    } else if (
+      slug === 'flagship-leather' ||
+      slug === 'leather-cuffs' ||
+      slug === 'leather-harness' ||
+      slug === 'tannery-hides'
+    ) {
+      onSelectCategory('leather-footwear');
+    } else if (slug === 'home-textiles') {
+      onSelectCategory('home-textiles');
+    }
+    if (activeView !== 'products') {
+      onViewChange('products');
+    }
+  };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0a0a0a]/90 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl">
-      {/* Top Nexus Ecosystem & Trust Bar */}
-      <div className="bg-[#050505] text-slate-300 text-xs py-1.5 px-4 border-b border-white/[0.06]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          {/* Left: Nexus Status & Discrete Ecosystem Cross-Routing */}
-          <div className="flex items-center flex-wrap gap-x-3 gap-y-1">
-            <span
-              onClick={onForceSync}
-              className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#ff5500]/10 text-[#ff5500] border border-[#ff5500]/30 tracking-wide uppercase cursor-pointer hover:bg-[#ff5500]/20 transition-colors"
-              title="Click to force live real-time synchronization"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff5500] mr-1.5 animate-ping"></span>
-              {apiSource === 'live' ? t.nexusLive : t.nexusFallback}
-              {isSyncing && <span className="ml-1 text-[9px] text-white">...</span>}
-            </span>
-
-            {/* Discrete Ecosystem Cross-Links */}
-            <div className="hidden lg:flex items-center space-x-2 text-[11px] text-slate-400">
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-500 font-semibold uppercase tracking-wider text-[10px]">
-                {t.ecosystem}:
+    <header
+      id="main-header"
+      className={`sticky top-0 z-40 transition-colors duration-200 border-b ${
+        isDark
+          ? 'bg-[#0a0a0a]/95 backdrop-blur-md border-white/10 text-white'
+          : 'bg-white/95 backdrop-blur-md border-slate-200 text-slate-900 shadow-xs'
+      }`}
+    >
+      {/* =========================================================================
+          TIER 1: TOP STRIP (Ultra-compact, dark glass)
+          ========================================================================= */}
+      <div
+        id="header-top-strip"
+        className={`text-xs py-1.5 px-4 border-b transition-colors ${
+          isDark
+            ? 'bg-[#111111]/90 border-white/10 text-slate-300'
+            : 'bg-slate-100 border-slate-200 text-slate-700'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Left: NexOS Sync indicator (green dot) + Ecosystem links */}
+          <div className="flex items-center space-x-3 truncate">
+            <div className="flex items-center space-x-1.5 shrink-0">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
               </span>
+              <span className="font-mono text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30">
+                NEXOS FAIL-SAFE SYNC
+              </span>
+            </div>
+
+            <span className="text-slate-500 hidden sm:inline">|</span>
+
+            {/* Ecosystem links */}
+            <div className="hidden sm:flex items-center space-x-3 text-[11px] truncate text-slate-400">
+              <span className="font-bold text-slate-500 uppercase tracking-wider">Ecosystem:</span>
               <a
                 href="https://admin.handsandhead.com"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white flex items-center space-x-1 transition-colors group"
-                title="Master B2B Operations & Backoffice"
+                rel="noreferrer"
+                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
+                title="Admin Control Nexus"
               >
-                <span className="group-hover:text-[#ff5500] transition-colors">Admin Nexus</span>
-                <ExternalLink className="w-2.5 h-2.5 text-slate-500 group-hover:text-[#ff5500]" />
+                <span>Admin Nexus</span>
+                <ExternalLink className="w-2.5 h-2.5" />
               </a>
-              <span className="text-slate-700">•</span>
+              <span>•</span>
               <a
-                href="https://arutemika.com"
+                href="https://shop.handsandhead.com"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white flex items-center space-x-1 transition-colors group"
-                title="Artisanal Heritage & RAWx Leathercraft"
+                rel="noreferrer"
+                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
+                title="D2C Commercial Portal"
               >
-                <span className="group-hover:text-[#ff5500] transition-colors">RAWx & ARUTEMIKA</span>
-                <ExternalLink className="w-2.5 h-2.5 text-slate-500 group-hover:text-[#ff5500]" />
+                <span>D2C Portal</span>
+                <ExternalLink className="w-2.5 h-2.5" />
               </a>
-              <span className="text-slate-700">•</span>
+              <span>•</span>
               <a
                 href="https://rmg.handsandhead.com"
                 target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white flex items-center space-x-1 transition-colors group"
-                title="Specialized RMG & Garment Manufacturing"
+                rel="noreferrer"
+                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
+                title="Commercial Knit & Denim Cluster"
               >
-                <span className="group-hover:text-[#ff5500] transition-colors">RMG Hub</span>
-                <ExternalLink className="w-2.5 h-2.5 text-slate-500 group-hover:text-[#ff5500]" />
+                <span>Commercial Knit &amp; Denim</span>
+                <ExternalLink className="w-2.5 h-2.5" />
+              </a>
+              <span>•</span>
+              <a
+                href="https://arutemika.com"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
+                title="Flagship Leather Atelier"
+              >
+                <span>Leather Atelier</span>
+                <ExternalLink className="w-2.5 h-2.5" />
               </a>
             </div>
           </div>
 
-          {/* Right: Language Toggle, Shipping Matrix & Currency Selector */}
-          <div className="flex items-center space-x-3 text-xs">
-            {/* EN / বাংলা Language Toggle */}
+          {/* Right: Theme Toggle + Language Toggle + Currency + Port Freight Matrix */}
+          <div className="flex items-center space-x-2.5 shrink-0 text-xs">
+            {/* Dark / Light Theme Toggle */}
+            {onToggleTheme && (
+              <button
+                type="button"
+                id="header-theme-toggle"
+                onClick={onToggleTheme}
+                className={`flex items-center space-x-1.5 px-2.5 py-0.5 rounded-lg border transition-all cursor-pointer ${
+                  isDark
+                    ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-2xs'
+                }`}
+                title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}
+              >
+                {isDark ? (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-amber-400" />
+                    <span className="text-[11px] font-bold">Light</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-slate-700" />
+                    <span className="text-[11px] font-bold">Dark</span>
+                  </>
+                )}
+              </button>
+            )}
+
+            {/* Language Toggle [EN | বাংলা] */}
             <div
-              id="language-toggle-group"
-              className="flex items-center bg-[#171717] rounded-lg border border-white/10 p-0.5 text-[11px] font-bold"
+              className={`flex items-center rounded-lg p-0.5 border ${
+                isDark ? 'bg-black/50 border-white/10' : 'bg-white border-slate-200'
+              }`}
             >
               <button
-                id="lang-btn-en"
+                type="button"
+                id="header-lang-en"
                 onClick={() => onLanguageChange('EN')}
-                className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
+                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                   lang === 'EN'
-                    ? 'bg-[#ff5500] text-white shadow-xs'
+                    ? 'bg-[#e11d48] text-white'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
                 EN
               </button>
               <button
-                id="lang-btn-bn"
+                type="button"
+                id="header-lang-bn"
                 onClick={() => onLanguageChange('BN')}
-                className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
+                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                   lang === 'BN'
-                    ? 'bg-[#ff5500] text-white shadow-xs'
+                    ? 'bg-[#e11d48] text-white'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -181,463 +275,390 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             </div>
 
-            <span className="text-slate-800">|</span>
-
+            {/* Port Freight Matrix */}
             <button
+              type="button"
+              id="header-freight-matrix-btn"
               onClick={onOpenShippingCalc}
-              className="flex items-center space-x-1.5 text-slate-300 hover:text-white cursor-pointer transition-colors"
+              className="hidden md:flex items-center space-x-1 text-slate-400 hover:text-[#10b981] transition-colors cursor-pointer font-medium text-[11px]"
+              title="Open Port Freight Matrix & Customs Calculator"
             >
-              <Ship className="w-3.5 h-3.5 text-[#ff5500]" />
-              <span className="hidden sm:inline">{t.freightMatrix}</span>
+              <Ship className="w-3.5 h-3.5 text-[#10b981]" />
+              <span>Port Freight Matrix</span>
             </button>
 
-            <span className="text-slate-800">|</span>
-
-            <div className="flex items-center space-x-1">
-              <Globe2 className="w-3.5 h-3.5 text-slate-400" />
-              <select
-                id="header-currency-selector"
-                value={currentCurrency}
-                onChange={(e) => onCurrencyChange(e.target.value as CurrencyCode)}
-                className="bg-[#171717] text-white rounded-md border border-white/10 px-2 py-0.5 text-xs focus:outline-none focus:border-[#ff5500] cursor-pointer"
+            {/* Currency Selector [USD $] */}
+            <div className="relative">
+              <button
+                type="button"
+                id="header-currency-btn"
+                onClick={() => setIsCurrencyMenuOpen(!isCurrencyMenuOpen)}
+                className={`flex items-center space-x-1 px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer border ${
+                  isDark
+                    ? 'bg-black/50 border-white/10 text-slate-200'
+                    : 'bg-white border-slate-200 text-slate-700'
+                }`}
               >
-                {Object.values(CURRENCIES).map((c) => (
-                  <option key={c.code} value={c.code}>
-                    {c.code} ({c.symbol})
-                  </option>
-                ))}
-              </select>
+                <Globe2 className="w-3 h-3 text-slate-400" />
+                <span>{currentCurrency} ({CURRENCIES[currentCurrency]?.symbol || '$'})</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
+
+              {isCurrencyMenuOpen && (
+                <div
+                  onMouseLeave={() => setIsCurrencyMenuOpen(false)}
+                  className={`absolute right-0 top-full mt-1 w-36 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
+                    isDark
+                      ? 'bg-[#141414] border-white/15 text-white'
+                      : 'bg-white border-slate-200 text-slate-900'
+                  }`}
+                >
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1">
+                    Currency
+                  </div>
+                  <div className="grid grid-cols-2 gap-1">
+                    {(Object.keys(CURRENCIES) as CurrencyCode[]).map((curr) => (
+                      <button
+                        key={curr}
+                        type="button"
+                        onClick={() => {
+                          onCurrencyChange(curr);
+                          setIsCurrencyMenuOpen(false);
+                        }}
+                        className={`px-2 py-1 rounded text-xs font-bold text-left transition-colors cursor-pointer ${
+                          currentCurrency === curr
+                            ? 'bg-[#e11d48] text-white'
+                            : isDark
+                            ? 'hover:bg-white/10 text-slate-300'
+                            : 'hover:bg-slate-100 text-slate-700'
+                        }`}
+                      >
+                        {curr} ({CURRENCIES[curr].symbol})
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Header Bar */}
-      <div className="max-w-7xl mx-auto px-4 py-3 sm:py-3.5">
-        <div className="flex items-center justify-between gap-3 md:gap-5">
-          {/* Brand Identity */}
-          <div className="flex items-center space-x-3 shrink-0">
-            <div
-              id="brand-logo-button"
-              className="flex items-center space-x-2.5 cursor-pointer group"
-              onClick={() => {
-                onViewChange('products');
-                onSelectCategory('all');
-              }}
-            >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff5500] to-[#b83800] flex items-center justify-center text-white font-black text-lg shadow-lg shadow-[#ff5500]/20 group-hover:scale-105 transition-transform">
-                BD
-              </div>
-              <div>
-                <div className="flex items-center space-x-1.5">
-                  <span className="font-black text-lg tracking-tight text-white">
-                    {t.portalTitle}
-                  </span>
-                  <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30">
-                    B2B Portal
-                  </span>
-                </div>
-                <div className="text-[11px] text-slate-400 font-mono">
-                  b2b.handsandhead.com
-                </div>
-              </div>
+      {/* =========================================================================
+          TIER 2: PRIMARY NAVBAR (One unified row)
+          ========================================================================= */}
+      <div
+        id="header-primary-navbar"
+        className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 sm:gap-4"
+      >
+        {/* Left: Logo with "&" inside red circle beside "Made in BD" + Persona Switcher */}
+        <div className="flex items-center space-x-3 sm:space-x-4 shrink-0">
+          <div
+            id="brand-logo"
+            onClick={() => {
+              onViewChange('products');
+              handleDivisionClick('all');
+              onSearchChange('');
+            }}
+            className="flex items-center space-x-2.5 cursor-pointer group shrink-0"
+            title="Made in BD - B2B Bangladesh Wholesale Export Portal"
+          >
+            {/* Red circle badge with ONLY "&" */}
+            <div className="w-9 h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
+              &amp;
+            </div>
+            <div className="flex items-center space-x-2">
+              <span
+                className={`font-black text-xl tracking-tight ${
+                  isDark ? 'text-white' : 'text-slate-950'
+                }`}
+              >
+                Made in BD
+              </span>
+              <span className="hidden sm:inline text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#e11d48]/15 text-[#ff1e42] border border-[#e11d48]/30 font-mono tracking-wider">
+                B2B PORTAL
+              </span>
             </div>
           </div>
 
-          {/* Persona Switcher: High-Visibility Dual Ecosystem */}
-          <div className="hidden sm:flex items-center bg-[#141414] p-1 rounded-xl border border-white/10 shadow-inner shrink-0">
+          {/* Persona Switcher: [Buyer Portal] / [Manufacturer Hub] */}
+          <div
+            id="persona-switcher"
+            className={`hidden md:flex items-center p-1 rounded-xl border ${
+              isDark ? 'bg-[#141414] border-white/10' : 'bg-slate-100 border-slate-200'
+            }`}
+          >
             <button
-              id="persona-switcher-buyer"
+              type="button"
+              id="persona-buyer-btn"
               onClick={() => onPersonaChange('buyer')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
                 persona === 'buyer'
-                  ? 'bg-white text-black shadow-md'
+                  ? 'bg-[#e11d48] text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Users className={`w-3.5 h-3.5 ${persona === 'buyer' ? 'text-[#ff5500]' : ''}`} />
-              <span>Buyer</span>
+              <span>Buyer Portal</span>
             </button>
-
             <button
-              id="persona-switcher-seller"
+              type="button"
+              id="persona-seller-btn"
               onClick={() => onPersonaChange('seller')}
-              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
                 persona === 'seller'
-                  ? 'bg-[#ff5500] text-white shadow-lg shadow-[#ff5500]/25'
+                  ? 'bg-[#10b981] text-slate-950 shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Factory className="w-3.5 h-3.5" />
-              <span>Factory</span>
+              <Factory className="w-3 h-3" />
+              <span>Manufacturer Hub</span>
             </button>
           </div>
-
-          {/* Sourcing Search Box (Buyer Mode) */}
-          <div className="flex-1 max-w-xl hidden md:block">
-            <div className="flex rounded-xl border border-white/10 focus-within:border-[#ff5500] focus-within:ring-2 focus-within:ring-[#ff5500]/20 bg-[#121212]/80 overflow-hidden transition-all">
-              <select
-                id="search-category-filter"
-                value={selectedCategory}
-                onChange={(e) => onSelectCategory(e.target.value as CategoryId)}
-                className="bg-[#171717] border-r border-white/10 text-xs font-medium text-slate-300 px-2.5 py-2 focus:outline-none cursor-pointer max-w-[130px] truncate"
-              >
-                {CATEGORIES.map((cat) => (
-                  <option key={cat.id} value={cat.id} className="bg-[#121212] text-white">
-                    {cat.name}
-                  </option>
-                ))}
-              </select>
-
-              <div className="relative flex-1 flex items-center">
-                <Search className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
-                <input
-                  id="global-product-search-input"
-                  type="text"
-                  placeholder={
-                    persona === 'buyer'
-                      ? t.searchPlaceholderBuyer
-                      : t.searchPlaceholderSeller
-                  }
-                  value={searchQuery}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs md:text-sm text-white placeholder:text-slate-500 bg-transparent focus:outline-none"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => onSearchChange('')}
-                    className="mr-2 text-xs text-slate-400 hover:text-white px-1.5 py-0.5 rounded cursor-pointer"
-                  >
-                    {t.clearFilter}
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Action CTAs: TechPack Studio, Super Automation, Post RFQ, Inquiries, and Auth User Pill */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
-            {/* AI Instant Trade Assistant with On-Hover Preview */}
-            {onOpenAiAssistant && (
-              <div className="relative group">
-                <button
-                  id="header-ai-assistant-button"
-                  onClick={onOpenAiAssistant}
-                  className="inline-flex items-center space-x-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-gradient-to-r from-[#ff5500]/15 to-purple-600/15 hover:from-[#ff5500]/25 hover:to-purple-600/25 text-white border border-[#ff5500]/30 text-xs font-bold shadow-sm transition-all cursor-pointer"
-                >
-                  <Bot className="w-4 h-4 text-[#ff5500] group-hover:scale-110 transition-transform" />
-                  <span className="hidden lg:inline">AI Trade</span>
-                  <span className="text-[9px] px-1 py-0.2 rounded bg-[#ff5500] text-white font-mono uppercase font-black">24/7</span>
-                </button>
-                {/* On-Hover Preview Tooltip */}
-                <div className="absolute top-full right-0 mt-2 w-64 p-2.5 rounded-xl bg-[#0e0e0e] border border-white/15 text-white text-xs shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 z-50">
-                  <div className="font-bold text-[#ff5500] flex items-center space-x-1">
-                    <Bot className="w-3.5 h-3.5" />
-                    <span>Instant Sourcing Assistant</span>
-                  </div>
-                  <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                    Query FOB price tiers, Accord audits, fabric GSM, and sample turnaround SLA across 2,400+ factories.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {/* TechPack Studio Quick Launcher with On-Hover Preview */}
-            <div className="relative group">
-              <button
-                id="header-techpack-studio-button"
-                onClick={onOpenTechPackStudio}
-                className="inline-flex items-center space-x-1 px-2.5 sm:px-3 py-2 rounded-xl bg-[#ff5500]/10 hover:bg-[#ff5500]/20 text-[#ff5500] border border-[#ff5500]/30 text-xs font-bold shadow-sm transition-all cursor-pointer"
-              >
-                <Layers className="w-4 h-4 text-[#ff5500] group-hover:rotate-12 transition-transform" />
-                <span className="hidden xl:inline">TechPack</span>
-              </button>
-              {/* On-Hover Preview Tooltip */}
-              <div className="absolute top-full right-0 mt-2 w-60 p-2.5 rounded-xl bg-[#0e0e0e] border border-white/15 text-white text-xs shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 z-50">
-                <div className="font-bold text-white flex items-center space-x-1">
-                  <Layers className="w-3.5 h-3.5 text-[#ff5500]" />
-                  <span>CAD & TechPack Studio</span>
-                </div>
-                <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                  Interactive size grading, Pantone TCX swatch selector, and instant FOB cost calculation.
-                </p>
-              </div>
-            </div>
-
-            {/* Super Automation Desk Trigger with On-Hover Preview */}
-            <div className="relative group hidden sm:block">
-              <button
-                id="header-super-automation-button"
-                onClick={onOpenAutomation}
-                className="inline-flex items-center space-x-1 px-2.5 sm:px-3 py-2 rounded-xl bg-gradient-to-r from-[#ff5500]/15 to-[#ff7700]/20 hover:bg-[#ff5500]/30 text-[#ff5500] border border-[#ff5500]/40 text-xs font-bold shadow-md transition-all cursor-pointer"
-              >
-                <Zap className="w-4 h-4 fill-[#ff5500] text-[#ff5500] group-hover:scale-110 transition-transform" />
-                <span className="hidden 2xl:inline">{t.superAutomation}</span>
-              </button>
-              {/* On-Hover Preview Tooltip */}
-              <div className="absolute top-full right-0 mt-2 w-60 p-2.5 rounded-xl bg-[#0e0e0e] border border-white/15 text-white text-xs shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 z-50">
-                <div className="font-bold text-white flex items-center space-x-1">
-                  <Zap className="w-3.5 h-3.5 text-[#ff5500]" />
-                  <span>Super Automation Hub</span>
-                </div>
-                <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                  Automated ERP synchronization, currency hedge rates, and real-time vessel schedules.
-                </p>
-              </div>
-            </div>
-
-            {/* Post RFQ Button with On-Hover Preview */}
-            <div className="relative group">
-              <button
-                id="header-post-rfq-button"
-                onClick={onOpenRfq}
-                className="inline-flex items-center space-x-1 px-3 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold shadow-lg shadow-[#ff5500]/25 hover:shadow-[#ff5500]/40 transition-all cursor-pointer truncate"
-              >
-                <FileText className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{t.postRfq}</span>
-                <span className="sm:hidden">RFQ</span>
-              </button>
-              {/* On-Hover Preview Tooltip */}
-              <div className="absolute top-full right-0 mt-2 w-60 p-2.5 rounded-xl bg-[#0e0e0e] border border-white/15 text-white text-xs shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 z-50">
-                <div className="font-bold text-white flex items-center space-x-1">
-                  <FileText className="w-3.5 h-3.5 text-[#ff5500]" />
-                  <span>Broadcast Direct RFQ</span>
-                </div>
-                <p className="text-[11px] text-slate-300 mt-1 leading-snug">
-                  Distribute buying requirements to 2,400+ vetted factories for verified competitive quotes.
-                </p>
-              </div>
-            </div>
-
-            {/* Inquiries Drawer Button with On-Hover Preview */}
-            <div className="relative group">
-              <button
-                id="header-inquiries-drawer-button"
-                onClick={onOpenInquiries}
-                className="relative p-2 rounded-xl border border-white/10 hover:border-[#ff5500]/50 text-slate-300 hover:text-white bg-[#141414] hover:bg-[#1c1c1c] transition-colors cursor-pointer"
-                title="Track Orders, Samples & RFQ Dispatch"
-              >
-                <Inbox className="w-4 h-4" />
-                {inquiryCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#ff5500] text-white text-[9px] font-black flex items-center justify-center ring-2 ring-[#0a0a0a]">
-                    {inquiryCount}
-                  </span>
-                )}
-              </button>
-              {/* On-Hover Tooltip */}
-              <div className="absolute top-full right-0 mt-2 w-52 p-2 rounded-xl bg-[#0e0e0e] border border-white/15 text-white text-[11px] shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-200 z-50">
-                <span className="font-bold text-[#ff5500] block">Orders & Inquiries</span>
-                Track dispatched RFQs, custom sample requests, and supplier messages.
-              </div>
-            </div>
-
-            {/* Auth State: Lean Sign In Button or Authenticated User Pill */}
-            {!authUser ? (
-              <button
-                id="header-auth-signin-button"
-                onClick={onOpenAuth}
-                className="inline-flex items-center space-x-1 px-3 py-2 rounded-xl bg-white text-black hover:bg-slate-200 text-xs font-extrabold shadow-md transition-all cursor-pointer shrink-0"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Sign In</span>
-              </button>
-            ) : (
-              <div className="relative">
-                <button
-                  id="header-user-pill-button"
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center space-x-1.5 py-1.5 px-2.5 rounded-xl bg-[#181818] hover:bg-[#202020] border border-[#ff5500]/40 text-xs text-white font-bold transition-all cursor-pointer shadow-xs"
-                >
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                  <div className="text-left hidden md:block">
-                    <span className="text-[9px] text-[#ff5500] font-black uppercase tracking-wider block">
-                      {persona === 'buyer' ? `Buyer • ${activeRfqCount} RFQs` : `Console • ${inquiryCount || 5} Inq`}
-                    </span>
-                    <span className="text-xs font-bold text-white truncate max-w-[100px] block">
-                      {authUser.companyName || authUser.name}
-                    </span>
-                  </div>
-                  <ChevronDown className="w-3 h-3 text-slate-400 shrink-0" />
-                </button>
-
-                {/* Dropdown Menu */}
-                {isUserMenuOpen && (
-                  <div
-                    id="header-user-dropdown"
-                    className="absolute right-0 mt-2 w-64 bg-[#121212] border border-white/10 rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in space-y-3"
-                  >
-                    <div className="border-b border-white/10 pb-2.5">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-lg bg-[#ff5500]/20 border border-[#ff5500]/40 flex items-center justify-center text-[#ff5500] font-bold text-xs">
-                          {authUser.name.charAt(0)}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs font-extrabold text-white truncate">{authUser.name}</p>
-                          <p className="text-[11px] text-slate-400 truncate">{authUser.companyName}</p>
-                        </div>
-                      </div>
-                      <div className="mt-2 text-[11px] text-slate-400 flex items-center space-x-1.5 font-mono">
-                        <Phone className="w-3 h-3 text-[#ff5500]" />
-                        <span>{authUser.phone}</span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block px-1">
-                        Active Mode Switcher
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onPersonaChange('buyer');
-                          setIsUserMenuOpen(false);
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-between ${
-                          persona === 'buyer'
-                            ? 'bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30'
-                            : 'text-slate-300 hover:bg-white/5'
-                        }`}
-                      >
-                        <span>International Buyer</span>
-                        {persona === 'buyer' && <CheckCircle2 className="w-3.5 h-3.5" />}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onPersonaChange('seller');
-                          setIsUserMenuOpen(false);
-                        }}
-                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center justify-between ${
-                          persona === 'seller'
-                            ? 'bg-[#ff5500]/15 text-[#ff5500] border border-[#ff5500]/30'
-                            : 'text-slate-300 hover:bg-white/5'
-                        }`}
-                      >
-                        <span>BD Manufacturer / Exporter</span>
-                        {persona === 'seller' && <CheckCircle2 className="w-3.5 h-3.5" />}
-                      </button>
-                    </div>
-
-                    <div className="border-t border-white/10 pt-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setIsUserMenuOpen(false);
-                          onLogout?.();
-                        }}
-                        className="w-full py-1.5 px-2.5 rounded-lg text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors flex items-center space-x-2 cursor-pointer"
-                      >
-                        <LogOut className="w-3.5 h-3.5" />
-                        <span>Sign Out Session</span>
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
         </div>
 
-        {/* Mobile Persona Switcher */}
-        <div className="mt-2.5 sm:hidden flex items-center bg-[#141414] p-1 rounded-xl border border-white/10">
-          <button
-            onClick={() => onPersonaChange('buyer')}
-            className={`flex-1 py-1 text-xs font-bold rounded-lg ${
-              persona === 'buyer' ? 'bg-white text-black' : 'text-slate-400'
+        {/* Center: Central Global Search Bar */}
+        <form
+          onSubmit={handleSearchSubmit}
+          className="flex-1 max-w-xl mx-2 hidden lg:flex items-center"
+        >
+          <div
+            className={`w-full flex items-center rounded-xl border transition-all ${
+              isDark
+                ? 'bg-[#141414] border-white/15 focus-within:border-[#e11d48]'
+                : 'bg-slate-50 border-slate-300 focus-within:border-[#e11d48]'
             }`}
           >
-            {t.buyerPortal}
-          </button>
-          <button
-            onClick={() => onPersonaChange('seller')}
-            className={`flex-1 py-1 text-xs font-bold rounded-lg ${
-              persona === 'seller' ? 'bg-[#ff5500] text-white' : 'text-slate-400'
-            }`}
-          >
-            {t.manufacturerHub}
-          </button>
-        </div>
+            {/* Visual Search / Lens button */}
+            <button
+              type="button"
+              onClick={() => {
+                onSearchChange('selvedge organic leather');
+                setSearchInput('selvedge organic leather');
+              }}
+              className={`p-2.5 border-r cursor-pointer transition-colors ${
+                isDark
+                  ? 'text-slate-400 hover:text-white border-white/10 hover:bg-white/5'
+                  : 'text-slate-500 hover:text-slate-900 border-slate-200 hover:bg-slate-100'
+              }`}
+              title="RAWx Visual Lens / Spec Match"
+            >
+              <Camera className="w-4 h-4 text-[#10b981]" />
+            </button>
 
-        {/* Mobile Search Input */}
-        <div className="mt-2.5 md:hidden">
-          <div className="relative flex items-center">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+            {/* Textual input */}
             <input
-              id="mobile-product-search-input"
               type="text"
-              placeholder={persona === 'buyer' ? t.searchPlaceholderBuyer : t.searchPlaceholderSeller}
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-white/10 bg-[#141414] text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
+              id="global-search-input"
+              placeholder="Search 50,000+ export products, fabrics, HS codes..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className={`flex-1 px-3 py-2 text-xs focus:outline-none bg-transparent ${
+                isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
+              }`}
             />
+
+            {/* Crimson Red "RAWx Search" button */}
+            <button
+              type="submit"
+              id="global-search-submit-btn"
+              className="px-4 py-2 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black rounded-r-xl transition-colors flex items-center space-x-1.5 cursor-pointer shrink-0"
+              title="Run Sourcing Search"
+            >
+              <Search className="w-3.5 h-3.5" />
+              <span>RAWx Search</span>
+            </button>
           </div>
+        </form>
+
+        {/* Right Actions: [RAWx Bot] [TechPack Studio] [Post RFQ] [Inquiries] [Sign In / Profile] */}
+        <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
+          {/* 1. RAWx Bot (24/7 AI Sourcing Assistant) */}
+          <button
+            type="button"
+            id="header-rawx-bot-btn"
+            onClick={onOpenAiAssistant}
+            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:opacity-95 text-white text-xs font-black shadow-md shadow-[#e11d48]/20 flex items-center space-x-1.5 cursor-pointer transition-all shrink-0"
+            title="Launch RAWx Bot Trade Agent"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
+            <span className="hidden sm:inline">RAWx Bot</span>
+          </button>
+
+          {/* 2. TechPack Studio */}
+          <button
+            type="button"
+            id="header-techpack-studio-btn"
+            onClick={onOpenTechPackStudio}
+            className={`hidden sm:flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer ${
+              isDark
+                ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+            }`}
+            title="Open Interactive TechPack Studio"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#10b981]" />
+            <span>TechPack Studio</span>
+          </button>
+
+          {/* 3. Post RFQ */}
+          <button
+            type="button"
+            id="header-post-rfq-btn"
+            onClick={onOpenRfq}
+            className="px-3 py-1.5 rounded-xl bg-[#10b981] hover:bg-[#22c55e] text-slate-950 text-xs font-black transition-all cursor-pointer flex items-center space-x-1 shadow-sm shrink-0"
+            title="Post Commercial RFQ for 5,000+ Mills"
+          >
+            <span>Post RFQ</span>
+          </button>
+
+          {/* 4. Inquiries / Messages */}
+          <button
+            type="button"
+            id="header-inquiries-btn"
+            onClick={onOpenInquiries}
+            className={`relative p-2 rounded-xl border transition-colors cursor-pointer ${
+              isDark
+                ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+            }`}
+            title="Inquiries & RFQ Messages"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span className="absolute -top-1 -right-1 bg-[#e11d48] text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full min-w-4 text-center">
+              {inquiryCount > 0 ? inquiryCount : 4}
+            </span>
+          </button>
+
+          {/* 5. User Account / Sign In */}
+          {authUser ? (
+            <div className="relative">
+              <button
+                type="button"
+                id="header-user-profile-btn"
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-xl border text-xs font-bold transition-colors cursor-pointer ${
+                  isDark ? 'bg-white/10 border-white/20 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
+                }`}
+              >
+                <div className="w-5 h-5 rounded-full bg-[#e11d48] text-white flex items-center justify-center text-[10px] font-black">
+                  {authUser.name.charAt(0)}
+                </div>
+                <span className="max-w-[70px] truncate">{authUser.name}</span>
+                <ChevronDown className="w-3 h-3 text-slate-400" />
+              </button>
+
+              {isUserMenuOpen && (
+                <div
+                  onMouseLeave={() => setIsUserMenuOpen(false)}
+                  className={`absolute right-0 top-full mt-1 w-52 rounded-xl shadow-2xl border p-2 z-50 animate-in fade-in ${
+                    isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+                  }`}
+                >
+                  <div className="px-3 py-2 border-b border-inherit text-xs">
+                    <p className="font-bold">{authUser.name}</p>
+                    <p className="text-[10px] text-slate-400 truncate">{authUser.email}</p>
+                    <span className="text-[9px] font-mono font-bold text-[#10b981] mt-0.5 block">
+                      Role: {authUser.role === 'buyer' ? 'Global Buyer' : 'Manufacturer'}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onLogout?.();
+                      setIsUserMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3 py-2 text-xs text-[#ff1e42] font-bold hover:bg-red-500/10 rounded-lg transition-colors flex items-center space-x-1.5 mt-1 cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              type="button"
+              id="header-sign-in-btn"
+              onClick={onOpenAuth}
+              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
+                isDark
+                  ? 'bg-white/10 hover:bg-white/20 border-white/20 text-white'
+                  : 'bg-slate-900 hover:bg-slate-800 text-white'
+              }`}
+            >
+              <LogIn className="w-3.5 h-3.5" />
+              <span>Sign In</span>
+            </button>
+          )}
         </div>
+      </div>
 
-        {/* Navigation Tabs (Products vs. Suppliers vs. Customers vs. Export Insights) */}
-        <div className="flex items-center justify-between border-t border-white/[0.08] mt-2.5 pt-2">
-          <nav className="flex space-x-1 sm:space-x-2 text-xs font-bold overflow-x-auto pb-1 sm:pb-0">
+      {/* =========================================================================
+          TIER 3: SECONDARY PAVILION BAR (Single cohesive rail beneath header - NO duplicates)
+          ========================================================================= */}
+      <div
+        id="header-pavilion-rail"
+        className={`border-t py-2 px-4 overflow-x-auto no-scrollbar transition-colors ${
+          isDark
+            ? 'bg-[#0e0e0e] border-white/10'
+            : 'bg-slate-50 border-slate-200'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Horizontal scrollable pills with active indicators */}
+          <div className="flex items-center space-x-2 shrink-0 overflow-x-auto no-scrollbar py-0.5">
+            {FEDERATED_DIVISIONS.map((div) => {
+              const isActive = selectedDivision === div.slug;
+              return (
+                <button
+                  key={div.slug}
+                  type="button"
+                  id={`pavilion-pill-${div.slug}`}
+                  onClick={() => handleDivisionClick(div.slug)}
+                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                    isActive
+                      ? 'bg-[#e11d48] text-white shadow-md shadow-[#e11d48]/20 font-black'
+                      : isDark
+                      ? 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
+                      : 'bg-white text-slate-700 hover:bg-slate-200 border border-slate-200'
+                  }`}
+                  title={`${div.divisionTitle}: ${div.tagline}`}
+                >
+                  <span>{div.pavilionLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Quick view switchers for Verified Mills & Global Buyers (Right side of rail) */}
+          <div className="hidden xl:flex items-center space-x-2 shrink-0 border-l border-inherit pl-3">
             <button
-              id="nav-tab-products"
-              onClick={() => onViewChange('products')}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors cursor-pointer ${
-                activeView === 'products'
-                  ? 'bg-white text-black shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
-              }`}
-            >
-              {t.wholesaleCatalog}
-            </button>
-            <button
-              id="nav-tab-suppliers"
+              type="button"
               onClick={() => onViewChange('suppliers')}
-              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer ${
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center space-x-1 cursor-pointer transition-colors ${
                 activeView === 'suppliers'
-                  ? 'bg-white text-black shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
+                  ? 'bg-[#10b981] text-slate-950 font-black'
+                  : 'text-slate-400 hover:text-white'
               }`}
+              title="EPB Certified Mills"
             >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>{t.verifiedFactories}</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
+              <span>EPB Factories</span>
             </button>
-            <button
-              id="nav-tab-customers"
-              onClick={() => onViewChange('customers')}
-              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer ${
-                activeView === 'customers'
-                  ? 'bg-white text-black shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
-              }`}
-            >
-              <Users className="w-3.5 h-3.5" />
-              <span>{t.globalCustomers}</span>
-            </button>
-            <button
-              id="nav-tab-insights"
-              onClick={() => onViewChange('insights')}
-              className={`px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer ${
-                activeView === 'insights'
-                  ? 'bg-white text-black shadow-xs'
-                  : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#ff5500]" />
-              <span>{t.bdExportAdvantage}</span>
-            </button>
-            <button
-              id="nav-tab-techpack-launcher"
-              onClick={onOpenTechPackStudio}
-              className="px-3 py-1.5 rounded-lg flex items-center space-x-1.5 whitespace-nowrap transition-colors cursor-pointer text-[#ff5500] hover:bg-[#ff5500]/10 border border-[#ff5500]/30 font-extrabold"
-            >
-              <Layers className="w-3.5 h-3.5 text-[#ff5500]" />
-              <span>TechPack Studio (CAD)</span>
-            </button>
-          </nav>
 
-          <div className="hidden lg:flex items-center space-x-2 text-xs text-slate-400 font-medium">
-            <ShieldCheck className="w-4 h-4 text-[#ff5500]" />
-            <span className="text-white">{t.escrowBadge}</span>
-            <span className="text-slate-700">•</span>
-            <span>{t.incotermsBadge}</span>
+            <button
+              type="button"
+              onClick={() => onViewChange('customers')}
+              className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center space-x-1 cursor-pointer transition-colors ${
+                activeView === 'customers'
+                  ? 'bg-[#10b981] text-slate-950 font-black'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Global Sourcing Buyers"
+            >
+              <Users className="w-3.5 h-3.5 text-[#10b981]" />
+              <span>Buyers</span>
+            </button>
           </div>
         </div>
       </div>
