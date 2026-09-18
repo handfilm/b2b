@@ -1,13 +1,10 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useRef, useEffect } from 'react';
 import {
   Layers,
   Building2,
   Users,
   Sparkles,
   Cpu,
-  FileText,
-  Activity,
 } from 'lucide-react';
 import { useNexosSync } from '../context/NexosSyncContext';
 
@@ -18,6 +15,7 @@ interface MobileHighTechDockProps {
   onOpenRfq?: () => void;
   onOpenPipeline?: () => void;
   theme?: 'dark' | 'light';
+  onHeightChange?: (height: number) => void;
 }
 
 export const MobileHighTechDock: React.FC<MobileHighTechDockProps> = ({
@@ -27,12 +25,48 @@ export const MobileHighTechDock: React.FC<MobileHighTechDockProps> = ({
   onOpenRfq,
   onOpenPipeline,
   theme = 'dark',
+  onHeightChange,
 }) => {
   const isDark = theme === 'dark';
   const { metrics, syncStatus } = useNexosSync();
+  const navRef = useRef<HTMLElement>(null);
+
+  // Dynamically measure dock height on mount, resize, and DOM updates
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+
+    const measureHeight = () => {
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.height > 0) {
+          // Set CSS custom property for global stylesheets / layout containers
+          document.documentElement.style.setProperty('--mobile-dock-height', `${Math.round(rect.height)}px`);
+          onHeightChange?.(rect.height);
+        }
+      }
+    };
+
+    measureHeight();
+
+    const resizeObserver = new ResizeObserver(() => {
+      measureHeight();
+    });
+    resizeObserver.observe(el);
+    window.addEventListener('resize', measureHeight);
+    window.addEventListener('orientationchange', measureHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', measureHeight);
+      window.removeEventListener('orientationchange', measureHeight);
+    };
+  }, [onHeightChange]);
 
   return (
     <nav
+      ref={navRef}
+      id="mobile-high-tech-dock"
       aria-label="Mobile Navigation Dock"
       className="fixed bottom-0 inset-x-0 z-40 lg:hidden px-3 pb-3 pt-1 pointer-events-none"
     >

@@ -300,7 +300,8 @@ export const Footer: React.FC<FooterProps> = ({
 
       {/* 3. Bottom Strip: Copyright & System Status */}
       <div
-        className={`border-t py-4 px-4 transition-colors ${
+        id="footer-bottom-strip"
+        className={`border-t py-4 px-4 pb-[calc(var(--mobile-dock-height,84px)+env(safe-area-inset-bottom,0px)+1.25rem)] lg:pb-4 transition-colors ${
           isDark ? 'bg-[#060606] border-white/10' : 'bg-slate-100 border-slate-200'
         }`}
       >

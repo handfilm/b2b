@@ -23,6 +23,7 @@ import { Footer } from './components/Footer';
 import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
 import { NexosPipelineModal } from './components/NexosPipelineModal';
 import { MobileHighTechDock } from './components/MobileHighTechDock';
+import { BangladeshManufacturerMap } from './components/BangladeshManufacturerMap';
 import {
   saveRfqToFirestore,
   saveSampleToFirestore,
@@ -69,6 +70,9 @@ import {
   ArrowUpDown,
   Layers,
   Globe2,
+  LayoutGrid,
+  MapPin,
+  Map,
 } from 'lucide-react';
 
 const AppContent: React.FC = () => {
@@ -122,6 +126,7 @@ const AppContent: React.FC = () => {
   const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'customers' | 'insights'>('products');
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
+  const [supplierViewMode, setSupplierViewMode] = useState<'list' | 'map'>('list');
 
   // Alibaba Hero Tab ('ai' | 'products' | 'suppliers' | 'customers')
   const [activeHeroTab, setActiveHeroTab] = useState<'ai' | 'products' | 'suppliers' | 'customers'>('products');
@@ -129,6 +134,31 @@ const AppContent: React.FC = () => {
   // Federated Division and Domain Source State
   const [selectedDomainSource, setSelectedDomainSource] = useState<'all' | 'shop.handsandhead.com' | 'arutemika.handsandhead.com'>('all');
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // Dynamic Dock Height Tracking for Screen Clearances
+  const [mobileDockHeight, setMobileDockHeight] = useState<number>(84);
+  const [isMobileScreen, setIsMobileScreen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 1024;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 1023px)');
+    const handleMediaChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      setIsMobileScreen(e.matches);
+    };
+    handleMediaChange(mql);
+    try {
+      mql.addEventListener('change', handleMediaChange);
+      return () => mql.removeEventListener('change', handleMediaChange);
+    } catch {
+      mql.addListener(handleMediaChange);
+      return () => mql.removeListener(handleMediaChange);
+    }
+  }, []);
 
   // Dynamic data layer
   const [suppliers, setSuppliers] = useState<Supplier[]>(INITIAL_SUPPLIERS);
@@ -624,7 +654,15 @@ const AppContent: React.FC = () => {
       )}
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 py-4 flex-1 w-full pb-24 lg:pb-8">
+      <main
+        id="main-content"
+        className="max-w-7xl mx-auto px-4 py-4 flex-1 w-full lg:pb-8"
+        style={{
+          paddingBottom: isMobileScreen
+            ? `calc(${mobileDockHeight}px + env(safe-area-inset-bottom, 0px) + 1.75rem)`
+            : undefined,
+        }}
+      >
         {/* SELLER / EXPORTER HUB WORKSPACE */}
         {persona === 'seller' ? (
           <ManufacturerHub
@@ -907,8 +945,44 @@ const AppContent: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Supplier Filters */}
+                  {/* Supplier Filters & View Mode Toggle */}
                   <div className="flex flex-wrap items-center gap-2 text-xs">
+                    {/* List vs Mini-Map Toggle Button */}
+                    <div
+                      className={`flex items-center p-0.5 rounded-xl border ${
+                        theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-slate-100 border-slate-200'
+                      }`}
+                    >
+                      <button
+                        id="supplier-toggle-list-view"
+                        onClick={() => setSupplierViewMode('list')}
+                        className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          supplierViewMode === 'list'
+                            ? 'bg-[#e11d48] text-white shadow-xs'
+                            : theme === 'dark'
+                            ? 'text-slate-400 hover:text-white'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        <LayoutGrid className="w-3.5 h-3.5" />
+                        <span>List View</span>
+                      </button>
+                      <button
+                        id="supplier-toggle-map-view"
+                        onClick={() => setSupplierViewMode('map')}
+                        className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          supplierViewMode === 'map'
+                            ? 'bg-[#e11d48] text-white shadow-xs'
+                            : theme === 'dark'
+                            ? 'text-slate-400 hover:text-white'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>Regional Density Map</span>
+                      </button>
+                    </div>
+
                     <div
                       className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border ${
                         theme === 'dark'
@@ -947,7 +1021,19 @@ const AppContent: React.FC = () => {
                   </div>
                 </div>
 
-                {isLoadingData ? (
+                {supplierViewMode === 'map' ? (
+                  <BangladeshManufacturerMap
+                    suppliers={suppliers}
+                    selectedDistrict={selectedDistrict}
+                    onSelectDistrict={(district) => setSelectedDistrict(district)}
+                    onSwitchToListView={() => setSupplierViewMode('list')}
+                    onContactSupplier={() => setIsRfqModalOpen(true)}
+                    onOpenComplianceVault={handleOpenComplianceVault}
+                    onReserveLineSlot={handleReserveLineSlot}
+                    onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
+                    theme={theme}
+                  />
+                ) : isLoadingData ? (
                   <div
                     className={`py-16 text-center space-y-2 rounded-2xl border ${
                       theme === 'dark'
@@ -1179,6 +1265,7 @@ const AppContent: React.FC = () => {
         onOpenRfq={() => setIsRfqModalOpen(true)}
         onOpenPipeline={() => setIsPipelineModalOpen(true)}
         theme={theme}
+        onHeightChange={(height) => setMobileDockHeight(height)}
       />
     </div>
   );
