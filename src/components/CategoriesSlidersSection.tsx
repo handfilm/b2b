@@ -194,16 +194,36 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                           : 'bg-slate-50 hover:bg-white border-slate-200/80 hover:border-[#e11d48]'
                       }`}
                     >
-                      <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20">
+                      <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
                         <img
                           src={p.images[0]}
                           alt={p.title}
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover/card:scale-105 transition-transform"
+                          className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300"
                         />
-                        <span className="absolute top-1 left-1 bg-[#e11d48] text-white text-[9px] font-black px-1.5 py-0.2 rounded font-mono">
+                        <span className="absolute top-1 left-1 bg-[#e11d48] text-white text-[9px] font-black px-1.5 py-0.2 rounded font-mono z-10 transition-opacity duration-200 group-hover/card:opacity-0">
                           Direct
                         </span>
+                        {/* Subtle Animated Glassmorphic Tooltip on Product Image Border */}
+                        <div
+                          role="tooltip"
+                          className="absolute top-1 inset-x-1 z-20 pointer-events-none opacity-0 -translate-y-1 scale-95 group-hover/card:opacity-100 group-hover/card:translate-y-0 group-hover/card:scale-100 transition-all duration-200 ease-out"
+                        >
+                          <div className="backdrop-blur-md bg-black/80 border border-white/20 border-t-[#e11d48] border-t-2 rounded-md p-1.5 shadow-xl text-white">
+                            <div className="flex items-center justify-between text-[8px] font-bold">
+                              <span className="truncate text-white font-extrabold max-w-[80px]">
+                                {p.divisionTitle || 'RMG Knits'}
+                              </span>
+                              <span className="text-[#10b981] font-mono flex items-center space-x-0.5 shrink-0">
+                                <ShieldCheck className="w-2.5 h-2.5 text-[#10b981]" />
+                                <span>Verified</span>
+                              </span>
+                            </div>
+                            <div className="text-[7.5px] text-emerald-300 font-mono truncate mt-0.5">
+                              {p.certifications?.[0] || 'OEKO-TEX 100'}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div className="text-[10px] text-[#10b981] font-semibold truncate">
                         ✔ {p.deliveryDate || 'Oct 24 delivery'}
@@ -293,16 +313,36 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                           : 'bg-slate-50 hover:bg-white border-slate-200/80 hover:border-amber-500'
                       }`}
                     >
-                      <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20">
+                      <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
                         <img
                           src={p.images[0]}
                           alt={p.title}
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover/card:scale-105 transition-transform"
+                          className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300"
                         />
-                        <span className="absolute top-1 left-1 bg-amber-600 text-white text-[9px] font-black px-1.5 py-0.2 rounded font-mono">
+                        <span className="absolute top-1 left-1 bg-amber-600 text-white text-[9px] font-black px-1.5 py-0.2 rounded font-mono z-10 transition-opacity duration-200 group-hover/card:opacity-0">
                           Artisan
                         </span>
+                        {/* Subtle Animated Glassmorphic Tooltip on Product Image Border */}
+                        <div
+                          role="tooltip"
+                          className="absolute top-1 inset-x-1 z-20 pointer-events-none opacity-0 -translate-y-1 scale-95 group-hover/card:opacity-100 group-hover/card:translate-y-0 group-hover/card:scale-100 transition-all duration-200 ease-out"
+                        >
+                          <div className="backdrop-blur-md bg-black/80 border border-white/20 border-t-amber-500 border-t-2 rounded-md p-1.5 shadow-xl text-white">
+                            <div className="flex items-center justify-between text-[8px] font-bold">
+                              <span className="truncate text-white font-extrabold max-w-[80px]">
+                                {p.divisionTitle || 'Arutemika Atelier'}
+                              </span>
+                              <span className="text-[#10b981] font-mono flex items-center space-x-0.5 shrink-0">
+                                <ShieldCheck className="w-2.5 h-2.5 text-[#10b981]" />
+                                <span>LWG Gold</span>
+                              </span>
+                            </div>
+                            <div className="text-[7.5px] text-amber-300 font-mono truncate mt-0.5">
+                              {p.certifications?.[0] || 'Artisan Heritage'}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div className="text-[10px] text-[#10b981] font-semibold truncate">
                         ✔ {p.deliveryDate || 'Nov 12 delivery'}
