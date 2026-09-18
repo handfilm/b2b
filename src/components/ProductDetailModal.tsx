@@ -15,6 +15,7 @@ import {
   DollarSign,
   Send,
   Sparkles,
+  ExternalLink,
 } from 'lucide-react';
 import { Product, Supplier, CurrencyConfig } from '../types';
 
@@ -339,6 +340,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   <Truck className="w-3.5 h-3.5 text-[#10b981]" />
                   <span>Freight Rates</span>
                 </button>
+
+                {product.targetRoutingUrl && (
+                  <a
+                    href={product.targetRoutingUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:text-white text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer"
+                    title="Direct Headless Checkout at Origin"
+                  >
+                    <span>Origin Checkout ({product.sourceDomain || 'Headless'})</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

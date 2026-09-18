@@ -35,8 +35,6 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
   currency,
   onOpenRfq,
 }) => {
-  if (!isOpen) return null;
-
   const [activeTab, setActiveTab] = useState<'rfqs' | 'escrow' | 'samples'>('escrow');
 
   // Milestone Stages Definition for JIT Escrow
@@ -128,6 +126,8 @@ export const InquiryDrawer: React.FC<InquiryDrawerProps> = ({
       ],
     },
   ];
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/80 backdrop-blur-sm flex justify-end">

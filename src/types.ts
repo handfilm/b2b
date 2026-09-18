@@ -321,3 +321,78 @@ export interface AutomationLog {
   detailsBn: string;
   payloadPreview?: string;
 }
+
+// ============================================================================
+// NEXOS DATA SYNCING PIPELINE INTERFACES
+// ============================================================================
+
+export type B2BProduct = Product;
+
+export interface RawGoogleDriveAsset {
+  driveFileId: string;
+  fileName: string;
+  folderPath: string;
+  d2cRetailPriceUSD: number;
+  thumbnailUrl?: string;
+  webContentLink?: string;
+  directImageUrl?: string;
+  mimeType?: string;
+  sku?: string;
+  title?: string;
+  description?: string;
+  categoryFolder?: string;
+  fabricComposition?: string;
+  gsm?: string | number;
+  availableColors?: Array<{ name: string; hex: string }>;
+  leadTimeDays?: number;
+  moq?: number;
+  inStock?: boolean;
+  metadata?: Record<string, any>;
+  lastModified?: string;
+}
+
+export interface RawArutemikaProduct {
+  id: string;
+  handle: string;
+  title: string;
+  leatherType: string;
+  tanneryOrigin?: string;
+  construction: string;
+  japanRetailYen?: number;
+  wholesalePriceUSD: number;
+  moq: number;
+  images: string[];
+  hardware?: string;
+  soling?: string;
+  colors: Array<{ name: string; hex: string }>;
+  atelierLocation?: string;
+  sku?: string;
+  leadTimeDays?: number;
+  weightGrams?: number;
+  tags?: string[];
+  description?: string;
+}
+
+export interface NexosDatabaseMetrics {
+  activeBuyers: number;
+  verifiedSuppliers: number;
+  totalTradeVol: string;
+  bdtSalesVolume: string;
+  pendingRfqs?: number;
+  customsSpeedDays?: number;
+  syncedSourcesCount?: number;
+  lastSyncTimestamp?: string;
+}
+
+export interface PipelineSyncEvent {
+  id: string;
+  source: 'google_drive' | 'arutemika' | 'nexos_admin';
+  sourceDomain: string;
+  recordsProcessed: number;
+  recordsFailed: number;
+  latencyMs: number;
+  status: 'synced' | 'streaming' | 'cached' | 'error';
+  timestamp: string;
+  message: string;
+}
+

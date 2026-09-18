@@ -33,8 +33,6 @@ export const RfqModal: React.FC<RfqModalProps> = ({
   onSubmitRfq,
   defaultCategoryId = 'rmg-apparel',
 }) => {
-  if (!isOpen) return null;
-
   const [formData, setFormData] = useState<{
     buyerName: string;
     companyName: string;
@@ -123,6 +121,8 @@ export const RfqModal: React.FC<RfqModalProps> = ({
       setIsSubmitting(false);
     }
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto">

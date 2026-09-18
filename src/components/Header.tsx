@@ -61,6 +61,7 @@ interface HeaderProps {
   onOpenAiAssistant?: () => void;
   theme?: 'dark' | 'light';
   onToggleTheme?: () => void;
+  onOpenPipeline?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -89,6 +90,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAiAssistant,
   theme = 'dark',
   onToggleTheme,
+  onOpenPipeline,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
@@ -153,15 +155,20 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           {/* Left: NexOS Sync indicator (green dot) + Ecosystem links */}
           <div className="flex items-center space-x-3 truncate">
-            <div className="flex items-center space-x-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={onOpenPipeline}
+              className="flex items-center space-x-1.5 shrink-0 cursor-pointer group"
+              title="Click to inspect NexOS Data Ingestion Pipeline (Google Drive & Arutemika)"
+            >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
               </span>
-              <span className="font-mono text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30">
-                NEXOS FAIL-SAFE SYNC
+              <span className="font-mono text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 group-hover:bg-[#10b981]/25 transition-colors">
+                NEXOS 6.5Cr SYNC: ACTIVE
               </span>
-            </div>
+            </button>
 
             <span className="text-slate-500 hidden sm:inline">|</span>
 
@@ -591,6 +598,53 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
         </div>
+      </div>
+
+      {/* =========================================================================
+          TIER 2.5: MOBILE HIGH-TECH SEARCH BAR (Visible on screens < lg)
+          ========================================================================= */}
+      <div className="lg:hidden px-4 pb-2 pt-0">
+        <form onSubmit={handleSearchSubmit} className="flex items-center">
+          <div
+            className={`w-full flex items-center rounded-xl border transition-all ${
+              isDark
+                ? 'bg-[#141414] border-white/15 focus-within:border-[#e11d48]'
+                : 'bg-slate-50 border-slate-300 focus-within:border-[#e11d48]'
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                onSearchChange('selvedge organic leather');
+                setSearchInput('selvedge organic leather');
+              }}
+              className={`p-2 border-r cursor-pointer ${
+                isDark ? 'text-slate-400 border-white/10' : 'text-slate-500 border-slate-200'
+              }`}
+              title="RAWx Visual Lens"
+            >
+              <Camera className="w-3.5 h-3.5 text-[#10b981]" />
+            </button>
+
+            <input
+              type="text"
+              placeholder="Search 50k+ products, HS codes, mills..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className={`flex-1 px-3 py-1.5 text-xs focus:outline-none bg-transparent ${
+                isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
+              }`}
+            />
+
+            <button
+              type="submit"
+              className="px-3 py-1.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold rounded-r-xl cursor-pointer flex items-center space-x-1"
+            >
+              <Search className="w-3 h-3" />
+              <span>Search</span>
+            </button>
+          </div>
+        </form>
       </div>
 
       {/* =========================================================================

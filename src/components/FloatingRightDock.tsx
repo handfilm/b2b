@@ -48,7 +48,7 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
   return (
     <aside
       aria-label="Quick Access Dock"
-      className="fixed right-3 bottom-8 z-40 flex flex-col items-center space-y-2"
+      className="hidden lg:flex fixed right-3 bottom-8 z-40 flex-col items-center space-y-2"
     >
       <div
         className={`rounded-2xl shadow-2xl p-1.5 flex flex-col items-center space-y-1.5 backdrop-blur-md border ${

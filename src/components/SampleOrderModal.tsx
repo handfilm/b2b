@@ -25,8 +25,6 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
   onClose,
   onConfirmSampleOrder,
 }) => {
-  if (!isOpen || !product) return null;
-
   const [quantity, setQuantity] = useState(1);
   const [buyerEmail, setBuyerEmail] = useState('');
   const [shippingCountry, setShippingCountry] = useState('United States');
@@ -34,7 +32,7 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
   const [customNotes, setCustomNotes] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const sampleFeeUSD = product.samplePriceUSD * quantity;
+  const sampleFeeUSD = (product?.samplePriceUSD || 0) * quantity;
   const courierFeeUSD = 35.0; // Flat DHL/FedEx air courier from Dhaka
   const totalUSD = sampleFeeUSD + courierFeeUSD;
 
@@ -44,7 +42,7 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!buyerEmail || !shippingAddress) return;
+    if (!product || !buyerEmail || !shippingAddress) return;
 
     const newOrder: SampleInquiry = {
       id: `sample-${Date.now()}`,
@@ -65,6 +63,8 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
     onConfirmSampleOrder(newOrder);
     setIsSuccess(true);
   };
+
+  if (!isOpen || !product) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto">

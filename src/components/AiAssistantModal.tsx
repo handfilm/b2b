@@ -53,8 +53,6 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
   onOpenSampleOrder,
   onOpenComplianceVault,
 }) => {
-  if (!isOpen) return null;
-
   const [messages, setMessages] = useState<AiChatMessage[]>([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -64,6 +62,8 @@ export const AiAssistantModal: React.FC<AiAssistantModalProps> = ({
 
   // Initialize initial welcome message tailored to context (Alibaba & IndiaMART style)
   useEffect(() => {
+    if (!isOpen) return;
+
     let initialGreeting = '';
     if (activeProduct) {
       initialGreeting = `👋 Hello! I am your **Instant Trade Assistant** for **${activeProduct.title}** (HS Code: \`${activeProduct.hsCode}\`).
@@ -110,11 +110,12 @@ What product or requirement are you sourcing today?`;
         ],
       },
     ]);
-  }, [activeProduct, activeSupplier]);
+  }, [isOpen, activeProduct, activeSupplier]);
 
   useEffect(() => {
+    if (!isOpen) return;
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping]);
+  }, [messages, isTyping, isOpen]);
 
   const handleSendMessage = async (queryText: string) => {
     if (!queryText.trim() || isTyping) return;
@@ -182,6 +183,8 @@ What product or requirement are you sourcing today?`;
       setIsTyping(false);
     }
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-md">

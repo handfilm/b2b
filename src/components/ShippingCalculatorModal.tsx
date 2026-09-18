@@ -26,8 +26,6 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
   currency,
   defaultPort,
 }) => {
-  if (!isOpen) return null;
-
   const [originPort, setOriginPort] = useState('Chattogram Port (CGP)');
   const [selectedDestinationIndex, setSelectedDestinationIndex] = useState(0);
   const [containerType, setContainerType] = useState<'20ft' | '40ft' | 'lcl'>('40ft');
@@ -41,6 +39,8 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
   const costConverted = (estimatedCostUSD * currency.rate).toLocaleString(undefined, {
     maximumFractionDigits: 0,
   });
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto">

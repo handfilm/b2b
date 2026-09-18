@@ -20,6 +20,9 @@ import { ComplianceVaultDrawer } from './components/ComplianceVaultDrawer';
 import { AiAssistantModal } from './components/AiAssistantModal';
 import { FloatingRightDock } from './components/FloatingRightDock';
 import { Footer } from './components/Footer';
+import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
+import { NexosPipelineModal } from './components/NexosPipelineModal';
+import { MobileHighTechDock } from './components/MobileHighTechDock';
 import {
   saveRfqToFirestore,
   saveSampleToFirestore,
@@ -68,7 +71,7 @@ import {
   Globe2,
 } from 'lucide-react';
 
-export const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     try {
       const saved = localStorage.getItem('portal_theme');
@@ -91,10 +94,31 @@ export const App: React.FC = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  const {
+    products: nexosCatalog,
+    filteredProducts: nexosFilteredProducts,
+    suppliers: nexosSuppliers,
+    buyers: nexosBuyers,
+    metrics: nexosMetrics,
+    selectedDivision,
+    setSelectedDivision,
+    selectedCategory,
+    setSelectedCategory,
+    searchQuery,
+    setSearchQuery,
+    sortBy,
+    setSortBy,
+    syncStatus,
+    triggerSync,
+    isPipelineModalOpen,
+    setIsPipelineModalOpen,
+    hasMore,
+    isLoadingMore,
+    loadMore,
+  } = useNexosSync();
+
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
   const [lang, setLang] = useState<LanguageCode>('EN');
-  const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'customers' | 'insights'>('products');
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
@@ -103,18 +127,10 @@ export const App: React.FC = () => {
   const [activeHeroTab, setActiveHeroTab] = useState<'ai' | 'products' | 'suppliers' | 'customers'>('products');
 
   // Federated Division and Domain Source State
-  const [selectedDivision, setSelectedDivision] = useState<string>('all');
   const [selectedDomainSource, setSelectedDomainSource] = useState<'all' | 'shop.handsandhead.com' | 'arutemika.handsandhead.com'>('all');
-  const [catalogPage, setCatalogPage] = useState(1);
-  const [unlimitedProducts, setUnlimitedProducts] = useState<Product[]>(() => {
-    return generateMoreProducts(1, 24, undefined, undefined);
-  });
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
-  const [sortBy, setSortBy] = useState<'ranking' | 'moq' | 'leadTime' | 'reorder'>('ranking');
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-  // Suppliers & Customers dynamic data layer
+  // Dynamic data layer
   const [suppliers, setSuppliers] = useState<Supplier[]>(INITIAL_SUPPLIERS);
   const [customers, setCustomers] = useState<Customer[]>(INITIAL_CUSTOMERS);
   const [liveEvents, setLiveEvents] = useState<LiveTradeEvent[]>(INITIAL_LIVE_EVENTS);
@@ -217,49 +233,6 @@ export const App: React.FC = () => {
     }, 4000);
   };
 
-  // Reset infinite catalog when division or domain source filter changes
-  useEffect(() => {
-    setCatalogPage(1);
-    setUnlimitedProducts(
-      generateMoreProducts(
-        1,
-        24,
-        selectedDomainSource === 'all' ? undefined : selectedDomainSource,
-        selectedDivision === 'all' ? undefined : selectedDivision
-      )
-    );
-    setHasMore(true);
-  }, [selectedDivision, selectedDomainSource]);
-
-  // Infinite Scroll Handler: loads federated items across satellite domains
-  const handleLoadMore = useCallback(() => {
-    if (isLoadingMore || !hasMore) return;
-    setIsLoadingMore(true);
-
-    setTimeout(() => {
-      const nextPage = catalogPage + 1;
-      const nextBatch = generateMoreProducts(
-        nextPage,
-        12,
-        selectedDomainSource === 'all' ? undefined : selectedDomainSource,
-        selectedDivision === 'all' ? undefined : selectedDivision
-      );
-
-      if (nextBatch.length === 0) {
-        setHasMore(false);
-      } else {
-        setUnlimitedProducts((prev) => {
-          // Avoid duplicate product IDs
-          const existingIds = new Set(prev.map((p) => p.id));
-          const newProducts = nextBatch.filter((p) => !existingIds.has(p.id));
-          return [...prev, ...newProducts];
-        });
-        setCatalogPage(nextPage);
-      }
-      setIsLoadingMore(false);
-    }, 350);
-  }, [catalogPage, isLoadingMore, hasMore, selectedDomainSource, selectedDivision]);
-
   // Observer for automatic infinite scrolling as user reaches bottom
   useEffect(() => {
     if (!sentinelRef.current || activeView !== 'products') return;
@@ -267,7 +240,7 @@ export const App: React.FC = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !isLoadingMore && hasMore) {
-          handleLoadMore();
+          loadMore();
         }
       },
       { threshold: 0.1, rootMargin: '300px' }
@@ -275,7 +248,7 @@ export const App: React.FC = () => {
 
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [handleLoadMore, isLoadingMore, hasMore, activeView]);
+  }, [loadMore, isLoadingMore, hasMore, activeView]);
 
   // Sync backend suppliers and customer events
   useEffect(() => {
@@ -356,6 +329,7 @@ export const App: React.FC = () => {
   const handleForceSync = async () => {
     setIsSyncing(true);
     try {
+      await triggerSync();
       const [supplierRes, customerRes, eventsRes, statsRes] = await Promise.all([
         nexusApi.fetchSuppliers({
           category: selectedCategory !== 'all' ? selectedCategory : undefined,
@@ -372,7 +346,7 @@ export const App: React.FC = () => {
       const freshEvt = generateRandomTradeEvent();
       setLiveEvents([freshEvt, ...eventsRes.events]);
       setMarketplaceStats(statsRes.stats);
-      showNotification('Realtime trade data synchronized with Master Nexus!');
+      showNotification('Realtime trade data synchronized with Master Nexus (6.5 Cr ledger + Google Drive + Arutemika)!');
     } catch (e) {
       console.warn('Sync failed:', e);
     } finally {
@@ -380,52 +354,17 @@ export const App: React.FC = () => {
     }
   };
 
-  // Filtered & Sorted Products from Unlimited Catalog
+  // Filtered & Sorted Products from Nexos Hydrated Catalog
   const displayedProducts = useMemo(() => {
-    let result = unlimitedProducts.filter((p) => {
-      // Division filter
-      if (selectedDivision !== 'all' && p.divisionSlug !== selectedDivision) {
-        return false;
-      }
-      // Domain filter
-      if (selectedDomainSource !== 'all' && p.sourceDomain !== selectedDomainSource) {
-        return false;
-      }
-      // Category check
-      if (selectedCategory !== 'all' && p.categoryId !== selectedCategory) {
-        return false;
-      }
-      // Supplier filter
-      if (supplierFilter && p.supplierId !== supplierFilter) {
-        return false;
-      }
-      // Search query check
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        const matchesTitle = p.title.toLowerCase().includes(query);
-        const matchesDesc = p.description.toLowerCase().includes(query);
-        const matchesHs = p.hsCode.toLowerCase().includes(query);
-        const matchesSupplier = p.supplierName.toLowerCase().includes(query);
-        const matchesMaterials = p.materials.some((m) => m.toLowerCase().includes(query));
-        const matchesDivision = p.divisionTitle?.toLowerCase().includes(query);
-        if (!matchesTitle && !matchesDesc && !matchesHs && !matchesSupplier && !matchesMaterials && !matchesDivision) {
-          return false;
-        }
-      }
-      return true;
-    });
-
-    // Sorting
-    if (sortBy === 'moq') {
-      result = [...result].sort((a, b) => (a?.moq || 0) - (b?.moq || 0));
-    } else if (sortBy === 'leadTime') {
-      result = [...result].sort((a, b) => (a?.leadTimeDays || 0) - (b?.leadTimeDays || 0));
-    } else if (sortBy === 'reorder') {
-      result = [...result].sort((a, b) => (b?.reorderRate || 0) - (a?.reorderRate || 0));
+    let result = nexosFilteredProducts;
+    if (selectedDomainSource !== 'all') {
+      result = result.filter((p) => p.sourceDomain === selectedDomainSource);
     }
-
+    if (supplierFilter) {
+      result = result.filter((p) => p.supplierId === supplierFilter);
+    }
     return result;
-  }, [unlimitedProducts, selectedDivision, selectedDomainSource, selectedCategory, supplierFilter, searchQuery, sortBy]);
+  }, [nexosFilteredProducts, selectedDomainSource, supplierFilter]);
 
   // Filtered Suppliers List
   const filteredSuppliers = useMemo(() => {
@@ -622,6 +561,7 @@ export const App: React.FC = () => {
         onOpenAiAssistant={() => handleOpenAiAssistant()}
         theme={theme}
         onToggleTheme={toggleTheme}
+        onOpenPipeline={() => setIsPipelineModalOpen(true)}
       />
 
       {/* 2. HERO SECTION: AI Mode, Products, BD Exporters, Global Buyer with Big Search Bar */}
@@ -644,6 +584,7 @@ export const App: React.FC = () => {
       {/* 2.5 LIVE COMMODITY & EXPORT LOGISTICS MATRIX STRIP */}
       {persona === 'buyer' && (
         <LiveTradeMatrixStrip
+          metrics={nexosMetrics}
           onOpenFreightMatrix={() => setIsShippingCalcOpen(true)}
           onOpenShipping={() => setIsShippingCalcOpen(true)}
           onOpenFactories={() => {
@@ -654,6 +595,7 @@ export const App: React.FC = () => {
             setActiveView('customers');
             setActiveHeroTab('customers');
           }}
+          onOpenPipeline={() => setIsPipelineModalOpen(true)}
           theme={theme}
         />
       )}
@@ -682,7 +624,7 @@ export const App: React.FC = () => {
       )}
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 py-4 flex-1 w-full">
+      <main className="max-w-7xl mx-auto px-4 py-4 flex-1 w-full pb-24 lg:pb-8">
         {/* SELLER / EXPORTER HUB WORKSPACE */}
         {persona === 'seller' ? (
           <ManufacturerHub
@@ -747,7 +689,7 @@ export const App: React.FC = () => {
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       }`}
                     >
-                      All Verticals ({unlimitedProducts.length})
+                      All Verticals ({nexosCatalog.length})
                     </button>
                     {FEDERATED_DIVISIONS.slice(1, 8).map((div) => {
                       const isActive = selectedDivision === div.slug;
@@ -877,8 +819,8 @@ export const App: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  /* Unlimited Products Grid (Alibaba/Shein/Etsy Style 4-columns 1:1 Cards) */
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  /* Unlimited Products Grid (High-Tech 2-cols on mobile, 3-4 cols on desktop 1:1 Cards) */
+                  <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4">
                     {displayedProducts.map((product) => (
                       <ProductCard
                         key={product.id}
@@ -926,7 +868,7 @@ export const App: React.FC = () => {
 
                   {!isLoadingMore && hasMore && (
                     <button
-                      onClick={handleLoadMore}
+                      onClick={loadMore}
                       className={`px-5 py-2 rounded-full border text-xs font-bold shadow-xs transition-colors cursor-pointer ${
                         theme === 'dark'
                           ? 'bg-[#141414] hover:bg-white/10 border-white/20 text-white hover:text-[#ff1e42]'
@@ -1218,6 +1160,34 @@ export const App: React.FC = () => {
           setSampleProduct(p);
         }}
       />
+
+      {/* NexOS Pipeline Inspector Modal */}
+      <NexosPipelineModal
+        isOpen={isPipelineModalOpen}
+        onClose={() => setIsPipelineModalOpen(false)}
+        theme={theme}
+      />
+
+      {/* High-Tech Mobile Bottom Dock */}
+      <MobileHighTechDock
+        activeView={activeView}
+        onViewChange={(v) => {
+          setActiveView(v);
+          setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
+        }}
+        onOpenAiAssistant={() => handleOpenAiAssistant()}
+        onOpenRfq={() => setIsRfqModalOpen(true)}
+        onOpenPipeline={() => setIsPipelineModalOpen(true)}
+        theme={theme}
+      />
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <NexosSyncProvider>
+      <AppContent />
+    </NexosSyncProvider>
   );
 };
