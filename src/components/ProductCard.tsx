@@ -537,7 +537,60 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </div>
 
             {/* Bottom Quick-Action Buttons with Motion Tap feedback */}
-            <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-white/10">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-2 border-t border-white/10">
+              {/* Inquire Button */}
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onInquire(product);
+                }}
+                className="py-2 px-2 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[11px] font-black tracking-wide shadow-md transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                title="Send Direct Factory RFQ & Inquire"
+              >
+                <Send className="w-3 h-3" />
+                <span>Inquire</span>
+              </motion.button>
+
+              {/* Chat Agent Button */}
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onOpenAiAssistant) {
+                    onOpenAiAssistant(product);
+                  } else {
+                    onInquire(product);
+                  }
+                }}
+                className="py-2 px-2 rounded-xl bg-[#10b981] hover:bg-[#059669] text-slate-950 text-[11px] font-black transition-colors flex items-center justify-center space-x-1 cursor-pointer shadow-md shadow-[#10b981]/20"
+                title="Chat with AI Sourcing Agent for custom spec & price negotiation"
+              >
+                <Sparkles className="w-3 h-3 text-slate-950 animate-pulse" />
+                <span>Chat Agent</span>
+              </motion.button>
+
+              {/* + RFQ Cart */}
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product);
+                }}
+                className="py-2 px-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[10.5px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                title="Add to B2B Inquiry Cart"
+              >
+                <ShoppingCart className="w-3 h-3 text-[#ff1e42]" />
+                <span className="truncate">+ Cart</span>
+              </motion.button>
+
+              {/* TechPack CAD */}
               <motion.button
                 type="button"
                 whileHover={{ scale: 1.02 }}
@@ -550,38 +603,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     onSelectProduct(product);
                   }
                 }}
-                className="py-2 px-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[10px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
+                className="py-2 px-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-[10.5px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
                 title="Export Spec to CAD TechPack Studio"
               >
                 <FileText className="w-3 h-3 text-[#10b981]" />
-                <span className="truncate">TechPack</span>
-              </motion.button>
-
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  addToCart(product);
-                }}
-                className="py-2 px-1.5 rounded-xl bg-[#e11d48]/20 hover:bg-[#e11d48]/35 border border-[#e11d48]/40 text-white text-[10px] font-bold transition-colors flex items-center justify-center space-x-1 cursor-pointer"
-                title="Add to B2B Inquiry Cart"
-              >
-                <ShoppingCart className="w-3 h-3 text-[#ff1e42]" />
-                <span className="truncate">+ RFQ Cart</span>
-              </motion.button>
-
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.96 }}
-                onClick={handleOutboundSourcing}
-                className="py-2 px-1.5 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[10px] font-black tracking-wide shadow-md transition-colors flex items-center justify-center space-x-1 cursor-pointer"
-                title="Procure Direct on Dedicated Node"
-              >
-                <ArrowUpRight className="w-3 h-3" />
-                <span className="truncate">Direct</span>
+                <span className="truncate">CAD</span>
               </motion.button>
             </div>
           </motion.div>

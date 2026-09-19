@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   ShieldCheck,
   FileText,
@@ -15,6 +16,9 @@ import {
   Eye,
   CheckCircle2,
   AlertCircle,
+  Activity,
+  TrendingUp,
+  Zap,
 } from 'lucide-react';
 import { B2BProduct } from '../../types';
 
@@ -230,20 +234,31 @@ export const Overview: React.FC<OverviewProps> = ({
       </div>
 
       {/* =========================================================================
-          FEATURE 1: 3 HIGH-TECH METRIC CARDS
+          FEATURE 1: 3 HIGH-TECH METRIC CARDS (ANIMATED & DYNAMIC)
           ========================================================================= */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Card 1: Pending Escrow */}
-        <div className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-lg relative overflow-hidden group hover:border-[#10b981]/40 transition-all">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-              Secured Trade Escrow
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.05 }}
+          whileHover={{ y: -3, scale: 1.01 }}
+          className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-lg relative overflow-hidden group hover:border-[#10b981]/40 transition-all"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#10b981]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#10b981]/20 transition-all" />
+          <div className="flex items-center justify-between relative z-10">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono flex items-center space-x-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
+              </span>
+              <span>Secured Trade Escrow</span>
             </span>
             <div className="w-9 h-9 rounded-xl bg-[#10b981]/15 text-[#10b981] flex items-center justify-center border border-[#10b981]/30">
               <ShieldCheck className="w-5 h-5" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-3 relative z-10">
             <div className="text-2xl sm:text-3xl font-black text-white tracking-tight font-mono">
               $142,500.00
             </div>
@@ -252,7 +267,7 @@ export const Overview: React.FC<OverviewProps> = ({
               <span>2 Milestones Protected • EPB Bonded Guarantee</span>
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 relative z-10">
             <span>Next Release: Post-Lab Dip ($28.5k)</span>
             <button
               onClick={() => onNavigateToTab?.('orders')}
@@ -262,19 +277,30 @@ export const Overview: React.FC<OverviewProps> = ({
               <ArrowUpRight className="w-3 h-3" />
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 2: Active RFQs */}
-        <div className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-lg relative overflow-hidden group hover:border-[#e11d48]/40 transition-all">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-              Active RFQ Broadcasts
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.12 }}
+          whileHover={{ y: -3, scale: 1.01 }}
+          className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-lg relative overflow-hidden group hover:border-[#e11d48]/40 transition-all"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#e11d48]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#e11d48]/20 transition-all" />
+          <div className="flex items-center justify-between relative z-10">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono flex items-center space-x-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e11d48]"></span>
+              </span>
+              <span>Active RFQ Broadcasts</span>
             </span>
             <div className="w-9 h-9 rounded-xl bg-[#e11d48]/15 text-[#e11d48] flex items-center justify-center border border-[#e11d48]/30">
               <FileText className="w-5 h-5" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-3 relative z-10">
             <div className="text-2xl sm:text-3xl font-black text-white tracking-tight font-mono">
               8 Active Lots
             </div>
@@ -283,7 +309,7 @@ export const Overview: React.FC<OverviewProps> = ({
               <span>34 Factory Quotations in Review</span>
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 relative z-10">
             <span>5 Mills Quoting FOB Chattogram</span>
             <button
               onClick={onOpenRfqModal}
@@ -293,19 +319,30 @@ export const Overview: React.FC<OverviewProps> = ({
               <ArrowUpRight className="w-3 h-3" />
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Card 3: Unread Quotes */}
-        <div className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-lg relative overflow-hidden group hover:border-amber-500/40 transition-all">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono">
-              Unread Factory Quotes
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: 0.19 }}
+          whileHover={{ y: -3, scale: 1.01 }}
+          className="rounded-2xl border border-white/10 bg-[#121212] p-5 shadow-lg relative overflow-hidden group hover:border-amber-500/40 transition-all"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-amber-500/20 transition-all" />
+          <div className="flex items-center justify-between relative z-10">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider font-mono flex items-center space-x-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400"></span>
+              </span>
+              <span>Unread Factory Quotes</span>
             </span>
             <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center border border-amber-500/30">
               <MessageSquareQuote className="w-5 h-5" />
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-3 relative z-10">
             <div className="text-2xl sm:text-3xl font-black text-white tracking-tight font-mono">
               12 Unread Bids
             </div>
@@ -314,7 +351,7 @@ export const Overview: React.FC<OverviewProps> = ({
               <span>Avg SLA Response: 3.2 hrs</span>
             </div>
           </div>
-          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[11px] text-slate-400 relative z-10">
             <span>Lowest bid: $2.42/pc (Knits)</span>
             <button
               onClick={onOpenInquiries}
@@ -324,7 +361,7 @@ export const Overview: React.FC<OverviewProps> = ({
               <ArrowUpRight className="w-3 h-3" />
             </button>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* =========================================================================

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Globe2,
   Search,
-  Camera,
   FileText,
   Ship,
   Sparkles,
@@ -17,10 +16,10 @@ import {
   Sun,
   Moon,
   ShieldCheck,
-  Zap,
   LayoutDashboard,
   Bookmark,
   ShoppingCart,
+  Check,
 } from 'lucide-react';
 import { useInquiryCart } from '../context/InquiryCartContext';
 import {
@@ -32,7 +31,6 @@ import {
 } from '../types';
 import { CURRENCIES } from '../data/mockData';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
-import { getTranslation } from '../i18n/translations';
 
 interface HeaderProps {
   currentCurrency: CurrencyCode;
@@ -48,7 +46,7 @@ interface HeaderProps {
   onOpenRfq: () => void;
   onOpenShippingCalc: () => void;
   onOpenInquiries: () => void;
-  onOpenAutomation: () => void;
+  onOpenAutomation?: () => void;
   inquiryCount: number;
   activeView: 'products' | 'suppliers' | 'customers' | 'insights';
   onViewChange: (view: 'products' | 'suppliers' | 'customers' | 'insights') => void;
@@ -75,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
   onCurrencyChange,
   lang,
   onLanguageChange,
-  selectedCategory,
+  selectedCategory: _selectedCategory,
   onSelectCategory,
   selectedDivision = 'all',
   onSelectDivision,
@@ -93,7 +91,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAuth,
   onLogout,
   onOpenTechPackStudio,
-  onOpenAiAssistant,
+  onOpenAiAssistant: _onOpenAiAssistant,
   theme = 'dark',
   onToggleTheme,
   onOpenPipeline,
@@ -102,6 +100,9 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
+  const [isEcosystemOpen, setIsEcosystemOpen] = useState(false);
+  const [isRfqMenuOpen, setIsRfqMenuOpen] = useState(false);
+  const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(searchQuery);
 
   const { openCart, totalItems: cartCount } = useInquiryCart();
@@ -120,7 +121,7 @@ export const Header: React.FC<HeaderProps> = ({
     if (onSelectDivision) {
       onSelectDivision(slug);
     }
-    // Also synchronize selectedCategory where applicable
+    // Synchronize selectedCategory where applicable
     if (slug === 'all') {
       onSelectCategory('all');
     } else if (slug === 'rmg-knits' || slug === 'heavy-outerwear' || slug === 'commercial-blanks') {
@@ -152,7 +153,8 @@ export const Header: React.FC<HeaderProps> = ({
       }`}
     >
       {/* =========================================================================
-          TIER 1: TOP STRIP (Ultra-compact, dark glass, responsive)
+          TIER 1: TOP STRIP
+          ECOSYSTEM (Dropdown) | Light/Dark | EN/বাংলা | USD ($) | RFQ (Dropdown)
           ========================================================================= */}
       <div
         id="header-top-strip"
@@ -162,76 +164,97 @@ export const Header: React.FC<HeaderProps> = ({
             : 'bg-slate-100 border-slate-200 text-slate-700'
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
-          {/* Left: NexOS Sync indicator + Ecosystem links */}
-          <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+          {/* Left: ECOSYSTEM Dropdown Menu */}
+          <div className="flex items-center space-x-2.5">
             <button
               type="button"
               onClick={onOpenPipeline}
               className="flex items-center space-x-1.5 shrink-0 cursor-pointer group"
-              title="Click to inspect NexOS Data Ingestion Pipeline (Google Drive & Arutemika)"
+              title="Click to inspect NexOS Data Ingestion Pipeline"
             >
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
               </span>
-              <span className="font-mono text-[9.5px] sm:text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 group-hover:bg-[#10b981]/25 transition-colors whitespace-nowrap">
-                NEXOS 6.5Cr SYNC: ACTIVE
-              </span>
             </button>
 
-            {/* Ecosystem links: visible on wide screens, cleanly tucked on smaller screens */}
-            <div className="hidden xl:flex items-center space-x-2.5 text-[11px] text-slate-400 border-l border-inherit pl-2.5 shrink-0">
-              <span className="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Ecosystem:</span>
-              <a
-                href="https://admin.handsandhead.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
-                title="Admin Control Nexus"
+            {/* ECOSYSTEM Dropdown Button */}
+            <div className="relative">
+              <button
+                type="button"
+                id="header-ecosystem-dropdown-btn"
+                onClick={() => setIsEcosystemOpen(!isEcosystemOpen)}
+                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                  isDark
+                    ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                    : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs'
+                }`}
               >
-                <span>Admin Nexus</span>
-                <ExternalLink className="w-2.5 h-2.5" />
-              </a>
-              <span>•</span>
-              <a
-                href="https://shop.handsandhead.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
-                title="D2C Commercial Portal"
-              >
-                <span>D2C Portal</span>
-                <ExternalLink className="w-2.5 h-2.5" />
-              </a>
-              <span>•</span>
-              <a
-                href="https://rmg.handsandhead.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
-                title="Commercial Knit & Denim Cluster"
-              >
-                <span>Commercial RMG</span>
-                <ExternalLink className="w-2.5 h-2.5" />
-              </a>
-              <span>•</span>
-              <a
-                href="https://arutemika.com"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
-                title="Flagship Leather Atelier"
-              >
-                <span>Leather Atelier</span>
-                <ExternalLink className="w-2.5 h-2.5" />
-              </a>
+                <span className="font-extrabold uppercase tracking-wider text-[11px]">ECOSYSTEM</span>
+                <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isEcosystemOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isEcosystemOpen && (
+                <div
+                  onMouseLeave={() => setIsEcosystemOpen(false)}
+                  className={`absolute left-0 top-full mt-1 w-56 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
+                    isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+                  }`}
+                >
+                  <div className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1 border-b border-inherit">
+                    NexOS Ecosystem
+                  </div>
+                  <div className="py-1 space-y-0.5 text-xs">
+                    <a
+                      href="https://admin.handsandhead.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setIsEcosystemOpen(false)}
+                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
+                    >
+                      <span>Admin Nexus</span>
+                      <ExternalLink className="w-3 h-3 text-slate-400" />
+                    </a>
+                    <a
+                      href="https://shop.handsandhead.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setIsEcosystemOpen(false)}
+                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
+                    >
+                      <span>D2C Portal</span>
+                      <ExternalLink className="w-3 h-3 text-slate-400" />
+                    </a>
+                    <a
+                      href="https://rmg.handsandhead.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setIsEcosystemOpen(false)}
+                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
+                    >
+                      <span>Commercial RMG</span>
+                      <ExternalLink className="w-3 h-3 text-slate-400" />
+                    </a>
+                    <a
+                      href="https://arutemika.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => setIsEcosystemOpen(false)}
+                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
+                    >
+                      <span>Leather Atelier</span>
+                      <ExternalLink className="w-3 h-3 text-slate-400" />
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Right: Theme Toggle + Language Toggle + Currency + Port Freight Matrix */}
-          <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0 text-xs">
-            {/* Dark / Light Theme Toggle */}
+          {/* Right: Light/Dark + EN/বাংলা + USD ($) + RFQ Dropdown */}
+          <div className="flex items-center space-x-2 shrink-0 text-xs">
+            {/* Theme Toggle */}
             {onToggleTheme && (
               <button
                 type="button"
@@ -247,12 +270,12 @@ export const Header: React.FC<HeaderProps> = ({
                 {isDark ? (
                   <>
                     <Sun className="w-3 h-3 text-amber-400" />
-                    <span className="text-[10px] sm:text-[11px] font-bold">Light</span>
+                    <span className="text-[11px] font-bold">Light</span>
                   </>
                 ) : (
                   <>
                     <Moon className="w-3 h-3 text-slate-700" />
-                    <span className="text-[10px] sm:text-[11px] font-bold">Dark</span>
+                    <span className="text-[11px] font-bold">Dark</span>
                   </>
                 )}
               </button>
@@ -290,19 +313,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             </div>
 
-            {/* Port Freight Matrix */}
-            <button
-              type="button"
-              id="header-freight-matrix-btn"
-              onClick={onOpenShippingCalc}
-              className="hidden lg:flex items-center space-x-1 text-slate-400 hover:text-[#10b981] transition-colors cursor-pointer font-medium text-[11px]"
-              title="Open Port Freight Matrix & Customs Calculator"
-            >
-              <Ship className="w-3 h-3 text-[#10b981]" />
-              <span>Freight Matrix</span>
-            </button>
-
-            {/* Currency Selector [USD $] */}
+            {/* Currency Selector [USD ($)] */}
             <div className="relative">
               <button
                 type="button"
@@ -355,18 +366,81 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
             </div>
+
+            {/* RFQ Dropdown Menu (Contains TechPack, Post RFQ, Freight Matrix) */}
+            <div className="relative">
+              <button
+                type="button"
+                id="header-rfq-dropdown-btn"
+                onClick={() => setIsRfqMenuOpen(!isRfqMenuOpen)}
+                className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black transition-all cursor-pointer shadow-xs"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>RFQ</span>
+                <ChevronDown className={`w-3 h-3 text-white/80 transition-transform ${isRfqMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isRfqMenuOpen && (
+                <div
+                  onMouseLeave={() => setIsRfqMenuOpen(false)}
+                  className={`absolute right-0 top-full mt-1 w-52 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
+                    isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+                  }`}
+                >
+                  <div className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1 border-b border-inherit">
+                    Commercial RFQ Suite
+                  </div>
+                  <div className="py-1 space-y-0.5 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsRfqMenuOpen(false);
+                        onOpenTechPackStudio?.();
+                      }}
+                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-[#10b981]/15 hover:text-[#10b981] transition-colors cursor-pointer"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-[#10b981]" />
+                      <span>TechPack</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsRfqMenuOpen(false);
+                        onOpenRfq();
+                      }}
+                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-[#e11d48]/15 hover:text-[#ff1e42] transition-colors cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-[#e11d48]" />
+                      <span>Post RFQ</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsRfqMenuOpen(false);
+                        onOpenShippingCalc();
+                      }}
+                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-white/10 transition-colors cursor-pointer"
+                    >
+                      <Ship className="w-3.5 h-3.5 text-[#10b981]" />
+                      <span>Freight Matrix</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/* =========================================================================
-          TIER 2: PRIMARY NAVBAR (Responsive row, zero horizontal overflow)
+          TIER 2: PRIMARY NAVBAR
+          & (Logo) Made in BD | [All Verticals ▾] [ Search... 🔍 ] | Buyer Portal / Mills Hub | Sign In
           ========================================================================= */}
       <div
         id="header-primary-navbar"
-        className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-3"
+        className="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex items-center justify-between gap-3"
       >
-        {/* Left: Logo with "&" inside red circle beside "Made in BD" + Persona Switcher */}
+        {/* Left: Logo "&" inside red circle beside "Made in BD" (strictly no b2b portal text) */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
           <div
             id="brand-logo"
@@ -376,30 +450,125 @@ export const Header: React.FC<HeaderProps> = ({
               onSearchChange('');
             }}
             className="flex items-center space-x-2 cursor-pointer group shrink-0"
-            title="Made in BD - B2B Bangladesh Wholesale Export Portal"
+            title="Made in BD"
           >
             {/* Red circle badge with ONLY "&" */}
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-base sm:text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
               &amp;
             </div>
-            <div className="flex items-center space-x-1.5">
-              <span
-                className={`font-black text-lg sm:text-xl tracking-tight ${
-                  isDark ? 'text-white' : 'text-slate-950'
+            <span
+              className={`font-black text-lg sm:text-xl tracking-tight ${
+                isDark ? 'text-white' : 'text-slate-950'
+              }`}
+            >
+              Made in BD
+            </span>
+          </div>
+        </div>
+
+        {/* Center: Subtle Verticals Dropdown + Tiny Search Bar with Magnifier Clipart */}
+        <div className="flex-1 min-w-0 max-w-xl mx-2 flex items-center space-x-1.5">
+          {/* Subtle Verticals Dropdown */}
+          <div className="relative shrink-0">
+            <button
+              type="button"
+              id="header-verticals-dropdown-btn"
+              onClick={() => setIsVerticalMenuOpen(!isVerticalMenuOpen)}
+              className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                isDark
+                  ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300'
+                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+              }`}
+              title="All Verticals (2,749)"
+            >
+              <span className="max-w-[130px] truncate">
+                {selectedDivision === 'all'
+                  ? 'All Verticals'
+                  : FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.pavilionLabel || 'Vertical'}
+              </span>
+              <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isVerticalMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {isVerticalMenuOpen && (
+              <div
+                onMouseLeave={() => setIsVerticalMenuOpen(false)}
+                className={`absolute left-0 top-full mt-1.5 w-64 rounded-xl shadow-2xl border p-1.5 z-50 max-h-80 overflow-y-auto ${
+                  isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
                 }`}
               >
-                Made in BD
-              </span>
-              <span className="hidden md:inline text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full bg-[#e11d48]/15 text-[#ff1e42] border border-[#e11d48]/30 font-mono tracking-wider">
-                B2B PORTAL
-              </span>
-            </div>
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1">
+                  Export Verticals (2,749)
+                </div>
+                {FEDERATED_DIVISIONS.map((div) => {
+                  const isSelected = selectedDivision === div.slug;
+                  return (
+                    <button
+                      key={div.slug}
+                      type="button"
+                      onClick={() => {
+                        handleDivisionClick(div.slug);
+                        setIsVerticalMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center justify-between ${
+                        isSelected
+                          ? 'bg-[#e11d48] text-white'
+                          : isDark
+                          ? 'hover:bg-white/10 text-slate-300'
+                          : 'hover:bg-slate-100 text-slate-700'
+                      }`}
+                    >
+                      <span>{div.pavilionLabel}</span>
+                      {isSelected && <Check className="w-3 h-3 text-white" />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Persona Switcher: [Buyer Portal] / [Manufacturer Hub] */}
+          {/* Tiny Search Bar with magnifier clipart, no extra text */}
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex-1 min-w-0 flex items-center"
+          >
+            <div
+              className={`w-full flex items-center rounded-xl border transition-all ${
+                isDark
+                  ? 'bg-[#141414] border-white/15 focus-within:border-[#e11d48]'
+                  : 'bg-slate-50 border-slate-300 focus-within:border-[#e11d48]'
+              }`}
+            >
+              <input
+                type="text"
+                id="global-search-input"
+                placeholder="Search..."
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                className={`flex-1 min-w-0 px-2.5 py-1.5 text-xs focus:outline-none bg-transparent ${
+                  isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
+                }`}
+              />
+
+              {/* Tiny magnifier clipart search button, no extra text */}
+              <button
+                type="submit"
+                id="global-search-submit-btn"
+                className="px-2.5 py-1.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white rounded-r-xl transition-colors flex items-center justify-center cursor-pointer shrink-0"
+                title="Search"
+                aria-label="Search"
+              >
+                <Search className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Right Side: Buyer Portal / Mills Hub, Inquiries, Cart, Sign In */}
+        <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+          {/* Persona Switcher: [Buyer Portal] / [Mills Hub] */}
           <div
             id="persona-switcher"
-            className={`hidden md:flex items-center p-0.5 rounded-xl border ${
+            className={`flex items-center p-0.5 rounded-xl border ${
               isDark ? 'bg-[#141414] border-white/10' : 'bg-slate-100 border-slate-200'
             }`}
           >
@@ -407,13 +576,13 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               id="persona-buyer-btn"
               onClick={() => onPersonaChange('buyer')}
-              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center space-x-1 ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
                 persona === 'buyer'
                   ? 'bg-[#e11d48] text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <span>Buyer Portal</span>
+              Buyer Portal
             </button>
             <button
               type="button"
@@ -426,111 +595,11 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Factory className="w-3 h-3" />
-              <span className="hidden lg:inline">Manufacturer Hub</span>
-              <span className="lg:hidden">Mills Hub</span>
+              <span>Mills Hub</span>
             </button>
           </div>
-        </div>
 
-        {/* Center: Central Global Search Bar */}
-        <form
-          onSubmit={handleSearchSubmit}
-          className="flex-1 min-w-0 max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-2 hidden lg:flex items-center"
-        >
-          <div
-            className={`w-full flex items-center rounded-xl border transition-all ${
-              isDark
-                ? 'bg-[#141414] border-white/15 focus-within:border-[#e11d48]'
-                : 'bg-slate-50 border-slate-300 focus-within:border-[#e11d48]'
-            }`}
-          >
-            {/* Visual Search / Lens button */}
-            <button
-              type="button"
-              onClick={() => {
-                onSearchChange('selvedge organic leather');
-                setSearchInput('selvedge organic leather');
-              }}
-              className={`p-2 border-r cursor-pointer transition-colors shrink-0 ${
-                isDark
-                  ? 'text-slate-400 hover:text-white border-white/10 hover:bg-white/5'
-                  : 'text-slate-500 hover:text-slate-900 border-slate-200 hover:bg-slate-100'
-              }`}
-              title="RAWx Visual Lens / Spec Match"
-            >
-              <Camera className="w-3.5 h-3.5 text-[#10b981]" />
-            </button>
-
-            {/* Textual input */}
-            <input
-              type="text"
-              id="global-search-input"
-              placeholder="Search 50,000+ fabrics, mills, HS codes..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className={`flex-1 min-w-0 px-2.5 py-1.5 text-xs focus:outline-none bg-transparent ${
-                isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
-              }`}
-            />
-
-            {/* Crimson Red "RAWx Search" button */}
-            <button
-              type="submit"
-              id="global-search-submit-btn"
-              className="px-3 py-1.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black rounded-r-xl transition-colors flex items-center space-x-1 cursor-pointer shrink-0"
-              title="Run Sourcing Search"
-            >
-              <Search className="w-3 h-3" />
-              <span className="hidden xl:inline">RAWx</span>
-              <span>Search</span>
-            </button>
-          </div>
-        </form>
-
-        {/* Right Actions: [RAWx Bot] [TechPack] [Post RFQ] [Inquiry Cart] [Inquiries] [Sign In / Profile] */}
-        <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
-          {/* 1. RAWx Bot (24/7 AI Sourcing Assistant) */}
-          <button
-            type="button"
-            id="header-rawx-bot-btn"
-            onClick={onOpenAiAssistant}
-            className="hidden xl:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:opacity-95 text-white text-xs font-black shadow-md shadow-[#e11d48]/20 cursor-pointer transition-all shrink-0"
-            title="Launch RAWx Bot Trade Agent"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
-            <span>RAWx Bot</span>
-          </button>
-
-          {/* 2. TechPack Studio */}
-          <button
-            type="button"
-            id="header-techpack-studio-btn"
-            onClick={onOpenTechPackStudio}
-            className={`hidden 2xl:flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer shrink-0 ${
-              isDark
-                ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
-                : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
-            }`}
-            title="Open Interactive TechPack Studio"
-          >
-            <FileText className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>TechPack</span>
-          </button>
-
-          {/* 3. Post RFQ (Compact on mobile, full on desktop) */}
-          <button
-            type="button"
-            id="header-post-rfq-btn"
-            onClick={onOpenRfq}
-            className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#10b981] hover:bg-[#22c55e] text-slate-950 text-xs font-black transition-all cursor-pointer flex items-center space-x-1 shadow-xs shrink-0"
-            title="Post Commercial RFQ for 5,000+ Mills"
-          >
-            <FileText className="w-3.5 h-3.5 sm:hidden" />
-            <span className="hidden sm:inline">Post RFQ</span>
-            <span className="sm:hidden">RFQ</span>
-          </button>
-
-          {/* 4. Inquiries / Messages */}
+          {/* Inquiries / Messages */}
           <button
             type="button"
             id="header-inquiries-btn"
@@ -548,22 +617,21 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </button>
 
-          {/* 4.5. B2B Inquiry Cart (RFQ Launcher) */}
+          {/* Inquiry Cart */}
           <button
             type="button"
             id="header-inquiry-cart-btn"
             onClick={openCart}
-            className={`relative p-2 rounded-xl border transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+            className={`relative p-2 rounded-xl border transition-all cursor-pointer flex items-center space-x-1 shrink-0 ${
               cartCount > 0
                 ? 'bg-[#e11d48]/15 hover:bg-[#e11d48]/25 border-[#e11d48]/50 text-white shadow-md shadow-[#e11d48]/20'
                 : isDark
                 ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
                 : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
             }`}
-            title="B2B Inquiry Cart (Launch RAWx Trade Agent)"
+            title="B2B Inquiry Cart"
           >
             <ShoppingCart className={`w-4 h-4 ${cartCount > 0 ? 'text-[#ff1e42]' : 'text-slate-300'}`} />
-            <span className="hidden 2xl:inline text-xs font-bold">Cart</span>
             {cartCount > 0 && (
               <span className="bg-[#e11d48] text-white font-bold text-[9px] px-1 py-0.2 rounded-full min-w-4 text-center animate-pulse">
                 {cartCount}
@@ -571,7 +639,7 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* 5. User Account / Sign In - ALWAYS FULLY VISIBLE & SIZED AT FAR RIGHT */}
+          {/* Sign In / Profile */}
           {authUser ? (
             <div className="relative shrink-0">
               <button
@@ -585,7 +653,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="w-5 h-5 rounded-full bg-[#e11d48] text-white flex items-center justify-center text-[10px] font-black shrink-0">
                   {authUser.name.charAt(0)}
                 </div>
-                <span className="max-w-[60px] sm:max-w-[70px] truncate hidden xs:inline sm:inline">{authUser.name}</span>
+                <span className="max-w-[70px] truncate hidden sm:inline">{authUser.name}</span>
                 <ChevronDown className="w-3 h-3 text-slate-400 shrink-0" />
               </button>
 
@@ -596,7 +664,6 @@ export const Header: React.FC<HeaderProps> = ({
                     isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
                   }`}
                 >
-                  {/* Buyer Profile Header */}
                   <div className="px-3 py-2.5 border-b border-inherit text-xs">
                     <div className="flex items-center space-x-2">
                       <div className="w-8 h-8 rounded-lg bg-[#e11d48] text-white font-black flex items-center justify-center text-xs">
@@ -615,7 +682,6 @@ export const Header: React.FC<HeaderProps> = ({
                     </div>
                   </div>
 
-                  {/* Rich Navigation Links: Sourcing Hub, Orders, RFQs, Favorites */}
                   <div className="py-1.5 space-y-0.5 text-xs">
                     <button
                       type="button"
@@ -663,8 +729,6 @@ export const Header: React.FC<HeaderProps> = ({
                         setIsUserMenuOpen(false);
                         if (onNavigateToBuyerDashboard) {
                           onNavigateToBuyerDashboard('rfqs');
-                        } else {
-                          onOpenInquiries();
                         }
                       }}
                       className="w-full text-left px-3 py-2 rounded-lg font-bold text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between cursor-pointer"
@@ -707,7 +771,6 @@ export const Header: React.FC<HeaderProps> = ({
                     )}
                   </div>
 
-                  {/* Sign Out Action */}
                   <div className="pt-1 border-t border-inherit">
                     <button
                       type="button"
@@ -739,123 +802,6 @@ export const Header: React.FC<HeaderProps> = ({
               <span>Sign In</span>
             </button>
           )}
-        </div>
-      </div>
-
-      {/* =========================================================================
-          TIER 2.5: MOBILE HIGH-TECH SEARCH BAR (Visible on screens < lg)
-          ========================================================================= */}
-      <div className="lg:hidden px-4 pb-2 pt-0">
-        <form onSubmit={handleSearchSubmit} className="flex items-center">
-          <div
-            className={`w-full flex items-center rounded-xl border transition-all ${
-              isDark
-                ? 'bg-[#141414] border-white/15 focus-within:border-[#e11d48]'
-                : 'bg-slate-50 border-slate-300 focus-within:border-[#e11d48]'
-            }`}
-          >
-            <button
-              type="button"
-              onClick={() => {
-                onSearchChange('selvedge organic leather');
-                setSearchInput('selvedge organic leather');
-              }}
-              className={`p-2 border-r cursor-pointer ${
-                isDark ? 'text-slate-400 border-white/10' : 'text-slate-500 border-slate-200'
-              }`}
-              title="RAWx Visual Lens"
-            >
-              <Camera className="w-3.5 h-3.5 text-[#10b981]" />
-            </button>
-
-            <input
-              type="text"
-              placeholder="Search 50k+ products, HS codes, mills..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className={`flex-1 px-3 py-1.5 text-xs focus:outline-none bg-transparent ${
-                isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
-              }`}
-            />
-
-            <button
-              type="submit"
-              className="px-3 py-1.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold rounded-r-xl cursor-pointer flex items-center space-x-1"
-            >
-              <Search className="w-3 h-3" />
-              <span>Search</span>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* =========================================================================
-          TIER 3: SECONDARY PAVILION BAR (Single cohesive rail beneath header - NO duplicates)
-          ========================================================================= */}
-      <div
-        id="header-pavilion-rail"
-        className={`w-full border-t py-1.5 sm:py-2 px-3 sm:px-4 transition-colors ${
-          isDark
-            ? 'bg-[#0e0e0e] border-white/10'
-            : 'bg-slate-50 border-slate-200'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          {/* Horizontal scrollable pills with active indicators */}
-          <div className="flex-1 min-w-0 flex items-center space-x-2 overflow-x-auto no-scrollbar py-0.5 scroll-smooth">
-            {FEDERATED_DIVISIONS.map((div) => {
-              const isActive = selectedDivision === div.slug;
-              return (
-                <button
-                  key={div.slug}
-                  type="button"
-                  id={`pavilion-pill-${div.slug}`}
-                  onClick={() => handleDivisionClick(div.slug)}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 shrink-0 ${
-                    isActive
-                      ? 'bg-[#e11d48] text-white shadow-md shadow-[#e11d48]/20 font-black'
-                      : isDark
-                      ? 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 border border-white/10'
-                      : 'bg-white text-slate-700 hover:bg-slate-200 border border-slate-200'
-                  }`}
-                  title={`${div.divisionTitle}: ${div.tagline}`}
-                >
-                  <span>{div.pavilionLabel}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Quick view switchers for Verified Mills & Global Buyers (Right side of rail) */}
-          <div className="hidden lg:flex items-center space-x-2 shrink-0 border-l border-inherit pl-3">
-            <button
-              type="button"
-              onClick={() => onViewChange('suppliers')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center space-x-1 cursor-pointer transition-colors ${
-                activeView === 'suppliers'
-                  ? 'bg-[#10b981] text-slate-950 font-black'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-              title="EPB Certified Mills"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>Exporters</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => onViewChange('customers')}
-              className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center space-x-1 cursor-pointer transition-colors ${
-                activeView === 'customers'
-                  ? 'bg-[#10b981] text-slate-950 font-black'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-              title="Global Sourcing Buyers"
-            >
-              <Users className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>Buyers</span>
-            </button>
-          </div>
         </div>
       </div>
     </header>

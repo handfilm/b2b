@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Header } from './components/Header';
 import { HeroBanner } from './components/HeroBanner';
 import { LiveTradeMatrixStrip } from './components/LiveTradeMatrixStrip';
@@ -81,6 +82,14 @@ import {
   LayoutGrid,
   MapPin,
   Map,
+  ChevronDown,
+  SlidersHorizontal,
+  RotateCcw,
+  X,
+  Check,
+  DollarSign,
+  Clock,
+  Tag,
 } from 'lucide-react';
 
 const AppContent: React.FC = () => {
@@ -168,6 +177,33 @@ const AppContent: React.FC = () => {
   // Federated Division and Domain Source State
   const [selectedDomainSource, setSelectedDomainSource] = useState<'all' | 'shop.handsandhead.com' | 'arutemika.handsandhead.com'>('all');
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // Sourcing Node Dropdown & Advanced Search / Filter States
+  const [isSourcingNodeDropdownOpen, setIsSourcingNodeDropdownOpen] = useState(false);
+  const [isAdvancedSearchOpen, setIsAdvancedSearchOpen] = useState(false);
+  const [moqFilter, setMoqFilter] = useState<'all' | 'low' | 'mid' | 'bulk'>('all');
+  const [leadTimeFilter, setLeadTimeFilter] = useState<'all' | 'fast' | 'standard'>('all');
+  const [certFilter, setCertFilter] = useState<'all' | 'leed' | 'oeko' | 'gots' | 'lwg'>('all');
+  const [priceRangeFilter, setPriceRangeFilter] = useState<'all' | 'under3' | '3to10' | 'over10'>('all');
+
+  const activeAdvancedFiltersCount = useMemo(() => {
+    let count = 0;
+    if (selectedDivision !== 'all') count++;
+    if (moqFilter !== 'all') count++;
+    if (leadTimeFilter !== 'all') count++;
+    if (certFilter !== 'all') count++;
+    if (priceRangeFilter !== 'all') count++;
+    return count;
+  }, [selectedDivision, moqFilter, leadTimeFilter, certFilter, priceRangeFilter]);
+
+  const handleResetAdvancedFilters = () => {
+    setSelectedDivision('all');
+    setSelectedDomainSource('all');
+    setMoqFilter('all');
+    setLeadTimeFilter('all');
+    setCertFilter('all');
+    setPriceRangeFilter('all');
+  };
 
   // Dynamic Dock Height Tracking for Screen Clearances
   const [mobileDockHeight, setMobileDockHeight] = useState<number>(84);
@@ -429,8 +465,51 @@ const AppContent: React.FC = () => {
     if (supplierFilter) {
       result = result.filter((p) => p.supplierId === supplierFilter);
     }
+    // MOQ Filter
+    if (moqFilter === 'low') {
+      result = result.filter((p) => (p.moq || 500) <= 500);
+    } else if (moqFilter === 'mid') {
+      result = result.filter((p) => (p.moq || 500) > 500 && (p.moq || 500) <= 2500);
+    } else if (moqFilter === 'bulk') {
+      result = result.filter((p) => (p.moq || 500) > 2500);
+    }
+    // SLA Lead Time Filter
+    if (leadTimeFilter === 'fast') {
+      result = result.filter((p) => (p.leadTimeDays || 30) <= 20);
+    } else if (leadTimeFilter === 'standard') {
+      result = result.filter((p) => (p.leadTimeDays || 30) > 20);
+    }
+    // Compliance Certifications Filter
+    if (certFilter === 'leed') {
+      result = result.filter((p) => p.certifications?.some((c) => c.toLowerCase().includes('leed')));
+    } else if (certFilter === 'oeko') {
+      result = result.filter((p) => p.certifications?.some((c) => c.toLowerCase().includes('oeko')));
+    } else if (certFilter === 'gots') {
+      result = result.filter((p) => p.certifications?.some((c) => c.toLowerCase().includes('gots') || c.toLowerCase().includes('organic')));
+    } else if (certFilter === 'lwg') {
+      result = result.filter((p) => p.certifications?.some((c) => c.toLowerCase().includes('lwg') || c.toLowerCase().includes('leather')));
+    }
+    // FOB Price Range Filter
+    if (priceRangeFilter === 'under3') {
+      result = result.filter((p) => (p.priceTiers?.[0]?.priceUSD || 3) < 3);
+    } else if (priceRangeFilter === '3to10') {
+      result = result.filter((p) => {
+        const pr = p.priceTiers?.[0]?.priceUSD || 5;
+        return pr >= 3 && pr <= 10;
+      });
+    } else if (priceRangeFilter === 'over10') {
+      result = result.filter((p) => (p.priceTiers?.[0]?.priceUSD || 5) > 10);
+    }
     return result;
-  }, [nexosFilteredProducts, selectedDomainSource, supplierFilter]);
+  }, [
+    nexosFilteredProducts,
+    selectedDomainSource,
+    supplierFilter,
+    moqFilter,
+    leadTimeFilter,
+    certFilter,
+    priceRangeFilter,
+  ]);
 
   // Filtered Suppliers List
   const filteredSuppliers = useMemo(() => {
@@ -768,92 +847,503 @@ const AppContent: React.FC = () => {
               <div className="space-y-4">
                 {/* Control Bar: Source Domains, Sort By & Product Count */}
                 <div
-                  className={`rounded-2xl border p-3 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 ${
+                  className={`rounded-2xl border p-3 shadow-xs flex flex-col gap-3 relative z-30 ${
                     theme === 'dark'
                       ? 'bg-[#141414] border-white/10 text-white'
                       : 'bg-white border-slate-200 text-slate-800'
                   }`}
                 >
-                  {/* Sourcing Feeds Filter Tabs: Federated Divisions */}
-                  <div className="flex flex-wrap items-center gap-1.5 text-xs overflow-x-auto no-scrollbar py-0.5 max-w-2xl">
-                    <span className="font-bold text-slate-400 mr-1 text-[11px] uppercase tracking-wider font-mono shrink-0">
-                      Sourcing Node:
-                    </span>
-                    <button
-                      onClick={() => {
-                        setSelectedDivision('all');
-                        setSelectedDomainSource('all');
-                      }}
-                      className={`px-3 py-1.5 rounded-full font-bold transition-all cursor-pointer shrink-0 ${
-                        selectedDivision === 'all' && selectedDomainSource === 'all'
-                          ? 'bg-[#e11d48] text-white shadow-xs'
-                          : theme === 'dark'
-                          ? 'bg-white/10 text-slate-300 hover:bg-white/20'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                      }`}
-                    >
-                      All Verticals ({nexosCatalog.length})
-                    </button>
-                    {FEDERATED_DIVISIONS.slice(1, 8).map((div) => {
-                      const isActive = selectedDivision === div.slug;
-                      return (
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    {/* Left: Sourcing Node Dropdown & Advanced Search Button */}
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      {/* 1. SOURCING NODE DROPDOWN MENU */}
+                      <div className="relative">
                         <button
-                          key={div.slug}
+                          type="button"
+                          id="sourcing-node-dropdown-button"
                           onClick={() => {
-                            setSelectedDivision(div.slug);
-                            if (div.slug === 'rmg-knits' || div.slug === 'commercial-blanks') {
-                              setSelectedDomainSource('shop.handsandhead.com');
-                            } else if (div.slug === 'flagship-leather' || div.slug === 'leather-cuffs') {
-                              setSelectedDomainSource('arutemika.handsandhead.com');
-                            } else {
-                              setSelectedDomainSource('all');
-                            }
+                            setIsSourcingNodeDropdownOpen((prev) => !prev);
+                            if (isAdvancedSearchOpen) setIsAdvancedSearchOpen(false);
                           }}
-                          className={`px-3 py-1.5 rounded-full font-bold transition-all cursor-pointer shrink-0 flex items-center space-x-1.5 ${
-                            isActive
-                              ? 'bg-[#e11d48] text-white shadow-xs'
+                          className={`px-3 py-2 rounded-xl font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
+                            selectedDivision !== 'all'
+                              ? 'bg-[#e11d48] text-white border-[#e11d48]'
                               : theme === 'dark'
-                              ? 'bg-white/5 text-slate-300 hover:bg-white/15 border border-white/10'
-                              : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                              ? 'bg-white/5 text-white border-white/15 hover:bg-white/10'
+                              : 'bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200'
                           }`}
                         >
-                          <span
-                            className={`w-1.5 h-1.5 rounded-full ${
-                              isActive ? 'bg-white' : 'bg-[#e11d48]'
+                          <Building2 className={`w-3.5 h-3.5 ${selectedDivision !== 'all' ? 'text-white' : 'text-[#e11d48]'}`} />
+                          <span className="font-mono text-[10px] uppercase text-slate-400">Node:</span>
+                          <span className="max-w-[160px] truncate font-black">
+                            {selectedDivision === 'all'
+                              ? `All Verticals (${nexosCatalog.length})`
+                              : FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.divisionTitle || selectedDivision}
+                          </span>
+                          <ChevronDown
+                            className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                              isSourcingNodeDropdownOpen ? 'rotate-180' : ''
                             }`}
                           />
-                          <span>{div.divisionTitle}</span>
                         </button>
-                      );
-                    })}
-                  </div>
 
-                  {/* Right: Sort By Dropdown & Count */}
-                  <div className="flex items-center space-x-3 text-xs shrink-0">
-                    <div className="flex items-center space-x-1">
-                      <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
-                      <span className="text-[11px] text-slate-400">Sort:</span>
-                      <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value as any)}
-                        className={`rounded-lg px-2 py-1 text-xs font-bold focus:outline-none cursor-pointer border ${
-                          theme === 'dark'
-                            ? 'bg-[#1c1c1c] border-white/10 text-white'
-                            : 'bg-slate-50 border-slate-200 text-slate-800'
+                        {/* Sourcing Node Dropdown Popover */}
+                        <AnimatePresence>
+                          {isSourcingNodeDropdownOpen && (
+                            <>
+                              <div
+                                className="fixed inset-0 z-40"
+                                onClick={() => setIsSourcingNodeDropdownOpen(false)}
+                              />
+                              <motion.div
+                                initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                                transition={{ duration: 0.16 }}
+                                className={`absolute left-0 top-full mt-1.5 w-72 sm:w-80 rounded-2xl border shadow-2xl z-50 p-2 overflow-hidden ${
+                                  theme === 'dark'
+                                    ? 'bg-[#181818] border-white/15 text-white'
+                                    : 'bg-white border-slate-200 text-slate-800'
+                                }`}
+                              >
+                                <div className="px-3 py-2 border-b border-inherit mb-1 flex items-center justify-between">
+                                  <span className="text-[10px] uppercase tracking-wider font-mono font-bold text-slate-400">
+                                    Select Sourcing Node
+                                  </span>
+                                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                                    8 Active Clusters
+                                  </span>
+                                </div>
+
+                                <div className="max-h-72 overflow-y-auto space-y-1">
+                                  {/* All Verticals */}
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedDivision('all');
+                                      setSelectedDomainSource('all');
+                                      setIsSourcingNodeDropdownOpen(false);
+                                    }}
+                                    className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-between ${
+                                      selectedDivision === 'all' && selectedDomainSource === 'all'
+                                        ? 'bg-[#e11d48] text-white shadow-xs'
+                                        : theme === 'dark'
+                                        ? 'hover:bg-white/5 text-slate-200'
+                                        : 'hover:bg-slate-100 text-slate-700'
+                                    }`}
+                                  >
+                                    <div className="flex items-center space-x-2">
+                                      <Globe2 className="w-3.5 h-3.5 text-[#10b981]" />
+                                      <span>All Verticals (Master Catalog)</span>
+                                    </div>
+                                    <span className="text-[10px] font-mono opacity-80">{nexosCatalog.length}</span>
+                                  </button>
+
+                                  {/* Federated Divisions */}
+                                  {FEDERATED_DIVISIONS.slice(1, 9).map((div) => {
+                                    const isActive = selectedDivision === div.slug;
+                                    return (
+                                      <button
+                                        key={div.slug}
+                                        type="button"
+                                        onClick={() => {
+                                          setSelectedDivision(div.slug);
+                                          if (div.slug === 'rmg-knits' || div.slug === 'commercial-blanks') {
+                                            setSelectedDomainSource('shop.handsandhead.com');
+                                          } else if (div.slug === 'flagship-leather' || div.slug === 'leather-cuffs') {
+                                            setSelectedDomainSource('arutemika.handsandhead.com');
+                                          } else {
+                                            setSelectedDomainSource('all');
+                                          }
+                                          setIsSourcingNodeDropdownOpen(false);
+                                        }}
+                                        className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-between ${
+                                          isActive
+                                            ? 'bg-[#e11d48] text-white shadow-xs'
+                                            : theme === 'dark'
+                                            ? 'hover:bg-white/5 text-slate-200'
+                                            : 'hover:bg-slate-100 text-slate-700'
+                                        }`}
+                                      >
+                                        <div className="flex items-center space-x-2 min-w-0">
+                                          <span
+                                            className={`w-2 h-2 rounded-full shrink-0 ${
+                                              isActive ? 'bg-white' : 'bg-[#e11d48]'
+                                            }`}
+                                          />
+                                          <span className="truncate">{div.divisionTitle}</span>
+                                        </div>
+                                        {isActive && <Check className="w-3.5 h-3.5 text-white shrink-0" />}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </motion.div>
+                            </>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      {/* 2. ADVANCED SEARCH OPTION BUTTON */}
+                      <button
+                        type="button"
+                        id="advanced-search-toggle-button"
+                        onClick={() => {
+                          setIsAdvancedSearchOpen((prev) => !prev);
+                          if (isSourcingNodeDropdownOpen) setIsSourcingNodeDropdownOpen(false);
+                        }}
+                        className={`px-3 py-2 rounded-xl font-bold transition-all cursor-pointer flex items-center space-x-1.5 border shadow-xs ${
+                          isAdvancedSearchOpen || activeAdvancedFiltersCount > 0
+                            ? 'bg-[#10b981] text-slate-950 border-[#10b981]'
+                            : theme === 'dark'
+                            ? 'bg-white/5 text-slate-300 border-white/15 hover:bg-white/10 hover:text-white'
+                            : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
                         }`}
+                        title="Open Advanced Filters: MOQ, Lead Time, Certifications, and Price Options"
                       >
-                        <option value="ranking">Top Ranking</option>
-                        <option value="moq">Lowest MOQ</option>
-                        <option value="leadTime">Fastest SLA Lead Time</option>
-                        <option value="reorder">Reorder Rate</option>
-                      </select>
+                        <SlidersHorizontal className="w-3.5 h-3.5" />
+                        <span>Advanced Filters</span>
+                        {activeAdvancedFiltersCount > 0 && (
+                          <span className="w-4 h-4 rounded-full bg-[#e11d48] text-white text-[10px] font-bold flex items-center justify-center">
+                            {activeAdvancedFiltersCount}
+                          </span>
+                        )}
+                      </button>
+
+                      {/* Quick reset button if filters active */}
+                      {activeAdvancedFiltersCount > 0 && (
+                        <button
+                          type="button"
+                          onClick={handleResetAdvancedFilters}
+                          className="text-[11px] text-slate-400 hover:text-[#e11d48] transition-colors flex items-center space-x-1 cursor-pointer font-bold ml-1"
+                          title="Reset All Filters"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                          <span>Reset</span>
+                        </button>
+                      )}
                     </div>
 
-                    <span className="text-slate-400 hidden sm:inline">|</span>
-                    <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
-                      {displayedProducts.length} items
-                    </span>
+                    {/* Right: Sort By Dropdown & Count */}
+                    <div className="flex items-center space-x-3 text-xs shrink-0">
+                      <div className="flex items-center space-x-1">
+                        <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
+                        <span className="text-[11px] text-slate-400">Sort:</span>
+                        <select
+                          value={sortBy}
+                          onChange={(e) => setSortBy(e.target.value as any)}
+                          className={`rounded-lg px-2 py-1.5 text-xs font-bold focus:outline-none cursor-pointer border ${
+                            theme === 'dark'
+                              ? 'bg-[#1c1c1c] border-white/10 text-white'
+                              : 'bg-slate-50 border-slate-200 text-slate-800'
+                          }`}
+                        >
+                          <option value="ranking">Top Ranking</option>
+                          <option value="moq">Lowest MOQ</option>
+                          <option value="leadTime">Fastest SLA Lead Time</option>
+                          <option value="reorder">Reorder Rate</option>
+                        </select>
+                      </div>
+
+                      <span className="text-slate-400 hidden sm:inline">|</span>
+                      <span className="text-slate-400 font-mono text-[11px] hidden sm:inline">
+                        <strong className={theme === 'dark' ? 'text-white' : 'text-slate-900'}>
+                          {displayedProducts.length}
+                        </strong>{' '}
+                        items
+                      </span>
+                    </div>
                   </div>
+
+                  {/* 3. ADVANCED SEARCH & FILTER OPTIONS PANEL (EXPANDABLE) */}
+                  <AnimatePresence>
+                    {isAdvancedSearchOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.22 }}
+                        className={`pt-3 border-t overflow-hidden ${
+                          theme === 'dark' ? 'border-white/10' : 'border-slate-200'
+                        }`}
+                      >
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+                          {/* Option 1: Minimum Order Quantity (MOQ) */}
+                          <div
+                            className={`p-2.5 rounded-xl border ${
+                              theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'
+                            }`}
+                          >
+                            <span className="text-[10px] uppercase font-mono font-bold text-slate-400 block mb-1.5">
+                              Minimum Order (MOQ)
+                            </span>
+                            <div className="grid grid-cols-2 gap-1 font-medium">
+                              <button
+                                type="button"
+                                onClick={() => setMoqFilter('all')}
+                                className={`px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  moqFilter === 'all'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                All MOQs
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setMoqFilter('low')}
+                                className={`px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  moqFilter === 'low'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                ≤ 500 pcs (Low)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setMoqFilter('mid')}
+                                className={`px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  moqFilter === 'mid'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                500 - 2,500 pcs
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setMoqFilter('bulk')}
+                                className={`px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  moqFilter === 'bulk'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                2,500+ pcs (Bulk)
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Option 2: Production SLA Lead Time */}
+                          <div
+                            className={`p-2.5 rounded-xl border ${
+                              theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'
+                            }`}
+                          >
+                            <span className="text-[10px] uppercase font-mono font-bold text-slate-400 block mb-1.5 flex items-center space-x-1">
+                              <Clock className="w-3 h-3 text-[#10b981]" />
+                              <span>Production Lead Time</span>
+                            </span>
+                            <div className="flex flex-col gap-1 font-medium">
+                              <button
+                                type="button"
+                                onClick={() => setLeadTimeFilter('all')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  leadTimeFilter === 'all'
+                                    ? 'bg-[#10b981] text-slate-950 font-black'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                All Production SLAs
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setLeadTimeFilter('fast')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  leadTimeFilter === 'fast'
+                                    ? 'bg-[#10b981] text-slate-950 font-black'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                Fast Track (≤ 20 Days)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setLeadTimeFilter('standard')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  leadTimeFilter === 'standard'
+                                    ? 'bg-[#10b981] text-slate-950 font-black'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                Standard (21 - 40 Days)
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Option 3: Certifications & Factory Audits */}
+                          <div
+                            className={`p-2.5 rounded-xl border ${
+                              theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'
+                            }`}
+                          >
+                            <span className="text-[10px] uppercase font-mono font-bold text-slate-400 block mb-1.5 flex items-center space-x-1">
+                              <ShieldCheck className="w-3 h-3 text-[#10b981]" />
+                              <span>Compliance Certification</span>
+                            </span>
+                            <div className="grid grid-cols-2 gap-1 font-medium">
+                              <button
+                                type="button"
+                                onClick={() => setCertFilter('all')}
+                                className={`px-2 py-1 rounded-lg text-[10.5px] font-bold cursor-pointer transition-colors ${
+                                  certFilter === 'all'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                All Audits
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCertFilter('leed')}
+                                className={`px-2 py-1 rounded-lg text-[10.5px] font-bold cursor-pointer transition-colors ${
+                                  certFilter === 'leed'
+                                    ? 'bg-[#10b981] text-slate-950'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                LEED Green
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCertFilter('oeko')}
+                                className={`px-2 py-1 rounded-lg text-[10.5px] font-bold cursor-pointer transition-colors ${
+                                  certFilter === 'oeko'
+                                    ? 'bg-[#10b981] text-slate-950'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                OEKO-TEX
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCertFilter('gots')}
+                                className={`px-2 py-1 rounded-lg text-[10.5px] font-bold cursor-pointer transition-colors ${
+                                  certFilter === 'gots'
+                                    ? 'bg-[#10b981] text-slate-950'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                GOTS Organic
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Option 4: FOB Price Range */}
+                          <div
+                            className={`p-2.5 rounded-xl border ${
+                              theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200'
+                            }`}
+                          >
+                            <span className="text-[10px] uppercase font-mono font-bold text-slate-400 block mb-1.5 flex items-center space-x-1">
+                              <DollarSign className="w-3 h-3 text-[#10b981]" />
+                              <span>FOB Price (USD)</span>
+                            </span>
+                            <div className="flex flex-col gap-1 font-medium">
+                              <button
+                                type="button"
+                                onClick={() => setPriceRangeFilter('all')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  priceRangeFilter === 'all'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                All Price Ranges
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setPriceRangeFilter('under3')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  priceRangeFilter === 'under3'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                Economy (Under $3.00)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setPriceRangeFilter('3to10')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  priceRangeFilter === '3to10'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                Mid-Tier ($3.00 - $10.00)
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setPriceRangeFilter('over10')}
+                                className={`text-left px-2 py-1 rounded-lg text-[11px] font-bold cursor-pointer transition-colors ${
+                                  priceRangeFilter === 'over10'
+                                    ? 'bg-[#e11d48] text-white'
+                                    : theme === 'dark'
+                                    ? 'hover:bg-white/10 text-slate-300'
+                                    : 'hover:bg-slate-200 text-slate-700'
+                                }`}
+                              >
+                                Premium / Outerwear (&gt; $10.00)
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Panel Footer */}
+                        <div className="mt-3 pt-2.5 border-t border-inherit flex items-center justify-between text-xs">
+                          <span className="text-slate-400 font-mono text-[11px]">
+                            Filtered: <strong className="text-emerald-400">{displayedProducts.length}</strong> products matching criteria
+                          </span>
+                          <div className="flex items-center space-x-2">
+                            <button
+                              type="button"
+                              onClick={handleResetAdvancedFilters}
+                              className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 text-xs font-bold transition-colors cursor-pointer"
+                            >
+                              Reset All
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setIsAdvancedSearchOpen(false)}
+                              className="px-3 py-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black transition-colors cursor-pointer shadow-xs"
+                            >
+                              Done
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Active Division Banner (if filtered) */}

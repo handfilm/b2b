@@ -190,106 +190,100 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
       }`}
     >
       <div className="max-w-7xl mx-auto space-y-3.5">
-        {/* 1. Mode Switcher Tabs above Big Search: AI Agent, Products, Exporters, Buyers */}
+        {/* 1. Heart of the Website: Centered Mode Switcher Highlight Tabs (AI Mode, Products, Exporters, Buyers) */}
         <div
-          className={`flex items-center justify-center sm:justify-start space-x-1 sm:space-x-2 border-b pb-2 ${
+          id="hero-mode-tabs"
+          className={`flex items-center justify-center flex-wrap gap-2 sm:gap-3 border-b pb-3 pt-1 ${
             isDark ? 'border-white/10' : 'border-slate-200/80'
           }`}
         >
-          {/* AI Agent Tab */}
+          {/* AI Mode Tab - Next Level Craft */}
           <motion.button
             type="button"
-            whileHover={{ y: -1, scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            id="tab-ai-mode"
+            whileHover={{ y: -2, scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => {
               onHeroTabChange('ai');
               onOpenAiAssistant();
             }}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 ${
+            className={`relative px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center space-x-2 shadow-lg ${
               activeHeroTab === 'ai'
-                ? 'bg-[#e11d48] text-white shadow-md shadow-[#e11d48]/25 ring-2 ring-[#e11d48]/40'
+                ? 'bg-gradient-to-r from-[#e11d48] via-[#f43f5e] to-[#ff1e42] text-white shadow-[#e11d48]/40 ring-2 ring-white/30'
                 : isDark
-                ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
-                : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                ? 'bg-gradient-to-r from-red-950/40 via-[#161616] to-[#121212] border border-[#e11d48]/50 text-white hover:border-[#ff1e42] shadow-md shadow-[#e11d48]/15'
+                : 'bg-white border-2 border-[#e11d48]/60 text-slate-900 hover:border-[#e11d48] shadow-md'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
-            <span>AI Agent</span>
-            <span className="text-[9.5px] bg-black/40 text-white px-1.5 py-0.2 rounded font-mono font-black">
-              24/7
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+            </span>
+            <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+            <span className="tracking-tight">AI Mode</span>
+            <span className="text-[9.5px] font-mono font-black uppercase px-2 py-0.5 rounded-full bg-black/40 text-emerald-300 border border-emerald-400/40">
+              Agent Next-Gen
             </span>
           </motion.button>
 
           {/* Products Tab */}
           <motion.button
             type="button"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
+            id="tab-products"
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => onHeroTabChange('products')}
-            className={`px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer relative flex items-center space-x-1.5 ${
+            className={`px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
               activeHeroTab === 'products'
-                ? 'text-[#ff1e42] font-black'
+                ? 'bg-[#e11d48] text-white border-[#e11d48] shadow-md shadow-[#e11d48]/30 font-black ring-2 ring-[#e11d48]/30'
                 : isDark
-                ? 'text-slate-400 hover:text-white'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-[#161616] hover:bg-white/10 text-slate-200 border-white/15'
+                : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
           >
-            <Package className="w-3.5 h-3.5" />
+            <Package className="w-4 h-4 text-[#e11d48]" />
             <span>Products</span>
-            {activeHeroTab === 'products' && (
-              <motion.span
-                layoutId="heroTabIndicator"
-                className="absolute bottom-0 inset-x-2 h-0.5 bg-[#e11d48] rounded-full"
-              />
-            )}
+            <span className="text-[10px] opacity-70 font-mono">50,000+</span>
           </motion.button>
 
           {/* Exporters Tab */}
           <motion.button
             type="button"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
+            id="tab-exporters"
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => onHeroTabChange('suppliers')}
-            className={`px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer relative flex items-center space-x-1.5 ${
+            className={`px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
               activeHeroTab === 'suppliers'
-                ? 'text-[#ff1e42] font-black'
+                ? 'bg-[#10b981] text-slate-950 border-[#10b981] shadow-md shadow-[#10b981]/30 font-black ring-2 ring-[#10b981]/30'
                 : isDark
-                ? 'text-slate-400 hover:text-white'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-[#161616] hover:bg-white/10 text-slate-200 border-white/15'
+                : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
           >
-            <Building2 className="w-3.5 h-3.5" />
+            <Building2 className="w-4 h-4 text-[#10b981]" />
             <span>Exporters</span>
-            {activeHeroTab === 'suppliers' && (
-              <motion.span
-                layoutId="heroTabIndicator"
-                className="absolute bottom-0 inset-x-2 h-0.5 bg-[#e11d48] rounded-full"
-              />
-            )}
+            <span className="text-[10px] opacity-70 font-mono">5,000+</span>
           </motion.button>
 
           {/* Buyers Tab */}
           <motion.button
             type="button"
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
+            id="tab-buyers"
+            whileHover={{ y: -2, scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => onHeroTabChange('customers')}
-            className={`px-3.5 py-1.5 text-xs font-bold transition-all cursor-pointer relative flex items-center space-x-1.5 ${
+            className={`px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
               activeHeroTab === 'customers'
-                ? 'text-[#ff1e42] font-black'
+                ? 'bg-[#10b981] text-slate-950 border-[#10b981] shadow-md shadow-[#10b981]/30 font-black ring-2 ring-[#10b981]/30'
                 : isDark
-                ? 'text-slate-400 hover:text-white'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-[#161616] hover:bg-white/10 text-slate-200 border-white/15'
+                : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
           >
-            <Users className="w-3.5 h-3.5" />
+            <Users className="w-4 h-4 text-[#10b981]" />
             <span>Buyers</span>
-            {activeHeroTab === 'customers' && (
-              <motion.span
-                layoutId="heroTabIndicator"
-                className="absolute bottom-0 inset-x-2 h-0.5 bg-[#e11d48] rounded-full"
-              />
-            )}
+            <span className="text-[10px] opacity-70 font-mono">140+ Countries</span>
           </motion.button>
         </div>
 
@@ -503,28 +497,36 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
           </AnimatePresence>
         </div>
 
-        {/* 3. Compact Dynamic Dashboard Strip with Animated Hover Cards */}
+        {/* 3. Compact Dynamic Dashboard Strip with Maximum Detail Hover Animations */}
         <div
+          id="hero-quick-actions"
           className={`pt-2 flex flex-col md:flex-row items-center justify-between gap-2.5 border-t text-xs ${
             isDark ? 'border-white/10' : 'border-slate-200/60'
           }`}
         >
-          {/* Left: Concise Verified Buyer Identity with Animated Hover Card */}
+          {/* 1. VERIFIED BUYER Identity with Deep Detail Hover Card */}
           <div
-            className="relative"
+            className="relative shrink-0"
             onMouseEnter={() => setIsBuyerBadgeHovered(true)}
             onMouseLeave={() => setIsBuyerBadgeHovered(false)}
           >
-            <div className="flex items-center space-x-2 font-medium cursor-pointer">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl border cursor-pointer transition-all shadow-xs ${
+                isDark
+                  ? 'bg-white/5 hover:bg-white/10 border-white/10 text-white'
+                  : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-900'
+              }`}
+            >
               <span className="inline-block w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
-              <span className="text-[11px] text-slate-400">Buyer Node:</span>
+              <span className="text-[11px] text-slate-400 font-mono uppercase">Buyer Node:</span>
               <span className="text-xs font-black text-[#e11d48] uppercase font-mono tracking-tight flex items-center space-x-1">
                 <span>{authUser ? authUser.name : 'VERIFIED BUYER'}</span>
                 <BadgeCheck className="w-3.5 h-3.5 text-[#10b981]" />
               </span>
-            </div>
+            </motion.div>
 
-            {/* Buyer Badge Hover Card */}
+            {/* Buyer Badge Hover Card with Maximum Commercial Details */}
             <AnimatePresence>
               {isBuyerBadgeHovered && (
                 <motion.div
@@ -532,22 +534,32 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 4, scale: 0.95 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute bottom-full left-0 mb-2 z-50 pointer-events-none w-72"
+                  className="absolute bottom-full left-0 mb-2 z-50 pointer-events-none w-80"
                 >
-                  <div className="backdrop-blur-xl bg-[#0a0e17]/95 border border-[#10b981]/50 rounded-xl p-3 shadow-2xl text-white text-[11px] space-y-1.5">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-1 font-bold">
-                      <span className="text-[#10b981] flex items-center space-x-1">
-                        <ShieldCheck className="w-3.5 h-3.5" />
-                        <span>Tier 1 Enterprise Buyer</span>
+                  <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#10b981]/60 rounded-2xl p-3.5 shadow-2xl text-white text-[11px] space-y-2">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                      <div className="flex items-center space-x-1.5 font-bold text-[#10b981]">
+                        <ShieldCheck className="w-4 h-4" />
+                        <span className="text-xs">Tier 1 Enterprise Buyer Node</span>
+                      </div>
+                      <span className="text-[9.5px] font-mono px-2 py-0.5 rounded-full bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/40 font-bold">
+                        100% Escrow
                       </span>
-                      <span className="text-[9px] font-mono text-slate-400">100% Escrow</span>
                     </div>
-                    <p className="text-slate-300 leading-snug">
-                      Direct RFQ dispatch to 5,000+ EPB bonded Bangladesh mills with 50% JIT Escrow and Irrevocable Bank L/C protection.
+
+                    <p className="text-slate-300 leading-snug text-[10.5px]">
+                      Authenticated sourcing channel with direct access to 5,000+ EPB bonded mills across Dhaka, Narayanganj &amp; Chattogram.
                     </p>
-                    <div className="text-[10px] font-mono text-emerald-400 flex items-center space-x-2 pt-0.5">
-                      <span>• Priority Matching</span>
-                      <span>• Sample Lab Express</span>
+
+                    <div className="grid grid-cols-2 gap-1.5 pt-1 border-t border-white/10 text-[10px] font-mono">
+                      <div className="bg-white/5 rounded-lg p-1.5">
+                        <span className="text-slate-400 block text-[9px]">SLA Matching:</span>
+                        <span className="font-bold text-emerald-300">Under 2 Hours</span>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-1.5">
+                        <span className="text-slate-400 block text-[9px]">Sample Turnaround:</span>
+                        <span className="font-bold text-emerald-300">3-5 Day Express</span>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -555,19 +567,19 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             </AnimatePresence>
           </div>
 
-          {/* Right: 4 Compact Action Buttons with Framer Motion Hover Cards */}
+          {/* Action Highlights (Post RFQ, Top Ranking, TechPack CAD, Bank L/C & Escrow) */}
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            {/* Post RFQ */}
+            {/* 2. Post RFQ */}
             <div
               className="relative"
               onMouseEnter={() => setHoveredAction('rfq')}
               onMouseLeave={() => setHoveredAction(null)}
             >
               <motion.button
-                whileHover={{ y: -1.5, scale: 1.03 }}
+                whileHover={{ y: -2, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onOpenRfq}
-                className={`px-3 py-1.5 rounded-lg border font-bold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
+                className={`px-3 py-1.5 rounded-xl border font-bold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
                   isDark
                     ? 'bg-white/5 hover:bg-[#e11d48]/15 border-white/10 hover:border-[#e11d48] text-white'
                     : 'bg-white hover:bg-rose-50 border-slate-200 hover:border-[#e11d48] text-slate-800'
@@ -582,28 +594,40 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     initial={{ opacity: 0, y: 4, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 2, scale: 0.95 }}
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-52"
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-64"
                   >
-                    <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#e11d48]/50 rounded-xl p-2.5 shadow-xl text-white text-[10.5px]">
-                      <div className="font-bold text-[#e11d48] mb-0.5">Instant RFQ Dispatch</div>
-                      <div className="text-slate-300">Broadcast specs to 5,000+ mills with counter-samples in 3-5 days.</div>
+                    <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#e11d48]/60 rounded-xl p-3 shadow-2xl text-white text-[10.5px] space-y-1.5">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                        <span className="font-bold text-[#ff1e42] flex items-center space-x-1">
+                          <FileText className="w-3.5 h-3.5" />
+                          <span>Instant RFQ Dispatch</span>
+                        </span>
+                        <span className="text-[9px] font-mono text-emerald-400">Live 24/7</span>
+                      </div>
+                      <p className="text-slate-300 leading-snug">
+                        Broadcast tech specifications directly to 5,000+ compliant factories. Receive competitive quotes and FOB rates in 2-4 hours.
+                      </p>
+                      <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 pt-1 border-t border-white/10">
+                        <span>FOB Chattogram</span>
+                        <span className="text-emerald-400 font-bold">Free Counter Sample</span>
+                      </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Top Ranking */}
+            {/* 3. Top Ranking */}
             <div
               className="relative"
               onMouseEnter={() => setHoveredAction('ranking')}
               onMouseLeave={() => setHoveredAction(null)}
             >
               <motion.button
-                whileHover={{ y: -1.5, scale: 1.03 }}
+                whileHover={{ y: -2, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => onHeroTabChange('products')}
-                className={`px-3 py-1.5 rounded-lg border font-semibold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
+                className={`px-3 py-1.5 rounded-xl border font-bold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
                   isDark
                     ? 'bg-white/5 hover:bg-[#10b981]/15 border-white/10 hover:border-[#10b981] text-white'
                     : 'bg-white hover:bg-emerald-50 border-slate-200 hover:border-[#10b981] text-slate-800'
@@ -618,28 +642,40 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     initial={{ opacity: 0, y: 4, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 2, scale: 0.95 }}
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-52"
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-64"
                   >
-                    <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#10b981]/50 rounded-xl p-2.5 shadow-xl text-white text-[10.5px]">
-                      <div className="font-bold text-[#10b981] mb-0.5">EPB Bestseller Index</div>
-                      <div className="text-slate-300">Ranked by actual export volume and buyer review score.</div>
+                    <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#10b981]/60 rounded-xl p-3 shadow-2xl text-white text-[10.5px] space-y-1.5">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                        <span className="font-bold text-[#10b981] flex items-center space-x-1">
+                          <TrendingUp className="w-3.5 h-3.5" />
+                          <span>EPB Export Volume Index</span>
+                        </span>
+                        <span className="text-[9px] font-mono text-emerald-300">Audited</span>
+                      </div>
+                      <p className="text-slate-300 leading-snug">
+                        Ranked by actual shipped container volume, buyer reorder rates (avg 94.8%), and LEED Platinum/Gold environmental audits.
+                      </p>
+                      <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 pt-1 border-t border-white/10">
+                        <span>Delivery SLA</span>
+                        <span className="text-emerald-400 font-bold">99.2% On-Time</span>
+                      </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* TechPack CAD */}
+            {/* 4. TechPack CAD */}
             <div
               className="relative"
               onMouseEnter={() => setHoveredAction('cad')}
               onMouseLeave={() => setHoveredAction(null)}
             >
               <motion.button
-                whileHover={{ y: -1.5, scale: 1.03 }}
+                whileHover={{ y: -2, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onOpenTechPackStudio}
-                className={`px-3 py-1.5 rounded-lg border font-semibold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
+                className={`px-3 py-1.5 rounded-xl border font-bold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
                   isDark
                     ? 'bg-white/5 hover:bg-[#10b981]/15 border-white/10 hover:border-[#10b981] text-white'
                     : 'bg-white hover:bg-emerald-50 border-slate-200 hover:border-[#10b981] text-slate-800'
@@ -654,28 +690,40 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     initial={{ opacity: 0, y: 4, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 2, scale: 0.95 }}
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-52"
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-64"
                   >
-                    <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#10b981]/50 rounded-xl p-2.5 shadow-xl text-white text-[10.5px]">
-                      <div className="font-bold text-[#10b981] mb-0.5">Interactive CAD Spec</div>
-                      <div className="text-slate-300">Build garment measurements, Bill of Materials, and print specs.</div>
+                    <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#10b981]/60 rounded-xl p-3 shadow-2xl text-white text-[10.5px] space-y-1.5">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                        <span className="font-bold text-[#10b981] flex items-center space-x-1">
+                          <Sliders className="w-3.5 h-3.5" />
+                          <span>Interactive CAD Spec Studio</span>
+                        </span>
+                        <span className="text-[9px] font-mono text-emerald-300">BOM Auto</span>
+                      </div>
+                      <p className="text-slate-300 leading-snug">
+                        Configure garment grading measurements, fabric weights, stitch tolerances, and Bill of Materials for one-click factory sampling.
+                      </p>
+                      <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 pt-1 border-t border-white/10">
+                        <span>Export Formats</span>
+                        <span className="text-emerald-400 font-bold">PDF, DXF, PLT</span>
+                      </div>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Bank L/C & Escrow */}
+            {/* 5. Bank L/C & Escrow */}
             <div
               className="relative"
               onMouseEnter={() => setHoveredAction('escrow')}
               onMouseLeave={() => setHoveredAction(null)}
             >
               <motion.button
-                whileHover={{ y: -1.5, scale: 1.03 }}
+                whileHover={{ y: -2, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onOpenShippingCalc}
-                className={`px-3 py-1.5 rounded-lg border font-semibold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
+                className={`px-3 py-1.5 rounded-xl border font-bold text-xs transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs ${
                   isDark
                     ? 'bg-white/5 hover:bg-[#10b981]/15 border-white/10 hover:border-[#10b981] text-white'
                     : 'bg-white hover:bg-emerald-50 border-slate-200 hover:border-[#10b981] text-slate-800'
@@ -690,11 +738,23 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                     initial={{ opacity: 0, y: 4, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 2, scale: 0.95 }}
-                    className="absolute bottom-full right-0 mb-2 z-50 pointer-events-none w-56"
+                    className="absolute bottom-full right-0 mb-2 z-50 pointer-events-none w-72"
                   >
-                    <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#10b981]/50 rounded-xl p-2.5 shadow-xl text-white text-[10.5px]">
-                      <div className="font-bold text-[#10b981] mb-0.5">50% JIT Trade Escrow</div>
-                      <div className="text-slate-300">Funds released upon Chattogram Port on-board Bill of Lading verification.</div>
+                    <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#10b981]/60 rounded-xl p-3 shadow-2xl text-white text-[10.5px] space-y-1.5">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                        <span className="font-bold text-[#10b981] flex items-center space-x-1">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          <span>50% JIT Trade Escrow Guarantee</span>
+                        </span>
+                        <span className="text-[9px] font-mono text-emerald-300">SWIFT MT700</span>
+                      </div>
+                      <p className="text-slate-300 leading-snug">
+                        Zero advance capital risk. Payment tranches unlock only upon Chattogram Port on-board Bill of Lading (B/L) and SGS inspection certificate.
+                      </p>
+                      <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 pt-1 border-t border-white/10">
+                        <span>Supported Ports</span>
+                        <span className="text-emerald-400 font-bold">Chattogram &amp; Mongla</span>
+                      </div>
                     </div>
                   </motion.div>
                 )}
