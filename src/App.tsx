@@ -579,7 +579,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen flex flex-col font-sans transition-colors duration-200 selection:bg-[#e11d48] selection:text-white ${
+      className={`min-h-screen w-full max-w-full overflow-x-clip flex flex-col font-sans transition-colors duration-200 selection:bg-[#e11d48] selection:text-white ${
         theme === 'dark' ? 'bg-[#0a0a0a] text-white' : 'bg-[#f8fafc] text-slate-900'
       }`}
     >

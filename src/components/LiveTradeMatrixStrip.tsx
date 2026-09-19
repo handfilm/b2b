@@ -287,133 +287,148 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
 
         {/* 4 Compact, High-Density Metric Nodes with Next-Level Animated Hover Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5">
-          {metrics.map((m) => (
-            <div
-              key={m.id}
-              className="relative"
-              onMouseEnter={() => setHoveredCard(m.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <motion.button
-                type="button"
-                whileHover={{ y: -2, scale: 1.015 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={m.action}
-                className={`w-full text-left p-2 sm:p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between group shadow-xs ${
-                  isDark
-                    ? 'bg-[#121620] hover:bg-[#161c2b] border-white/10 hover:border-[#e11d48]/60 shadow-black/40'
-                    : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-[#e11d48]/50 shadow-slate-200'
-                }`}
+          {metrics.map((m, idx) => {
+            // Intelligent tooltip horizontal alignment to prevent right-edge and left-edge overflowing
+            const isFirst = idx === 0;
+            const isLast = idx === metrics.length - 1;
+            const isSecond = idx === 1;
+
+            const alignmentClasses = isFirst
+              ? 'left-0 sm:left-0 -translate-x-0'
+              : isLast
+              ? 'right-0 left-auto translate-x-0'
+              : isSecond
+              ? 'right-0 sm:right-auto sm:left-1/2 sm:-translate-x-1/2'
+              : 'left-1/2 -translate-x-1/2';
+
+            return (
+              <div
+                key={m.id}
+                className="relative"
+                onMouseEnter={() => setHoveredCard(m.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Node Top: Icon + Label + Badge */}
-                <div className="flex items-center justify-between gap-1 w-full">
-                  <div className="flex items-center space-x-1.5 min-w-0">
-                    <div
-                      className={`p-1 rounded-md ${
-                        isDark ? 'bg-white/5 border border-white/10' : 'bg-slate-100 border border-slate-200'
-                      }`}
-                    >
-                      {m.icon}
+                <motion.button
+                  type="button"
+                  whileHover={{ y: -2, scale: 1.015 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={m.action}
+                  className={`w-full text-left p-2 sm:p-2.5 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between group shadow-xs ${
+                    isDark
+                      ? 'bg-[#121620] hover:bg-[#161c2b] border-white/10 hover:border-[#e11d48]/60 shadow-black/40'
+                      : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-[#e11d48]/50 shadow-slate-200'
+                  }`}
+                >
+                  {/* Node Top: Icon + Label + Badge */}
+                  <div className="flex items-center justify-between gap-1 w-full">
+                    <div className="flex items-center space-x-1.5 min-w-0">
+                      <div
+                        className={`p-1 rounded-md ${
+                          isDark ? 'bg-white/5 border border-white/10' : 'bg-slate-100 border border-slate-200'
+                        }`}
+                      >
+                        {m.icon}
+                      </div>
+                      <span
+                        className={`text-[10px] sm:text-[11px] font-bold tracking-tight truncate ${
+                          isDark ? 'text-slate-300' : 'text-slate-700'
+                        }`}
+                      >
+                        {m.label}
+                      </span>
                     </div>
+
                     <span
-                      className={`text-[10px] sm:text-[11px] font-bold tracking-tight truncate ${
-                        isDark ? 'text-slate-300' : 'text-slate-700'
-                      }`}
+                      className={`text-[8.5px] sm:text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border shrink-0 ${m.badgeColor}`}
                     >
-                      {m.label}
+                      {m.badge}
                     </span>
                   </div>
 
-                  <span
-                    className={`text-[8.5px] sm:text-[9px] font-mono font-bold px-1.5 py-0.2 rounded border shrink-0 ${m.badgeColor}`}
-                  >
-                    {m.badge}
-                  </span>
-                </div>
-
-                {/* Node Bottom: Value + Arrow */}
-                <div className="mt-1 flex items-baseline justify-between w-full">
-                  <div
-                    className={`text-lg sm:text-xl font-black tracking-tight group-hover:text-[#e11d48] transition-colors ${
-                      isDark ? 'text-white' : 'text-slate-900'
-                    }`}
-                  >
-                    {m.value}
-                  </div>
-                  <div className="flex items-center space-x-0.5 text-[9px] font-bold text-slate-400 group-hover:text-[#e11d48] transition-colors">
-                    <span className="hidden sm:inline">Details</span>
-                    <ArrowRight className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </div>
-              </motion.button>
-
-              {/* Next-Level Hover Animated Card */}
-              <AnimatePresence>
-                {hoveredCard === m.id && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.95 }}
-                    transition={{ duration: 0.16, ease: 'easeOut' }}
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 pointer-events-none w-72 sm:w-80"
-                  >
-                    <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#e11d48]/40 rounded-2xl p-3 sm:p-3.5 shadow-2xl text-white space-y-2">
-                      {/* Tooltip Header */}
-                      <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
-                        <div>
-                          <div className="font-extrabold text-xs text-white flex items-center space-x-1.5">
-                            <span>{m.tooltip.title}</span>
-                          </div>
-                          <div className="text-[9.5px] font-mono text-[#10b981]">
-                            {m.tooltip.tagline}
-                          </div>
-                        </div>
-                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300 border border-white/10">
-                          {m.badge}
-                        </span>
-                      </div>
-
-                      {/* Tooltip Stats Grid */}
-                      <div className="grid grid-cols-2 gap-1.5 py-0.5">
-                        {m.tooltip.stats.map((st, i) => (
-                          <div
-                            key={i}
-                            className="bg-white/5 rounded-lg p-1.5 border border-white/5"
-                          >
-                            <div className="text-[8.5px] text-slate-400 font-medium">
-                              {st.label}
-                            </div>
-                            <div className="text-[11px] font-mono font-bold text-slate-100">
-                              {st.value}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Compliance & Operations */}
-                      <div className="text-[9.5px] font-mono text-slate-300 bg-[#e11d48]/10 border border-[#e11d48]/20 rounded-lg p-1.5">
-                        <div className="text-[#ff4a68] font-bold text-[8.5px] uppercase tracking-wider mb-0.5">
-                          Standard & SLA
-                        </div>
-                        <div className="line-clamp-2 leading-tight">
-                          {m.tooltip.compliance}
-                        </div>
-                      </div>
-
-                      {/* Action Prompt */}
-                      <div className="flex items-center justify-between pt-1 border-t border-white/10 text-[10px] text-slate-400">
-                        <span>{m.tooltip.turnaround}</span>
-                        <span className="text-[#10b981] font-bold flex items-center space-x-1">
-                          <span>{m.actionText}</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </span>
-                      </div>
+                  {/* Node Bottom: Value + Arrow */}
+                  <div className="mt-1 flex items-baseline justify-between w-full">
+                    <div
+                      className={`text-lg sm:text-xl font-black tracking-tight group-hover:text-[#e11d48] transition-colors ${
+                        isDark ? 'text-white' : 'text-slate-900'
+                      }`}
+                    >
+                      {m.value}
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
+                    <div className="flex items-center space-x-0.5 text-[9px] font-bold text-slate-400 group-hover:text-[#e11d48] transition-colors">
+                      <span className="hidden sm:inline">Details</span>
+                      <ArrowRight className="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </motion.button>
+
+                {/* Next-Level Hover Animated Card */}
+                <AnimatePresence>
+                  {hoveredCard === m.id && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.95 }}
+                      transition={{ duration: 0.16, ease: 'easeOut' }}
+                      className={`absolute bottom-full mb-2 z-50 pointer-events-none w-72 sm:w-80 max-w-[calc(100vw-1.5rem)] ${alignmentClasses}`}
+                    >
+                      <div className="backdrop-blur-xl bg-[#090d16]/98 border border-[#e11d48]/40 rounded-2xl p-3 sm:p-3.5 shadow-2xl text-white space-y-2">
+                        {/* Tooltip Header */}
+                        <div className="flex items-center justify-between border-b border-white/10 pb-1.5">
+                          <div>
+                            <div className="font-extrabold text-xs text-white flex items-center space-x-1.5">
+                              <span>{m.tooltip.title}</span>
+                            </div>
+                            <div className="text-[9.5px] font-mono text-[#10b981]">
+                              {m.tooltip.tagline}
+                            </div>
+                          </div>
+                          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300 border border-white/10">
+                            {m.badge}
+                          </span>
+                        </div>
+
+                        {/* Tooltip Stats Grid */}
+                        <div className="grid grid-cols-2 gap-1.5 py-0.5">
+                          {m.tooltip.stats.map((st, i) => (
+                            <div
+                              key={i}
+                              className="bg-white/5 rounded-lg p-1.5 border border-white/5"
+                            >
+                              <div className="text-[8.5px] text-slate-400 font-medium">
+                                {st.label}
+                              </div>
+                              <div className="text-[11px] font-mono font-bold text-slate-100">
+                                {st.value}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Compliance & Operations */}
+                        <div className="text-[9.5px] font-mono text-slate-300 bg-[#e11d48]/10 border border-[#e11d48]/20 rounded-lg p-1.5">
+                          <div className="text-[#ff4a68] font-bold text-[8.5px] uppercase tracking-wider mb-0.5">
+                            Standard & SLA
+                          </div>
+                          <div className="line-clamp-2 leading-tight">
+                            {m.tooltip.compliance}
+                          </div>
+                        </div>
+
+                        {/* Action Prompt */}
+                        <div className="flex items-center justify-between pt-1 border-t border-white/10 text-[10px] text-slate-400">
+                          <span>{m.tooltip.turnaround}</span>
+                          <span className="text-[#10b981] font-bold flex items-center space-x-1">
+                            <span>{m.actionText}</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

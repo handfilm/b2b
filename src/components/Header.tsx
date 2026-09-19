@@ -152,39 +152,37 @@ export const Header: React.FC<HeaderProps> = ({
       }`}
     >
       {/* =========================================================================
-          TIER 1: TOP STRIP (Ultra-compact, dark glass)
+          TIER 1: TOP STRIP (Ultra-compact, dark glass, responsive)
           ========================================================================= */}
       <div
         id="header-top-strip"
-        className={`text-xs py-1.5 px-4 border-b transition-colors ${
+        className={`text-xs py-1.5 px-3 sm:px-4 border-b transition-colors ${
           isDark
             ? 'bg-[#111111]/90 border-white/10 text-slate-300'
             : 'bg-slate-100 border-slate-200 text-slate-700'
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          {/* Left: NexOS Sync indicator (green dot) + Ecosystem links */}
-          <div className="flex items-center space-x-3 truncate">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
+          {/* Left: NexOS Sync indicator + Ecosystem links */}
+          <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
             <button
               type="button"
               onClick={onOpenPipeline}
               className="flex items-center space-x-1.5 shrink-0 cursor-pointer group"
               title="Click to inspect NexOS Data Ingestion Pipeline (Google Drive & Arutemika)"
             >
-              <span className="relative flex h-2 w-2">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
               </span>
-              <span className="font-mono text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 group-hover:bg-[#10b981]/25 transition-colors">
+              <span className="font-mono text-[9.5px] sm:text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 group-hover:bg-[#10b981]/25 transition-colors whitespace-nowrap">
                 NEXOS 6.5Cr SYNC: ACTIVE
               </span>
             </button>
 
-            <span className="text-slate-500 hidden sm:inline">|</span>
-
-            {/* Ecosystem links */}
-            <div className="hidden sm:flex items-center space-x-3 text-[11px] truncate text-slate-400">
-              <span className="font-bold text-slate-500 uppercase tracking-wider">Ecosystem:</span>
+            {/* Ecosystem links: visible on wide screens, cleanly tucked on smaller screens */}
+            <div className="hidden xl:flex items-center space-x-2.5 text-[11px] text-slate-400 border-l border-inherit pl-2.5 shrink-0">
+              <span className="font-bold text-slate-500 uppercase tracking-wider text-[10px]">Ecosystem:</span>
               <a
                 href="https://admin.handsandhead.com"
                 target="_blank"
@@ -214,7 +212,7 @@ export const Header: React.FC<HeaderProps> = ({
                 className="hover:text-[#ff1e42] transition-colors flex items-center space-x-0.5 font-semibold"
                 title="Commercial Knit & Denim Cluster"
               >
-                <span>Commercial Knit &amp; Denim</span>
+                <span>Commercial RMG</span>
                 <ExternalLink className="w-2.5 h-2.5" />
               </a>
               <span>•</span>
@@ -232,14 +230,14 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Right: Theme Toggle + Language Toggle + Currency + Port Freight Matrix */}
-          <div className="flex items-center space-x-2.5 shrink-0 text-xs">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0 text-xs">
             {/* Dark / Light Theme Toggle */}
             {onToggleTheme && (
               <button
                 type="button"
                 id="header-theme-toggle"
                 onClick={onToggleTheme}
-                className={`flex items-center space-x-1.5 px-2.5 py-0.5 rounded-lg border transition-all cursor-pointer ${
+                className={`flex items-center space-x-1 px-2 py-0.5 rounded-lg border transition-all cursor-pointer ${
                   isDark
                     ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
                     : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-2xs'
@@ -248,13 +246,13 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 {isDark ? (
                   <>
-                    <Sun className="w-3.5 h-3.5 text-amber-400" />
-                    <span className="text-[11px] font-bold">Light</span>
+                    <Sun className="w-3 h-3 text-amber-400" />
+                    <span className="text-[10px] sm:text-[11px] font-bold">Light</span>
                   </>
                 ) : (
                   <>
-                    <Moon className="w-3.5 h-3.5 text-slate-700" />
-                    <span className="text-[11px] font-bold">Dark</span>
+                    <Moon className="w-3 h-3 text-slate-700" />
+                    <span className="text-[10px] sm:text-[11px] font-bold">Dark</span>
                   </>
                 )}
               </button>
@@ -270,7 +268,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 id="header-lang-en"
                 onClick={() => onLanguageChange('EN')}
-                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                   lang === 'EN'
                     ? 'bg-[#e11d48] text-white'
                     : 'text-slate-400 hover:text-white'
@@ -282,7 +280,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 id="header-lang-bn"
                 onClick={() => onLanguageChange('BN')}
-                className={`px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
                   lang === 'BN'
                     ? 'bg-[#e11d48] text-white'
                     : 'text-slate-400 hover:text-white'
@@ -297,11 +295,11 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               id="header-freight-matrix-btn"
               onClick={onOpenShippingCalc}
-              className="hidden md:flex items-center space-x-1 text-slate-400 hover:text-[#10b981] transition-colors cursor-pointer font-medium text-[11px]"
+              className="hidden lg:flex items-center space-x-1 text-slate-400 hover:text-[#10b981] transition-colors cursor-pointer font-medium text-[11px]"
               title="Open Port Freight Matrix & Customs Calculator"
             >
-              <Ship className="w-3.5 h-3.5 text-[#10b981]" />
-              <span>Port Freight Matrix</span>
+              <Ship className="w-3 h-3 text-[#10b981]" />
+              <span>Freight Matrix</span>
             </button>
 
             {/* Currency Selector [USD $] */}
@@ -362,14 +360,14 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* =========================================================================
-          TIER 2: PRIMARY NAVBAR (One unified row)
+          TIER 2: PRIMARY NAVBAR (Responsive row, zero horizontal overflow)
           ========================================================================= */}
       <div
         id="header-primary-navbar"
-        className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3 sm:gap-4"
+        className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-3"
       >
         {/* Left: Logo with "&" inside red circle beside "Made in BD" + Persona Switcher */}
-        <div className="flex items-center space-x-3 sm:space-x-4 shrink-0">
+        <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
           <div
             id="brand-logo"
             onClick={() => {
@@ -377,22 +375,22 @@ export const Header: React.FC<HeaderProps> = ({
               handleDivisionClick('all');
               onSearchChange('');
             }}
-            className="flex items-center space-x-2.5 cursor-pointer group shrink-0"
+            className="flex items-center space-x-2 cursor-pointer group shrink-0"
             title="Made in BD - B2B Bangladesh Wholesale Export Portal"
           >
             {/* Red circle badge with ONLY "&" */}
-            <div className="w-9 h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-base sm:text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
               &amp;
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1.5">
               <span
-                className={`font-black text-xl tracking-tight ${
+                className={`font-black text-lg sm:text-xl tracking-tight ${
                   isDark ? 'text-white' : 'text-slate-950'
                 }`}
               >
                 Made in BD
               </span>
-              <span className="hidden sm:inline text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-[#e11d48]/15 text-[#ff1e42] border border-[#e11d48]/30 font-mono tracking-wider">
+              <span className="hidden md:inline text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full bg-[#e11d48]/15 text-[#ff1e42] border border-[#e11d48]/30 font-mono tracking-wider">
                 B2B PORTAL
               </span>
             </div>
@@ -401,7 +399,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Persona Switcher: [Buyer Portal] / [Manufacturer Hub] */}
           <div
             id="persona-switcher"
-            className={`hidden md:flex items-center p-1 rounded-xl border ${
+            className={`hidden md:flex items-center p-0.5 rounded-xl border ${
               isDark ? 'bg-[#141414] border-white/10' : 'bg-slate-100 border-slate-200'
             }`}
           >
@@ -409,7 +407,7 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               id="persona-buyer-btn"
               onClick={() => onPersonaChange('buyer')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center space-x-1 ${
                 persona === 'buyer'
                   ? 'bg-[#e11d48] text-white shadow-xs'
                   : 'text-slate-400 hover:text-white'
@@ -421,14 +419,15 @@ export const Header: React.FC<HeaderProps> = ({
               type="button"
               id="persona-seller-btn"
               onClick={() => onPersonaChange('seller')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 ${
+              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer flex items-center space-x-1 ${
                 persona === 'seller'
-                  ? 'bg-[#10b981] text-slate-950 shadow-xs'
+                  ? 'bg-[#10b981] text-slate-950 shadow-xs font-black'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
               <Factory className="w-3 h-3" />
-              <span>Manufacturer Hub</span>
+              <span className="hidden lg:inline">Manufacturer Hub</span>
+              <span className="lg:hidden">Mills Hub</span>
             </button>
           </div>
         </div>
@@ -436,7 +435,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Center: Central Global Search Bar */}
         <form
           onSubmit={handleSearchSubmit}
-          className="flex-1 max-w-xl mx-2 hidden lg:flex items-center"
+          className="flex-1 min-w-0 max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg mx-2 hidden lg:flex items-center"
         >
           <div
             className={`w-full flex items-center rounded-xl border transition-all ${
@@ -452,24 +451,24 @@ export const Header: React.FC<HeaderProps> = ({
                 onSearchChange('selvedge organic leather');
                 setSearchInput('selvedge organic leather');
               }}
-              className={`p-2.5 border-r cursor-pointer transition-colors ${
+              className={`p-2 border-r cursor-pointer transition-colors shrink-0 ${
                 isDark
                   ? 'text-slate-400 hover:text-white border-white/10 hover:bg-white/5'
                   : 'text-slate-500 hover:text-slate-900 border-slate-200 hover:bg-slate-100'
               }`}
               title="RAWx Visual Lens / Spec Match"
             >
-              <Camera className="w-4 h-4 text-[#10b981]" />
+              <Camera className="w-3.5 h-3.5 text-[#10b981]" />
             </button>
 
             {/* Textual input */}
             <input
               type="text"
               id="global-search-input"
-              placeholder="Search 50,000+ export products, fabrics, HS codes..."
+              placeholder="Search 50,000+ fabrics, mills, HS codes..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className={`flex-1 px-3 py-2 text-xs focus:outline-none bg-transparent ${
+              className={`flex-1 min-w-0 px-2.5 py-1.5 text-xs focus:outline-none bg-transparent ${
                 isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
               }`}
             />
@@ -478,27 +477,28 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="submit"
               id="global-search-submit-btn"
-              className="px-4 py-2 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black rounded-r-xl transition-colors flex items-center space-x-1.5 cursor-pointer shrink-0"
+              className="px-3 py-1.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black rounded-r-xl transition-colors flex items-center space-x-1 cursor-pointer shrink-0"
               title="Run Sourcing Search"
             >
-              <Search className="w-3.5 h-3.5" />
-              <span>RAWx Search</span>
+              <Search className="w-3 h-3" />
+              <span className="hidden xl:inline">RAWx</span>
+              <span>Search</span>
             </button>
           </div>
         </form>
 
-        {/* Right Actions: [RAWx Bot] [TechPack Studio] [Post RFQ] [Inquiries] [Sign In / Profile] */}
-        <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
+        {/* Right Actions: [RAWx Bot] [TechPack] [Post RFQ] [Inquiry Cart] [Inquiries] [Sign In / Profile] */}
+        <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
           {/* 1. RAWx Bot (24/7 AI Sourcing Assistant) */}
           <button
             type="button"
             id="header-rawx-bot-btn"
             onClick={onOpenAiAssistant}
-            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:opacity-95 text-white text-xs font-black shadow-md shadow-[#e11d48]/20 flex items-center space-x-1.5 cursor-pointer transition-all shrink-0"
+            className="hidden xl:flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:opacity-95 text-white text-xs font-black shadow-md shadow-[#e11d48]/20 cursor-pointer transition-all shrink-0"
             title="Launch RAWx Bot Trade Agent"
           >
             <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
-            <span className="hidden sm:inline">RAWx Bot</span>
+            <span>RAWx Bot</span>
           </button>
 
           {/* 2. TechPack Studio */}
@@ -506,7 +506,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="header-techpack-studio-btn"
             onClick={onOpenTechPackStudio}
-            className={`hidden sm:flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer ${
+            className={`hidden 2xl:flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-colors cursor-pointer shrink-0 ${
               isDark
                 ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
                 : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
@@ -514,18 +514,20 @@ export const Header: React.FC<HeaderProps> = ({
             title="Open Interactive TechPack Studio"
           >
             <FileText className="w-3.5 h-3.5 text-[#10b981]" />
-            <span>TechPack Studio</span>
+            <span>TechPack</span>
           </button>
 
-          {/* 3. Post RFQ */}
+          {/* 3. Post RFQ (Compact on mobile, full on desktop) */}
           <button
             type="button"
             id="header-post-rfq-btn"
             onClick={onOpenRfq}
-            className="px-3 py-1.5 rounded-xl bg-[#10b981] hover:bg-[#22c55e] text-slate-950 text-xs font-black transition-all cursor-pointer flex items-center space-x-1 shadow-sm shrink-0"
+            className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#10b981] hover:bg-[#22c55e] text-slate-950 text-xs font-black transition-all cursor-pointer flex items-center space-x-1 shadow-xs shrink-0"
             title="Post Commercial RFQ for 5,000+ Mills"
           >
-            <span>Post RFQ</span>
+            <FileText className="w-3.5 h-3.5 sm:hidden" />
+            <span className="hidden sm:inline">Post RFQ</span>
+            <span className="sm:hidden">RFQ</span>
           </button>
 
           {/* 4. Inquiries / Messages */}
@@ -533,7 +535,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="header-inquiries-btn"
             onClick={onOpenInquiries}
-            className={`relative p-2 rounded-xl border transition-colors cursor-pointer ${
+            className={`relative p-2 rounded-xl border transition-colors cursor-pointer shrink-0 ${
               isDark
                 ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
                 : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
@@ -541,7 +543,7 @@ export const Header: React.FC<HeaderProps> = ({
             title="Inquiries & RFQ Messages"
           >
             <MessageCircle className="w-4 h-4" />
-            <span className="absolute -top-1 -right-1 bg-[#e11d48] text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full min-w-4 text-center">
+            <span className="absolute -top-1 -right-1 bg-[#e11d48] text-white font-bold text-[9px] px-1 py-0.2 rounded-full min-w-4 text-center">
               {inquiryCount > 0 ? inquiryCount : 4}
             </span>
           </button>
@@ -551,7 +553,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="header-inquiry-cart-btn"
             onClick={openCart}
-            className={`relative p-2 rounded-xl border transition-all cursor-pointer flex items-center space-x-1.5 ${
+            className={`relative p-2 rounded-xl border transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
               cartCount > 0
                 ? 'bg-[#e11d48]/15 hover:bg-[#e11d48]/25 border-[#e11d48]/50 text-white shadow-md shadow-[#e11d48]/20'
                 : isDark
@@ -561,30 +563,30 @@ export const Header: React.FC<HeaderProps> = ({
             title="B2B Inquiry Cart (Launch RAWx Trade Agent)"
           >
             <ShoppingCart className={`w-4 h-4 ${cartCount > 0 ? 'text-[#ff1e42]' : 'text-slate-300'}`} />
-            <span className="hidden xl:inline text-xs font-bold">Inquiry Cart</span>
+            <span className="hidden 2xl:inline text-xs font-bold">Cart</span>
             {cartCount > 0 && (
-              <span className="bg-[#e11d48] text-white font-bold text-[9px] px-1.5 py-0.2 rounded-full min-w-4 text-center animate-pulse">
+              <span className="bg-[#e11d48] text-white font-bold text-[9px] px-1 py-0.2 rounded-full min-w-4 text-center animate-pulse">
                 {cartCount}
               </span>
             )}
           </button>
 
-          {/* 5. User Account / Sign In */}
+          {/* 5. User Account / Sign In - ALWAYS FULLY VISIBLE & SIZED AT FAR RIGHT */}
           {authUser ? (
-            <div className="relative">
+            <div className="relative shrink-0">
               <button
                 type="button"
                 id="header-user-profile-btn"
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-xl border text-xs font-bold transition-colors cursor-pointer ${
+                className={`flex items-center space-x-1.5 px-2 sm:px-2.5 py-1 rounded-xl border text-xs font-bold transition-colors cursor-pointer shrink-0 ${
                   isDark ? 'bg-white/10 border-white/20 text-white' : 'bg-slate-100 border-slate-300 text-slate-900'
                 }`}
               >
-                <div className="w-5 h-5 rounded-full bg-[#e11d48] text-white flex items-center justify-center text-[10px] font-black">
+                <div className="w-5 h-5 rounded-full bg-[#e11d48] text-white flex items-center justify-center text-[10px] font-black shrink-0">
                   {authUser.name.charAt(0)}
                 </div>
-                <span className="max-w-[70px] truncate">{authUser.name}</span>
-                <ChevronDown className="w-3 h-3 text-slate-400" />
+                <span className="max-w-[60px] sm:max-w-[70px] truncate hidden xs:inline sm:inline">{authUser.name}</span>
+                <ChevronDown className="w-3 h-3 text-slate-400 shrink-0" />
               </button>
 
               {isUserMenuOpen && (
@@ -792,15 +794,15 @@ export const Header: React.FC<HeaderProps> = ({
           ========================================================================= */}
       <div
         id="header-pavilion-rail"
-        className={`border-t py-2 px-4 overflow-x-auto no-scrollbar transition-colors ${
+        className={`w-full border-t py-1.5 sm:py-2 px-3 sm:px-4 transition-colors ${
           isDark
             ? 'bg-[#0e0e0e] border-white/10'
             : 'bg-slate-50 border-slate-200'
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           {/* Horizontal scrollable pills with active indicators */}
-          <div className="flex items-center space-x-2 shrink-0 overflow-x-auto no-scrollbar py-0.5">
+          <div className="flex-1 min-w-0 flex items-center space-x-2 overflow-x-auto no-scrollbar py-0.5 scroll-smooth">
             {FEDERATED_DIVISIONS.map((div) => {
               const isActive = selectedDivision === div.slug;
               return (
@@ -809,7 +811,7 @@ export const Header: React.FC<HeaderProps> = ({
                   type="button"
                   id={`pavilion-pill-${div.slug}`}
                   onClick={() => handleDivisionClick(div.slug)}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 ${
+                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center space-x-1.5 shrink-0 ${
                     isActive
                       ? 'bg-[#e11d48] text-white shadow-md shadow-[#e11d48]/20 font-black'
                       : isDark
@@ -825,7 +827,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Quick view switchers for Verified Mills & Global Buyers (Right side of rail) */}
-          <div className="hidden xl:flex items-center space-x-2 shrink-0 border-l border-inherit pl-3">
+          <div className="hidden lg:flex items-center space-x-2 shrink-0 border-l border-inherit pl-3">
             <button
               type="button"
               onClick={() => onViewChange('suppliers')}

@@ -373,6 +373,7 @@ export const GoogleMapsManufacturerDirectory: React.FC<GoogleMapsManufacturerDir
       <div className="relative w-full h-[540px]">
         <APIProvider apiKey={apiKey}>
           <Map
+            mapId={(import.meta as any).env?.VITE_GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID'}
             style={{ width: '100%', height: '100%' }}
             defaultCenter={BANGLADESH_CENTER}
             defaultZoom={7.8}

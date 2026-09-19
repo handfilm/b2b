@@ -7,6 +7,23 @@
   --brand-lime-hover: #22c55e;
 }
 
+/* Global viewport containment to prevent horizontal scroll and scaling glitches */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 /* Dark Mode (Default Obsidian Deep Black) */
 html.dark,
 body.dark {

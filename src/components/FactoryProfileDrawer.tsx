@@ -170,6 +170,7 @@ export const FactoryProfileDrawer: React.FC<FactoryProfileDrawerProps> = ({
               <div className="rounded-2xl border border-white/10 overflow-hidden relative shadow-2xl h-[260px] bg-black">
                 <APIProvider apiKey={apiKey}>
                   <Map
+                    mapId={(import.meta as any).env?.VITE_GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID'}
                     style={{ width: '100%', height: '100%' }}
                     defaultCenter={{ lat: coords.lat, lng: coords.lng }}
                     defaultZoom={9}
