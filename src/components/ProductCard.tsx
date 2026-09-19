@@ -14,6 +14,7 @@ import {
   Building2,
   TrendingDown,
   ShoppingCart,
+  X,
 } from 'lucide-react';
 import { Product, CurrencyConfig } from '../types';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
@@ -290,7 +291,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             exit={{ opacity: 0, y: '100%' }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             style={{ willChange: 'opacity, transform' }}
-            className="absolute inset-0 pt-13 p-3.5 bg-[#0a0a0a]/92 backdrop-blur-md flex flex-col justify-between z-20 text-white transform-gpu"
+            className="absolute inset-0 pt-12 p-3.5 bg-[#0a0a0a]/95 backdrop-blur-md flex flex-col justify-between z-20 text-white transform-gpu"
             onClick={(e) => {
               // Click inside overlay delegates to full view unless an action button is clicked
             }}
@@ -302,9 +303,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   <Sparkles className="w-3 h-3 text-[#10b981]" />
                   <span>Verified EPB Specs</span>
                 </span>
-                <span className="text-[10px] text-slate-400 font-mono">
-                  HS: {product.hsCode || '6109.10'}
-                </span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    HS: {product.hsCode || '6109.10'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsHovered(false);
+                      setHoveredTierIndex(null);
+                    }}
+                    className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                    title="Dismiss overlay"
+                    aria-label="Dismiss overlay"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
 
               <h4 className="text-xs sm:text-sm font-black line-clamp-2 text-white leading-tight">
@@ -541,6 +557,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {/* Inquire Button */}
               <motion.button
                 type="button"
+                id={`btn-inquire-${product.id}`}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={(e) => {
@@ -557,6 +574,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {/* Chat Agent Button */}
               <motion.button
                 type="button"
+                id={`btn-chat-agent-${product.id}`}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={(e) => {
@@ -577,6 +595,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {/* + RFQ Cart */}
               <motion.button
                 type="button"
+                id={`btn-cart-${product.id}`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={(e) => {
@@ -593,6 +612,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {/* TechPack CAD */}
               <motion.button
                 type="button"
+                id={`btn-cad-${product.id}`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={(e) => {

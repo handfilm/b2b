@@ -800,7 +800,7 @@ const AppContent: React.FC = () => {
       {/* Main Content Area */}
       <main
         id="main-content"
-        className="max-w-7xl mx-auto px-4 py-4 flex-1 w-full lg:pb-8"
+        className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-4 flex-1 lg:pb-8"
         style={{
           paddingBottom: isMobileScreen
             ? `calc(${mobileDockHeight}px + env(safe-area-inset-bottom, 0px) + 1.75rem)`

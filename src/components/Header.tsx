@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Globe2,
   Search,
@@ -105,9 +105,31 @@ export const Header: React.FC<HeaderProps> = ({
   const [isVerticalMenuOpen, setIsVerticalMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(searchQuery);
 
+  const headerRef = useRef<HTMLElement>(null);
+
   const { openCart, totalItems: cartCount } = useInquiryCart();
 
   const isDark = theme === 'dark';
+
+  // Sync external searchQuery changes
+  useEffect(() => {
+    setSearchInput(searchQuery);
+  }, [searchQuery]);
+
+  // Click outside to close all dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+        setIsCurrencyMenuOpen(false);
+        setIsEcosystemOpen(false);
+        setIsRfqMenuOpen(false);
+        setIsVerticalMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,6 +167,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header
+      ref={headerRef}
       id="main-header"
       className={`sticky top-0 z-40 transition-colors duration-200 border-b ${
         isDark
@@ -164,7 +187,7 @@ export const Header: React.FC<HeaderProps> = ({
             : 'bg-slate-100 border-slate-200 text-slate-700'
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
+        <div className="w-full max-w-[1720px] mx-auto flex items-center justify-between gap-2 sm:gap-4 px-1 sm:px-2">
           {/* Left: ECOSYSTEM Dropdown Menu */}
           <div className="flex items-center space-x-2.5">
             <button
@@ -438,7 +461,7 @@ export const Header: React.FC<HeaderProps> = ({
           ========================================================================= */}
       <div
         id="header-primary-navbar"
-        className="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex items-center justify-between gap-3"
+        className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-2 flex items-center justify-between gap-3"
       >
         {/* Left: Logo "&" inside red circle beside "Made in BD" (strictly no b2b portal text) */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">

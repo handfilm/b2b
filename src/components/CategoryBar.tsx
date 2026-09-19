@@ -36,7 +36,7 @@ export const CategoryBar: React.FC<CategoryBarProps> = ({
 }) => {
   return (
     <div className="bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/[0.08]">
-      <div className="max-w-7xl mx-auto px-4 py-2.5 overflow-x-auto no-scrollbar">
+      <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-2.5 overflow-x-auto no-scrollbar">
         <div className="flex items-center space-x-2 min-w-max">
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;

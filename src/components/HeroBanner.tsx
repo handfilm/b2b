@@ -189,7 +189,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
           : 'bg-gradient-to-b from-[#f8fafc] via-white to-[#f1f5f9] border-slate-200 text-slate-800'
       }`}
     >
-      <div className="max-w-7xl mx-auto space-y-3.5">
+      <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 space-y-3.5">
         {/* 1. Heart of the Website: Centered Mode Switcher Highlight Tabs (AI Mode, Products, Exporters, Buyers) */}
         <div
           id="hero-mode-tabs"
@@ -288,7 +288,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
         </div>
 
         {/* 2. Bigger, Dynamic Executive Search Bar with Hover Glow & Interactive Click Card */}
-        <div ref={searchContainerRef} className="max-w-4xl mx-auto relative">
+        <div ref={searchContainerRef} className="w-full max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto relative">
           <motion.form
             onSubmit={handleSearchSubmit}
             whileHover={{ scale: 1.008 }}

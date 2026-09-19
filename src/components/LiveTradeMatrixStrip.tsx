@@ -150,7 +150,7 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
           : 'bg-[#f8fafc] border-y border-slate-200'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 py-2 sm:py-2.5">
+      <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-2 sm:py-2.5">
         {/* Compact Bar with Live Indicator & Functional Status Chips */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2 pb-1.5 border-b border-inherit">
           <div className="flex items-center space-x-2">

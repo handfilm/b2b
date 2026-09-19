@@ -61,7 +61,7 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
     return (
       <div
         id="catalog-grid-skeleton-loading"
-        className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-5"
       >
         {Array.from({ length: 8 }).map((_, idx) => (
           <div
@@ -130,7 +130,7 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
   return (
     <div id="catalog-grid-container" className="space-y-4">
       {/* 1:1 Aspect Ratio Products Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
         {products.map((product) => (
           <ProductCard
             key={product.id}
