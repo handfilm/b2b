@@ -19,6 +19,7 @@ import { AuthModal } from './components/AuthModal';
 import { TechPackModal } from './components/TechPackModal';
 import { ComplianceVaultDrawer } from './components/ComplianceVaultDrawer';
 import { AiAssistantModal } from './components/AiAssistantModal';
+import { EcosystemGridSection } from './components/EcosystemGridSection';
 import { FloatingRightDock } from './components/FloatingRightDock';
 import { Footer } from './components/Footer';
 import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
@@ -845,6 +846,19 @@ const AppContent: React.FC = () => {
             {/* View 1: 4. UNLIMITED PRODUCTS GRID LOADING THROUGH SCROLLING */}
             {activeView === 'products' && (
               <div className="space-y-4">
+                {/* 1 x 4 SQUARE GRID: 12 Master Portals with Dynamic Hover Effects and Direct Website Links */}
+                {persona === 'buyer' && !supplierFilter && !searchQuery && (
+                  <EcosystemGridSection
+                    onSelectDivision={(slug) => {
+                      setSelectedDivision(slug);
+                      setSelectedDomainSource('all');
+                    }}
+                    selectedDivision={selectedDivision}
+                    onOpenAiAssistant={() => handleOpenAiAssistant()}
+                    theme={theme}
+                  />
+                )}
+
                 {/* Control Bar: Source Domains, Sort By & Product Count */}
                 <div
                   className={`rounded-2xl border p-3 shadow-xs flex flex-col gap-3 relative z-30 ${
@@ -948,13 +962,7 @@ const AppContent: React.FC = () => {
                                         type="button"
                                         onClick={() => {
                                           setSelectedDivision(div.slug);
-                                          if (div.slug === 'rmg-knits' || div.slug === 'commercial-blanks') {
-                                            setSelectedDomainSource('shop.handsandhead.com');
-                                          } else if (div.slug === 'flagship-leather' || div.slug === 'leather-cuffs') {
-                                            setSelectedDomainSource('arutemika.handsandhead.com');
-                                          } else {
-                                            setSelectedDomainSource('all');
-                                          }
+                                          setSelectedDomainSource('all');
                                           setIsSourcingNodeDropdownOpen(false);
                                         }}
                                         className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-between ${
