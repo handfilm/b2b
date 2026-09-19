@@ -28,6 +28,8 @@ import { NexosPipelineModal } from './components/NexosPipelineModal';
 import { MobileHighTechDock } from './components/MobileHighTechDock';
 import { BangladeshManufacturerMap } from './components/BangladeshManufacturerMap';
 import { GoogleMapsManufacturerDirectory } from './components/GoogleMapsManufacturerDirectory';
+import { CatalogGrid } from './components/CatalogGrid';
+import { FactoryProfileDrawer } from './components/FactoryProfileDrawer';
 import { BuyerDashboardShell } from './pages/BuyerDashboard';
 import { SellerDashboardShell } from './pages/SellerDashboard';
 import {
@@ -224,6 +226,8 @@ const AppContent: React.FC = () => {
   const [isTechPackModalOpen, setIsTechPackModalOpen] = useState(false);
   const [vaultSupplier, setVaultSupplier] = useState<Supplier | null>(null);
   const [isVaultOpen, setIsVaultOpen] = useState(false);
+  const [profileDrawerSupplier, setProfileDrawerSupplier] = useState<Supplier | null>(null);
+  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
 
   // AI Assistant States (RAWx Bot / Sourcing Assistant)
   const [isAiAssistantOpen, setIsAiAssistantOpen] = useState(false);
@@ -886,104 +890,39 @@ const AppContent: React.FC = () => {
                   </div>
                 )}
 
-                {/* Empty State */}
-                {displayedProducts.length === 0 ? (
-                  <div
-                    className={`py-16 text-center space-y-3 rounded-2xl border shadow-xs ${
-                      theme === 'dark'
-                        ? 'bg-[#141414] border-white/10 text-white'
-                        : 'bg-white border-slate-200 text-slate-800'
-                    }`}
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-white/10 text-slate-400 mx-auto flex items-center justify-center">
-                      <Filter className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-bold text-base">No matching export products found</h3>
-                    <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                      Try clearing your search query or reset your domain feed filter to discover verified Bangladesh products.
-                    </p>
-                    <div className="pt-2">
-                      <button
-                        onClick={() => {
-                          setSearchQuery('');
-                          setSelectedCategory('all');
-                          setSelectedDivision('all');
-                          setSelectedDomainSource('all');
-                          setSupplierFilter(null);
-                        }}
-                        className="px-4 py-2 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold cursor-pointer transition-colors"
-                      >
-                        Reset All Filters
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  /* Unlimited Products Grid (High-Tech 2-cols on mobile, 3-4 cols on desktop 1:1 Cards) */
-                  <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4">
-                    {displayedProducts.map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        product={product}
-                        currency={currentCurrencyConfig}
-                        onSelectProduct={setSelectedProduct}
-                        onRequestSample={handleOpenSampleModal}
-                        onInquire={handleInquireProduct}
-                        onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
-                        onAddToTechPack={(p) => {
-                          setSelectedProduct(p);
-                          setIsTechPackModalOpen(true);
-                        }}
-                        onProcureDirect={(p) => {
-                          const target =
-                            p.targetRoutingUrl ||
-                            `https://${p.sourceDomain || 'b2b.handsandhead.com'}/order?sku=${encodeURIComponent(
-                              p.sku || p.id
-                            )}&ref=b2b_portal&utm_source=b2b_hub`;
-                          window.open(target, '_blank', 'noopener,noreferrer');
-                        }}
-                        theme={theme}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {/* Infinite Scroll Trigger Sentinel & Loading Indicator */}
-                <div
-                  ref={sentinelRef}
-                  className="py-8 flex flex-col items-center justify-center space-y-2"
-                >
-                  {isLoadingMore && (
-                    <div
-                      className={`flex items-center space-x-2 text-xs px-4 py-2 rounded-full border shadow-xs animate-in fade-in ${
-                        theme === 'dark'
-                          ? 'bg-[#141414] border-white/10 text-white'
-                          : 'bg-white border-slate-200 text-slate-600'
-                      }`}
-                    >
-                      <Loader2 className="w-4 h-4 animate-spin text-[#e11d48]" />
-                      <span>Loading more products from shop.handsandhead.com & arutemika.handsandhead.com...</span>
-                    </div>
-                  )}
-
-                  {!isLoadingMore && hasMore && (
-                    <button
-                      onClick={loadMore}
-                      className={`px-5 py-2 rounded-full border text-xs font-bold shadow-xs transition-colors cursor-pointer ${
-                        theme === 'dark'
-                          ? 'bg-[#141414] hover:bg-white/10 border-white/20 text-white hover:text-[#ff1e42]'
-                          : 'bg-white hover:bg-slate-50 border-slate-300 text-slate-700 hover:text-[#e11d48]'
-                      }`}
-                    >
-                      Load More Products (or keep scrolling)
-                    </button>
-                  )}
-
-                  {!hasMore && displayedProducts.length > 0 && (
-                    <div className="text-xs text-slate-400 font-medium font-mono">
-                      You've browsed all current live export lots from Bangladesh mills.
-                    </div>
-                  )}
-                </div>
+                {/* Unified Catalog Grid with Glassmorphic Skeleton Loader & Infinite Scroll */}
+                <CatalogGrid
+                  products={displayedProducts}
+                  isLoading={isLoadingData}
+                  isLoadingMore={isLoadingMore}
+                  hasMore={hasMore}
+                  onLoadMore={loadMore}
+                  currency={currentCurrencyConfig}
+                  onSelectProduct={setSelectedProduct}
+                  onRequestSample={handleOpenSampleModal}
+                  onInquire={handleInquireProduct}
+                  onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
+                  onAddToTechPack={(p) => {
+                    setSelectedProduct(p);
+                    setIsTechPackModalOpen(true);
+                  }}
+                  onProcureDirect={(p) => {
+                    const target =
+                      p.targetRoutingUrl ||
+                      `https://${p.sourceDomain || 'b2b.handsandhead.com'}/order?sku=${encodeURIComponent(
+                        p.sku || p.id
+                      )}&ref=b2b_portal&utm_source=b2b_hub`;
+                    window.open(target, '_blank', 'noopener,noreferrer');
+                  }}
+                  theme={theme}
+                  emptyAction={() => {
+                    setSearchQuery('');
+                    setSelectedCategory('all');
+                    setSelectedDivision('all');
+                    setSelectedDomainSource('all');
+                    setSupplierFilter(null);
+                  }}
+                />
               </div>
             )}
 
@@ -1172,6 +1111,10 @@ const AppContent: React.FC = () => {
                         onOpenComplianceVault={handleOpenComplianceVault}
                         onReserveLineSlot={handleReserveLineSlot}
                         onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
+                        onOpenFactoryDrawer={(s) => {
+                          setProfileDrawerSupplier(s);
+                          setIsProfileDrawerOpen(true);
+                        }}
                         theme={theme}
                       />
                     ))}
@@ -1311,6 +1254,20 @@ const AppContent: React.FC = () => {
           setIsVaultOpen(false);
           handleReserveLineSlot(s);
         }}
+        theme={theme}
+      />
+
+      {/* Enterprise Factory Profile & Logistics Drawer */}
+      <FactoryProfileDrawer
+        supplier={profileDrawerSupplier}
+        isOpen={isProfileDrawerOpen}
+        onClose={() => {
+          setIsProfileDrawerOpen(false);
+          setProfileDrawerSupplier(null);
+        }}
+        onContactSupplier={() => setIsRfqModalOpen(true)}
+        onOpenComplianceVault={handleOpenComplianceVault}
+        onReserveLineSlot={handleReserveLineSlot}
         theme={theme}
       />
 

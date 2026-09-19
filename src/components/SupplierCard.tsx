@@ -22,6 +22,7 @@ interface SupplierCardProps {
   onOpenComplianceVault?: (supplier: Supplier) => void;
   onReserveLineSlot?: (supplier: Supplier) => void;
   onOpenAiAssistant?: (supplier: Supplier) => void;
+  onOpenFactoryDrawer?: (supplier: Supplier) => void;
   theme?: 'dark' | 'light';
 }
 
@@ -32,6 +33,7 @@ export const SupplierCard: React.FC<SupplierCardProps> = ({
   onOpenComplianceVault,
   onReserveLineSlot,
   onOpenAiAssistant,
+  onOpenFactoryDrawer,
   theme = 'dark',
 }) => {
   const isDark = theme === 'dark';
@@ -54,7 +56,9 @@ export const SupplierCard: React.FC<SupplierCardProps> = ({
     'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80';
 
   const handleCardClick = () => {
-    if (onOpenComplianceVault) {
+    if (onOpenFactoryDrawer) {
+      onOpenFactoryDrawer(supplier);
+    } else if (onOpenComplianceVault) {
       onOpenComplianceVault(supplier);
     } else {
       onFilterBySupplier(supplier.id);
