@@ -178,6 +178,9 @@ export interface Supplier {
   gotsCertified?: boolean;
   activeLines?: number;
   lineAvailabilityPercentage?: number;
+  lat?: number;
+  lng?: number;
+  industrialZone?: string;
 }
 
 export interface TechPackAttachment {

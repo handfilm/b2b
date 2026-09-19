@@ -32,24 +32,22 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 
-// Google Workspace & Drive OAuth Scopes
-export const GOOGLE_DRIVE_SCOPES = [
+// Google Workspace (Drive, Gmail, Chat) OAuth Scopes
+export const WORKSPACE_SCOPES = [
   'https://www.googleapis.com/auth/drive',
-  'https://www.googleapis.com/auth/drive.activity',
-  'https://www.googleapis.com/auth/drive.activity.readonly',
-  'https://www.googleapis.com/auth/drive.appdata',
-  'https://www.googleapis.com/auth/drive.apps.readonly',
   'https://www.googleapis.com/auth/drive.file',
-  'https://www.googleapis.com/auth/drive.install',
-  'https://www.googleapis.com/auth/drive.meet.readonly',
-  'https://www.googleapis.com/auth/drive.metadata',
-  'https://www.googleapis.com/auth/drive.metadata.readonly',
-  'https://www.googleapis.com/auth/drive.photos.readonly',
-  'https://www.googleapis.com/auth/drive.readonly',
-  'https://www.googleapis.com/auth/drive.scripts',
+  'https://mail.google.com/',
+  'https://www.googleapis.com/auth/gmail.send',
+  'https://www.googleapis.com/auth/gmail.readonly',
+  'https://www.googleapis.com/auth/gmail.compose',
+  'https://www.googleapis.com/auth/chat.spaces',
+  'https://www.googleapis.com/auth/chat.spaces.readonly',
+  'https://www.googleapis.com/auth/chat.messages',
 ];
 
-GOOGLE_DRIVE_SCOPES.forEach((scope) => {
+export const GOOGLE_DRIVE_SCOPES = WORKSPACE_SCOPES;
+
+WORKSPACE_SCOPES.forEach((scope) => {
   googleProvider.addScope(scope);
 });
 
@@ -72,8 +70,9 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // Initialize Firestore (supporting specific databaseId if configured)
-export const db: Firestore = firebaseConfig.firestoreDatabaseId
-  ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+const dbId = (firebaseConfig as Record<string, unknown>).firestoreDatabaseId;
+export const db: Firestore = typeof dbId === 'string' && dbId.length > 0
+  ? getFirestore(app, dbId)
   : getFirestore(app);
 
 // Google Sign-In with Workspace OAuth

@@ -27,6 +27,7 @@ import { RawxBotChat } from './components/RawxBotChat';
 import { NexosPipelineModal } from './components/NexosPipelineModal';
 import { MobileHighTechDock } from './components/MobileHighTechDock';
 import { BangladeshManufacturerMap } from './components/BangladeshManufacturerMap';
+import { GoogleMapsManufacturerDirectory } from './components/GoogleMapsManufacturerDirectory';
 import { BuyerDashboardShell } from './pages/BuyerDashboard';
 import { SellerDashboardShell } from './pages/SellerDashboard';
 import {
@@ -157,7 +158,7 @@ const AppContent: React.FC = () => {
   const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'customers' | 'insights'>('products');
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
-  const [supplierViewMode, setSupplierViewMode] = useState<'list' | 'map'>('list');
+  const [supplierViewMode, setSupplierViewMode] = useState<'list' | 'map' | 'google_map'>('google_map');
 
   // Alibaba Hero Tab ('ai' | 'products' | 'suppliers' | 'customers')
   const [activeHeroTab, setActiveHeroTab] = useState<'ai' | 'products' | 'suppliers' | 'customers'>('products');
@@ -1007,12 +1008,26 @@ const AppContent: React.FC = () => {
 
                   {/* Supplier Filters & View Mode Toggle */}
                   <div className="flex flex-wrap items-center gap-2 text-xs">
-                    {/* List vs Mini-Map Toggle Button */}
+                    {/* List vs Mini-Map vs Google Maps Toggle Button */}
                     <div
                       className={`flex items-center p-0.5 rounded-xl border ${
                         theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-slate-100 border-slate-200'
                       }`}
                     >
+                      <button
+                        id="supplier-toggle-google-map-view"
+                        onClick={() => setSupplierViewMode('google_map')}
+                        className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          supplierViewMode === 'google_map'
+                            ? 'bg-[#e11d48] text-white shadow-xs'
+                            : theme === 'dark'
+                            ? 'text-slate-400 hover:text-white'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                      >
+                        <MapPin className="w-3.5 h-3.5 text-white" />
+                        <span>Google Maps™ Live</span>
+                      </button>
                       <button
                         id="supplier-toggle-list-view"
                         onClick={() => setSupplierViewMode('list')}
@@ -1038,8 +1053,8 @@ const AppContent: React.FC = () => {
                             : 'text-slate-600 hover:text-slate-900'
                         }`}
                       >
-                        <MapPin className="w-3.5 h-3.5" />
-                        <span>Regional Density Map</span>
+                        <Layers className="w-3.5 h-3.5" />
+                        <span>Vector Clusters</span>
                       </button>
                     </div>
 
@@ -1081,7 +1096,19 @@ const AppContent: React.FC = () => {
                   </div>
                 </div>
 
-                {supplierViewMode === 'map' ? (
+                {supplierViewMode === 'google_map' ? (
+                  <GoogleMapsManufacturerDirectory
+                    suppliers={suppliers}
+                    selectedDistrict={selectedDistrict}
+                    onSelectDistrict={(district) => setSelectedDistrict(district)}
+                    onSwitchToListView={() => setSupplierViewMode('list')}
+                    onContactSupplier={() => setIsRfqModalOpen(true)}
+                    onOpenComplianceVault={handleOpenComplianceVault}
+                    onReserveLineSlot={handleReserveLineSlot}
+                    onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
+                    theme={theme}
+                  />
+                ) : supplierViewMode === 'map' ? (
                   <BangladeshManufacturerMap
                     suppliers={suppliers}
                     selectedDistrict={selectedDistrict}
