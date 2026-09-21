@@ -19,6 +19,7 @@ import {
 import { Product, CurrencyConfig } from '../types';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
 import { useInquiryCart } from '../context/InquiryCartContext';
+import { useI18n } from '../context/I18nContext';
 
 interface ProductCardProps {
   product: Product;
@@ -43,6 +44,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onProcureDirect,
   theme = 'dark',
 }) => {
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
   const [selectedSwatchIndex, setSelectedSwatchIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredTierIndex, setHoveredTierIndex] = useState<number | null>(null);
@@ -181,7 +184,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {product.artisanDirect && (
             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#10b981]/90 text-slate-950 font-mono flex items-center space-x-0.5">
               <Award className="w-2.5 h-2.5" />
-              <span>Artisan</span>
+              <span>{isBn ? 'কারুশিল্পী' : 'Artisan'}</span>
             </span>
           )}
         </div>
@@ -189,7 +192,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {product.bestseller && (
           <span className="bg-[#e11d48] text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-xs tracking-wider font-mono flex items-center space-x-1">
             <Flame className="w-2.5 h-2.5 fill-current" />
-            <span>BESTSELLER</span>
+            <span>{isBn ? 'জনপ্রিয়' : 'BESTSELLER'}</span>
           </span>
         )}
       </motion.div>
@@ -217,7 +220,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 </span>
                 <div className="min-w-0">
                   <span className="text-[8px] font-mono uppercase tracking-wider text-slate-400 block leading-none">
-                    Division
+                    {isBn ? 'বিভাগ' : 'Division'}
                   </span>
                   <span className="text-[11px] font-black text-white tracking-tight truncate block leading-tight mt-0.5">
                     {resolvedDivisionTitle}
@@ -264,19 +267,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <div className="flex items-baseline space-x-1">
             <span className="text-sm sm:text-base font-black text-[#10b981] font-mono">
               {currency.symbol}
-              {lowestConverted}
+              {toDigits(lowestConverted)}
             </span>
             {highestConverted !== lowestConverted && (
               <span className="text-[10px] text-slate-300 font-mono">
                 - {currency.symbol}
-                {highestConverted}
+                {toDigits(highestConverted)}
               </span>
             )}
             <span className="text-[10px] text-slate-300">/ {product.unit.toLowerCase().replace(/s$/, '')}</span>
           </div>
 
           <span className="text-[10px] font-medium text-slate-300 bg-white/10 px-2 py-0.5 rounded-full border border-white/10 backdrop-blur-xs">
-            MOQ: {product.moq} {product.unit}
+            {isBn ? 'নূন্যতম:' : 'MOQ:'} {toDigits(product.moq)} {product.unit}
           </span>
         </div>
       </motion.div>
@@ -301,7 +304,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               <div className="flex items-center justify-between border-b border-white/10 pb-2">
                 <span className="text-[10px] font-mono font-bold text-[#10b981] uppercase tracking-wider flex items-center space-x-1">
                   <Sparkles className="w-3 h-3 text-[#10b981]" />
-                  <span>Verified EPB Specs</span>
+                  <span>{isBn ? 'যাচাইকৃত ইপিবি স্পেক্স' : 'Verified EPB Specs'}</span>
                 </span>
                 <div className="flex items-center space-x-2">
                   <span className="text-[10px] text-slate-400 font-mono">
@@ -329,7 +332,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
               {/* Exact GSM / Fabric Breakdown */}
               <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-[11px] text-slate-300 leading-snug">
-                <span className="text-[9px] uppercase font-bold text-slate-400 block">Material & Weight</span>
+                <span className="text-[9px] uppercase font-bold text-slate-400 block">{isBn ? 'উপাদান ও ওজন' : 'Material & Weight'}</span>
                 <span className="font-medium text-slate-200">{gsmSpec}</span>
               </div>
             </div>
@@ -339,7 +342,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {/* Swatches with Framer Motion High-Performance spring response */}
               <div>
                 <div className="flex items-center justify-between text-[10px] text-slate-400 mb-1">
-                  <span className="uppercase font-bold">Variants / Swatches</span>
+                  <span className="uppercase font-bold">{isBn ? 'ভ্যারিয়েন্ট / রঙ' : 'Variants / Swatches'}</span>
                   <span className="text-slate-300 font-medium">{swatches[selectedSwatchIndex]?.name}</span>
                 </div>
                 <div className="flex items-center space-x-1.5">
@@ -393,10 +396,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               {/* Volume Price Tiers with Interactive Price Drop Tooltip */}
               <div className="space-y-1 relative">
                 <div className="flex items-center justify-between text-[9px]">
-                  <span className="uppercase font-bold text-slate-400 block">Volume Price Ladder</span>
+                  <span className="uppercase font-bold text-slate-400 block">{isBn ? 'বাল্ক মূল্য তালিকা' : 'Volume Price Ladder'}</span>
                   <span className="text-[8.5px] font-mono font-medium text-[#10b981] flex items-center space-x-0.5">
                     <TrendingDown className="w-2.5 h-2.5" />
-                    <span>{hoveredTierIndex !== null ? 'Price Drop Active' : 'Hover tier for drop'}</span>
+                    <span>{hoveredTierIndex !== null ? (isBn ? 'মূল্য ছাড় সক্রিয়' : 'Price Drop Active') : (isBn ? 'ছাড় দেখতে হোভার করুন' : 'Hover tier for drop')}</span>
                   </span>
                 </div>
 
@@ -546,9 +549,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               <div className="flex items-center justify-between text-[10px] text-slate-400 px-1">
                 <span className="flex items-center space-x-1">
                   <Clock className="w-3 h-3 text-[#10b981]" />
-                  <span>Production: <strong>25-35 Days</strong></span>
+                  <span>{isBn ? 'উৎপাদন:' : 'Production:'} <strong>{isBn ? '২৫-৩৫ দিন' : '25-35 Days'}</strong></span>
                 </span>
-                <span>Sample: <strong>4-7 Days</strong></span>
+                <span>{isBn ? 'নমুনা:' : 'Sample:'} <strong>{isBn ? '৪-৭ দিন' : '4-7 Days'}</strong></span>
               </div>
             </div>
 
@@ -568,7 +571,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 title="Send Direct Factory RFQ & Inquire"
               >
                 <Send className="w-3 h-3" />
-                <span>Inquire</span>
+                <span>{isBn ? 'অনুসন্ধান' : 'Inquire'}</span>
               </motion.button>
 
               {/* Chat Agent Button */}
@@ -589,7 +592,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 title="Chat with AI Sourcing Agent for custom spec & price negotiation"
               >
                 <Sparkles className="w-3 h-3 text-slate-950 animate-pulse" />
-                <span>Chat Agent</span>
+                <span>{isBn ? 'এআই এজেন্ট' : 'Chat Agent'}</span>
               </motion.button>
 
               {/* + RFQ Cart */}
@@ -606,7 +609,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 title="Add to B2B Inquiry Cart"
               >
                 <ShoppingCart className="w-3 h-3 text-[#ff1e42]" />
-                <span className="truncate">+ Cart</span>
+                <span className="truncate">{isBn ? '+ কার্ট' : '+ Cart'}</span>
               </motion.button>
 
               {/* TechPack CAD */}
@@ -627,7 +630,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 title="Export Spec to CAD TechPack Studio"
               >
                 <FileText className="w-3 h-3 text-[#10b981]" />
-                <span className="truncate">CAD</span>
+                <span className="truncate">{isBn ? 'ক্যাড' : 'CAD'}</span>
               </motion.button>
             </div>
           </motion.div>

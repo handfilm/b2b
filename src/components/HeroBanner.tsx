@@ -23,6 +23,7 @@ import {
   Package,
 } from 'lucide-react';
 import { MarketplaceStats, LanguageCode, AuthUser } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface HeroBannerProps {
   searchQuery: string;
@@ -72,6 +73,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const isDark = theme === 'dark';
+  const { t, toDigits, lang: currentLang } = useI18n();
+  const isBn = currentLang === 'BN';
 
   const popularSearches: PopularSearchItem[] = [
     {
@@ -220,9 +223,9 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
             </span>
             <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
-            <span className="tracking-tight">AI Mode</span>
+            <span className="tracking-tight">{isBn ? 'এআই মোড' : 'AI Mode'}</span>
             <span className="text-[9.5px] font-mono font-black uppercase px-2 py-0.5 rounded-full bg-black/40 text-emerald-300 border border-emerald-400/40">
-              Agent Next-Gen
+              {isBn ? 'নেক্সট-জেন' : 'Agent Next-Gen'}
             </span>
           </motion.button>
 
@@ -242,8 +245,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             }`}
           >
             <Package className="w-4 h-4 text-[#e11d48]" />
-            <span>Products</span>
-            <span className="text-[10px] opacity-70 font-mono">50,000+</span>
+            <span>{isBn ? 'পণ্যসমূহ' : 'Products'}</span>
+            <span className="text-[10px] opacity-70 font-mono">{toDigits('50,000+')}</span>
           </motion.button>
 
           {/* Exporters Tab */}
@@ -262,8 +265,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             }`}
           >
             <Building2 className="w-4 h-4 text-[#10b981]" />
-            <span>Exporters</span>
-            <span className="text-[10px] opacity-70 font-mono">5,000+</span>
+            <span>{isBn ? 'রপ্তানিকারক' : 'Exporters'}</span>
+            <span className="text-[10px] opacity-70 font-mono">{toDigits('5,000+')}</span>
           </motion.button>
 
           {/* Buyers Tab */}
@@ -282,8 +285,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             }`}
           >
             <Users className="w-4 h-4 text-[#10b981]" />
-            <span>Buyers</span>
-            <span className="text-[10px] opacity-70 font-mono">140+ Countries</span>
+            <span>{isBn ? 'ক্রেতাসমূহ' : 'Buyers'}</span>
+            <span className="text-[10px] opacity-70 font-mono">{isBn ? `${toDigits(140)}+ দেশ` : '140+ Countries'}</span>
           </motion.button>
         </div>
 
@@ -317,7 +320,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               title="Visual Search: Upload photo or garment spec"
             >
               <Camera className="w-5 h-5" />
-              <span className="text-[11px] font-bold hidden sm:inline">Lens</span>
+              <span className="text-[11px] font-bold hidden sm:inline">{isBn ? 'লেন্স' : 'Lens'}</span>
             </motion.button>
 
             {/* Vertical Separator */}
@@ -336,8 +339,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }}
                 placeholder={
                   isAiModeEnabled
-                    ? 'Ask AI Agent: "Find 240 GSM organic combed tees FOB Chattogram under $3.00"'
-                    : 'Search 50,000+ export products, fabrics, HS codes, or certified mills...'
+                    ? (isBn ? 'এআই এজেন্টকে জিজ্ঞাসা করুন: "২৪০ জিএসএম অর্গানিক টি-শার্ট চট্টগ্রাম এফওবি $৩.০০ এর নিচে"' : 'Ask AI Agent: "Find 240 GSM organic combed tees FOB Chattogram under $3.00"')
+                    : (isBn ? '৫০,০০০+ রপ্তানি পণ্য, টেক্সটাইল, এইচএস কোড বা প্রত্যয়িত মিল খুঁজুন...' : 'Search 50,000+ export products, fabrics, HS codes, or certified mills...')
                 }
                 className={`w-full text-xs sm:text-sm md:text-base font-medium focus:outline-none bg-transparent placeholder:font-normal ${
                   isDark ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
@@ -519,9 +522,9 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               }`}
             >
               <span className="inline-block w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
-              <span className="text-[11px] text-slate-400 font-mono uppercase">Buyer Node:</span>
+              <span className="text-[11px] text-slate-400 font-mono uppercase">{isBn ? 'ক্রেতা নোড:' : 'Buyer Node:'}</span>
               <span className="text-xs font-black text-[#e11d48] uppercase font-mono tracking-tight flex items-center space-x-1">
-                <span>{authUser ? authUser.name : 'VERIFIED BUYER'}</span>
+                <span>{authUser ? authUser.name : (isBn ? 'যাচাইকৃত ক্রেতা' : 'VERIFIED BUYER')}</span>
                 <BadgeCheck className="w-3.5 h-3.5 text-[#10b981]" />
               </span>
             </motion.div>
@@ -586,7 +589,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 text-[#e11d48]" />
-                <span>Post RFQ</span>
+                <span>{isBn ? 'আরএফকিউ পোস্ট' : 'Post RFQ'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'rfq' && (
@@ -634,7 +637,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <TrendingUp className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>Top Ranking</span>
+                <span>{isBn ? 'শীর্ষ র‍্যাঙ্কিং' : 'Top Ranking'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'ranking' && (
@@ -648,16 +651,16 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                       <div className="flex items-center justify-between border-b border-white/10 pb-1">
                         <span className="font-bold text-[#10b981] flex items-center space-x-1">
                           <TrendingUp className="w-3.5 h-3.5" />
-                          <span>EPB Export Volume Index</span>
+                          <span>{isBn ? 'ইপিবি রপ্তানি সূচক' : 'EPB Export Volume Index'}</span>
                         </span>
-                        <span className="text-[9px] font-mono text-emerald-300">Audited</span>
+                        <span className="text-[9px] font-mono text-emerald-300">{isBn ? 'নিরীক্ষিত' : 'Audited'}</span>
                       </div>
                       <p className="text-slate-300 leading-snug">
-                        Ranked by actual shipped container volume, buyer reorder rates (avg 94.8%), and LEED Platinum/Gold environmental audits.
+                        {isBn ? 'প্রকৃত রপ্তানি কন্টেইনার ভলিউম, ক্রেতা পুনঃঅর্ডার হার (গড় ৯৪.৮%) এবং লিড প্ল্যাটিনাম মানদণ্ডে ক্রমবিন্যস্ত।' : 'Ranked by actual shipped container volume, buyer reorder rates (avg 94.8%), and LEED Platinum/Gold environmental audits.'}
                       </p>
                       <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 pt-1 border-t border-white/10">
-                        <span>Delivery SLA</span>
-                        <span className="text-emerald-400 font-bold">99.2% On-Time</span>
+                        <span>{isBn ? 'ডেলিভারি এসএলএ' : 'Delivery SLA'}</span>
+                        <span className="text-emerald-400 font-bold">{toDigits('99.2%')} {isBn ? 'অন-টাইম' : 'On-Time'}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -682,7 +685,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <Sliders className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>TechPack CAD</span>
+                <span>{isBn ? 'ক্যাড টেকপ্যাক' : 'TechPack CAD'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'cad' && (
@@ -696,15 +699,15 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                       <div className="flex items-center justify-between border-b border-white/10 pb-1">
                         <span className="font-bold text-[#10b981] flex items-center space-x-1">
                           <Sliders className="w-3.5 h-3.5" />
-                          <span>Interactive CAD Spec Studio</span>
+                          <span>{isBn ? 'ইন্টারেক্টিভ স্পেক স্টুডিও' : 'Interactive CAD Spec Studio'}</span>
                         </span>
                         <span className="text-[9px] font-mono text-emerald-300">BOM Auto</span>
                       </div>
                       <p className="text-slate-300 leading-snug">
-                        Configure garment grading measurements, fabric weights, stitch tolerances, and Bill of Materials for one-click factory sampling.
+                        {isBn ? 'পোশাকের মাপ, ফ্যাব্রিক জিএসএম, সেলাই সহনশীলতা ও ম্যাটেরিয়াল বিল কনফিগার করুন।' : 'Configure garment grading measurements, fabric weights, stitch tolerances, and Bill of Materials for one-click factory sampling.'}
                       </p>
                       <div className="flex items-center justify-between text-[9.5px] font-mono text-slate-400 pt-1 border-t border-white/10">
-                        <span>Export Formats</span>
+                        <span>{isBn ? 'এক্সপোর্ট ফরম্যাট' : 'Export Formats'}</span>
                         <span className="text-emerald-400 font-bold">PDF, DXF, PLT</span>
                       </div>
                     </div>
@@ -730,7 +733,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>Bank L/C & Escrow</span>
+                <span>{isBn ? 'ব্যাংক এল/সি ও এসক্রো' : 'Bank L/C & Escrow'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'escrow' && (

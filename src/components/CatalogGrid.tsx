@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { Loader2, Sparkles, Filter, RefreshCw, Layers } from 'lucide-react';
 import { ProductCard } from './ProductCard';
 import { Product, CurrencyConfig } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface CatalogGridProps {
   products: Product[];
@@ -38,6 +39,8 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
 }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const isDark = theme === 'dark';
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   // IntersectionObserver for auto-infinite scrolling
   useEffect(() => {
@@ -109,9 +112,13 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
         <div className="w-12 h-12 rounded-xl bg-white/10 text-slate-400 mx-auto flex items-center justify-center">
           <Filter className="w-6 h-6" />
         </div>
-        <h3 className="font-bold text-base">No matching export products found</h3>
+        <h3 className="font-bold text-base">
+          {isBn ? 'কোনো মানানসই রপ্তানি পণ্য পাওয়া যায়নি' : 'No matching export products found'}
+        </h3>
         <p className="text-xs text-slate-400 max-w-sm mx-auto">
-          Try clearing your search query or reset your domain feed filter to discover verified Bangladesh products.
+          {isBn
+            ? 'অনুসন্ধান ফিল্টার পরিবর্তন বা রিসেট করে যাচাইকৃত বাংলাদেশি পণ্য খুঁজুন।'
+            : 'Try clearing your search query or reset your domain feed filter to discover verified Bangladesh products.'}
         </p>
         {emptyAction && (
           <div className="pt-2">
@@ -119,7 +126,7 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
               onClick={emptyAction}
               className="px-4 py-2 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold cursor-pointer transition-colors"
             >
-              Reset All Filters
+              {isBn ? 'সব ফিল্টার রিসেট করুন' : 'Reset All Filters'}
             </button>
           </div>
         )}
@@ -162,7 +169,11 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
             }`}
           >
             <Loader2 className="w-4 h-4 animate-spin text-[#e11d48]" />
-            <span>Hydrating catalog from federated Cloud SQL &amp; Firestore...</span>
+            <span>
+              {isBn
+                ? 'ফেডারেটেড ক্লাউড এসকিউএল ও ফায়ারস্টোর থেকে ক্যাটালগ সিঙ্ক হচ্ছে...'
+                : 'Hydrating catalog from federated Cloud SQL & Firestore...'}
+            </span>
           </div>
         )}
 
@@ -175,13 +186,15 @@ export const CatalogGrid: React.FC<CatalogGridProps> = ({
                 : 'bg-white hover:bg-slate-50 border-slate-300 text-slate-700 hover:text-[#e11d48]'
             }`}
           >
-            Load Next 24 Export Lots
+            {isBn ? 'পরবর্তী ২৪টি রপ্তানি লট লোড করুন' : 'Load Next 24 Export Lots'}
           </button>
         )}
 
         {!hasMore && products.length > 0 && (
           <div className="text-[11px] font-mono text-slate-500 py-2">
-            ✓ Federated catalog fully synchronized ({products.length} active lots)
+            {isBn
+              ? `✓ ফেডারেটেড ক্যাটালগ সম্পূর্ণ সিঙ্কড (${toDigits(products.length)}টি সক্রিয় লট)`
+              : `✓ Federated catalog fully synchronized (${products.length} active lots)`}
           </div>
         )}
       </div>

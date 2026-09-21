@@ -50,7 +50,7 @@ interface NexosSyncContextType {
   syncStatus: 'idle' | 'syncing' | 'live' | 'error';
   lastSyncedAt: string | null;
   syncEvents: PipelineSyncEvent[];
-  triggerSync: (source?: 'all' | 'drive' | 'arutemika') => Promise<void>;
+  triggerSync: (source?: 'all' | 'drive' | 'arutemika' | 'ai-studio') => Promise<void>;
   addPublishedProduct: (product: B2BProduct) => void;
   isPipelineModalOpen: boolean;
   setIsPipelineModalOpen: (open: boolean) => void;
@@ -205,34 +205,49 @@ export const NexosSyncProvider: React.FC<{ children: ReactNode }> = ({ children 
 
   // Trigger Manual / Scheduled Sync Pipeline
   const triggerSync = useCallback(
-    async (source: 'all' | 'drive' | 'arutemika' = 'all') => {
+    async (source: 'all' | 'drive' | 'arutemika' | 'ai-studio' = 'all') => {
       setSyncStatus('syncing');
 
       try {
         const newEvents: PipelineSyncEvent[] = [];
 
+        // 1. Master sync with handsandhead.ai.studio
+        if (source === 'all' || source === 'ai-studio') {
+          const aiResult = await nexusApi.syncWithAiStudioMasterHub();
+          if (aiResult.event) {
+            newEvents.push(aiResult.event);
+          }
+        }
+
+        // 2. Google Drive / shop.handsandhead.com sync
         if (source === 'all' || source === 'drive') {
           const driveResult = await nexusApi.syncGoogleDriveHeadless();
           newEvents.push(driveResult.event);
         }
 
+        // 3. Arutemika atelier sync
         if (source === 'all' || source === 'arutemika') {
           const artmResult = await nexusApi.syncArutemikaHeadless();
           newEvents.push(artmResult.event);
         }
 
-        // Re-fetch catalog & metrics
-        const refreshed = await nexusApi.fetchB2BCatalog({
-          page: 1,
-          limit: 120,
-          division: 'all',
-          forceRefresh: true,
-        });
-
-        const refreshedMetrics = await nexusApi.fetchDatabaseMetrics();
+        // Re-fetch catalog, suppliers, buyers & metrics
+        const [refreshed, suppliersRes, buyersRes, refreshedMetrics] = await Promise.all([
+          nexusApi.fetchB2BCatalog({
+            page: 1,
+            limit: 120,
+            division: 'all',
+            forceRefresh: true,
+          }),
+          nexusApi.fetchVerifiedSuppliers(),
+          nexusApi.fetchGlobalBuyers(),
+          nexusApi.fetchDatabaseMetrics(),
+        ]);
 
         setProducts(refreshed.products);
         setTotalProductsCount(refreshed.totalCount);
+        setSuppliers(suppliersRes.suppliers);
+        setBuyers(buyersRes.buyers);
         setMetrics(refreshedMetrics);
         setSyncEvents((prev) => [...newEvents, ...prev]);
         setSyncStatus('live');

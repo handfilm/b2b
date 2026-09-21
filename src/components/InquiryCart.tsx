@@ -16,6 +16,7 @@ import {
   Minus,
 } from 'lucide-react';
 import { useInquiryCart } from '../context/InquiryCartContext';
+import { useI18n } from '../context/I18nContext';
 import { AuthUser, CurrencyConfig } from '../types';
 import { createRfqThread } from '../services/rfqService';
 
@@ -39,6 +40,9 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
     clearCart,
     openRawxBot,
   } = useInquiryCart();
+
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [globalMessage, setGlobalMessage] = useState('');
@@ -130,14 +134,14 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h2 className="text-base font-black tracking-tight text-white uppercase">
-                  B2B Inquiry / RFQ Cart
+                  {isBn ? 'বি২বি অনুসন্ধান / আরএফকিউ কার্ট' : 'B2B Inquiry / RFQ Cart'}
                 </h2>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[#e11d48]/20 border border-[#e11d48]/40 text-[#ff1e42]">
-                  {cartItems.length} {cartItems.length === 1 ? 'Lot' : 'Lots'}
+                  {toDigits(cartItems.length)} {isBn ? 'লট' : (cartItems.length === 1 ? 'Lot' : 'Lots')}
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">
-                Direct mill inquiry queue • Zero retail checkout
+                {isBn ? 'সরাসরি মিল ইনকোয়ারি কিউ • খুচরা চেকআউট নেই' : 'Direct mill inquiry queue • Zero retail checkout'}
               </p>
             </div>
           </div>
@@ -148,9 +152,9 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                 type="button"
                 onClick={clearCart}
                 className="text-[11px] text-slate-400 hover:text-red-400 px-2 py-1 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
-                title="Clear all lots"
+                title={isBn ? 'সব মুছুন' : 'Clear all lots'}
               >
-                Clear
+                {isBn ? 'মুছুন' : 'Clear'}
               </button>
             )}
             <button
@@ -168,7 +172,11 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
         <div className="px-4 py-2 bg-[#121212] border-b border-white/5 flex items-center space-x-2 text-[11px] text-slate-400 shrink-0">
           <Sparkles className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
           <span>
-            Target prices & quantities are intercepted by <strong className="text-white">RAWx Autonomous Agent</strong> for automated factory routing.
+            {isBn ? (
+              <>লক্ষ্য মূল্য ও পরিমাণ সরাসরি <strong className="text-white">র-এক্স স্বায়ত্তশাসিত এজেন্ট</strong> দ্বারা কারখানায় রাউট করা হয়।</>
+            ) : (
+              <>Target prices & quantities are intercepted by <strong className="text-white">RAWx Autonomous Agent</strong> for automated factory routing.</>
+            )}
           </span>
         </div>
 
@@ -180,9 +188,11 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                 <Package className="w-8 h-8" />
               </div>
               <div className="max-w-xs space-y-1">
-                <h3 className="text-base font-bold text-white">Your Inquiry Cart is Empty</h3>
+                <h3 className="text-base font-bold text-white">{isBn ? 'আপনার অনুসন্ধান কার্ট খালি' : 'Your Inquiry Cart is Empty'}</h3>
                 <p className="text-xs text-slate-400">
-                  Select RMG blanks, leather goods, or industrial products to configure target volume lots and launch automated mill negotiation.
+                  {isBn
+                    ? 'তৈরি পোশাক, চামড়াজাত পণ্য বা শিল্প উপাদান নির্বাচন করে স্বয়ংক্রিয় ফ্যাক্টরি নেগোসিয়েশন শুরু করুন।'
+                    : 'Select RMG blanks, leather goods, or industrial products to configure target volume lots and launch automated mill negotiation.'}
                 </p>
               </div>
               <button
@@ -193,7 +203,7 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                 }}
                 className="px-5 py-2.5 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold tracking-wide shadow-lg shadow-[#e11d48]/25 transition-all cursor-pointer flex items-center space-x-1.5"
               >
-                <span>Browse Export Catalog</span>
+                <span>{isBn ? 'রপ্তানি ক্যাটালগ দেখুন' : 'Browse Export Catalog'}</span>
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -256,7 +266,7 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                       {/* Target Quantity */}
                       <div className="p-2.5 rounded-xl bg-[#171717] border border-white/10 space-y-1.5">
                         <label className="text-[10px] font-mono font-bold text-slate-400 block uppercase">
-                          Target Quantity (Pieces)
+                          {isBn ? 'লক্ষ্যমাত্রা পরিমাণ (পিস)' : 'Target Quantity (Pieces)'}
                         </label>
                         <div className="flex items-center space-x-1.5">
                           <button
@@ -295,34 +305,34 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                           </button>
                         </div>
                         <div className="flex justify-between items-center text-[9px] text-slate-500 font-mono">
-                          <span>Steppers:</span>
+                          <span>{isBn ? 'ধাপ:' : 'Steppers:'}</span>
                           <button
                             type="button"
                             onClick={() => updateCartItem(item.id, { requestedQty: 1000 })}
                             className="hover:text-white transition-colors"
                           >
-                            1k
+                            {isBn ? '১হাজার' : '1k'}
                           </button>
                           <button
                             type="button"
                             onClick={() => updateCartItem(item.id, { requestedQty: 3000 })}
                             className="hover:text-white transition-colors"
                           >
-                            3k
+                            {isBn ? '৩হাজার' : '3k'}
                           </button>
                           <button
                             type="button"
                             onClick={() => updateCartItem(item.id, { requestedQty: 5000 })}
                             className="hover:text-white transition-colors"
                           >
-                            5k
+                            {isBn ? '৫হাজার' : '5k'}
                           </button>
                           <button
                             type="button"
                             onClick={() => updateCartItem(item.id, { requestedQty: 10000 })}
                             className="hover:text-white transition-colors"
                           >
-                            10k
+                            {isBn ? '১০হাজার' : '10k'}
                           </button>
                         </div>
                       </div>
@@ -331,10 +341,10 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                       <div className="p-2.5 rounded-xl bg-[#171717] border border-white/10 space-y-1.5">
                         <div className="flex justify-between items-center">
                           <label className="text-[10px] font-mono font-bold text-slate-400 uppercase">
-                            Target FOB Price (USD)
+                            {isBn ? 'লক্ষ্য এফওবি মূল্য (USD)' : 'Target FOB Price (USD)'}
                           </label>
                           <span className="text-[9px] font-mono text-[#10b981]">
-                            Est: ${item.targetPrice.toFixed(2)}
+                            {isBn ? 'আনুমানিক:' : 'Est:'} ${toDigits(item.targetPrice.toFixed(2))}
                           </span>
                         </div>
                         <div className="relative">
@@ -355,9 +365,9 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                           />
                         </div>
                         <div className="text-[9px] text-slate-400 flex justify-between items-center">
-                          <span>Lot Valuation:</span>
+                          <span>{isBn ? 'লট মূল্যায়ন:' : 'Lot Valuation:'}</span>
                           <strong className="text-white font-mono">
-                            ${itemTotalUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            ${toDigits(itemTotalUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))}
                           </strong>
                         </div>
                       </div>
@@ -367,7 +377,7 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                     <div className="space-y-1 pt-1">
                       <div className="flex justify-between items-center">
                         <label className="text-[10px] font-mono text-slate-400">
-                          Message / Technical Spec to Mill:
+                          {isBn ? 'কারখানার জন্য বার্তা / টেকনিক্যাল স্পেক্স:' : 'Message / Technical Spec to Mill:'}
                         </label>
                         <span className="text-[9px] text-slate-500">TechPack, GSM, Pantone TCX</span>
                       </div>
@@ -375,7 +385,11 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
                         rows={2}
                         value={item.itemMessage}
                         onChange={(e) => updateCartItem(item.id, { itemMessage: e.target.value })}
-                        placeholder="e.g., Required in 240 GSM organic cotton, Pantone 19-4052 TCX Classic Blue, FOB Chittagong with lab dip samples..."
+                        placeholder={
+                          isBn
+                            ? 'উদা: ২৪০ জিএসএম অর্গানিক কটন, প্যান্টোন ১৯-৪০৫২ টিসিএক্স ক্ল্যাসিক ব্লু, ল্যাব ডিপ নমুনা সহ...'
+                            : 'e.g., Required in 240 GSM organic cotton, Pantone 19-4052 TCX Classic Blue, FOB Chittagong with lab dip samples...'
+                        }
                         className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-[#e11d48] resize-none"
                       />
                     </div>
@@ -386,13 +400,17 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
               {/* Optional Master Note */}
               <div className="p-3.5 rounded-2xl bg-[#121212] border border-white/10 space-y-1.5">
                 <label className="text-[11px] font-mono font-bold text-slate-300 block uppercase">
-                  Consolidated Buyer Purchase Notes (Optional)
+                  {isBn ? 'ক্রেতার সমন্বিত ক্রয় নোট (ঐচ্ছিক)' : 'Consolidated Buyer Purchase Notes (Optional)'}
                 </label>
                 <textarea
                   rows={2}
                   value={globalMessage}
                   onChange={(e) => setGlobalMessage(e.target.value)}
-                  placeholder="Additional delivery instructions, payment preferences (L/C, Escrow), or destination ports (e.g., Los Angeles, Rotterdam)..."
+                  placeholder={
+                    isBn
+                      ? 'অতিরিক্ত ডেলিভারি নির্দেশনা, পেমেন্ট মাধ্যম (এল/সি, এসক্রো), অথবা গন্তব্য বন্দর (যেমন লস অ্যাঞ্জেলেস, রটারড্যাম)...'
+                      : 'Additional delivery instructions, payment preferences (L/C, Escrow), or destination ports (e.g., Los Angeles, Rotterdam)...'
+                  }
                   className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-[#e11d48] resize-none"
                 />
               </div>
@@ -406,15 +424,15 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
             {/* Summary Metrics */}
             <div className="flex items-center justify-between text-xs">
               <div className="space-y-0.5">
-                <span className="text-slate-400 block text-[11px]">Total Target Volume:</span>
+                <span className="text-slate-400 block text-[11px]">{isBn ? 'মোট লক্ষ্যমাত্রা ভলিউম:' : 'Total Target Volume:'}</span>
                 <span className="text-sm font-black text-white font-mono">
-                  {totalPcs.toLocaleString()} Pieces
+                  {toDigits(totalPcs.toLocaleString())} {isBn ? 'পিস' : 'Pieces'}
                 </span>
               </div>
               <div className="text-right space-y-0.5">
-                <span className="text-slate-400 block text-[11px]">Estimated Lot Value:</span>
+                <span className="text-slate-400 block text-[11px]">{isBn ? 'আনুমানিক লট মূল্য:' : 'Estimated Lot Value:'}</span>
                 <span className="text-base font-black text-[#10b981] font-mono">
-                  ${totalTargetValUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD
+                  ${toDigits(totalTargetValUSD.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))} USD
                 </span>
               </div>
             </div>
@@ -423,7 +441,9 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
             <div className="flex items-center space-x-1.5 text-[10px] text-slate-400 bg-white/5 p-2 rounded-xl border border-white/5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
               <span>
-                Dispatched directly to verified EPB/BGMEA bonded manufacturers. No retail markup.
+                {isBn
+                  ? 'সরাসরি যাচাইকৃত ইপিবি/বিজিএমইএ বন্ডেড প্রস্তুতকারকদের কাছে প্রেরিত। কোনো খুচরা অতিরিক্ত মূল্য নেই।'
+                  : 'Dispatched directly to verified EPB/BGMEA bonded manufacturers. No retail markup.'}
               </span>
             </div>
 
@@ -431,7 +451,11 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
             {submissionSuccess && (
               <div className="p-2.5 rounded-xl bg-[#10b981]/15 border border-[#10b981]/40 text-[#10b981] text-xs font-bold flex items-center space-x-2 animate-in fade-in">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>RFQ Thread #{submissionSuccess.substring(0, 10)} created! Launching RAWx Trade Agent...</span>
+                <span>
+                  {isBn
+                    ? `আরএফকিউ থ্রেড #${submissionSuccess.substring(0, 10)} সফলভাবে তৈরি! র-এক্স এজেন্ট চালু হচ্ছে...`
+                    : `RFQ Thread #${submissionSuccess.substring(0, 10)} created! Launching RAWx Trade Agent...`}
+                </span>
               </div>
             )}
 
@@ -448,12 +472,12 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
               {isSubmitting ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Logging RFQ Thread & Dispatching...</span>
+                  <span>{isBn ? 'আরএফকিউ থ্রেড তৈরি ও পাঠানো হচ্ছে...' : 'Logging RFQ Thread & Dispatching...'}</span>
                 </>
               ) : (
                 <>
                   <Send className="w-4 h-4" />
-                  <span>Submit Inquiry & Launch RAWx Agent</span>
+                  <span>{isBn ? 'ইনকোয়ারি জমা দিন ও র-এক্স এজেন্ট চালু করুন' : 'Submit Inquiry & Launch RAWx Agent'}</span>
                 </>
               )}
             </button>

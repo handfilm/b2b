@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useI18n } from '../context/I18nContext';
 import {
   ShieldCheck,
   Users,
@@ -38,6 +39,8 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
 }) => {
   const isDark = theme === 'dark';
   const handleShipping = onOpenFreightMatrix || onOpenShipping;
+  const { t, toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [hoveredChip, setHoveredChip] = useState<string | null>(null);
@@ -53,65 +56,65 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
   const metrics = [
     {
       id: 'exporters',
-      label: 'Exporters',
-      value: `${activeMetrics.verifiedSuppliers.toLocaleString()}+`,
-      badge: 'EPB Bonded',
+      label: isBn ? 'রপ্তানিকারক' : 'Exporters',
+      value: `${toDigits(activeMetrics.verifiedSuppliers.toLocaleString())}+`,
+      badge: isBn ? 'ইপিবি বন্ডেড' : 'EPB Bonded',
       badgeColor: 'text-[#10b981] bg-[#10b981]/15 border-[#10b981]/30',
       icon: <Building2 className="w-3.5 h-3.5 text-[#e11d48]" />,
       action: onOpenFactories,
-      actionText: `Explore ${activeMetrics.verifiedSuppliers.toLocaleString()}+ Mills`,
+      actionText: isBn ? `${toDigits(activeMetrics.verifiedSuppliers.toLocaleString())}+ কারখানা দেখুন` : `Explore ${activeMetrics.verifiedSuppliers.toLocaleString()}+ Mills`,
       tooltip: {
-        title: 'Verified Bangladesh Exporters',
-        tagline: `${activeMetrics.verifiedSuppliers.toLocaleString()}+ EPB Bonded Mills in NexOS DB`,
+        title: isBn ? 'যাচাইকৃত বাংলাদেশ রপ্তানিকারক' : 'Verified Bangladesh Exporters',
+        tagline: isBn ? `নেক্সস ডেটাবেজে ${toDigits(activeMetrics.verifiedSuppliers.toLocaleString())}+ ইপিবি বন্ডেড মিল` : `${activeMetrics.verifiedSuppliers.toLocaleString()}+ EPB Bonded Mills in NexOS DB`,
         stats: [
-          { label: 'RMG Knitwear & Jersey', value: '1,850+ Units' },
-          { label: 'Woven & Selvedge Denim', value: '750+ Plants' },
-          { label: 'Finished Leather & Shoes', value: '320+ Tannery/Mfr' },
-          { label: 'Diversified Jute & Agro', value: '185+ Eco Units' },
+          { label: isBn ? 'আরএমজি নিটওয়্যার ও জার্সি' : 'RMG Knitwear & Jersey', value: isBn ? `${toDigits('1,850')}+ ইউনিট` : '1,850+ Units' },
+          { label: isBn ? 'ওভেন ও সেলভেজ ডেনিম' : 'Woven & Selvedge Denim', value: isBn ? `${toDigits('750')}+ প্ল্যান্ট` : '750+ Plants' },
+          { label: isBn ? 'ফিনিশড লেদার ও পাদুকা' : 'Finished Leather & Shoes', value: isBn ? `${toDigits('320')}+ ট্যানারি` : '320+ Tannery/Mfr' },
+          { label: isBn ? 'পাটজাত ও পরিবেশবান্ধব পণ্য' : 'Diversified Jute & Agro', value: isBn ? `${toDigits('185')}+ ইউনিট` : '185+ Eco Units' },
         ],
         compliance: 'OEKO-TEX 100 • GOTS • WRAP • SEDEX • BSCI',
-        turnaround: 'Counter-sample: 3-5 days • Bulk: 30-45 days',
+        turnaround: isBn ? 'কাউন্টার-স্যাম্পল: ৩-৫ দিন • বাল্ক: ৩০-৪৫ দিন' : 'Counter-sample: 3-5 days • Bulk: 30-45 days',
       },
     },
     {
       id: 'buyers',
-      label: 'Buyers',
-      value: `${activeMetrics.activeBuyers.toLocaleString()}+`,
-      badge: 'Active Hub',
+      label: isBn ? 'ক্রেতাসমূহ' : 'Buyers',
+      value: `${toDigits(activeMetrics.activeBuyers.toLocaleString())}+`,
+      badge: isBn ? 'সক্রিয় হাব' : 'Active Hub',
       badgeColor: 'text-[#10b981] bg-[#10b981]/15 border-[#10b981]/30',
       icon: <Users className="w-3.5 h-3.5 text-[#10b981]" />,
       action: onOpenBuyers,
-      actionText: 'View Buyer Hub',
+      actionText: isBn ? 'ক্রেতা হাব দেখুন' : 'View Buyer Hub',
       tooltip: {
-        title: 'Global Sourcing Network',
-        tagline: `${activeMetrics.activeBuyers.toLocaleString()} Verified Purchasing Accounts`,
+        title: isBn ? 'বৈশ্বিক সোর্সিং নেটওয়ার্ক' : 'Global Sourcing Network',
+        tagline: isBn ? `${toDigits(activeMetrics.activeBuyers.toLocaleString())} যাচাইকৃত আন্তর্জাতিক ক্রেতা একাউন্ট` : `${activeMetrics.activeBuyers.toLocaleString()} Verified Purchasing Accounts`,
         stats: [
-          { label: 'European Union (EU)', value: '44% Volume' },
-          { label: 'North America (US/CA)', value: '36% Volume' },
-          { label: 'UK, Japan & Australia', value: '20% Volume' },
-          { label: 'Active Monthly RFQs', value: '120+ Tenders' },
+          { label: isBn ? 'ইউরোপিয়ান ইউনিয়ন (EU)' : 'European Union (EU)', value: isBn ? `${toDigits('44%')} ভলিউম` : '44% Volume' },
+          { label: isBn ? 'উত্তর আমেরিকা (US/CA)' : 'North America (US/CA)', value: isBn ? `${toDigits('36%')} ভলিউম` : '36% Volume' },
+          { label: isBn ? 'যুক্তরাজ্য, জাপান ও অস্ট্রেলিয়া' : 'UK, Japan & Australia', value: isBn ? `${toDigits('20%')} ভলিউম` : '20% Volume' },
+          { label: isBn ? 'সক্রিয় মাসিক আরএফকিউ' : 'Active Monthly RFQs', value: isBn ? `${toDigits('120')}+ টেন্ডার` : '120+ Tenders' },
         ],
-        compliance: 'Bank L/C Verified • 50% JIT Escrow Coverage',
-        turnaround: 'Direct Buyer-to-Mill Matching with Zero Intermediary Markups',
+        compliance: isBn ? 'ব্যাংক এল/সি যাচাইকৃত • ৫০% জেআইটি এসক্রো কভারেজ' : 'Bank L/C Verified • 50% JIT Escrow Coverage',
+        turnaround: isBn ? 'জিরো মধ্যস্বত্বভোগী সরাসরি কারখানা ম্যাচিং' : 'Direct Buyer-to-Mill Matching with Zero Intermediary Markups',
       },
     },
     {
       id: 'capacity',
-      label: 'Sales Ledger',
-      value: `${activeMetrics.totalTradeVol}`,
+      label: isBn ? 'বিক্রয় হিসাব (লেজার)' : 'Sales Ledger',
+      value: isBn ? '৬.৫ কোটি+' : `${activeMetrics.totalTradeVol}`,
       badge: 'NexOS Central',
       badgeColor: 'text-[#ff1e42] bg-[#e11d48]/15 border-[#e11d48]/30',
       icon: <TrendingUp className="w-3.5 h-3.5 text-[#e11d48]" />,
       action: onOpenPipeline || handleShipping,
-      actionText: 'Inspect NexOS Ledger',
+      actionText: isBn ? 'নেক্সস লেজার পরিদর্শন' : 'Inspect NexOS Ledger',
       tooltip: {
-        title: 'NexOS Central Database',
-        tagline: `${activeMetrics.totalTradeVol} BDT Sales Volume Ingested`,
+        title: isBn ? 'নেক্সস সেন্ট্রাল ডেটাবেজ' : 'NexOS Central Database',
+        tagline: isBn ? `${toDigits(activeMetrics.totalTradeVol)} বিডিটি বিক্রয় ইনজেস্টেড` : `${activeMetrics.totalTradeVol} BDT Sales Volume Ingested`,
         stats: [
-          { label: 'BDT Sales History', value: activeMetrics.bdtSalesVolume || '65,000,000 BDT' },
+          { label: isBn ? 'বিক্রয় ইতিহাস' : 'BDT Sales History', value: isBn ? '৬৫,০০০,০০০ টাকা' : (activeMetrics.bdtSalesVolume || '65,000,000 BDT') },
           { label: 'Google Drive Headless', value: 'shop.handsandhead.com' },
           { label: 'Japan Wholesale Store', value: 'arutemika.com' },
-          { label: 'Sync Pipeline Status', value: 'Realtime Bus Online' },
+          { label: isBn ? 'সিঙ্ক পাইপলাইন স্ট্যাটাস' : 'Sync Pipeline Status', value: isBn ? 'লাইভ বাস সক্রিয়' : 'Realtime Bus Online' },
         ],
         compliance: 'Duty-Free EU EBA (GSP) & UK DCTS Tariff Treatment',
         turnaround: 'Continuous Headless Asset & Inventory Hydration',
@@ -119,24 +122,24 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
     },
     {
       id: 'leed',
-      label: 'LEED Green Mills',
-      value: '220+',
+      label: isBn ? 'লিড গ্রিন মিলস' : 'LEED Green Mills',
+      value: `${toDigits('220+')}`,
       badge: '#1 ESG World',
       badgeColor: 'text-[#10b981] bg-[#10b981]/15 border-[#10b981]/30',
       icon: <Sparkles className="w-3.5 h-3.5 text-[#10b981]" />,
       action: onOpenFactories,
-      actionText: 'Browse Green Mills',
+      actionText: isBn ? 'গ্রিন মিলস দেখুন' : 'Browse Green Mills',
       tooltip: {
-        title: 'USGBC Green Certified Factories',
-        tagline: 'World Leader in Eco-Friendly RMG',
+        title: isBn ? 'ইউএসজিবিসি প্রত্যয়িত পরিবেশবান্ধব কারখানা' : 'USGBC Green Certified Factories',
+        tagline: isBn ? 'বিশ্বের শীর্ষ পরিবেশবান্ধব তৈরি পোশাক শিল্প' : 'World Leader in Eco-Friendly RMG',
         stats: [
-          { label: 'LEED Platinum Certified', value: '80+ Facilities' },
-          { label: 'LEED Gold Certified', value: '140+ Facilities' },
-          { label: 'Top 100 World Green RMG', value: '73 in Bangladesh' },
-          { label: 'Carbon & Water Footprint', value: '-40% CO2 / -50% H2O' },
+          { label: isBn ? 'লিড প্ল্যাটিনাম প্রত্যয়িত' : 'LEED Platinum Certified', value: isBn ? `${toDigits('80')}+ মিলস` : '80+ Facilities' },
+          { label: isBn ? 'লিড গোল্ড প্রত্যয়িত' : 'LEED Gold Certified', value: isBn ? `${toDigits('140')}+ মিলস` : '140+ Facilities' },
+          { label: isBn ? 'বিশ্বের শীর্ষ ১০০ কারখানার' : 'Top 100 World Green RMG', value: isBn ? `৭৩টি বাংলাদেশে` : '73 in Bangladesh' },
+          { label: isBn ? 'কার্বন ও পানি সাশ্রয়' : 'Carbon & Water Footprint', value: isBn ? `-${toDigits('40')}% CO2 / -${toDigits('50')}% H2O` : '-40% CO2 / -50% H2O' },
         ],
         compliance: 'Zero Liquid Discharge (ZLD) • Solar Rooftop Integrated',
-        turnaround: 'Preferred by ESG-mandated retailers across EU and North America',
+        turnaround: isBn ? 'ইউরোপ ও উত্তর আমেরিকার ইএসজি অগ্রাধিকারপ্রাপ্ত' : 'Preferred by ESG-mandated retailers across EU and North America',
       },
     },
   ];
@@ -163,7 +166,7 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
                 isDark ? 'text-white' : 'text-slate-900'
               }`}
             >
-              Live Trade Matrix
+              {isBn ? 'লাইভ ট্রেড ম্যাট্রিক্স' : 'Live Trade Matrix'}
             </span>
             <span
               className={`text-[9.5px] font-mono px-2 py-0.2 rounded border ${
@@ -172,7 +175,7 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
                   : 'bg-white text-slate-600 border-slate-200'
               }`}
             >
-              EPB Customs Synced
+              {isBn ? 'ইপিবি কাস্টমস সিঙ্কড' : 'EPB Customs Synced'}
             </span>
             {onOpenPipeline && (
               <button
@@ -182,7 +185,7 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
                 title="Inspect NexOS Data Ingestion Pipeline (Google Drive & Arutemika)"
               >
                 <Activity className="w-3 h-3 text-[#ff1e42]" />
-                <span>NEXOS BUS: ACTIVE</span>
+                <span>{isBn ? 'নেক্সস বাস: সক্রিয়' : 'NEXOS BUS: ACTIVE'}</span>
               </button>
             )}
           </div>
@@ -206,7 +209,7 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
               >
                 <Ship className="w-3 h-3 text-[#10b981]" />
                 <span>
-                  <strong>Chattogram Port:</strong> 3.2d AVG
+                  <strong>{isBn ? 'চট্টগ্রাম বন্দর:' : 'Chattogram Port:'}</strong> {toDigits('3.2')}d AVG
                 </span>
               </button>
 
@@ -220,15 +223,15 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
                   >
                     <div className="backdrop-blur-xl bg-[#090d16]/95 border border-[#10b981]/50 rounded-xl p-2.5 shadow-2xl text-white text-[10.5px] space-y-1">
                       <div className="font-bold text-[#10b981] flex items-center justify-between">
-                        <span>Chattogram Port (CGP) Hub</span>
-                        <span className="text-[9px] font-mono text-slate-400">92% Trade</span>
+                        <span>{isBn ? 'চট্টগ্রাম বন্দর (CGP) হাব' : 'Chattogram Port (CGP) Hub'}</span>
+                        <span className="text-[9px] font-mono text-slate-400">{isBn ? '৯২% বাণিজ্য' : '92% Trade'}</span>
                       </div>
                       <p className="text-slate-300 text-[10px] leading-tight">
-                        Average vessel berth turnaround is 3.2 days with daily feeder departures to Singapore and Colombo deep-sea transshipment lines.
+                        {isBn ? 'গড় টার্নঅ্যারাউন্ড ৩.২ দিন এবং সিঙ্গাপুর ও কলম্বো ট্রান্সশিপমেন্ট লাইনে দৈনিক ফিডার জাহাজ চলাচল।' : 'Average vessel berth turnaround is 3.2 days with daily feeder departures to Singapore and Colombo deep-sea transshipment lines.'}
                       </p>
                       <div className="text-[9.5px] font-mono text-emerald-400 flex items-center space-x-1 pt-0.5">
                         <ArrowRight className="w-3 h-3" />
-                        <span>Click to open Sea Freight Calculator</span>
+                        <span>{isBn ? 'সি ফ্রেট ক্যালকুলেটর খুলতে ক্লিক করুন' : 'Click to open Sea Freight Calculator'}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -253,7 +256,7 @@ export const LiveTradeMatrixStrip: React.FC<LiveTradeMatrixStripProps> = ({
               >
                 <Anchor className="w-3 h-3 text-[#e11d48]" />
                 <span>
-                  <strong>Escrow & L/C:</strong> 100% Guaranteed
+                  <strong>{isBn ? 'এসক্রো ও এল/সি:' : 'Escrow & L/C:'}</strong> {isBn ? '১০০% সুরক্ষিত' : '100% Guaranteed'}
                 </span>
               </button>
 

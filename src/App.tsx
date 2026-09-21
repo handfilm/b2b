@@ -24,6 +24,7 @@ import { FloatingRightDock } from './components/FloatingRightDock';
 import { Footer } from './components/Footer';
 import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
 import { InquiryCartProvider } from './context/InquiryCartContext';
+import { I18nProvider, useI18n } from './context/I18nContext';
 import { InquiryCart } from './components/InquiryCart';
 import { RawxBotChat } from './components/RawxBotChat';
 import { NexosPipelineModal } from './components/NexosPipelineModal';
@@ -166,7 +167,7 @@ const AppContent: React.FC = () => {
   }, []);
 
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
-  const [lang, setLang] = useState<LanguageCode>('EN');
+  const { lang, setLang, t, toDigits } = useI18n();
   const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'customers' | 'insights'>('products');
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
@@ -1835,10 +1836,12 @@ const AppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <NexosSyncProvider>
-      <InquiryCartProvider>
-        <AppContent />
-      </InquiryCartProvider>
-    </NexosSyncProvider>
+    <I18nProvider>
+      <NexosSyncProvider>
+        <InquiryCartProvider>
+          <AppContent />
+        </InquiryCartProvider>
+      </NexosSyncProvider>
+    </I18nProvider>
   );
 };

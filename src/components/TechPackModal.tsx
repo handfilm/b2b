@@ -22,6 +22,7 @@ import {
 import { TechPackSpec, TechPackAttachment, CategoryId } from '../types';
 import { uploadTextFileToDrive, GoogleDriveFile } from '../services/googleDriveService';
 import { ensureGoogleDriveToken } from '../firebase';
+import { useI18n } from '../context/I18nContext';
 
 interface TechPackModalProps {
   isOpen: boolean;
@@ -71,6 +72,8 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
   onSubmitTechPack,
   initialCategory = 'rmg-apparel',
 }) => {
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
   const fileInputId = useId();
   const [selectedProduct, setSelectedProduct] = useState(PRODUCT_TYPES[0]);
   const [fabricWeight, setFabricWeight] = useState(PRODUCT_TYPES[0].defaultGsm);
@@ -443,14 +446,16 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
-                  Interactive TechPack Studio
+                  {isBn ? 'ইন্টারেক্টিভ টেক-প্যাক স্টুডিও' : 'Interactive TechPack Studio'}
                 </h2>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-[#ff5500]/20 text-[#ff5500] border border-[#ff5500]/30">
-                  CAD / Spec Builder
+                  {isBn ? 'ক্যাড / স্পেক বিল্ডার' : 'CAD / Spec Builder'}
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Assemble manufacturing requirements, Pantone TCX swatches, size splits & direct factory routing
+                {isBn
+                  ? 'উৎপাদন প্রয়োজনীয়তা, প্যান্টোন টিসিএক্স কালার, সাইজ বিভাজন ও সরাসরি কারখানার রাউটিং সাজান'
+                  : 'Assemble manufacturing requirements, Pantone TCX swatches, size splits & direct factory routing'}
               </p>
             </div>
           </div>
@@ -474,7 +479,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
           {/* Section 1: Garment / Product Type */}
           <div>
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
-              1. Garment / Product Silhouette
+              {isBn ? '১. পোশাক / পণ্যের ধরন ও সিলুয়েট' : '1. Garment / Product Silhouette'}
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
               {PRODUCT_TYPES.map((prod) => {
@@ -506,7 +511,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
-                2. Fabric / Material Weight (GSM / Oz)
+                {isBn ? '২. ফ্যাব্রিক / উপাদানের ওজন (জিএসএম / আউন্স)' : '2. Fabric / Material Weight (GSM / Oz)'}
               </label>
               <select
                 value={fabricWeight}
@@ -526,13 +531,13 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
 
             <div>
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
-                Or Custom Yarn / Density Spec
+                {isBn ? 'অথবা কাস্টম সুতা / ঘনত্বের স্পেক' : 'Or Custom Yarn / Density Spec'}
               </label>
               <input
                 type="text"
                 value={customFabric}
                 onChange={(e) => setCustomFabric(e.target.value)}
-                placeholder="e.g. 260 GSM French Terry 80/20 Organic/Recycled"
+                placeholder={isBn ? 'যেমন: ২৬০ জিএসএম ফ্রেঞ্চ টেরি ৮০/২০ অর্গানিক/রিসাইকেল্ড' : 'e.g. 260 GSM French Terry 80/20 Organic/Recycled'}
                 className="w-full px-3 py-2 text-xs text-white rounded-xl bg-[#141414] border border-white/10 focus:outline-none focus:border-[#ff5500]"
               />
             </div>
@@ -543,14 +548,16 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-2">
                 <Palette className="w-3.5 h-3.5 text-[#ff5500]" />
-                <span>3. Color Specification (Pantone / TCX Codes)</span>
+                <span>{isBn ? '৩. রঙের স্পেসিফিকেশন (প্যান্টোন / টিসিএক্স কোড)' : '3. Color Specification (Pantone / TCX Codes)'}</span>
               </label>
               <button
                 type="button"
                 onClick={() => setIsCustomColor(!isCustomColor)}
                 className="text-[11px] text-[#ff5500] hover:underline cursor-pointer"
               >
-                {isCustomColor ? 'Use Standard TCX Palette' : 'Enter Custom Hex / TCX'}
+                {isBn
+                  ? (isCustomColor ? 'স্ট্যান্ডার্ড টিসিএক্স প্যালেট ব্যবহার করুন' : 'কাস্টম হেক্স / টিসিএক্স দিন')
+                  : (isCustomColor ? 'Use Standard TCX Palette' : 'Enter Custom Hex / TCX')}
               </button>
             </div>
 
@@ -584,7 +591,9 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
             ) : (
               <div className="p-3.5 rounded-xl bg-[#141414] border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
                 <div>
-                  <label className="text-[11px] text-slate-400 block mb-1">Pantone TCX Code</label>
+                  <label className="text-[11px] text-slate-400 block mb-1">
+                    {isBn ? 'প্যান্টোন টিসিএক্স কোড' : 'Pantone TCX Code'}
+                  </label>
                   <input
                     type="text"
                     value={customPantoneTcx}
@@ -594,7 +603,9 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] text-slate-400 block mb-1">Color Hex Preview</label>
+                  <label className="text-[11px] text-slate-400 block mb-1">
+                    {isBn ? 'কালার হেক্স প্রিভিউ' : 'Color Hex Preview'}
+                  </label>
                   <div className="flex items-center space-x-2">
                     <input
                       type="color"
@@ -615,7 +626,9 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
                     className="w-9 h-9 rounded-lg border border-white/20 shrink-0"
                     style={{ backgroundColor: customColorHex }}
                   />
-                  <span className="text-xs text-slate-300 font-bold">Live TCX Lab Swatch</span>
+                  <span className="text-xs text-slate-300 font-bold">
+                    {isBn ? 'লাইভ টিসিএক্স ল্যাব সোয়াচ' : 'Live TCX Lab Swatch'}
+                  </span>
                 </div>
               </div>
             )}
@@ -626,12 +639,14 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
             <div className="flex items-center justify-between mb-3">
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center space-x-2">
                 <Calculator className="w-3.5 h-3.5 text-[#ff5500]" />
-                <span>4. Size Breakdown Grid (Units per Size)</span>
+                <span>{isBn ? '৪. সাইজ বিভাজন গ্রিড (সাইজ প্রতি পিস)' : '4. Size Breakdown Grid (Units per Size)'}</span>
               </label>
               <div className="flex items-center space-x-2">
-                <span className="text-xs text-slate-400 font-bold">Total Order Volume:</span>
+                <span className="text-xs text-slate-400 font-bold">
+                  {isBn ? 'সর্বমোট অর্ডার ভলিউম:' : 'Total Order Volume:'}
+                </span>
                 <span className="text-sm font-black text-[#ff5500] font-mono px-2 py-0.5 rounded-md bg-[#ff5500]/15 border border-[#ff5500]/30">
-                  {totalPieces.toLocaleString()} Pcs
+                  {toDigits(totalPieces.toLocaleString())} {isBn ? 'পিস' : 'Pcs'}
                 </span>
               </div>
             </div>
@@ -660,7 +675,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="sm:col-span-2">
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
-                5. Stitching, Construction & Tolerance Notes
+                {isBn ? '৫. সেলাই, কনস্ট্রাকশন ও টলারেন্স নোট' : '5. Stitching, Construction & Tolerance Notes'}
               </label>
               <textarea
                 rows={3}
@@ -671,7 +686,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
             </div>
             <div>
               <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
-                Target Incoterms & Date
+                {isBn ? 'টার্গেট ইনকোটার্মস ও তারিখ' : 'Target Incoterms & Date'}
               </label>
               <div className="space-y-2">
                 <select
@@ -679,10 +694,10 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
                   onChange={(e) => setIncoterms(e.target.value as any)}
                   className="w-full px-3 py-1.5 text-xs text-white rounded-xl bg-[#141414] border border-white/10 focus:outline-none focus:border-[#ff5500]"
                 >
-                  <option value="FOB">FOB Chattogram / Dhaka Port</option>
-                  <option value="CIF">CIF Destination Port</option>
-                  <option value="CFR">CFR Cost and Freight</option>
-                  <option value="EXW">EXW Factory Gate</option>
+                  <option value="FOB">{isBn ? 'এফওবি চট্টগ্রাম / ঢাকা বন্দর' : 'FOB Chattogram / Dhaka Port'}</option>
+                  <option value="CIF">{isBn ? 'সিআইএফ গন্তব্য বন্দর' : 'CIF Destination Port'}</option>
+                  <option value="CFR">{isBn ? 'সিএফআর খরচ ও মালবাহী' : 'CFR Cost and Freight'}</option>
+                  <option value="EXW">{isBn ? 'ইএক্সডাব্লিউ কারখানার গেট' : 'EXW Factory Gate'}</option>
                 </select>
 
                 <input
@@ -698,7 +713,9 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
           {/* Section 6: File Dropzone (CAD .DXF, PDFs, Spec Sheets) */}
           <div>
             <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
-              6. Technical Attachments Dropzone (CAD .DXF, PDFs, Graded Pattern Rulers)
+              {isBn
+                ? '৬. টেকনিক্যাল ফাইল সংযুক্তি (ক্যাড .DXF, PDF, প্যাটার্ন রুলার)'
+                : '6. Technical Attachments Dropzone (CAD .DXF, PDFs, Graded Pattern Rulers)'}
             </label>
             <div
               onDragOver={(e) => {
@@ -719,10 +736,14 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
             >
               <UploadCloud className="w-8 h-8 text-[#ff5500] mx-auto mb-2" />
               <p className="text-xs font-bold text-white mb-1">
-                Drag & Drop CAD Files (.dxf, .dwg), TechPack PDFs, or High-Res Artwork
+                {isBn
+                  ? 'ক্যাড ফাইল (.dxf, .dwg), টেক-প্যাক PDF বা হাই-রেজোলিউশন আর্টওয়ার্ক ড্র্যাগ করুন'
+                  : 'Drag & Drop CAD Files (.dxf, .dwg), TechPack PDFs, or High-Res Artwork'}
               </p>
               <p className="text-[11px] text-slate-400 mb-3">
-                Max 50 MB per file. Direct encrypted transmission to factory CAD pattern rooms.
+                {isBn
+                  ? 'ফাইল প্রতি সর্বোচ্চ ৫০ মেগাবাইট। কারখানার ক্যাড প্যাটার্ন রুমে সরাসরি এনক্রিপ্টেড ট্রান্সমিশন।'
+                  : 'Max 50 MB per file. Direct encrypted transmission to factory CAD pattern rooms.'}
               </p>
               <input
                 type="file"
@@ -736,7 +757,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
                 htmlFor={fileInputId}
                 className="inline-flex items-center px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold transition-all cursor-pointer border border-white/15"
               >
-                Browse Files from Device
+                {isBn ? 'ডিভাইস থেকে ফাইল নির্বাচন করুন' : 'Browse Files from Device'}
               </label>
             </div>
 
@@ -777,7 +798,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
               title="Generate printable PDF techpack dossier"
             >
               <Printer className="w-4 h-4 text-[#ff5500]" />
-              <span>Export PDF Dossier</span>
+              <span>{isBn ? 'পিডিএফ ডসিয়ার এক্সপোর্ট' : 'Export PDF Dossier'}</span>
             </button>
             <button
               type="button"
@@ -786,7 +807,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
               title="Download CAD machine-readable JSON specification"
             >
               <Download className="w-3.5 h-3.5 text-slate-400" />
-              <span>JSON CAD</span>
+              <span>{isBn ? 'জেসন ক্যাড' : 'JSON CAD'}</span>
             </button>
 
             {/* Google Drive Save Action */}
@@ -805,12 +826,12 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
               {isSavingToDrive ? (
                 <>
                   <span className="w-3.5 h-3.5 border-2 border-[#4285F4] border-t-transparent rounded-full animate-spin" />
-                  <span>Saving to Drive...</span>
+                  <span>{isBn ? 'ড্রাইভে সেভ হচ্ছে...' : 'Saving to Drive...'}</span>
                 </>
               ) : driveSavedFile ? (
                 <>
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#10b981]" />
-                  <span>Saved to Drive</span>
+                  <span>{isBn ? 'ড্রাইভে সংরক্ষিত' : 'Saved to Drive'}</span>
                   {driveSavedFile.webViewLink && (
                     <a
                       href={driveSavedFile.webViewLink}
@@ -827,7 +848,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
               ) : (
                 <>
                   <HardDrive className="w-3.5 h-3.5 text-[#4285F4]" />
-                  <span>Save to Drive</span>
+                  <span>{isBn ? 'ড্রাইভে সেভ করুন' : 'Save to Drive'}</span>
                 </>
               )}
             </button>
@@ -839,7 +860,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
               onClick={onClose}
               className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all cursor-pointer"
             >
-              Cancel
+              {isBn ? 'বাতিল' : 'Cancel'}
             </button>
             <button
               type="button"
@@ -847,7 +868,7 @@ export const TechPackModal: React.FC<TechPackModalProps> = ({
               className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-extrabold shadow-lg shadow-[#ff5500]/25 transition-all flex items-center justify-center space-x-2 cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>Broadcast TechPack as Verified RFQ</span>
+              <span>{isBn ? 'যাচাইকৃত আরএফকিউ হিসেবে টেক-প্যাক সম্প্রচার করুন' : 'Broadcast TechPack as Verified RFQ'}</span>
             </button>
           </div>
         </div>

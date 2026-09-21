@@ -9,6 +9,7 @@ import {
   Truck,
 } from 'lucide-react';
 import { Product, SampleInquiry, CurrencyConfig } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface SampleOrderModalProps {
   product: Product | null;
@@ -31,6 +32,9 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
   const [shippingAddress, setShippingAddress] = useState('');
   const [customNotes, setCustomNotes] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
+
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   const sampleFeeUSD = (product?.samplePriceUSD || 0) * quantity;
   const courierFeeUSD = 35.0; // Flat DHL/FedEx air courier from Dhaka
@@ -77,8 +81,12 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
           <div className="flex items-center space-x-2">
             <Package className="w-5 h-5 text-[#ff5500]" />
             <div>
-              <h3 className="text-sm font-bold text-white">Request Pre-Production Sample</h3>
-              <p className="text-[11px] text-slate-400">Direct from factory floor in Bangladesh</p>
+              <h3 className="text-sm font-bold text-white">
+                {isBn ? 'প্রাক-উৎপাদন নমুনার অনুরোধ করুন' : 'Request Pre-Production Sample'}
+              </h3>
+              <p className="text-[11px] text-slate-400">
+                {isBn ? 'বাংলাদেশের কারখানার ফ্লোর থেকে সরাসরি' : 'Direct from factory floor in Bangladesh'}
+              </p>
             </div>
           </div>
           <button
@@ -94,12 +102,22 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
             <div className="w-14 h-14 rounded-2xl bg-[#ff5500]/20 border border-[#ff5500]/40 text-[#ff5500] mx-auto flex items-center justify-center">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h4 className="text-lg font-bold text-white">Sample Order Confirmed!</h4>
+            <h4 className="text-lg font-bold text-white">
+              {isBn ? 'নমুনা অর্ডার নিশ্চিত করা হয়েছে!' : 'Sample Order Confirmed!'}
+            </h4>
             <p className="text-xs text-slate-300 max-w-xs mx-auto">
-              Your sample request has been queued at <strong className="text-white">{product.supplierName}</strong>. Factory dispatch scheduled via DHL Express with tracking sent to <strong className="text-white">{buyerEmail}</strong>.
+              {isBn ? (
+                <span>
+                  আপনার নমুনার অনুরোধটি <strong className="text-white">{product.supplierName}</strong> কারখানায় গৃহীত হয়েছে। ডিএইচএল এক্সপ্রেস ট্র্যাকিং <strong className="text-white">{buyerEmail}</strong> ঠিকানায় পাঠানো হবে।
+                </span>
+              ) : (
+                <span>
+                  Your sample request has been queued at <strong className="text-white">{product.supplierName}</strong>. Factory dispatch scheduled via DHL Express with tracking sent to <strong className="text-white">{buyerEmail}</strong>.
+                </span>
+              )}
             </p>
             <div className="p-3 bg-[#171717] rounded-xl border border-white/10 text-xs font-mono text-slate-300">
-              Courier Tracking: BD-DHL-{Math.floor(10000000 + Math.random() * 90000000)}
+              {isBn ? 'কুরিয়ার ট্র্যাকিং: ' : 'Courier Tracking: '}BD-DHL-{Math.floor(10000000 + Math.random() * 90000000)}
             </div>
             <button
               onClick={() => {
@@ -108,7 +126,7 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
               }}
               className="px-5 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold"
             >
-              Done
+              {isBn ? 'সম্পন্ন' : 'Done'}
             </button>
           </div>
         ) : (
@@ -128,7 +146,9 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs font-bold text-slate-300 block mb-1">Quantity</label>
+                <label className="text-xs font-bold text-slate-300 block mb-1">
+                  {isBn ? 'পরিমাণ' : 'Quantity'}
+                </label>
                 <input
                   type="number"
                   min={1}
@@ -140,7 +160,9 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-300 block mb-1">Destination Country</label>
+                <label className="text-xs font-bold text-slate-300 block mb-1">
+                  {isBn ? 'গন্তব্য দেশ' : 'Destination Country'}
+                </label>
                 <input
                   type="text"
                   value={shippingCountry}
@@ -151,11 +173,13 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Courier Delivery Address *</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">
+                {isBn ? 'কুরিয়ার ডেলিভারি ঠিকানা *' : 'Courier Delivery Address *'}
+              </label>
               <textarea
                 rows={2}
                 required
-                placeholder="Street address, city, postal code, recipient phone..."
+                placeholder={isBn ? 'রাস্তা, শহর, পোস্টাল কোড, মোবাইল নম্বর...' : 'Street address, city, postal code, recipient phone...'}
                 value={shippingAddress}
                 onChange={(e) => setShippingAddress(e.target.value)}
                 className="w-full bg-[#141414] border border-white/10 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#ff5500]"
@@ -163,7 +187,9 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Recipient Business Email *</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">
+                {isBn ? 'প্রাপকের ব্যবসায়িক ইমেইল *' : 'Recipient Business Email *'}
+              </label>
               <input
                 type="email"
                 required
@@ -177,16 +203,16 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
             {/* Price Breakdown */}
             <div className="p-3.5 bg-[#141414] rounded-xl border border-white/10 text-xs font-mono space-y-1.5">
               <div className="flex justify-between text-slate-400">
-                <span>Sample Fee ({quantity} pc):</span>
-                <span className="text-white">{currency.symbol}{sampleFeeConv}</span>
+                <span>{isBn ? `নমুনার ফি (${toDigits(quantity)} পিস):` : `Sample Fee (${quantity} pc):`}</span>
+                <span className="text-white">{currency.symbol}{toDigits(sampleFeeConv)}</span>
               </div>
               <div className="flex justify-between text-slate-400">
-                <span>Air Express Courier (DHL):</span>
-                <span className="text-white">{currency.symbol}{courierFeeConv}</span>
+                <span>{isBn ? 'এয়ার এক্সপ্রেস কুরিয়ার (ডিএইচএল):' : 'Air Express Courier (DHL):'}</span>
+                <span className="text-white">{currency.symbol}{toDigits(courierFeeConv)}</span>
               </div>
               <div className="flex justify-between pt-1 border-t border-white/10 font-bold text-white">
-                <span>Total Amount:</span>
-                <span className="text-[#ff5500] text-sm">{currency.symbol}{totalConv}</span>
+                <span>{isBn ? 'সর্বমোট পরিমাণ:' : 'Total Amount:'}</span>
+                <span className="text-[#ff5500] text-sm">{currency.symbol}{toDigits(totalConv)}</span>
               </div>
             </div>
 
@@ -194,15 +220,15 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white"
+                className="px-4 py-2 rounded-xl text-xs text-slate-400 hover:text-white cursor-pointer"
               >
-                Cancel
+                {isBn ? 'বাতিল' : 'Cancel'}
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold shadow-lg shadow-[#ff5500]/25"
+                className="px-5 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold shadow-lg shadow-[#ff5500]/25 cursor-pointer"
               >
-                Confirm Sample Request
+                {isBn ? 'নমুনার অনুরোধ নিশ্চিত করুন' : 'Confirm Sample Request'}
               </button>
             </div>
           </form>

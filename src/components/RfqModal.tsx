@@ -19,6 +19,7 @@ import {
 import { CategoryId, RfqSubmission, TechPackAttachment } from '../types';
 import { CATEGORIES } from '../data/mockData';
 import { nexusApi } from '../services/nexusApi';
+import { useI18n } from '../context/I18nContext';
 
 interface RfqModalProps {
   isOpen: boolean;
@@ -74,6 +75,9 @@ export const RfqModal: React.FC<RfqModalProps> = ({
     source: 'live' | 'fallback';
     message: string;
   } | null>(null);
+
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -139,14 +143,16 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="text-base font-extrabold tracking-tight text-white">
-                  Post Commercial Sourcing RFQ
+                  {isBn ? 'বাণিজ্যিক সোর্সিং আরএফকিউ প্রকাশ করুন' : 'Post Commercial Sourcing RFQ'}
                 </h3>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#ff5500]/20 text-[#ff5500] border border-[#ff5500]/30">
                   Nexus JIT Engine
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Directly broadcasted to verified EPB bonded manufacturers with guaranteed 24-hr bids
+                {isBn
+                  ? 'যাচাইকৃত ইপিবি বন্ডেড প্রস্তুতকারকদের কাছে সরাসরি সম্প্রচারিত (২৪ ঘণ্টার মধ্যে কোটেশন)'
+                  : 'Directly broadcasted to verified EPB bonded manufacturers with guaranteed 24-hr bids'}
               </p>
             </div>
           </div>
@@ -166,37 +172,45 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             </div>
             <div className="space-y-1">
               <h4 className="text-2xl font-black tracking-tight text-white">
-                RFQ Broadcast Successful!
+                {isBn ? 'আরএফকিউ সফলভাবে সম্প্রচারিত হয়েছে!' : 'RFQ Broadcast Successful!'}
               </h4>
               <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Your requirement for <strong className="text-white">{formData.productRequirement}</strong> has been transmitted to certified factories with matching capacity.
+                {isBn ? (
+                  <span>
+                    আপনার <strong className="text-white">{formData.productRequirement}</strong> চাহিদাটি যথাযথ উৎপাদন ক্ষমতার সার্টিফাইড কারখানাসমূহে পাঠানো হয়েছে।
+                  </span>
+                ) : (
+                  <span>
+                    Your requirement for <strong className="text-white">{formData.productRequirement}</strong> has been transmitted to certified factories with matching capacity.
+                  </span>
+                )}
               </p>
             </div>
 
             {/* Tracking ID Badge */}
             <div className="p-4 bg-[#141414] rounded-xl border border-white/10 max-w-md mx-auto text-left space-y-2 font-mono text-xs">
               <div className="flex justify-between items-center pb-2 border-b border-white/10">
-                <span className="text-slate-400">Tracking Reference:</span>
+                <span className="text-slate-400">{isBn ? 'ট্র্যাকিং রেফারেন্স:' : 'Tracking Reference:'}</span>
                 <span className="font-black text-sm text-[#ff5500] bg-[#ff5500]/10 px-2.5 py-1 rounded-md border border-[#ff5500]/30">
                   {submissionResult.trackingId}
                 </span>
               </div>
               <div className="flex justify-between text-slate-300">
-                <span>Target Volume:</span>
-                <span className="text-white font-bold">{formData.targetQuantity.toLocaleString()} Units</span>
+                <span>{isBn ? 'লক্ষ্যমাত্রা ভলিউম:' : 'Target Volume:'}</span>
+                <span className="text-white font-bold">{toDigits(formData.targetQuantity.toLocaleString())} {isBn ? 'ইউনিট' : 'Units'}</span>
               </div>
               <div className="flex justify-between text-slate-300">
-                <span>Target Unit Price:</span>
-                <span className="text-white font-bold">${formData.targetUnitPriceUSD} FOB</span>
+                <span>{isBn ? 'টার্গেট একক মূল্য:' : 'Target Unit Price:'}</span>
+                <span className="text-white font-bold">${toDigits(formData.targetUnitPriceUSD)} FOB</span>
               </div>
               <div className="flex justify-between text-slate-300">
-                <span>Delivery Port:</span>
+                <span>{isBn ? 'ডেলিভারি বন্দর:' : 'Delivery Port:'}</span>
                 <span className="text-white font-bold">{formData.destinationPort}</span>
               </div>
               <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] font-sans text-slate-400">
                 <span className="flex items-center space-x-1 text-emerald-400">
                   <Clock className="w-3.5 h-3.5" />
-                  <span>Factory bids arriving within 24 hours</span>
+                  <span>{isBn ? '২৪ ঘণ্টার মধ্যে কারখানার কোটেশন আসবে' : 'Factory bids arriving within 24 hours'}</span>
                 </span>
                 <span className="text-slate-500">Nexus Data: {submissionResult.source}</span>
               </div>
@@ -210,7 +224,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                 }}
                 className="px-6 py-2.5 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold shadow-lg shadow-[#ff5500]/25 cursor-pointer"
               >
-                Close & Monitor in Trade Desk
+                {isBn ? 'বন্ধ করুন ও ট্রেড ডেস্কে পর্যবেক্ষণ করুন' : 'Close & Monitor in Trade Desk'}
               </button>
             </div>
           </div>
@@ -220,7 +234,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Target Product Category *
+                  {isBn ? 'টার্গেট পণ্য বিভাগ *' : 'Target Product Category *'}
                 </label>
                 <select
                   value={formData.categoryId}
@@ -237,12 +251,12 @@ export const RfqModal: React.FC<RfqModalProps> = ({
 
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Your Company / Brand Name *
+                  {isBn ? 'আপনার কোম্পানি / ব্র্যান্ডের নাম *' : 'Your Company / Brand Name *'}
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Nordic Retail Group AB"
+                  placeholder={isBn ? 'যেমন: নর্ডিক রিটেল গ্রুপ' : 'e.g. Nordic Retail Group AB'}
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
@@ -253,12 +267,12 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             {/* Product Title / Requirement */}
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                Product Specification & Requirement *
+                {isBn ? 'পণ্যের বিবরণ ও প্রয়োজনীয়তা *' : 'Product Specification & Requirement *'}
               </label>
               <input
                 type="text"
                 required
-                placeholder="e.g. 240 GSM Combed Ringspun Organic Cotton Oversized Tees"
+                placeholder={isBn ? 'যেমন: ২৪০ জিএসএম কম্বড রিংস্পান অর্গানিক কটন ওভারসাইজড টি-শার্ট' : 'e.g. 240 GSM Combed Ringspun Organic Cotton Oversized Tees'}
                 value={formData.productRequirement}
                 onChange={(e) => setFormData({ ...formData, productRequirement: e.target.value })}
                 className="w-full bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
@@ -269,7 +283,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Order Volume (MOQ) *
+                  {isBn ? 'অর্ডার ভলিউম (সর্বনিম্ন) *' : 'Order Volume (MOQ) *'}
                 </label>
                 <input
                   type="number"
@@ -284,7 +298,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
 
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Target Price (USD/pc) *
+                  {isBn ? 'টার্গেট মূল্য (USD/পিস) *' : 'Target Price (USD/pc) *'}
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2.5 text-slate-400 font-mono text-xs">$</span>
@@ -302,17 +316,17 @@ export const RfqModal: React.FC<RfqModalProps> = ({
 
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Target Lead Time *
+                  {isBn ? 'টার্গেট লিড টাইম *' : 'Target Lead Time *'}
                 </label>
                 <select
                   value={formData.targetTimelineDays}
                   onChange={(e) => setFormData({ ...formData, targetTimelineDays: parseInt(e.target.value) || 45 })}
-                  className="w-full bg-[#141414] border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
+                  className="w-full bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
                 >
-                  <option value={30} className="bg-[#141414]">30 Days (Urgent)</option>
-                  <option value={45} className="bg-[#141414]">45 Days (Standard)</option>
-                  <option value={60} className="bg-[#141414]">60 Days (Bulk Run)</option>
-                  <option value={90} className="bg-[#141414]">90 Days (Pre-Season)</option>
+                  <option value={30} className="bg-[#141414]">{isBn ? '৩০ দিন (জরুরি)' : '30 Days (Urgent)'}</option>
+                  <option value={45} className="bg-[#141414]">{isBn ? '৪৫ দিন (সাধারণ)' : '45 Days (Standard)'}</option>
+                  <option value={60} className="bg-[#141414]">{isBn ? '৬০ দিন (বাল্ক অর্ডার)' : '60 Days (Bulk Run)'}</option>
+                  <option value={90} className="bg-[#141414]">{isBn ? '৯০ দিন (প্রাক-মৌসুম)' : '90 Days (Pre-Season)'}</option>
                 </select>
               </div>
             </div>
@@ -321,28 +335,28 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Trade Incoterms 2020
+                  {isBn ? 'ট্রেড ইনকোটার্ম ২০২০' : 'Trade Incoterms 2020'}
                 </label>
                 <select
                   value={formData.incoterms}
                   onChange={(e) => setFormData({ ...formData, incoterms: e.target.value })}
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
                 >
-                  <option value="FOB Chattogram Port" className="bg-[#141414]">FOB Chattogram Port (Most Popular)</option>
-                  <option value="CIF Destination Port" className="bg-[#141414]">CIF Destination Port (Insured Freight)</option>
-                  <option value="CFR Destination Port" className="bg-[#141414]">CFR Cost & Freight</option>
-                  <option value="EXW Dhaka Factory" className="bg-[#141414]">EXW Factory Floor</option>
+                  <option value="FOB Chattogram Port" className="bg-[#141414]">{isBn ? 'এফওবি চট্টগ্রাম বন্দর (সর্বাধিক ব্যবহৃত)' : 'FOB Chattogram Port (Most Popular)'}</option>
+                  <option value="CIF Destination Port" className="bg-[#141414]">{isBn ? 'সিআইএফ গন্তব্য বন্দর (বীমাকৃত ফ্রেইট)' : 'CIF Destination Port (Insured Freight)'}</option>
+                  <option value="CFR Destination Port" className="bg-[#141414]">{isBn ? 'সিএফআর খরচ ও ফ্রেইট' : 'CFR Cost & Freight'}</option>
+                  <option value="EXW Dhaka Factory" className="bg-[#141414]">{isBn ? 'ইএক্সডাব্লিউ কারখানা ফ্লোর' : 'EXW Factory Floor'}</option>
                 </select>
               </div>
 
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Destination Seaport / Airport *
+                  {isBn ? 'গন্তব্য সমুদ্রবন্দর / বিমানবন্দর *' : 'Destination Seaport / Airport *'}
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Rotterdam, Hamburg, Newark, Felixstowe"
+                  placeholder={isBn ? 'যেমন: রটারডাম, হামবুর্গ, নিউয়ার্ক' : 'e.g. Rotterdam, Hamburg, Newark, Felixstowe'}
                   value={formData.destinationPort}
                   onChange={(e) => setFormData({ ...formData, destinationPort: e.target.value })}
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
@@ -353,8 +367,8 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             {/* Tech-Pack Drag-and-Drop Attachment Section */}
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1.5 flex items-center justify-between">
-                <span>Tech-Pack / Design Spec Sheet (PDF, AI, CAD, ZIP)</span>
-                <span className="text-[11px] text-[#ff5500] font-normal">Accelerates Factory Quotes</span>
+                <span>{isBn ? 'টেক-প্যাক / ডিজাইন স্পেক শীট (PDF, AI, CAD, ZIP)' : 'Tech-Pack / Design Spec Sheet (PDF, AI, CAD, ZIP)'}</span>
+                <span className="text-[11px] text-[#ff5500] font-normal">{isBn ? 'দ্রুত কোট পেতে সহায়তা করে' : 'Accelerates Factory Quotes'}</span>
               </label>
 
               {techPack ? (
@@ -366,7 +380,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                     <div>
                       <div className="text-xs font-bold text-white">{techPack.name}</div>
                       <div className="text-[10px] text-slate-400 font-mono">
-                        {techPack.size} • Attached Tech-Pack
+                        {techPack.size} • {isBn ? 'সংযুক্ত টেক-প্যাক' : 'Attached Tech-Pack'}
                       </div>
                     </div>
                   </div>
@@ -390,10 +404,10 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                 >
                   <UploadCloud className="w-6 h-6 text-slate-400 mx-auto" />
                   <div className="text-xs text-slate-300 font-semibold">
-                    Click to browse or drag & drop Tech-Pack PDF / Spec
+                    {isBn ? 'ব্রাউজ করতে ক্লিক করুন বা টেক-প্যাক ফাইল এখানে টেনে আনুন' : 'Click to browse or drag & drop Tech-Pack PDF / Spec'}
                   </div>
                   <div className="text-[10px] text-slate-500">
-                    Supports PDF, AI, DXF, Techpack spreadsheets up to 25MB
+                    {isBn ? '২৫ মেগাবাইট পর্যন্ত PDF, AI, DXF ইত্যাদি ফাইল সমর্থিত' : 'Supports PDF, AI, DXF, Techpack spreadsheets up to 25MB'}
                   </div>
                   <input
                     ref={fileInputRef}
@@ -411,7 +425,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Business Work Email *
+                  {isBn ? 'ব্যবসায়িক কাজের ইমেইল *' : 'Business Work Email *'}
                 </label>
                 <input
                   type="email"
@@ -425,11 +439,11 @@ export const RfqModal: React.FC<RfqModalProps> = ({
 
               <div>
                 <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                  Contact Person Name
+                  {isBn ? 'যোগাযোগকারীর নাম' : 'Contact Person Name'}
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Henrik Larsson"
+                  placeholder={isBn ? 'যেমন: হেনরিক লারসন' : 'e.g. Henrik Larsson'}
                   value={formData.buyerName}
                   onChange={(e) => setFormData({ ...formData, buyerName: e.target.value })}
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
@@ -440,11 +454,11 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             {/* Additional Notes */}
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1.5">
-                Specific Fabric, GSM, Pantone, or Lab-Dip Instructions
+                {isBn ? 'নির্দিষ্ট ফ্যাব্রিক, জিএসএম, প্যান্টোন বা ল্যাব-ডিপ নির্দেশাবলী' : 'Specific Fabric, GSM, Pantone, or Lab-Dip Instructions'}
               </label>
               <textarea
                 rows={2}
-                placeholder="Include GSM, custom Pantone TCX codes, OEKO-TEX or GOTS certification mandates..."
+                placeholder={isBn ? 'জিএসএম, কাস্টম প্যান্টোন কোড, ওইকো-টেক্স বা গটস সার্টিফাইড শর্তাবলী উল্লেখ করুন...' : 'Include GSM, custom Pantone TCX codes, OEKO-TEX or GOTS certification mandates...'}
                 value={formData.specNotes}
                 onChange={(e) => setFormData({ ...formData, specNotes: e.target.value })}
                 className="w-full bg-[#141414] border border-white/10 rounded-xl p-3 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ff5500]"
@@ -455,7 +469,10 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             <div className="p-3 bg-[#ff5500]/10 border border-[#ff5500]/25 rounded-xl flex items-start space-x-2.5 text-xs text-slate-300">
               <ShieldCheck className="w-4 h-4 text-[#ff5500] shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold text-white">Guaranteed Response Protocol:</span> Your RFQ is cryptographically signed and submitted into the Nexus B2B Trade clearinghouse. All matching certified mills are bound to reply with formal FOB quotes within 24 hours.
+                <span className="font-bold text-white">{isBn ? 'নিশ্চিত প্রতিক্রিয়া প্রোটোকল:' : 'Guaranteed Response Protocol:'}</span>{' '}
+                {isBn
+                  ? 'আপনার আরএফকিউ নেক্সাস বিটুবি ট্রেড ক্লিয়ারিংহাউসে আনুষ্ঠানিকভাবে জমা হয়। ম্যাচিং সার্টিফাইড কারখানাগুলো ২৪ ঘণ্টার মধ্যে এফওবি কোট প্রদান করতে প্রতিজ্ঞাবদ্ধ।'
+                  : 'Your RFQ is cryptographically signed and submitted into the Nexus B2B Trade clearinghouse. All matching certified mills are bound to reply with formal FOB quotes within 24 hours.'}
               </div>
             </div>
 
@@ -467,7 +484,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                 disabled={isSubmitting}
                 className="px-4 py-2.5 rounded-xl border border-white/10 text-slate-300 hover:text-white hover:bg-white/5 text-xs font-bold transition-colors cursor-pointer"
               >
-                Cancel
+                {isBn ? 'বাতিল' : 'Cancel'}
               </button>
 
               <button
@@ -478,12 +495,12 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Broadcasting to Nexus...</span>
+                    <span>{isBn ? 'নেক্সাসে সম্প্রচার হচ্ছে...' : 'Broadcasting to Nexus...'}</span>
                   </>
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>Broadcast RFQ to 5 Factories</span>
+                    <span>{isBn ? '৫টি কারখানায় আরএফকিউ সম্প্রচার করুন' : 'Broadcast RFQ to 5 Factories'}</span>
                   </>
                 )}
               </button>

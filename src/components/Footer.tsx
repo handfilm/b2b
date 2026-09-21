@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { useI18n } from '../context/I18nContext';
 import {
   ShieldCheck,
   Globe2,
@@ -31,6 +32,8 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenAiAssistant,
   theme = 'dark',
 }) => {
+  const { t, toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
   const isDark = theme === 'dark';
 
   const valueGuarantees = [
@@ -38,37 +41,37 @@ export const Footer: React.FC<FooterProps> = ({
       icon: ShieldCheck,
       color: 'text-[#e11d48]',
       bg: 'bg-[#e11d48]/10 border-[#e11d48]/25',
-      title: '50% JIT Escrow',
+      title: isBn ? '৫০% জেআইটি এসক্রো' : '50% JIT Escrow',
       tag: 'ICC INCOTERMS 2020',
       tagColor: 'text-[#e11d48] bg-[#e11d48]/10 border-[#e11d48]/20',
-      desc: 'Milestone disbursements released on B/L and third-party QC pass.',
+      desc: isBn ? 'জাহাজের বি/এল এবং তৃতীয় পক্ষের কিউসি পাসের পর অর্থ অবমুক্ত।' : 'Milestone disbursements released on B/L and third-party QC pass.',
     },
     {
       icon: Anchor,
       color: 'text-emerald-400',
       bg: 'bg-emerald-500/10 border-emerald-500/25',
-      title: 'CGP & MGL Seaports',
-      tag: 'GREEN CUSTOMS',
+      title: isBn ? 'চট্টগ্রাম ও মোংলা সমুদ্রবন্দর' : 'CGP & MGL Seaports',
+      tag: isBn ? 'গ্রিন কাস্টমস' : 'GREEN CUSTOMS',
       tagColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-      desc: 'Direct feeder departures with automated EPB export clearances.',
+      desc: isBn ? 'সরাসরি ফিডার জাহাজ চলাচল ও ইপিবি ডিজিটাল কাস্টমস ছাড়পত্র।' : 'Direct feeder departures with automated EPB export clearances.',
     },
     {
       icon: Award,
       color: 'text-amber-400',
       bg: 'bg-amber-500/10 border-amber-500/25',
-      title: 'LEED Platinum Vault',
+      title: isBn ? 'লিড প্ল্যাটিনাম কারখানা' : 'LEED Platinum Vault',
       tag: 'ESG AUDITED',
       tagColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-      desc: 'OEKO-TEX 100, biological ETP, and Accord/RSC structural certs.',
+      desc: isBn ? 'ওইকো-টেক্স ১০০, বায়োলজিক্যাল ইটিপি এবং অ্যাকর্ড/আরএসসি সার্টিফাইড।' : 'OEKO-TEX 100, biological ETP, and Accord/RSC structural certs.',
     },
     {
       icon: Cpu,
       color: 'text-indigo-400',
       bg: 'bg-indigo-500/10 border-indigo-500/25',
-      title: 'RAWx Bot Engine',
-      tag: 'AI ROUTER',
+      title: isBn ? 'র-এক্স এআই ইঞ্জিন' : 'RAWx Bot Engine',
+      tag: isBn ? 'এআই রাউটার' : 'AI ROUTER',
       tagColor: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
-      desc: '24/7 vector CAD specs, HS tariff mapping, and factory allocation.',
+      desc: isBn ? '২৪/৭ ক্যাড স্পেকস, এইচএস ট্যারিফ ম্যাপিং এবং ফ্যাক্টরি বণ্টন।' : '24/7 vector CAD specs, HS tariff mapping, and factory allocation.',
     },
   ];
 
@@ -143,7 +146,7 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}
               >
-                Trade Desk & Statutory
+                {isBn ? 'বাণিজ্য ডেস্ক ও আইনি সংস্থা' : 'Trade Desk & Statutory'}
               </h4>
             </div>
 
@@ -159,7 +162,7 @@ export const Footer: React.FC<FooterProps> = ({
                 }`}
               >
                 <span className="truncate group-hover:text-[#ff1e42] transition-colors">
-                  Export Promotion Bureau (EPB)
+                  {isBn ? 'রপ্তানি উন্নয়ন ব্যুরো (ইপিবি)' : 'Export Promotion Bureau (EPB)'}
                 </span>
                 <ExternalLink className="w-3 h-3 text-slate-500 group-hover:text-[#ff1e42] group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
               </a>
@@ -175,7 +178,7 @@ export const Footer: React.FC<FooterProps> = ({
                 }`}
               >
                 <span className="truncate group-hover:text-[#ff1e42] transition-colors">
-                  BGMEA RMG Exporter Directory
+                  {isBn ? 'বিজিএমইএ তৈরি পোশাক ডিরেক্টরি' : 'BGMEA RMG Exporter Directory'}
                 </span>
                 <ExternalLink className="w-3 h-3 text-slate-500 group-hover:text-[#ff1e42] group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
               </a>
@@ -191,7 +194,7 @@ export const Footer: React.FC<FooterProps> = ({
                 }`}
               >
                 <span className="truncate group-hover:text-[#ff1e42] transition-colors">
-                  BKMEA Knitwear Association
+                  {isBn ? 'বিকেএমইএ নিটওয়্যার সমিতি' : 'BKMEA Knitwear Association'}
                 </span>
                 <ExternalLink className="w-3 h-3 text-slate-500 group-hover:text-[#ff1e42] group-hover:translate-x-0.5 transition-all shrink-0 ml-1" />
               </a>
@@ -201,7 +204,7 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-200'
                 }`}
               >
-                <span className="text-slate-400">Duty-Free GSP & DFQF Hub</span>
+                <span className="text-slate-400">{isBn ? 'শুল্কমুক্ত জিএসপি ও ডিএফকিউএফ' : 'Duty-Free GSP & DFQF Hub'}</span>
                 <span className="font-mono font-bold text-emerald-400 text-[10px]">
                   EU / UK / JP
                 </span>
@@ -218,16 +221,16 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}
               >
-                Regional Factory Hubs
+                {isBn ? 'আঞ্চলিক কারখানা হাব' : 'Regional Factory Hubs'}
               </h4>
             </div>
 
             <div className="space-y-1.5">
               {[
-                { name: 'Gazipur Garment & Denim', count: '1,840 Mills' },
-                { name: 'Savar & Ashulia DEPZ', count: 'Bonded EPZ' },
-                { name: 'Narayanganj Knit City', count: '920 Units' },
-                { name: 'Chattogram Seaport EPZ', count: 'Direct Feeder' },
+                { name: isBn ? 'গাজীপুর পোশাক ও ডেনিম' : 'Gazipur Garment & Denim', count: isBn ? `${toDigits(1840)} মিলস` : '1,840 Mills' },
+                { name: isBn ? 'সাভার ও আশুলিয়া ডিইপিজেড' : 'Savar & Ashulia DEPZ', count: isBn ? 'বন্ডেড ইপিজেড' : 'Bonded EPZ' },
+                { name: isBn ? 'নারায়ণগঞ্জ নিট সিটি' : 'Narayanganj Knit City', count: isBn ? `${toDigits(920)} কারখানা` : '920 Units' },
+                { name: isBn ? 'চট্টগ্রাম সমুদ্রবন্দর ইপিজেড' : 'Chattogram Seaport EPZ', count: isBn ? 'সরাসরি ফিডার' : 'Direct Feeder' },
               ].map((hub, i) => (
                 <div
                   key={i}
@@ -255,7 +258,7 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}
               >
-                Logistics & Escrow
+                {isBn ? 'লজিস্টিকস ও এসক্রো' : 'Logistics & Escrow'}
               </h4>
             </div>
 
@@ -270,7 +273,7 @@ export const Footer: React.FC<FooterProps> = ({
                 }`}
               >
                 <span className="group-hover:text-emerald-400 transition-colors">
-                  Feeder Schedules (CGP-SIN-RTM)
+                  {isBn ? 'ফিডার সূচি (চট্টগ্রাম-সিঙ্গাপুর-রটারড্যাম)' : 'Feeder Schedules (CGP-SIN-RTM)'}
                 </span>
                 <ArrowRight className="w-3 h-3 text-emerald-400 group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
               </button>
@@ -285,7 +288,7 @@ export const Footer: React.FC<FooterProps> = ({
                 }`}
               >
                 <span className="group-hover:text-[#ff1e42] transition-colors">
-                  Custom Tariff & HS Code Lookup
+                  {isBn ? 'কাস্টমস শুল্ক ও এইচএস কোড সার্চ' : 'Custom Tariff & HS Code Lookup'}
                 </span>
                 <ArrowRight className="w-3 h-3 text-[#e11d48] group-hover:translate-x-1 transition-transform shrink-0 ml-1" />
               </button>
@@ -295,8 +298,8 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-200'
                 }`}
               >
-                <span className="text-slate-400">Swift MT700 L/C at Sight</span>
-                <span className="font-mono font-bold text-emerald-400 text-[10px]">Active</span>
+                <span className="text-slate-400">{isBn ? 'সুইফট এমটি৭০০ এল/সি' : 'Swift MT700 L/C at Sight'}</span>
+                <span className="font-mono font-bold text-emerald-400 text-[10px]">{isBn ? 'সক্রিয়' : 'Active'}</span>
               </div>
             </div>
           </div>
@@ -310,7 +313,7 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'text-white' : 'text-slate-900'
                 }`}
               >
-                Infrastructure & Sync
+                {isBn ? 'অবকাঠামো ও সিঙ্ক' : 'Infrastructure & Sync'}
               </h4>
             </div>
 
@@ -330,7 +333,7 @@ export const Footer: React.FC<FooterProps> = ({
                   isDark ? 'bg-white/5 border-white/5' : 'bg-slate-50 border-slate-200'
                 }`}
               >
-                <span className="text-slate-400">Security & Encryption</span>
+                <span className="text-slate-400">{isBn ? 'নিরাপত্তা ও এনক্রিপশন' : 'Security & Encryption'}</span>
                 <span className="font-mono text-white text-[10px]">TLS 1.3 / 256-bit</span>
               </div>
 
@@ -341,7 +344,7 @@ export const Footer: React.FC<FooterProps> = ({
                   className="w-full group flex items-center justify-center space-x-1.5 p-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-bold transition-all cursor-pointer text-xs"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Launch RAWx Bot Agent</span>
+                  <span>{isBn ? 'র-এক্স এআই বট চালু করুন' : 'Launch RAWx Bot Agent'}</span>
                 </button>
               )}
             </div>
@@ -361,17 +364,17 @@ export const Footer: React.FC<FooterProps> = ({
             <div className="w-5 h-5 rounded-full bg-[#e11d48] text-white flex items-center justify-center font-black text-[10px]">
               BD
             </div>
-            <span className="font-bold text-slate-300">Made in BD</span>
+            <span className="font-bold text-slate-300">{isBn ? 'মেড ইন বাংলাদেশ' : 'Made in BD'}</span>
             <span>•</span>
             <span className="truncate">
-              © {new Date().getFullYear()} B2B Wholesale Gateway • Federated Trade Matrix
+              © {new Date().getFullYear()} {isBn ? 'বি২বি হোলসেল গেটওয়ে • ফেডারেটেড ট্রেড ম্যাট্রিক্স' : 'B2B Wholesale Gateway • Federated Trade Matrix'}
             </span>
           </div>
 
           <div className="flex items-center space-x-3 text-[11px]">
             <span className="flex items-center space-x-1.5 text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="font-mono font-bold">99.99% Uptime</span>
+              <span className="font-mono font-bold">{toDigits('99.99%')} {isBn ? 'আপটাইম' : 'Uptime'}</span>
             </span>
 
             <span className="text-slate-600">|</span>
@@ -382,7 +385,7 @@ export const Footer: React.FC<FooterProps> = ({
               rel="noreferrer"
               className="text-slate-300 hover:text-white font-mono flex items-center space-x-1 transition-colors"
             >
-              <span>Master Hub:</span>
+              <span>{isBn ? 'মাস্টার হাব:' : 'Master Hub:'}</span>
               <strong className="text-emerald-400">handsandhead.ai.studio</strong>
             </a>
           </div>

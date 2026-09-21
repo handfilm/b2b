@@ -27,6 +27,7 @@ import { CategoryId, Product, CurrencyConfig } from '../types';
 import { CATEGORIES } from '../data/mockData';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
 import { SEED_SHOP_HANDSANDHEAD, SEED_ARUTEMIKA_HANDSANDHEAD } from '../data/unlimitedCatalog';
+import { useI18n } from '../context/I18nContext';
 
 interface CategoriesSlidersSectionProps {
   selectedCategory: CategoryId;
@@ -61,6 +62,8 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
 
   const isDark = theme === 'dark';
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   const scrollSlider = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
     if (ref.current) {
@@ -102,14 +105,14 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
             </span>
             <div>
               <span className="font-extrabold text-xs sm:text-sm tracking-tight">
-                Specialized Sourcing Hubs
+                {isBn ? 'বিশেষায়িত সোর্সিং হাব' : 'Specialized Sourcing Hubs'}
               </span>
               <span className="text-[10.5px] text-slate-400 ml-2 hidden sm:inline">
-                8 Active Industrial Export Clusters
+                {isBn ? '৮টি সক্রিয় শিল্প রপ্তানি ক্লাস্টার' : '8 Active Industrial Export Clusters'}
               </span>
             </div>
             <span className="text-[9.5px] font-mono font-bold text-[#10b981] px-2 py-0.5 rounded-full bg-[#10b981]/15 border border-[#10b981]/30 shrink-0">
-              9 Nodes Live
+              {isBn ? '৯টি নোড লাইভ' : '9 Nodes Live'}
             </span>
           </div>
 
@@ -122,7 +125,9 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
               }`}
             >
               <ShieldCheck className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
-              <span>5,000+ Bonded EPB Mills • Direct Customs CGP</span>
+              <span>
+                {isBn ? '৫,০০০+ বন্ডেড ইপিবি মিল • সরাসরি কাস্টমস সিজিপি' : '5,000+ Bonded EPB Mills • Direct Customs CGP'}
+              </span>
             </div>
 
             {selectedDivision !== 'all' && (
@@ -131,7 +136,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                 onClick={() => onSelectDivision && onSelectDivision('all')}
                 className="px-2.5 py-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[10.5px] font-bold transition-all cursor-pointer shadow-xs"
               >
-                Reset Filter
+                {isBn ? 'ফিল্টার রিসেট' : 'Reset Filter'}
               </button>
             )}
           </div>
@@ -158,7 +163,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>All Clusters</span>
+            <span>{isBn ? 'সকল ক্লাস্টার' : 'All Clusters'}</span>
           </motion.button>
 
           {/* 8 Specific Cluster Nodes */}
@@ -228,10 +233,12 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-[#e11d48]"></span>
                   </span>
                   <span>shop.handsandhead.com</span>
-                  <span className="text-[9.5px] text-slate-400 font-normal hidden sm:inline">• High-Density RMG</span>
+                  <span className="text-[9.5px] text-slate-400 font-normal hidden sm:inline">
+                    {isBn ? '• উচ্চ-ঘনত্ব পোশাক' : '• High-Density RMG'}
+                  </span>
                 </div>
                 <h3 className="font-extrabold text-sm sm:text-base mt-0.5 tracking-tight">
-                  Commercial Knit & Denim Pavilion
+                  {isBn ? 'বাণিজ্যিক নিট ও ডেনিম প্যাভিলিয়ন' : 'Commercial Knit & Denim Pavilion'}
                 </h3>
               </div>
 
@@ -300,7 +307,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
 
                         {/* Top-Left Badge */}
                         <span className="absolute top-1.5 left-1.5 bg-[#e11d48] text-white text-[9px] font-black px-1.5 py-0.5 rounded font-mono z-10 shadow-xs">
-                          Direct Mill
+                          {isBn ? 'সরাসরি মিল' : 'Direct Mill'}
                         </span>
 
                         {/* Top-Right EPB Verified Indicator */}
@@ -321,7 +328,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                             className="flex-1 py-1 px-1.5 rounded-md bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[9.5px] font-bold flex items-center justify-center space-x-1 shadow-md cursor-pointer transition-colors"
                           >
                             <MessageSquare className="w-3 h-3" />
-                            <span>Inquire</span>
+                            <span>{isBn ? 'অনুসন্ধান' : 'Inquire'}</span>
                           </button>
                           <button
                             type="button"
@@ -331,7 +338,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                               onOpenAiAssistant(p);
                             }}
                             className="p-1 rounded-md bg-black/80 hover:bg-black text-white hover:text-rose-300 text-[9.5px] border border-white/20 flex items-center justify-center cursor-pointer transition-colors"
-                            title="Match factory via RAWx AI"
+                            title={isBn ? 'র-এক্স এআই দিয়ে ফ্যাক্টরি ম্যাচ করুন' : 'Match factory via RAWx AI'}
                           >
                             <Sparkles className="w-3 h-3 text-[#10b981]" />
                           </button>
@@ -349,7 +356,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                               </span>
                               <span className="text-[#10b981] font-mono flex items-center space-x-0.5 shrink-0">
                                 <ShieldCheck className="w-2.5 h-2.5 text-[#10b981]" />
-                                <span>Verified</span>
+                                <span>{isBn ? 'যাচাইকৃত' : 'Verified'}</span>
                               </span>
                             </div>
                             <div className="text-[8px] text-emerald-300 font-mono truncate mt-0.5">
@@ -361,7 +368,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
 
                       {/* Delivery SLA Guarantee */}
                       <div className="text-[10px] text-[#10b981] font-semibold truncate flex items-center space-x-1">
-                        <CheckCircle2 className="w-2.5 h-2.5 text-[#10b981] shrink-0" />
+                        <CheckCircle2 className="w-2.5 h-2.5 text-[#10b981]" />
                         <span>{p.deliveryDate || 'Oct 24 delivery'}</span>
                       </div>
 
@@ -376,12 +383,12 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                       <div className="flex items-baseline justify-between">
                         <div className="flex items-baseline space-x-1">
                           <span className="font-black text-sm text-[#10b981] font-mono">
-                            {currency.symbol}{(lowestPrice * currency.rate).toFixed(2)}
+                            {currency.symbol}{toDigits((lowestPrice * currency.rate).toFixed(2))}
                           </span>
                           <span className="text-[10px] text-slate-400">/ {p.unit.toLowerCase().replace(/s$/, '')}</span>
                         </div>
                         <span className="text-[9.5px] font-mono font-bold text-slate-400 bg-white/5 px-1.5 py-0.5 rounded border border-inherit">
-                          MOQ: {p.moq}
+                          MOQ: {toDigits(p.moq)}
                         </span>
                       </div>
                     </div>
@@ -393,12 +400,14 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
 
           {/* Slider Footer */}
           <div className="mt-3 pt-2.5 border-t border-inherit flex items-center justify-between text-xs">
-            <span className="text-slate-400 text-[11px] font-mono">Fast production & FOB SLA</span>
+            <span className="text-slate-400 text-[11px] font-mono">
+              {isBn ? 'দ্রুত উৎপাদন ও এফওবি চুক্তি' : 'Fast production & FOB SLA'}
+            </span>
             <span
               onClick={() => onSelectCategory('rmg-apparel')}
               className="text-[#ff1e42] font-bold hover:underline cursor-pointer flex items-center space-x-0.5 text-xs"
             >
-              <span>View catalog</span>
+              <span>{isBn ? 'ক্যাটালগ দেখুন' : 'View catalog'}</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </span>
           </div>
@@ -423,10 +432,12 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                   </span>
                   <span>arutemika.handsandhead.com</span>
-                  <span className="text-[9.5px] text-slate-400 font-normal hidden sm:inline">• Mastercraft Atelier</span>
+                  <span className="text-[9.5px] text-slate-400 font-normal hidden sm:inline">
+                    {isBn ? '• ঐতিহ্যবাহী আর্ট স্টুডিও' : '• Mastercraft Atelier'}
+                  </span>
                 </div>
                 <h3 className="font-extrabold text-sm sm:text-base mt-0.5 tracking-tight">
-                  Artisanal & Heritage Pavilion
+                  {isBn ? 'ঐতিহ্যবাহী কারুশিল্প প্যাভিলিয়ন' : 'Artisanal & Heritage Pavilion'}
                 </h3>
               </div>
 
@@ -494,7 +505,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
 
                         {/* Top-Left Badge */}
                         <span className="absolute top-1.5 left-1.5 bg-amber-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded font-mono z-10 shadow-xs">
-                          Artisan Craft
+                          {isBn ? 'ঐতিহ্যবাহী কারুশিল্প' : 'Artisan Craft'}
                         </span>
 
                         {/* Top-Right LWG Gold Indicator */}
@@ -515,7 +526,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                             className="flex-1 py-1 px-1.5 rounded-md bg-amber-600 hover:bg-amber-500 text-white text-[9.5px] font-bold flex items-center justify-center space-x-1 shadow-md cursor-pointer transition-colors"
                           >
                             <MessageSquare className="w-3 h-3" />
-                            <span>Inquire</span>
+                            <span>{isBn ? 'অনুসন্ধান' : 'Inquire'}</span>
                           </button>
                           <button
                             type="button"
@@ -525,7 +536,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                               onOpenAiAssistant(p);
                             }}
                             className="p-1 rounded-md bg-black/80 hover:bg-black text-white hover:text-amber-300 text-[9.5px] border border-white/20 flex items-center justify-center cursor-pointer transition-colors"
-                            title="Match artisan workshop via RAWx AI"
+                            title={isBn ? 'র-এক্স এআই দিয়ে কারিগর কর্মশালা খুঁজুন' : 'Match artisan workshop via RAWx AI'}
                           >
                             <Sparkles className="w-3 h-3 text-amber-400" />
                           </button>
@@ -543,7 +554,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                               </span>
                               <span className="text-amber-400 font-mono flex items-center space-x-0.5 shrink-0">
                                 <ShieldCheck className="w-2.5 h-2.5 text-amber-400" />
-                                <span>Mastercraft</span>
+                                <span>{isBn ? 'মাস্টারক্র্যাফ্ট' : 'Mastercraft'}</span>
                               </span>
                             </div>
                             <div className="text-[8px] text-amber-300 font-mono truncate mt-0.5">
@@ -555,7 +566,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
 
                       {/* Delivery SLA Guarantee */}
                       <div className="text-[10px] text-[#10b981] font-semibold truncate flex items-center space-x-1">
-                        <CheckCircle2 className="w-2.5 h-2.5 text-[#10b981] shrink-0" />
+                        <CheckCircle2 className="w-2.5 h-2.5 text-[#10b981]" />
                         <span>{p.deliveryDate || 'Nov 12 delivery'}</span>
                       </div>
 
@@ -570,12 +581,12 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                       <div className="flex items-baseline justify-between">
                         <div className="flex items-baseline space-x-1">
                           <span className="font-black text-sm text-[#10b981] font-mono">
-                            {currency.symbol}{(lowestPrice * currency.rate).toFixed(2)}
+                            {currency.symbol}{toDigits((lowestPrice * currency.rate).toFixed(2))}
                           </span>
                           <span className="text-[10px] text-slate-400">/ {p.unit.toLowerCase().replace(/s$/, '')}</span>
                         </div>
                         <span className="text-[9.5px] font-mono font-bold text-slate-400 bg-white/5 px-1.5 py-0.5 rounded border border-inherit">
-                          MOQ: {p.moq}
+                          MOQ: {toDigits(p.moq)}
                         </span>
                       </div>
                     </div>
@@ -587,12 +598,14 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
 
           {/* Slider Footer */}
           <div className="mt-3 pt-2.5 border-t border-inherit flex items-center justify-between text-xs">
-            <span className="text-slate-400 text-[11px] font-mono">Authentic Bengal Mastercraft</span>
+            <span className="text-slate-400 text-[11px] font-mono">
+              {isBn ? 'খাঁটি বাংলার ঐতিহ্যবাহী কারুশিল্প' : 'Authentic Bengal Mastercraft'}
+            </span>
             <span
               onClick={() => onSelectCategory('handicrafts-brass')}
               className="text-amber-500 font-bold hover:underline cursor-pointer flex items-center space-x-0.5 text-xs"
             >
-              <span>View crafts</span>
+              <span>{isBn ? 'হস্তশিল্প দেখুন' : 'View crafts'}</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </span>
           </div>
@@ -617,21 +630,25 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
             <div className="flex items-center space-x-2">
               <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-[#e11d48] text-white text-[10px] font-black uppercase tracking-wider shadow-xs font-mono">
                 <Sparkles className="w-3 h-3 text-white animate-spin" style={{ animationDuration: '4s' }} />
-                <span>RAWx SOURCING BOT</span>
+                <span>{isBn ? 'র-এক্স সোর্সিং বট' : 'RAWx SOURCING BOT'}</span>
               </div>
               <span className="text-[10px] font-mono text-emerald-400 flex items-center space-x-1 font-bold">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-ping" />
-                <span>Instant Mill Match • 5-min quotes</span>
+                <span>{isBn ? 'তাৎক্ষণিক মিল ম্যাচিং • ৫ মিনিটে কোটেশন' : 'Instant Mill Match • 5-min quotes'}</span>
               </span>
             </div>
 
             <h4 className="text-sm sm:text-base font-black text-white tracking-tight">
-              AI-Powered Factory Matching, FOB Chattogram Quotes & TechPack CAD
+              {isBn
+                ? 'এআই-চালিত ফ্যাক্টরি ম্যাচিং, এফওবি চট্টগ্রাম কোটেশন ও টেকপ্যাক ক্যাড'
+                : 'AI-Powered Factory Matching, FOB Chattogram Quotes & TechPack CAD'}
             </h4>
 
             {/* Quick Prompt Pills: Clickable, launches AI instantly */}
             <div className="flex items-center flex-wrap gap-1.5 pt-0.5">
-              <span className="text-[10.5px] text-slate-400 font-medium">Try asking:</span>
+              <span className="text-[10.5px] text-slate-400 font-medium">
+                {isBn ? 'জিজ্ঞাসা করুন:' : 'Try asking:'}
+              </span>
               {sampleAiPrompts.map((promptText) => (
                 <button
                   key={promptText}
@@ -651,11 +668,11 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
             <div className="flex items-center space-x-3 text-[10.5px] text-slate-300">
               <div className="flex items-center space-x-1">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
-                <span>LEED Platinum Verified</span>
+                <span>{isBn ? 'লিড প্ল্যাটিনাম যাচাইকৃত' : 'LEED Platinum Verified'}</span>
               </div>
               <div className="flex items-center space-x-1">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
-                <span>100% Escrow Protection</span>
+                <span>{isBn ? '১০০% এসক্রো সুরক্ষা' : '100% Escrow Protection'}</span>
               </div>
             </div>
 
@@ -668,7 +685,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:from-[#ff1e42] hover:to-[#e11d48] text-white font-extrabold text-xs shadow-lg shadow-[#e11d48]/30 transition-all flex items-center justify-center space-x-2 cursor-pointer group/btn"
             >
               <Sparkles className="w-3.5 h-3.5 text-white" />
-              <span>Launch RAWx Bot</span>
+              <span>{isBn ? 'র-এক্স বট চালু করুন' : 'Launch RAWx Bot'}</span>
               <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
             </motion.button>
           </div>

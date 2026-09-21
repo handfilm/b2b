@@ -22,6 +22,7 @@ import {
   Check,
 } from 'lucide-react';
 import { useInquiryCart } from '../context/InquiryCartContext';
+import { useI18n } from '../context/I18nContext';
 import {
   CurrencyCode,
   CategoryId,
@@ -108,6 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
   const headerRef = useRef<HTMLElement>(null);
 
   const { openCart, totalItems: cartCount } = useInquiryCart();
+  const { t, toDigits } = useI18n();
 
   const isDark = theme === 'dark';
 
@@ -423,7 +425,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-[#10b981]/15 hover:text-[#10b981] transition-colors cursor-pointer"
                     >
                       <FileText className="w-3.5 h-3.5 text-[#10b981]" />
-                      <span>TechPack</span>
+                      <span>{t.techPackStudio}</span>
                     </button>
                     <button
                       type="button"
@@ -434,7 +436,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-[#e11d48]/15 hover:text-[#ff1e42] transition-colors cursor-pointer"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-[#e11d48]" />
-                      <span>Post RFQ</span>
+                      <span>{t.postRfq}</span>
                     </button>
                     <button
                       type="button"
@@ -445,7 +447,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-white/10 transition-colors cursor-pointer"
                     >
                       <Ship className="w-3.5 h-3.5 text-[#10b981]" />
-                      <span>Freight Matrix</span>
+                      <span>{t.feederShipping}</span>
                     </button>
                   </div>
                 </div>
@@ -506,7 +508,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <span className="max-w-[130px] truncate">
                 {selectedDivision === 'all'
-                  ? 'All Verticals'
+                  ? (lang === 'BN' ? 'সব বিভাগ' : 'All Verticals')
                   : FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.pavilionLabel || 'Vertical'}
               </span>
               <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isVerticalMenuOpen ? 'rotate-180' : ''}`} />
@@ -520,7 +522,7 @@ export const Header: React.FC<HeaderProps> = ({
                 }`}
               >
                 <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1">
-                  Export Verticals (2,749)
+                  {lang === 'BN' ? 'রপ্তানি বিভাগসমূহ' : 'Export Verticals'} ({toDigits(2749)})
                 </div>
                 {FEDERATED_DIVISIONS.map((div) => {
                   const isSelected = selectedDivision === div.slug;
@@ -564,7 +566,7 @@ export const Header: React.FC<HeaderProps> = ({
               <input
                 type="text"
                 id="global-search-input"
-                placeholder="Search..."
+                placeholder={persona === 'buyer' ? t.searchPlaceholderBuyer : t.searchPlaceholderSeller}
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 className={`flex-1 min-w-0 px-2.5 py-1.5 text-xs focus:outline-none bg-transparent ${
@@ -605,7 +607,7 @@ export const Header: React.FC<HeaderProps> = ({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Buyer Portal
+              {t.buyerPortal}
             </button>
             <button
               type="button"
@@ -618,7 +620,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <Factory className="w-3 h-3" />
-              <span>Mills Hub</span>
+              <span>{t.manufacturerHub}</span>
             </button>
           </div>
 
@@ -804,7 +806,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="w-full text-left px-3 py-2 text-xs text-[#ff1e42] font-bold hover:bg-red-500/10 rounded-lg transition-colors flex items-center space-x-2 cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
-                      <span>Sign Out</span>
+                      <span>{lang === 'BN' ? 'সাইন আউট' : 'Sign Out'}</span>
                     </button>
                   </div>
                 </div>
@@ -822,7 +824,7 @@ export const Header: React.FC<HeaderProps> = ({
               }`}
             >
               <LogIn className="w-3.5 h-3.5" />
-              <span>Sign In</span>
+              <span>{lang === 'BN' ? 'সাইন ইন' : 'Sign In'}</span>
             </button>
           )}
         </div>

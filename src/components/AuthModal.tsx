@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { AuthUser, PersonaMode } from '../types';
 import { signInWithGooglePopup, saveUserToFirestore } from '../firebase';
+import { useI18n } from '../context/I18nContext';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -50,6 +51,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
   onLoginSuccess,
   initialRole = 'buyer',
 }) => {
+  const { lang } = useI18n();
+  const isBn = lang === 'BN';
   const [role, setRole] = useState<PersonaMode>(initialRole);
   const [authMethod, setAuthMethod] = useState<'password' | 'magic'>('password');
   const [fullName, setFullName] = useState('');
@@ -223,13 +226,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             </div>
             <div>
               <h2 className="text-lg font-extrabold text-white tracking-tight flex items-center space-x-2">
-                <span>Enterprise B2B Identity Portal</span>
+                <span>{isBn ? 'এন্টারপ্রাইজ বিটুবি আইডেন্টিটি পোর্টাল' : 'Enterprise B2B Identity Portal'}</span>
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#ff5500]/20 text-[#ff5500] border border-[#ff5500]/30">
-                  Verified
+                  {isBn ? 'যাচাইকৃত' : 'Verified'}
                 </span>
               </h2>
               <p className="text-xs text-slate-400">
-                Direct trade access, escrow guarantees & factory capacity transparency
+                {isBn
+                  ? 'সরাসরি বাণিজ্যের সুবিধা, এসক্রো নিরাপত্তা ও কারখানার উৎপাদন স্বচ্ছতা'
+                  : 'Direct trade access, escrow guarantees & factory capacity transparency'}
               </p>
             </div>
           </div>
@@ -244,7 +249,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Dual Persona Switcher */}
         <div className="p-6 pb-2">
           <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
-            Select Your Trade Role
+            {isBn ? 'আপনার ট্রেড রোল নির্বাচন করুন' : 'Select Your Trade Role'}
           </label>
           <div className="grid grid-cols-2 gap-3">
             <button
@@ -264,9 +269,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   </span>
                 )}
               </div>
-              <h4 className="text-xs font-bold text-white">International Buyer</h4>
+              <h4 className="text-xs font-bold text-white">
+                {isBn ? 'আন্তর্জাতিক ক্রেতা (Buyer)' : 'International Buyer'}
+              </h4>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Unlock direct supplier contacts, broadcast custom RFQs, and track air samples.
+                {isBn
+                  ? 'সরাসরি সরবরাহকারীর যোগাযোগ, কাস্টম আরএফকিউ পাঠানো এবং এয়ার স্যাম্পল ট্র্যাকিং।'
+                  : 'Unlock direct supplier contacts, broadcast custom RFQs, and track air samples.'}
               </p>
             </button>
 
@@ -287,9 +296,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   </span>
                 )}
               </div>
-              <h4 className="text-xs font-bold text-white">BD Manufacturer / Exporter</h4>
+              <h4 className="text-xs font-bold text-white">
+                {isBn ? 'বাংলাদেশি প্রস্তুতকারক / রপ্তানিকারক' : 'BD Manufacturer / Exporter'}
+              </h4>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Access international RFQ boards, quote FOB tenders, and log live line capacity.
+                {isBn
+                  ? 'আন্তর্জাতিক আরএফকিউ বোর্ডে প্রবেশ, এফওবি দরপত্র পেশ ও লাইভ প্রোডাকশন লাইন নিবন্ধন।'
+                  : 'Access international RFQ boards, quote FOB tenders, and log live line capacity.'}
               </p>
             </button>
           </div>
@@ -331,17 +344,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                   d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.35 0 3.26 2.64 1.24 6.59l4.04 3.15c.95-2.84 3.6-4.99 6.72-4.99z"
                 />
               </svg>
-              <span>Continue with Google (Verified Work Account)</span>
+              <span>{isBn ? 'গুগল দিয়ে প্রবেশ করুন (কর্পোরেট একাউন্ট)' : 'Continue with Google (Verified Work Account)'}</span>
             </button>
             <p className="text-[11px] text-slate-500 text-center mt-1">
-              *Requires valid phone/WhatsApp number below for two-factor verification.
+              {isBn
+                ? '*টু-ফ্যাক্টর ভেরিফিকেশনের জন্য নিচে সঠিক ফোন / হোয়াটসঅ্যাপ নম্বর প্রয়োজন।'
+                : '*Requires valid phone/WhatsApp number below for two-factor verification.'}
             </p>
           </div>
 
           <div className="relative flex items-center justify-center">
             <div className="border-t border-white/10 w-full"></div>
             <span className="bg-[#0e0e0e] px-3 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-              Or Sign In with Corporate Details
+              {isBn ? 'অথবা কর্পোরেট তথ্যাদি দিয়ে সাইন-ইন করুন' : 'Or Sign In with Corporate Details'}
             </span>
           </div>
 
@@ -349,26 +364,30 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1">
-                Full Name / Representative
+                {isBn ? 'পূর্ণ নাম / প্রতিনিধি' : 'Full Name / Representative'}
               </label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="e.g. Jonathan Meyer"
+                placeholder={isBn ? 'যেমন: মোহাম্মদ রহমান' : 'e.g. Jonathan Meyer'}
                 className="w-full px-3 py-2 text-xs text-white rounded-xl bg-[#141414] border border-white/10 focus:outline-none focus:border-[#ff5500]"
               />
             </div>
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1">
-                Enterprise / Company Name <span className="text-[#ff5500]">*</span>
+                {isBn ? 'প্রতিষ্ঠান / কোম্পানির নাম' : 'Enterprise / Company Name'} <span className="text-[#ff5500]">*</span>
               </label>
               <input
                 type="text"
                 required
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                placeholder={role === 'buyer' ? 'e.g. Nordic Sourcing ApS' : 'e.g. Envoy Composite Mill'}
+                placeholder={
+                  isBn
+                    ? (role === 'buyer' ? 'যেমন: নরডিক সোর্সিং লিমিটেড' : 'যেমন: এনভয় কম্পোজিট মিলস')
+                    : (role === 'buyer' ? 'e.g. Nordic Sourcing ApS' : 'e.g. Envoy Composite Mill')
+                }
                 className="w-full px-3 py-2 text-xs text-white rounded-xl bg-[#141414] border border-white/10 focus:outline-none focus:border-[#ff5500]"
               />
             </div>
@@ -377,7 +396,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           {/* Email */}
           <div>
             <label className="text-xs font-bold text-slate-300 block mb-1">
-              Business Email <span className="text-[#ff5500]">*</span>
+              {isBn ? 'ব্যবসায়িক ইমেইল' : 'Business Email'} <span className="text-[#ff5500]">*</span>
             </label>
             <div className="relative flex items-center">
               <Mail className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
@@ -397,14 +416,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <div className="flex items-center justify-between">
               <label className="text-xs font-extrabold text-[#ff5500] flex items-center space-x-1.5">
                 <Phone className="w-3.5 h-3.5 text-[#ff5500]" />
-                <span>MANDATORY: International Phone / WhatsApp Number</span>
+                <span>{isBn ? 'বাধ্যতামূলক: আন্তর্জাতিক ফোন / হোয়াটসঅ্যাপ নম্বর' : 'MANDATORY: International Phone / WhatsApp Number'}</span>
               </label>
               <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-                Required for Escrow & SLA
+                {isBn ? 'এসক্রো ও এসএলএ সুরক্ষায় আবশ্যক' : 'Required for Escrow & SLA'}
               </span>
             </div>
             <p className="text-[11px] text-slate-400">
-              International trade regulations require direct WhatsApp/phone contact to dispatch courier samples and issue export letters of credit.
+              {isBn
+                ? 'আন্তর্জাতিক বাণিজ্য নীতিমালায় কুরিয়ারে নমুনা পাঠানো এবং এলসি ইস্যু করার জন্য সরাসরি ফোন/হোয়াটসঅ্যাপ যোগাযোগ বাধ্যতামূলক।'
+                : 'International trade regulations require direct WhatsApp/phone contact to dispatch courier samples and issue export letters of credit.'}
             </p>
             <div className="flex items-center space-x-2">
               <select
@@ -436,7 +457,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                 onChange={(e) => setWhatsappEnabled(e.target.checked)}
                 className="accent-[#ff5500] rounded"
               />
-              <span>Use this number for Instant WhatsApp quotation alerts and courier tracking</span>
+              <span>
+                {isBn
+                  ? 'তাৎক্ষণিক হোয়াটসঅ্যাপ কোটেশন অ্যালার্ট ও কুরিয়ার ট্র্যাকিংয়ের জন্য এই নম্বরটি ব্যবহার করুন'
+                  : 'Use this number for Instant WhatsApp quotation alerts and courier tracking'}
+              </span>
             </label>
           </div>
 
@@ -444,14 +469,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="text-xs font-bold text-slate-300">
-                Security Password
+                {isBn ? 'নিরাপত্তা পাসওয়ার্ড' : 'Security Password'}
               </label>
               <button
                 type="button"
                 onClick={() => setAuthMethod(authMethod === 'password' ? 'magic' : 'password')}
                 className="text-[11px] text-[#ff5500] hover:underline cursor-pointer"
               >
-                {authMethod === 'password' ? 'Switch to Magic Link' : 'Switch to Password'}
+                {authMethod === 'password'
+                  ? (isBn ? 'ম্যাজিক লিংকে পরিবর্তন' : 'Switch to Magic Link')
+                  : (isBn ? 'পাসওয়ার্ডে পরিবর্তন' : 'Switch to Password')}
               </button>
             </div>
             {authMethod === 'password' ? (
@@ -467,7 +494,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               </div>
             ) : (
               <div className="p-3 bg-[#141414] rounded-xl border border-white/10 text-xs text-slate-400">
-                A one-time cryptographic sign-in link will be dispatched to your corporate email immediately.
+                {isBn
+                  ? 'আপনার কর্পোরেট ইমেইলে একটি ওয়ান-টাইম সাইন-ইন লিঙ্ক তাৎক্ষণিকভাবে পাঠানো হবে।'
+                  : 'A one-time cryptographic sign-in link will be dispatched to your corporate email immediately.'}
               </div>
             )}
           </div>
@@ -481,10 +510,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             >
               <span>
                 {isSubmitting
-                  ? 'Verifying B2B Credentials...'
+                  ? (isBn ? 'বিটুবি পরিচয় যাচাই হচ্ছে...' : 'Verifying B2B Credentials...')
                   : role === 'buyer'
-                  ? 'Enter as Verified International Buyer'
-                  : 'Enter Exporter Operations Console'}
+                  ? (isBn ? 'যাচাইকৃত আন্তর্জাতিক ক্রেতা হিসেবে প্রবেশ' : 'Enter as Verified International Buyer')
+                  : (isBn ? 'রপ্তানিকারক অপারেশন কনসোলে প্রবেশ' : 'Enter Exporter Operations Console')}
               </span>
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -496,8 +525,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>
                 {role === 'buyer'
-                  ? 'Buyer Privileges: Direct factory telephone & WhatsApp contacts, TechPack export, sample courier booking.'
-                  : 'Exporter Privileges: Full tender response access, CAD tech-pack inspection, factory floor line scheduling.'}
+                  ? (isBn
+                      ? 'ক্রেতার সুবিধা: সরাসরি কারখানার ফোন ও হোয়াটসঅ্যাপ নম্বর, টেক-প্যাক এক্সপোর্ট এবং স্যাম্পল বুকিং।'
+                      : 'Buyer Privileges: Direct factory telephone & WhatsApp contacts, TechPack export, sample courier booking.')
+                  : (isBn
+                      ? 'রপ্তানিকারকের সুবিধা: সম্পূর্ণ টেন্ডার রেসপন্স এক্সেস, ক্যাড টেক-প্যাক পর্যালোচনা এবং প্রোডাকশন লাইন শিডিউলিং।'
+                      : 'Exporter Privileges: Full tender response access, CAD tech-pack inspection, factory floor line scheduling.')}
               </span>
             </p>
           </div>

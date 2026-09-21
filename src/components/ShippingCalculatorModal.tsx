@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { SHIPPING_DESTINATIONS } from '../data/mockData';
 import { CurrencyConfig } from '../types';
+import { useI18n } from '../context/I18nContext';
 
 interface ShippingCalculatorModalProps {
   isOpen: boolean;
@@ -26,6 +27,8 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
   currency,
   defaultPort,
 }) => {
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
   const [originPort, setOriginPort] = useState('Chattogram Port (CGP)');
   const [selectedDestinationIndex, setSelectedDestinationIndex] = useState(0);
   const [containerType, setContainerType] = useState<'20ft' | '40ft' | 'lcl'>('40ft');
@@ -56,10 +59,12 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
             </div>
             <div>
               <h3 className="text-base font-extrabold text-white">
-                Bangladesh Ocean Freight & Transit Matrix
+                {isBn ? 'বাংলাদেশ সমুদ্র মালবাহী ও ট্রানজিট ক্যালকুলেটর' : 'Bangladesh Ocean Freight & Transit Matrix'}
               </h3>
               <p className="text-xs text-slate-400">
-                Direct container line routes from Chattogram (CGP) & Mongla (MGL) Ports
+                {isBn
+                  ? 'চট্টগ্রাম (CGP) ও মোংলা (MGL) সমুদ্রবন্দর থেকে সরাসরি কন্টেইনার রুট'
+                  : 'Direct container line routes from Chattogram (CGP) & Mongla (MGL) Ports'}
               </p>
             </div>
           </div>
@@ -77,22 +82,22 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1">
-                Port of Departure (Bangladesh)
+                {isBn ? 'প্রস্থানের বন্দর (বাংলাদেশ)' : 'Port of Departure (Bangladesh)'}
               </label>
               <select
                 value={originPort}
                 onChange={(e) => setOriginPort(e.target.value)}
                 className="w-full bg-[#171717] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-[#ff5500] cursor-pointer"
               >
-                <option value="Chattogram Port (CGP)">Chattogram Seaport (CGP - 92% of Exports)</option>
-                <option value="Mongla Port (MGL)">Mongla Seaport (MGL - Eco Jute & Agro)</option>
-                <option value="Dhaka Air Cargo (DAC)">Hazrat Shahjalal Air Cargo (DAC - Garments)</option>
+                <option value="Chattogram Port (CGP)">{isBn ? 'চট্টগ্রাম বন্দর (CGP - ৯২% রপ্তানি)' : 'Chattogram Seaport (CGP - 92% of Exports)'}</option>
+                <option value="Mongla Port (MGL)">{isBn ? 'মোংলা সমুদ্রবন্দর (MGL - পাট ও কৃষি)' : 'Mongla Seaport (MGL - Eco Jute & Agro)'}</option>
+                <option value="Dhaka Air Cargo (DAC)">{isBn ? 'শাহজালাল এয়ার কার্গো (DAC - তৈরি পোশাক)' : 'Hazrat Shahjalal Air Cargo (DAC - Garments)'}</option>
               </select>
             </div>
 
             <div>
               <label className="text-xs font-bold text-slate-300 block mb-1">
-                Destination Discharge Port
+                {isBn ? 'গন্তব্যের বন্দর' : 'Destination Discharge Port'}
               </label>
               <select
                 value={selectedDestinationIndex}
@@ -101,7 +106,7 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
               >
                 {SHIPPING_DESTINATIONS.map((d, idx) => (
                   <option key={d.port} value={idx}>
-                    {d.port} ({d.transitDays})
+                    {d.port} ({toDigits(d.transitDays)} {isBn ? 'দিন' : 'Days'})
                   </option>
                 ))}
               </select>
@@ -111,7 +116,7 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
           {/* Container Size Selector */}
           <div>
             <label className="text-xs font-bold text-slate-300 block mb-1.5">
-              Shipment Load Configuration
+              {isBn ? 'শিপমেন্ট লোড কনফিগারেশন' : 'Shipment Load Configuration'}
             </label>
             <div className="grid grid-cols-3 gap-3">
               <button
@@ -123,8 +128,8 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
                     : 'border-white/10 bg-[#141414] text-slate-400 hover:text-white'
                 }`}
               >
-                <div className="text-xs">20ft Standard FCL</div>
-                <div className="text-[10px] text-slate-500 mt-0.5">~33 CBM / 28,000 kg</div>
+                <div className="text-xs">{isBn ? '২০ ফুট স্ট্যান্ডার্ড এফসিএল' : '20ft Standard FCL'}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">{isBn ? '~৩৩ সিবিএম / ২৮,০০০ কেজি' : '~33 CBM / 28,000 kg'}</div>
               </button>
 
               <button
@@ -136,8 +141,8 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
                     : 'border-white/10 bg-[#141414] text-slate-400 hover:text-white'
                 }`}
               >
-                <div className="text-xs">40ft High Cube (HC)</div>
-                <div className="text-[10px] text-slate-500 mt-0.5">~76 CBM / Best Value</div>
+                <div className="text-xs">{isBn ? '৪০ ফুট হাই কিউব (HC)' : '40ft High Cube (HC)'}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">{isBn ? '~৭৬ সিবিএম / সেরা মূল্য' : '~76 CBM / Best Value'}</div>
               </button>
 
               <button
@@ -149,8 +154,8 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
                     : 'border-white/10 bg-[#141414] text-slate-400 hover:text-white'
                 }`}
               >
-                <div className="text-xs">LCL Shared Pallet</div>
-                <div className="text-[10px] text-slate-500 mt-0.5">Consolidated Cargo</div>
+                <div className="text-xs">{isBn ? 'এলসিএল শেয়ার্ড প্যালেট' : 'LCL Shared Pallet'}</div>
+                <div className="text-[10px] text-slate-500 mt-0.5">{isBn ? 'একত্রিত কার্গো' : 'Consolidated Cargo'}</div>
               </button>
             </div>
           </div>
@@ -158,7 +163,7 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
           {containerType === 'lcl' && (
             <div className="p-3.5 bg-[#171717] rounded-xl border border-white/10">
               <label className="text-xs font-bold text-slate-300 block mb-1">
-                LCL Volume in Cubic Meters (CBM): {lclVolumeCBM} CBM
+                {isBn ? `এলসিএল ভলিউম কিউবিক মিটার (CBM): ${toDigits(lclVolumeCBM)} সিবিএম` : `LCL Volume in Cubic Meters (CBM): ${lclVolumeCBM} CBM`}
               </label>
               <input
                 type="range"
@@ -174,7 +179,7 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
           {/* Freight Estimation Output Card */}
           <div className="p-4 rounded-xl bg-[#141414] border border-white/10 space-y-3 font-mono">
             <div className="flex items-center justify-between pb-2 border-b border-white/10">
-              <span className="text-xs text-slate-400">Route Corridor:</span>
+              <span className="text-xs text-slate-400">{isBn ? 'রুট করিডোর:' : 'Route Corridor:'}</span>
               <span className="text-xs font-bold text-white">
                 {originPort.split(' ')[0]} → {dest.port}
               </span>
@@ -182,23 +187,25 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-bold block">Ocean Transit Time</span>
+                <span className="text-[10px] text-slate-400 uppercase font-bold block">{isBn ? 'সমুদ্র ট্রানজিট সময়' : 'Ocean Transit Time'}</span>
                 <span className="text-sm font-black text-white flex items-center space-x-1.5 mt-0.5">
                   <Clock className="w-3.5 h-3.5 text-[#ff5500]" />
-                  <span>{dest.transitDays} Days</span>
+                  <span>{toDigits(dest.transitDays)} {isBn ? 'দিন' : 'Days'}</span>
                 </span>
               </div>
 
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-bold block">Freight Range</span>
+                <span className="text-[10px] text-slate-400 uppercase font-bold block">{isBn ? 'আনুমানিক মালবাহী খরচ' : 'Freight Range'}</span>
                 <span className="text-lg font-black text-[#ff5500]">
-                  {currency.symbol}{costConverted}
+                  {currency.symbol}{toDigits(costConverted)}
                 </span>
               </div>
             </div>
 
             <div className="pt-2 border-t border-white/5 text-[11px] font-sans text-slate-400">
-              Direct feeder vessel connects Chattogram to Singapore/Colombo transshipment hubs weekly.
+              {isBn
+                ? 'সরাসরি ফিডার জাহাজ চট্টগ্রাম থেকে সিঙ্গাপুর/কলম্বো ট্রান্সশিপমেন্ট হাবের সাথে সাপ্তাহিক সংযুক্ত।'
+                : 'Direct feeder vessel connects Chattogram to Singapore/Colombo transshipment hubs weekly.'}
             </div>
           </div>
         </div>
@@ -209,7 +216,7 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
             onClick={onClose}
             className="px-5 py-2 rounded-xl bg-[#ff5500] hover:bg-[#ff6a1a] text-white text-xs font-bold shadow-lg shadow-[#ff5500]/25 cursor-pointer"
           >
-            Apply Rate to Calculation
+            {isBn ? 'হিসাবে এই রেট প্রয়োগ করুন' : 'Apply Rate to Calculation'}
           </button>
         </div>
       </div>

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Product, Supplier, CurrencyConfig } from '../types';
 import { useInquiryCart } from '../context/InquiryCartContext';
+import { useI18n } from '../context/I18nContext';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -49,6 +50,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const [sentNotice, setSentNotice] = useState(false);
 
   const { addToCart } = useInquiryCart();
+  const { toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
 
   React.useEffect(() => {
     if (product) {
@@ -106,7 +109,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {product.ecoFriendly && (
               <span className="text-xs font-bold px-2.5 py-1 rounded-md bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30 flex items-center space-x-1">
                 <Leaf className="w-3.5 h-3.5 mr-1 text-[#10b981]" />
-                <span>Green Eco Export</span>
+                <span>{isBn ? 'সবুজ পরিবেশবান্ধব রপ্তানি' : 'Green Eco Export'}</span>
               </span>
             )}
           </div>
@@ -153,10 +156,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Verified Supplier Block */}
               <div className="p-4 rounded-xl bg-[#141414] border border-white/10 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase">Manufacturer</span>
+                  <span className="text-[10px] font-mono text-slate-500 uppercase">
+                    {isBn ? 'প্রস্তুতকারক' : 'Manufacturer'}
+                  </span>
                   <div className="flex items-center space-x-1 text-[11px] text-[#10b981] font-bold font-mono">
                     <span>★</span>
-                    <span>{product.supplierRating} Rating</span>
+                    <span>{toDigits(product.supplierRating)} {isBn ? 'রেটিং' : 'Rating'}</span>
                   </div>
                 </div>
                 <div className="font-bold text-sm text-white flex items-center space-x-1.5">
@@ -167,9 +172,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </div>
                 {supplier && (
                   <div className="text-xs text-slate-400 space-y-1">
-                    <div>Location: {supplier.district}</div>
+                    <div>{isBn ? 'অবস্থান: ' : 'Location: '}{supplier.district}</div>
                     {supplier.leedStatus && (
-                      <div className="text-[#10b981] font-semibold">LEED {supplier.leedStatus} Certified Mill</div>
+                      <div className="text-[#10b981] font-semibold">
+                        {isBn ? `লিড ${supplier.leedStatus} সনদপ্রাপ্ত মিল` : `LEED ${supplier.leedStatus} Certified Mill`}
+                      </div>
                     )}
                   </div>
                 )}
@@ -190,7 +197,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Tiered Price Matrix */}
               <div className="space-y-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                  Volume FOB Pricing Tiers (USD)
+                  {isBn ? 'ভলিউম এফওবি মূল্য তালিকা' : 'Volume FOB Pricing Tiers (USD)'}
                 </h4>
                 <div className="grid grid-cols-3 gap-2">
                   {product.priceTiers.map((tier, idx) => {
@@ -201,10 +208,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                         className="p-2.5 rounded-xl bg-[#141414] border border-white/5 text-center font-mono"
                       >
                         <div className="text-[10px] text-slate-500">
-                          {tier.maxQty ? `${tier.minQty.toLocaleString()} - ${tier.maxQty.toLocaleString()}` : `${tier.minQty.toLocaleString()}+`} pcs
+                          {tier.maxQty ? `${toDigits(tier.minQty.toLocaleString())} - ${toDigits(tier.maxQty.toLocaleString())}` : `${toDigits(tier.minQty.toLocaleString())}+`} pcs
                         </div>
                         <div className="text-base font-black text-[#10b981] mt-0.5">
-                          {currency.symbol}{tierConverted}
+                          {currency.symbol}{toDigits(tierConverted)}
                         </div>
                         <div className="text-[10px] text-slate-400">FOB Chattogram</div>
                       </div>
@@ -218,17 +225,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-white flex items-center space-x-1.5">
                     <DollarSign className="w-3.5 h-3.5 text-[#10b981]" />
-                    <span>Instant Order Cost Estimator</span>
+                    <span>{isBn ? 'তাৎক্ষণিক অর্ডার খরচ হিসাবকারী' : 'Instant Order Cost Estimator'}</span>
                   </span>
                   <span className="text-xs font-mono text-slate-400">
-                    Unit: {product.unit}
+                    {isBn ? 'একক: ' : 'Unit: '}{product.unit}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="text-[11px] font-bold text-slate-400 block mb-1">
-                      Order Quantity (Min: {product.moq.toLocaleString()})
+                      {isBn
+                        ? `অর্ডারের পরিমাণ (সর্বনিম্ন: ${toDigits(product.moq.toLocaleString())})`
+                        : `Order Quantity (Min: ${product.moq.toLocaleString()})`}
                     </label>
                     <input
                       type="number"
@@ -242,7 +251,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
                   <div>
                     <label className="text-[11px] font-bold text-slate-400 block mb-1">
-                      Trade Incoterm
+                      {isBn ? 'বাণিজ্য শর্তাবলী (ইনকোটার্ম)' : 'Trade Incoterm'}
                     </label>
                     <select
                       value={selectedIncoterm}
@@ -260,12 +269,16 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
 
                 <div className="pt-2 border-t border-white/10 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-slate-400 block">Unit Cost:</span>
-                    <span className="font-mono text-sm font-bold text-white">{currency.symbol}{unitConverted}</span>
+                    <span className="text-[10px] text-slate-400 block">
+                      {isBn ? 'একক মূল্য:' : 'Unit Cost:'}
+                    </span>
+                    <span className="font-mono text-sm font-bold text-white">{currency.symbol}{toDigits(unitConverted)}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-slate-400 block">Estimated FOB Total:</span>
-                    <span className="font-mono text-lg font-black text-[#10b981]">{currency.symbol}{totalConverted}</span>
+                    <span className="text-[10px] text-slate-400 block">
+                      {isBn ? 'আনুমানিক এফওবি মোট:' : 'Estimated FOB Total:'}
+                    </span>
+                    <span className="font-mono text-lg font-black text-[#10b981]">{currency.symbol}{toDigits(totalConverted)}</span>
                   </div>
                 </div>
               </div>
@@ -273,7 +286,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {/* Specifications Matrix */}
               <div className="space-y-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                  Export Technical Specifications
+                  {isBn ? 'রপ্তানি কারিগরি বিবরণ' : 'Export Technical Specifications'}
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {product.specifications.map((spec, idx) => (
@@ -290,7 +303,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <div className="flex space-x-2">
                   <input
                     type="text"
-                    placeholder="Enter custom specifications, Pantone shade, or inquiry notes..."
+                    placeholder={
+                      isBn
+                        ? 'প্যান্টোন শেড, কাস্টম স্পেসিফিকেশন বা ইনকোয়ারি নোট লিখুন...'
+                        : 'Enter custom specifications, Pantone shade, or inquiry notes...'
+                    }
                     value={quickMsg}
                     onChange={(e) => setQuickMsg(e.target.value)}
                     className="flex-1 bg-[#141414] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-[#e11d48]"
@@ -300,14 +317,18 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     className="px-5 py-2.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold rounded-xl shadow-lg shadow-[#e11d48]/25 flex items-center space-x-1.5 transition-all cursor-pointer shrink-0"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>Inquire Now</span>
+                    <span>{isBn ? 'ইনকোয়ারি পাঠান' : 'Inquire Now'}</span>
                   </button>
                 </div>
 
                 {sentNotice && (
                   <div className="text-xs text-[#10b981] flex items-center space-x-1 font-semibold animate-in fade-in">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Inquiry dispatched! Track status in Inquiries drawer.</span>
+                    <span>
+                      {isBn
+                        ? 'ইনকোয়ারি পাঠানো হয়েছে! ইনকোয়ারি ড্রয়ারে স্ট্যাটাস দেখুন।'
+                        : 'Inquiry dispatched! Track status in Inquiries drawer.'}
+                    </span>
                   </div>
                 )}
               </form>
@@ -330,7 +351,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   title="Add to B2B Inquiry / RFQ Cart"
                 >
                   <ShoppingCart className="w-3.5 h-3.5 text-white" />
-                  <span>Add to RFQ Cart</span>
+                  <span>{isBn ? 'আরএফকিউ কার্টে যোগ করুন' : 'Add to RFQ Cart'}</span>
                 </button>
 
                 {onOpenAiAssistant && (
@@ -342,7 +363,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-slate-200 hover:text-white text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer shadow-sm"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-[#10b981]" />
-                    <span>RAWx Trade Agent</span>
+                    <span>{isBn ? 'র-এক্স ট্রেড এজেন্ট' : 'RAWx Trade Agent'}</span>
                   </button>
                 )}
 
@@ -352,7 +373,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl border border-white/10 hover:border-[#e11d48]/50 text-white bg-[#171717] hover:bg-[#202020] text-xs font-bold flex items-center space-x-1.5 sm:space-x-2 transition-all cursor-pointer"
                   >
                     <Box className="w-3.5 h-3.5 text-[#e11d48]" />
-                    <span>Sample ({currency.symbol}{(product.samplePriceUSD * currency.rate).toFixed(2)})</span>
+                    <span>
+                      {isBn
+                        ? `নমুনা (${currency.symbol}${toDigits((product.samplePriceUSD * currency.rate).toFixed(2))})`
+                        : `Sample (${currency.symbol}${(product.samplePriceUSD * currency.rate).toFixed(2)})`}
+                    </span>
                   </button>
                 )}
 
@@ -361,7 +386,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                   className="px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-transparent border border-white/10 text-slate-300 hover:text-white hover:bg-white/5 text-xs font-semibold flex items-center space-x-1.5 transition-colors cursor-pointer"
                 >
                   <Truck className="w-3.5 h-3.5 text-[#10b981]" />
-                  <span>Freight Rates</span>
+                  <span>{isBn ? 'জাহাজীকরণ খরচ' : 'Freight Rates'}</span>
                 </button>
 
                 {product.targetRoutingUrl && (
@@ -372,7 +397,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                     className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:text-white text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer"
                     title="Direct Headless Checkout at Origin"
                   >
-                    <span>Origin Checkout ({product.sourceDomain || 'Headless'})</span>
+                    <span>
+                      {isBn
+                        ? `সরাসরি চেকআউট (${product.sourceDomain || 'Headless'})`
+                        : `Origin Checkout (${product.sourceDomain || 'Headless'})`}
+                    </span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 )}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useI18n } from '../context/I18nContext';
 import {
   MessageCircle,
   Sparkles,
@@ -26,6 +27,8 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
   inquiryCount = 64,
   theme = 'dark',
 }) => {
+  const { t, toDigits, lang } = useI18n();
+  const isBn = lang === 'BN';
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -67,7 +70,7 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
             <ChevronLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
             <Sparkles className="w-4 h-4 text-white animate-pulse" />
             <span className="text-[10px] font-black uppercase tracking-wider font-mono pr-1">
-              Quick Dock
+              {isBn ? 'কুইক ডক' : 'Quick Dock'}
             </span>
             {inquiryCount > 0 && (
               <span className="w-2 h-2 rounded-full bg-[#10b981] animate-ping" />
@@ -85,7 +88,7 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
             {/* Header: Collapse Toggle */}
             <div className="w-full flex items-center justify-between px-1 py-0.5 border-b border-inherit">
               <span className="text-[8.5px] font-mono font-bold uppercase tracking-wider text-slate-400">
-                Dock
+                {isBn ? 'ডক' : 'Dock'}
               </span>
               <button
                 type="button"
@@ -111,9 +114,9 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
               title="Inquiries & RFQ Messages"
             >
               <MessageCircle className="w-4.5 h-4.5 group-hover:text-[#e11d48] transition-colors" />
-              <span className="text-[8.5px] font-bold mt-0.5 leading-none">Chat</span>
+              <span className="text-[8.5px] font-bold mt-0.5 leading-none">{isBn ? 'চ্যাট' : 'Chat'}</span>
               <span className="absolute -top-1 -right-1 bg-[#e11d48] text-white font-bold text-[9px] px-1 py-0.2 rounded-full min-w-4 text-center shadow-xs">
-                {inquiryCount}
+                {toDigits(inquiryCount)}
               </span>
             </button>
 
@@ -125,7 +128,7 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
               title="RAWx Sourcing AI Agent (Instant specs & quotes)"
             >
               <Sparkles className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
-              <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5">Agent</span>
+              <span className="text-[8px] font-black uppercase tracking-tighter mt-0.5">{isBn ? 'এআই' : 'Agent'}</span>
             </button>
 
             {/* 3. RFQ Quick Post */}
@@ -138,7 +141,7 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
               title="Post Commercial RFQ for 5,000+ Mills"
             >
               <FileText className="w-4.5 h-4.5 group-hover:text-[#10b981] transition-colors" />
-              <span className="text-[8.5px] font-bold mt-0.5 leading-none">RFQ</span>
+              <span className="text-[8.5px] font-bold mt-0.5 leading-none">{isBn ? 'আরএফকিউ' : 'RFQ'}</span>
             </button>
 
             {/* 4. Shipping Calculator / Trade Assurance */}
@@ -151,7 +154,7 @@ export const FloatingRightDock: React.FC<FloatingRightDockProps> = ({
               title="Chattogram Port Freight & Escrow Terms"
             >
               <Ship className="w-4.5 h-4.5 group-hover:text-[#10b981] transition-colors" />
-              <span className="text-[8.5px] font-bold mt-0.5 leading-none">Ship</span>
+              <span className="text-[8.5px] font-bold mt-0.5 leading-none">{isBn ? 'জাহাজ' : 'Ship'}</span>
             </button>
           </div>
         )}
