@@ -500,12 +500,12 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                       {/* Image Frame with Aspect Square & Badges */}
                       <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
                         <img
-                          src={p.images?.[0] || 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80'}
+                          src={p.images?.[0] || '/catalog/arutemika/arutemika-origami-tote-01.jpg'}
                           alt={p.title}
                           referrerPolicy="no-referrer"
                           className="w-full h-full object-cover group-hover/card:scale-106 transition-transform duration-500 ease-out"
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80';
+                            (e.currentTarget as HTMLImageElement).src = '/catalog/arutemika/arutemika-origami-tote-01.jpg';
                           }}
                         />
 

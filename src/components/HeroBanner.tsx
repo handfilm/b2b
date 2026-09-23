@@ -224,9 +224,6 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             </span>
             <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
             <span className="tracking-tight">{isBn ? 'এআই মোড' : 'AI Mode'}</span>
-            <span className="text-[9.5px] font-mono font-black uppercase px-2 py-0.5 rounded-full bg-black/40 text-emerald-300 border border-emerald-400/40">
-              {isBn ? 'নেক্সট-জেন' : 'Agent Next-Gen'}
-            </span>
           </motion.button>
 
           {/* Products Tab */}

@@ -86,7 +86,7 @@ export const FEDERATED_DIVISIONS: FederatedDivision[] = [
     slug: 'home-textiles',
     pavilionLabel: 'Home Textiles & Linens',
     divisionTitle: 'Home Textiles & Linens',
-    domain: 'textiles.handsandhead.com',
+    domain: 'textile.handsandhead.com',
     itemCount: 326,
     description: 'Home Textiles, Terry Towels & Linens',
     tagline: '650+ GSM zero-twist luxury hotel terry & 400TC long-staple sateen bedding',
@@ -265,8 +265,9 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.91,
     images: [
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1589365278144-c9e705f843ba?w=800&auto=format&fit=crop&q=80',
+      '/catalog/jute/jute-card-hero.jpg',
+      '/catalog/jute/golden-jute-burlap.jpg',
+      '/catalog/jute/raw-golden-fiber.jpg',
     ],
     specifications: [
       { label: 'Fiber Grade', value: 'Bangla Tossa Grade-A' },
@@ -458,7 +459,7 @@ export const FEDERATED_PRODUCTS: Product[] = [
     totalSold: 12200,
   },
 
-  // 7. Home Textiles & Linens (textiles.handsandhead.com)
+  // 7. Home Textiles & Linens (textile.handsandhead.com)
   {
     id: 'fed-tex-01',
     sku: 'RAWX-TEX-650GSM',
@@ -466,8 +467,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     categoryId: 'home-textiles',
     divisionSlug: 'home-textiles',
     divisionTitle: 'Home Textiles & Linens',
-    sourceDomain: 'textiles.handsandhead.com',
-    targetRoutingUrl: buildTargetRoutingUrl('textiles.handsandhead.com', 'RAWX-TEX-650GSM'),
+    sourceDomain: 'textile.handsandhead.com',
+    targetRoutingUrl: buildTargetRoutingUrl('textile.handsandhead.com', 'RAWX-TEX-650GSM'),
     provenance: 'Zero-Twist 650 GSM',
     hsCode: '6302.60.00',
     fobPort: 'Chattogram Port (CGP)',

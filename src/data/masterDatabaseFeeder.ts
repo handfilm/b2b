@@ -432,7 +432,7 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     bestseller: true,
   },
 
-  // 9. textiles.handsandhead.com (Home Textiles & Linens)
+  // 9. textile.handsandhead.com (Home Textiles & Linens)
   {
     id: 'tex-01',
     title: '650 GSM Zero-Twist Supima Cotton Luxury Hotel Bath Sheet Towels',
@@ -468,7 +468,7 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     sampleAvailable: true,
     samplePriceUSD: 25,
     customizationOffered: true,
-    sourceDomain: 'textiles.handsandhead.com',
+    sourceDomain: 'textile.handsandhead.com',
     divisionSlug: 'home-textiles',
     divisionTitle: 'Home Textiles & Linens',
     sku: 'RAWX-TEX-650GSM',
@@ -688,7 +688,7 @@ export const MASTER_LIVE_ORDERS: MasterLiveOrder[] = [
   {
     id: 'ord-8025',
     orderNumber: 'PO-2026-UK-6104',
-    domain: 'textiles.handsandhead.com',
+    domain: 'textile.handsandhead.com',
     productTitle: '650 GSM Zero-Twist Supima Bath Sheets (15,000 pcs)',
     buyerName: 'Marks & Spencer Wholesale',
     buyerCountry: 'United Kingdom',

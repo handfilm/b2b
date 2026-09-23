@@ -283,14 +283,14 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Right: Light/Dark + EN/বাংলা + USD ($) + RFQ Dropdown */}
-          <div className="flex items-center space-x-2 shrink-0 text-xs">
+          <div className="flex items-center space-x-1 sm:space-x-2 shrink-0 text-xs">
             {/* Theme Toggle */}
             {onToggleTheme && (
               <button
                 type="button"
                 id="header-theme-toggle"
                 onClick={onToggleTheme}
-                className={`flex items-center space-x-1 px-2 py-0.5 rounded-lg border transition-all cursor-pointer ${
+                className={`flex items-center space-x-1 px-1.5 sm:px-2 py-0.5 rounded-lg border transition-all cursor-pointer ${
                   isDark
                     ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
                     : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 shadow-2xs'
@@ -300,12 +300,12 @@ export const Header: React.FC<HeaderProps> = ({
                 {isDark ? (
                   <>
                     <Sun className="w-3 h-3 text-amber-400" />
-                    <span className="text-[11px] font-bold">Light</span>
+                    <span className="text-[10px] sm:text-[11px] font-bold hidden xs:inline sm:inline">Light</span>
                   </>
                 ) : (
                   <>
                     <Moon className="w-3 h-3 text-slate-700" />
-                    <span className="text-[11px] font-bold">Dark</span>
+                    <span className="text-[10px] sm:text-[11px] font-bold hidden xs:inline sm:inline">Dark</span>
                   </>
                 )}
               </button>
@@ -321,7 +321,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 id="header-lang-en"
                 onClick={() => onLanguageChange('EN')}
-                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[9.5px] sm:text-[10px] font-bold transition-all cursor-pointer ${
                   lang === 'EN'
                     ? 'bg-[#e11d48] text-white'
                     : 'text-slate-400 hover:text-white'
@@ -333,7 +333,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 id="header-lang-bn"
                 onClick={() => onLanguageChange('BN')}
-                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[9.5px] sm:text-[10px] font-bold transition-all cursor-pointer ${
                   lang === 'BN'
                     ? 'bg-[#e11d48] text-white'
                     : 'text-slate-400 hover:text-white'
@@ -349,14 +349,15 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 id="header-currency-btn"
                 onClick={() => setIsCurrencyMenuOpen(!isCurrencyMenuOpen)}
-                className={`flex items-center space-x-1 px-2 py-0.5 rounded text-[11px] font-bold cursor-pointer border ${
+                className={`flex items-center space-x-0.5 sm:space-x-1 px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold cursor-pointer border ${
                   isDark
                     ? 'bg-black/50 border-white/10 text-slate-200'
                     : 'bg-white border-slate-200 text-slate-700'
                 }`}
               >
                 <Globe2 className="w-3 h-3 text-slate-400" />
-                <span>{currentCurrency} ({CURRENCIES[currentCurrency]?.symbol || '$'})</span>
+                <span>{currentCurrency}</span>
+                <span className="hidden sm:inline">({CURRENCIES[currentCurrency]?.symbol || '$'})</span>
                 <ChevronDown className="w-3 h-3 text-slate-400" />
               </button>
 
@@ -403,11 +404,11 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 id="header-rfq-dropdown-btn"
                 onClick={() => setIsRfqMenuOpen(!isRfqMenuOpen)}
-                className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-black transition-all cursor-pointer shadow-xs"
+                className="flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[11px] sm:text-xs font-black transition-all cursor-pointer shadow-xs"
               >
-                <FileText className="w-3.5 h-3.5" />
+                <FileText className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 <span>RFQ</span>
-                <ChevronDown className={`w-3 h-3 text-white/80 transition-transform ${isRfqMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-2.5 h-2.5 sm:w-3 sm:h-3 text-white/80 transition-transform ${isRfqMenuOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {isRfqMenuOpen && (
@@ -468,55 +469,57 @@ export const Header: React.FC<HeaderProps> = ({
           ========================================================================= */}
       <div
         id="header-primary-navbar"
-        className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-2 flex items-center justify-between gap-3"
+        className="w-full max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-2"
       >
-        {/* Left: Logo "&" inside red circle beside "Made in BD" (strictly no b2b portal text) */}
-        <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-          <div
-            id="brand-logo"
-            onClick={() => {
-              onViewChange('products');
-              handleDivisionClick('all');
-              onSearchChange('');
-            }}
-            className="flex items-center space-x-2 cursor-pointer group shrink-0"
-            title="Made in BD"
-          >
-            {/* Red circle badge with ONLY "&" */}
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-base sm:text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
-              &amp;
-            </div>
-            <span
-              className={`font-black text-lg sm:text-xl tracking-tight ${
-                isDark ? 'text-white' : 'text-slate-950'
-              }`}
+        {/* Top / Desktop Main Row */}
+        <div className="flex items-center justify-between gap-2 sm:gap-3 w-full">
+          {/* Left: Logo "&" inside red circle beside "Made in BD" (strictly no b2b portal text) */}
+          <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+            <div
+              id="brand-logo"
+              onClick={() => {
+                onViewChange('products');
+                handleDivisionClick('all');
+                onSearchChange('');
+              }}
+              className="flex items-center space-x-1.5 sm:space-x-2 cursor-pointer group shrink-0"
+              title="Made in BD"
             >
-              Made in BD
-            </span>
+              {/* Red circle badge with ONLY "&" */}
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-sm sm:text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
+                &amp;
+              </div>
+              <span
+                className={`font-black text-base sm:text-xl tracking-tight ${
+                  isDark ? 'text-white' : 'text-slate-950'
+                }`}
+              >
+                Made in BD
+              </span>
+            </div>
+
+            {onNavigateToCatalog && (
+              <button
+                type="button"
+                id="header-b2b-catalog-btn"
+                onClick={() => onNavigateToCatalog('/catalog')}
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center space-x-1 sm:space-x-1.5 border shrink-0 ${
+                  currentPath?.startsWith('/catalog')
+                    ? 'bg-gradient-to-r from-rose-600 to-rose-700 border-rose-500 text-white shadow-md shadow-rose-950/40'
+                    : isDark
+                    ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200 hover:text-white'
+                    : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
+                }`}
+                title="B2B Catalog"
+              >
+                <Package className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span className="whitespace-nowrap">B2B Catalog</span>
+              </button>
+            )}
           </div>
 
-          {onNavigateToCatalog && (
-            <button
-              type="button"
-              id="header-b2b-catalog-btn"
-              onClick={() => onNavigateToCatalog('/catalog')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 border shrink-0 ${
-                currentPath?.startsWith('/catalog')
-                  ? 'bg-gradient-to-r from-rose-600 to-rose-700 border-rose-500 text-white shadow-md shadow-rose-950/40'
-                  : isDark
-                  ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200 hover:text-white'
-                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
-              }`}
-              title="B2B Catalog"
-            >
-              <Package className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>B2B Catalog</span>
-            </button>
-          )}
-        </div>
-
-        {/* Center: Subtle Verticals Dropdown + Tiny Search Bar with Magnifier Clipart */}
-        <div className="flex-1 min-w-0 max-w-xl mx-2 flex items-center space-x-1.5">
+          {/* Center: Subtle Verticals Dropdown + Tiny Search Bar (Desktop only, hidden on mobile) */}
+          <div className="hidden md:flex flex-1 min-w-0 max-w-xl mx-2 items-center space-x-1.5">
           {/* Subtle Verticals Dropdown */}
           <div className="relative shrink-0">
             <button
@@ -852,6 +855,102 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
         </div>
+      </div>
+
+      {/* Mobile Sub-Row: All Verticals Dropdown + Search Bar (Cleanly side-by-side, 100% full width, zero collision!) */}
+      <div className="flex md:hidden items-center space-x-2 w-full mt-2 pt-1.5 border-t border-white/10 dark:border-white/10 border-slate-200">
+        {/* Mobile All Verticals Dropdown */}
+        <div className="relative shrink-0">
+          <button
+            type="button"
+            id="header-verticals-dropdown-btn-mobile"
+            onClick={() => setIsVerticalMenuOpen(!isVerticalMenuOpen)}
+            className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
+              isDark
+                ? 'bg-white/10 hover:bg-white/15 border-white/15 text-white'
+                : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
+            }`}
+            title="All Verticals (2,749)"
+          >
+            <span className="max-w-[110px] truncate">
+              {selectedDivision === 'all'
+                ? (lang === 'BN' ? 'সব বিভাগ' : 'All Verticals')
+                : FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.pavilionLabel || 'Vertical'}
+            </span>
+            <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${isVerticalMenuOpen ? 'rotate-180' : ''}`} />
+          </button>
+
+          {isVerticalMenuOpen && (
+            <div
+              onMouseLeave={() => setIsVerticalMenuOpen(false)}
+              className={`absolute left-0 top-full mt-1.5 w-64 max-w-[85vw] rounded-xl shadow-2xl border p-1.5 z-50 max-h-80 overflow-y-auto ${
+                isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+              }`}
+            >
+              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1">
+                {lang === 'BN' ? 'রপ্তানি বিভাগসমূহ' : 'Export Verticals'} ({toDigits(2749)})
+              </div>
+              {FEDERATED_DIVISIONS.map((div) => {
+                const isSelected = selectedDivision === div.slug;
+                return (
+                  <button
+                    key={`mob-${div.slug}`}
+                    type="button"
+                    onClick={() => {
+                      handleDivisionClick(div.slug);
+                      setIsVerticalMenuOpen(false);
+                    }}
+                    className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center justify-between ${
+                      isSelected
+                        ? 'bg-[#e11d48] text-white'
+                        : isDark
+                        ? 'hover:bg-white/10 text-slate-300'
+                        : 'hover:bg-slate-100 text-slate-700'
+                    }`}
+                  >
+                    <span className="truncate">{div.pavilionLabel}</span>
+                    {isSelected && <Check className="w-3 h-3 text-white shrink-0 ml-1" />}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Search Bar */}
+        <form
+          onSubmit={handleSearchSubmit}
+          className="flex-1 min-w-0 flex items-center"
+        >
+          <div
+            className={`w-full flex items-center rounded-xl border transition-all ${
+              isDark
+                ? 'bg-[#141414] border-white/15 focus-within:border-[#e11d48]'
+                : 'bg-slate-50 border-slate-300 focus-within:border-[#e11d48]'
+            }`}
+          >
+            <input
+              type="text"
+              id="global-search-input-mobile"
+              placeholder={persona === 'buyer' ? t.searchPlaceholderBuyer : t.searchPlaceholderSeller}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className={`flex-1 min-w-0 px-2.5 py-1.5 text-xs focus:outline-none bg-transparent ${
+                isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'
+              }`}
+            />
+            <button
+              type="submit"
+              id="global-search-submit-btn-mobile"
+              className="px-2.5 py-1.5 bg-[#e11d48] hover:bg-[#ff1e42] text-white rounded-r-xl transition-colors flex items-center justify-center cursor-pointer shrink-0"
+              title="Search"
+              aria-label="Search"
+            >
+              <Search className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </form>
+      </div>
       </div>
     </header>
   );

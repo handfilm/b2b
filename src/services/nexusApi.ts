@@ -901,7 +901,7 @@ export async function syncWithAiStudioMasterHub(): Promise<{
       'bracelets.handsandhead.com',
       'jacket.handsandhead.com',
       'jute.handsandhead.com',
-      'textiles.handsandhead.com',
+      'textile.handsandhead.com',
       'lingerie.handsandhead.com',
       'harness.handsandhead.com',
       'arutemika.com',
