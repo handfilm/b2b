@@ -333,6 +333,9 @@ export interface Customer {
   note?: string;
   taxExempt?: boolean;
   leadType?: 'RMG' | 'RMLG' | 'Leather Goods';
+  pendingInquiriesCount?: number;
+  recentActivityTime?: string;
+  recentActivitySummary?: string;
 }
 
 export interface LiveTradeEvent {

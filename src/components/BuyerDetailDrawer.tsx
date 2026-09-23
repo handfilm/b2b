@@ -17,8 +17,11 @@ import {
   Tag,
   Copy,
   Check,
+  Flame,
+  Activity,
 } from 'lucide-react';
 import { Customer } from '../types';
+import { getBuyerInquiriesCount, getBuyerRecentActivity } from '../utils/buyerActivity';
 
 interface BuyerDetailDrawerProps {
   customer: Customer | null;
@@ -40,6 +43,8 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
   if (!isOpen || !customer) return null;
 
   const isDark = theme === 'dark';
+  const inquiriesCount = getBuyerInquiriesCount(customer);
+  const activity = getBuyerRecentActivity(customer);
 
   const copyToClipboard = (text: string, fieldName: string) => {
     navigator.clipboard.writeText(text);
@@ -59,43 +64,69 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
               : 'bg-white border-slate-200 text-slate-900'
           }`}
         >
-          {/* Top Header */}
-          <div
-            className={`p-5 sm:p-6 border-b flex items-center justify-between ${
-              isDark ? 'bg-[#141414] border-white/10' : 'bg-slate-50 border-slate-200'
-            }`}
-          >
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 overflow-hidden p-1 flex items-center justify-center">
-                <img
-                  src={customer.logoUrl}
-                  alt={customer.companyName}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-              <div>
-                <div className="flex items-center space-x-2">
-                  <h3 className="text-base sm:text-lg font-black tracking-tight">{customer.companyName}</h3>
-                  <span className="text-base" title={customer.country}>{customer.flag}</span>
-                  {customer.customerId && (
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300">
-                      ID: {customer.customerId}
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-slate-400">
-                  {customer.contactPerson} • {customer.role}
-                </p>
-              </div>
-            </div>
+          {/* Top Hero Photo Banner: Fitted to Drawer with Hover Zoom */}
+          <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-black group shrink-0">
+            <img
+              src={customer.logoUrl}
+              alt={customer.companyName}
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+            />
+            {/* Ambient gradients */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/60 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/80 to-transparent" />
 
+            {/* Floating Close Button */}
             <button
               onClick={onClose}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="absolute top-3 right-3 p-2 rounded-xl bg-black/60 hover:bg-white/20 text-white backdrop-blur-md border border-white/15 transition-all cursor-pointer z-10"
+              title="Close Drawer"
             >
               <X className="w-5 h-5" />
             </button>
+
+            {/* Bottom Hero Overlay */}
+            <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between z-10">
+              <div className="flex items-center space-x-3">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl bg-black/40 backdrop-blur-md shrink-0">
+                  <img
+                    src={customer.logoUrl}
+                    alt={customer.companyName}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <h3 className="text-base sm:text-lg font-black tracking-tight text-white drop-shadow-md">
+                      {customer.companyName}
+                    </h3>
+                    <span className="text-lg" title={customer.country}>{customer.flag}</span>
+                    {customer.customerId && (
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-black/60 text-slate-200 border border-white/15">
+                        ID: {customer.customerId}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-200 drop-shadow-sm">
+                    {customer.contactPerson} • {customer.role}
+                  </p>
+
+                  {/* Recent Activity & Pending Inquiries Header Badges */}
+                  <div className="flex items-center space-x-2 mt-1.5">
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold bg-black/70 backdrop-blur-md border border-white/20 text-slate-200">
+                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${activity.isLive ? 'bg-emerald-400 animate-pulse' : 'bg-slate-400'}`} />
+                      <span>Active {activity.time}</span>
+                    </span>
+
+                    <span className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full text-[9.5px] font-black bg-amber-500 text-slate-950 backdrop-blur-md shadow-sm border border-amber-300/40">
+                      <Flame className="w-2.5 h-2.5 fill-slate-950 text-slate-950 shrink-0" />
+                      <span>{inquiriesCount} Pending Inquiries</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Body */}
@@ -266,19 +297,25 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
             </div>
 
             {/* Recent Live RFQ / Sourcing Inquiry */}
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 text-xs">
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-[#e11d48] uppercase tracking-wider flex items-center space-x-1">
+                <span className="text-[10px] font-mono font-bold text-[#e11d48] uppercase tracking-wider flex items-center space-x-1.5">
                   <FileText className="w-3.5 h-3.5" />
                   <span>Recent Sourcing Requirement</span>
                 </span>
-                <span className="text-[10px] text-slate-400 font-mono">Status: Active</span>
+                <span className="inline-flex items-center space-x-1 text-[10px] text-amber-400 font-mono font-bold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                  <Flame className="w-3 h-3 text-amber-400" />
+                  <span>{inquiriesCount} Inquiries Pending</span>
+                </span>
               </div>
               <p className="text-sm font-bold text-white leading-relaxed">
                 "{customer.recentInquiry}"
               </p>
               <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5">
-                <span>Avg Fulfillment Cycle: <strong>35 Days</strong></span>
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-emerald-400" />
+                  <span>Last Activity: <strong className="text-white">{activity.time}</strong></span>
+                </span>
                 <span>Destination: <strong>{customer.country}</strong></span>
               </div>
             </div>

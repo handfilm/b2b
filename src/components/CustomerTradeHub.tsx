@@ -26,9 +26,12 @@ import {
   Clock,
   ArrowUpRight,
   ExternalLink,
+  Flame,
+  Activity,
 } from 'lucide-react';
 import { CustomerCard } from './CustomerCard';
 import { BuyerDetailDrawer } from './BuyerDetailDrawer';
+import { getBuyerInquiriesCount } from '../utils/buyerActivity';
 
 interface CustomerTradeHubProps {
   customers: Customer[];
@@ -54,45 +57,55 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
   const t = getTranslation(lang);
   const [customerSearch, setCustomerSearch] = useState('');
   const [selectedVerification, setSelectedVerification] = useState<string>('all');
-  const [buyerSegment, setBuyerSegment] = useState<'all' | 'rmg' | 'leather' | 'eu' | 'us'>('all');
+  const [buyerSegment, setBuyerSegment] = useState<'all' | 'inquiries' | 'rmg' | 'leather' | 'eu' | 'us'>('all');
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
   const isDark = theme === 'dark';
+  const totalPendingInquiries = customers.reduce((sum, c) => sum + getBuyerInquiriesCount(c), 0);
 
-  const filteredCustomers = customers.filter((c) => {
-    const q = customerSearch.toLowerCase();
-    const tagsStr = (c.tags || []).join(' ').toLowerCase();
-    const matchesSearch =
-      !customerSearch ||
-      c.companyName.toLowerCase().includes(q) ||
-      c.country.toLowerCase().includes(q) ||
-      c.contactPerson.toLowerCase().includes(q) ||
-      (c.city && c.city.toLowerCase().includes(q)) ||
-      (c.email && c.email.toLowerCase().includes(q)) ||
-      (c.phone && c.phone.toLowerCase().includes(q)) ||
-      (c.note && c.note.toLowerCase().includes(q)) ||
-      tagsStr.includes(q) ||
-      c.recentInquiry.toLowerCase().includes(q);
+  const filteredCustomers = customers
+    .filter((c) => {
+      const q = customerSearch.toLowerCase();
+      const tagsStr = (c.tags || []).join(' ').toLowerCase();
+      const matchesSearch =
+        !customerSearch ||
+        c.companyName.toLowerCase().includes(q) ||
+        c.country.toLowerCase().includes(q) ||
+        c.contactPerson.toLowerCase().includes(q) ||
+        (c.city && c.city.toLowerCase().includes(q)) ||
+        (c.email && c.email.toLowerCase().includes(q)) ||
+        (c.phone && c.phone.toLowerCase().includes(q)) ||
+        (c.note && c.note.toLowerCase().includes(q)) ||
+        tagsStr.includes(q) ||
+        c.recentInquiry.toLowerCase().includes(q);
 
-    const matchesCategory =
-      selectedCategory === 'all' || c.sectorsOfInterest.includes(selectedCategory);
+      const matchesCategory =
+        selectedCategory === 'all' || c.sectorsOfInterest.includes(selectedCategory);
 
-    const matchesVerification =
-      selectedVerification === 'all' || c.verifiedStatus === selectedVerification;
+      const matchesVerification =
+        selectedVerification === 'all' || c.verifiedStatus === selectedVerification;
 
-    let matchesSegment = true;
-    if (buyerSegment === 'rmg') {
-      matchesSegment = c.sectorsOfInterest.includes('rmg-apparel') || c.leadType === 'RMG';
-    } else if (buyerSegment === 'leather') {
-      matchesSegment = c.sectorsOfInterest.includes('leather-footwear') || c.leadType === 'RMLG';
-    } else if (buyerSegment === 'eu') {
-      matchesSegment = ['GB', 'DE', 'FR', 'NL', 'DK', 'ES', 'SE'].includes(c.countryCode);
-    } else if (buyerSegment === 'us') {
-      matchesSegment = c.countryCode === 'US';
-    }
+      let matchesSegment = true;
+      if (buyerSegment === 'inquiries') {
+        matchesSegment = getBuyerInquiriesCount(c) > 0;
+      } else if (buyerSegment === 'rmg') {
+        matchesSegment = c.sectorsOfInterest.includes('rmg-apparel') || c.leadType === 'RMG';
+      } else if (buyerSegment === 'leather') {
+        matchesSegment = c.sectorsOfInterest.includes('leather-footwear') || c.leadType === 'RMLG';
+      } else if (buyerSegment === 'eu') {
+        matchesSegment = ['GB', 'DE', 'FR', 'NL', 'DK', 'ES', 'SE'].includes(c.countryCode);
+      } else if (buyerSegment === 'us') {
+        matchesSegment = c.countryCode === 'US';
+      }
 
-    return matchesSearch && matchesCategory && matchesVerification && matchesSegment;
-  });
+      return matchesSearch && matchesCategory && matchesVerification && matchesSegment;
+    })
+    .sort((a, b) => {
+      if (buyerSegment === 'inquiries') {
+        return getBuyerInquiriesCount(b) - getBuyerInquiriesCount(a);
+      }
+      return 0;
+    });
 
   const getEventIcon = (type: LiveTradeEvent['type']) => {
     switch (type) {
@@ -204,6 +217,24 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
 
           <button
             type="button"
+            onClick={() => setBuyerSegment('inquiries')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              buyerSegment === 'inquiries'
+                ? 'bg-amber-500 text-slate-950 shadow-md font-black'
+                : isDark
+                ? 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/25'
+                : 'bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200'
+            }`}
+          >
+            <Flame className="w-3.5 h-3.5 fill-current" />
+            <span>🔥 Pending Inquiries</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-mono font-black">
+              {totalPendingInquiries}
+            </span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => setBuyerSegment('rmg')}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               buyerSegment === 'rmg'
@@ -213,7 +244,7 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
             }`}
           >
-            <span>👕 RMG Apparel Buyers</span>
+            <span>👕 RMG Apparel</span>
             <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
               {customers.filter((c) => c.sectorsOfInterest.includes('rmg-apparel') || c.leadType === 'RMG').length}
             </span>
@@ -230,7 +261,7 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
             }`}
           >
-            <span>👜 Leather Goods & RMLG</span>
+            <span>👜 Leather / RMLG</span>
             <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
               {customers.filter((c) => c.sectorsOfInterest.includes('leather-footwear') || c.leadType === 'RMLG').length}
             </span>
@@ -247,7 +278,7 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
             }`}
           >
-            <span>🇪🇺 EU & UK Buying Houses</span>
+            <span>🇪🇺 EU / UK</span>
             <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
               {customers.filter((c) => ['GB', 'DE', 'FR', 'NL', 'DK', 'ES', 'SE'].includes(c.countryCode)).length}
             </span>
@@ -264,16 +295,21 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
                 : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
             }`}
           >
-            <span>🇺🇸 US Retailers</span>
+            <span>🇺🇸 US Retail</span>
             <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
               {customers.filter((c) => c.countryCode === 'US').length}
             </span>
           </button>
         </div>
 
-        <span className="text-xs font-mono text-slate-400">
-          Showing <strong className="text-emerald-400">{filteredCustomers.length}</strong> active verified buyers
-        </span>
+        <div className="flex items-center space-x-3 text-xs font-mono text-slate-400">
+          <span>
+            Showing <strong className="text-emerald-400">{filteredCustomers.length}</strong> active verified buyers
+          </span>
+          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-bold">
+            ⚡ {totalPendingInquiries} Inquiries Awaiting Response
+          </span>
+        </div>
       </div>
 
       {/* Search & Verification Badges Filter Bar */}
@@ -327,7 +363,7 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
         </div>
       </div>
 
-      {/* 1:1 Aspect Ratio Square Cards Grid for Verified Global Buyers */}
+      {/* Aspect Ratio Square/Fitted Cards Grid for Verified Global Buyers */}
       {filteredCustomers.length === 0 ? (
         <div
           className={`py-16 text-center space-y-3 rounded-2xl border ${
@@ -341,7 +377,7 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 w-full">
           {filteredCustomers.map((cust) => (
             <CustomerCard
               key={cust.id}
