@@ -209,8 +209,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.95,
     images: [
-      'https://images.unsplash.com/photo-1542272604-780c96856592?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Weave', value: '3x1 RHT Shuttle-Loom Selvedge' },
@@ -266,7 +266,7 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierRating: 4.91,
     images: [
       'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1589365278144-c9e705f843ba?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Fiber Grade', value: 'Bangla Tossa Grade-A' },
@@ -377,8 +377,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.93,
     images: [
-      'https://images.unsplash.com/photo-1611591475883-8a0715e2193b?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Leather Width', value: '12mm Double Wrap' },

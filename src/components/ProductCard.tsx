@@ -134,6 +134,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const isDark = theme === 'dark';
 
+  const fallbackImage =
+    product.categoryId === 'rmg-apparel'
+      ? '/catalog/club-football/club-01.jpg'
+      : product.categoryId === 'leather-footwear'
+      ? 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80'
+      : product.categoryId === 'jute-eco'
+      ? 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80'
+      : product.categoryId === 'home-textiles'
+      ? 'https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=800&auto=format&fit=crop&q=80'
+      : 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80';
+
   const handleCardClick = () => {
     onSelectProduct(product);
   };
@@ -174,6 +185,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         isParentHovered={isHovered}
         angleBadgePosition="top-center"
         paginationBottomClass="bottom-18"
+        fallbackImage={fallbackImage}
         angleLabels={[
           'Front Studio Cut',
           product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic Detail',
@@ -182,16 +194,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         ]}
       />
 
-      {/* Top Gradient & Minimal Provenance Pill (Fades out smoothly on hover to reveal glassmorphic tooltip) */}
+      {/* Top Gradient & Badges (Fades out smoothly on hover to reveal glassmorphic tooltip) */}
       <motion.div
         animate={{ opacity: isHovered ? 0 : 1 }}
         transition={{ duration: 0.2 }}
-        className="absolute inset-x-0 top-0 p-3 bg-gradient-to-b from-black/80 via-black/30 to-transparent flex items-start justify-between pointer-events-none z-10"
+        className="absolute inset-x-0 top-0 p-3 bg-gradient-to-b from-black/85 via-black/40 to-transparent flex items-start justify-between pointer-events-none z-10"
       >
         <div className="flex flex-wrap gap-1.5 items-center">
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-md">
-            {product.provenance || product.divisionTitle || categoryLabel}
-          </span>
+          {product.brand && (
+            <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-white/20 text-white border border-white/30 backdrop-blur-md font-mono shadow-xs">
+              {product.brand}
+            </span>
+          )}
+          {product.club ? (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/75 text-amber-300 border border-amber-400/40 backdrop-blur-md shadow-xs">
+              {product.club}
+            </span>
+          ) : (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-md">
+              {product.provenance || product.divisionTitle || categoryLabel}
+            </span>
+          )}
           {product.artisanDirect && (
             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#10b981]/90 text-slate-950 font-mono flex items-center space-x-0.5">
               <Award className="w-2.5 h-2.5" />
@@ -273,6 +296,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <p className="text-white text-xs sm:text-sm font-extrabold truncate drop-shadow-md">
           {product.title}
         </p>
+
+        {product.frontPrint && (
+          <div className="mt-0.5 flex items-center gap-1.5 overflow-hidden">
+            <span className="inline-flex items-center text-[9px] font-mono font-bold text-rose-300 bg-rose-950/70 px-1.5 py-0.5 rounded border border-rose-500/30 truncate max-w-[190px]">
+              Print: {product.frontPrint}
+            </span>
+            {product.backPrint && (
+              <span className="text-[9px] font-mono text-slate-300 truncate max-w-[120px]">
+                {product.backPrint}
+              </span>
+            )}
+          </div>
+        )}
 
         <div className="mt-1 flex items-baseline justify-between">
           <div className="flex items-baseline space-x-1">

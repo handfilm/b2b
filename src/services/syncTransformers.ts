@@ -299,7 +299,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Pure Indigo Raw', hex: '#1e3a8a' },
       { name: 'Overdyed Black', hex: '#0a0a0a' },
     ],
-    directImageUrl: 'https://images.unsplash.com/photo-1542272604-780c96856592?w=800&auto=format&fit=crop&q=80',
+    directImageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
   },
 ];
 

@@ -643,8 +643,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1542272604-780c96856592?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Denim Weight', value: '12.5 oz / sq yard' },
@@ -683,8 +683,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.8,
     images: [
-      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1597484661643-2f5fef640dd1?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1589365278144-c9e705f843ba?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Dimensions', value: '44 inch x 26.5 inch (112 cm x 67 cm) / 60 kg Capacity' },
@@ -880,7 +880,7 @@ export const PRODUCTS: Product[] = [
     supplierRating: 4.8,
     images: [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Craft Technique', value: '100% Hand-Stitched Bengal Nakshi Kantha' },

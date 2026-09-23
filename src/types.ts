@@ -158,6 +158,7 @@ export interface Product {
   brand?: string;
   club?: string;
   frontPrint?: string;
+  backPrint?: string;
 }
 
 export interface B2bSubcategory {

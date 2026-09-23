@@ -17,7 +17,9 @@ import {
   CUSTOMERS as FALLBACK_CUSTOMERS,
   LIVE_TRADE_EVENTS as FALLBACK_LIVE_EVENTS,
   BANGLADESH_EXPORT_STATS,
+  PRODUCTS as MOCK_PRODUCTS,
 } from '../data/mockData';
+import rawCatalogData from '../data/b2bCatalogData.json';
 import { FEDERATED_PRODUCTS } from '../data/divisions';
 import { MASTER_FEDERATED_PRODUCTS, MASTER_LIVE_ORDERS } from '../data/masterDatabaseFeeder';
 import { generateMoreProducts } from '../data/unlimitedCatalog';
@@ -91,9 +93,100 @@ async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutM
   }
 }
 
+function normalizeJsonCatalogProduct(raw: any): B2BProduct {
+  let categoryId: CategoryId = 'rmg-apparel';
+  let divisionSlug: any = 'rmg-knits';
+  let divisionTitle = 'RMG Knits & Football Kits';
+
+  if (raw.categorySlug === 'leather-bags') {
+    categoryId = 'leather-footwear';
+    divisionSlug = 'flagship-leather';
+    divisionTitle = 'Arutemika Atelier';
+  } else if (raw.categorySlug === 'accessories') {
+    if (raw.id.includes('belt')) {
+      categoryId = 'leather-footwear';
+      divisionSlug = 'leather-cuffs';
+      divisionTitle = 'Leather Cuffs & Hardware';
+    } else if (raw.id.includes('brass')) {
+      categoryId = 'handicrafts-brass';
+      divisionSlug = 'leather-cuffs';
+      divisionTitle = 'Heritage Brass & Metal Craft';
+    } else if (raw.id.includes('jute')) {
+      categoryId = 'jute-eco';
+      divisionSlug = 'golden-jute';
+      divisionTitle = 'Golden Jute & Eco';
+    } else {
+      categoryId = 'rmg-apparel';
+      divisionSlug = 'commercial-blanks';
+      divisionTitle = 'Ready Commercial Blanks';
+    }
+  } else if (raw.subcategorySlug === 'streetwear-blanks' || raw.subcategorySlug === 'vintage-wash') {
+    categoryId = 'rmg-apparel';
+    divisionSlug = 'commercial-blanks';
+    divisionTitle = 'Ready Commercial Blanks';
+  }
+
+  const sku = raw.slug ? raw.slug.toUpperCase() : `B2B-${raw.id.toUpperCase()}`;
+
+  const priceTiers = raw.priceTiers || [
+    { minQty: raw.moq || 100, maxQty: (raw.moq || 100) * 4, priceUSD: raw.price || 3.85 },
+    { minQty: (raw.moq || 100) * 4 + 1, maxQty: (raw.moq || 100) * 10, priceUSD: Number(((raw.price || 3.85) * 0.88).toFixed(2)) },
+    { minQty: (raw.moq || 100) * 10 + 1, priceUSD: Number(((raw.price || 3.85) * 0.78).toFixed(2)) },
+  ];
+
+  return {
+    id: raw.id,
+    sku,
+    title: raw.title,
+    categoryId,
+    divisionSlug,
+    divisionTitle,
+    sourceDomain: 'b2b.handsandhead.com',
+    targetRoutingUrl: `https://b2b.handsandhead.com/catalog/${raw.slug || raw.id}`,
+    provenance: raw.exportComplianceStatus || 'Tokyo Standard QC • 240 GSM',
+    hsCode: raw.hsCode || '6109.10.00',
+    fobPort: raw.fobPort || 'Chattogram Port (CGP)',
+    gsmSpec: raw.specifications?.find((s: any) => s.label.includes('Fabric') || s.label.includes('GSM'))?.value || '240 GSM • 100% Combed Compact Cotton',
+    description: raw.description,
+    moq: raw.moq || 100,
+    unit: raw.unit || 'pcs',
+    priceTiers,
+    leadTimeDays: raw.leadTimeDays || 21,
+    portOfLoading: raw.fobPort || 'Chattogram Port (CGP)',
+    incoterms: ['FOB', 'CIF', 'EXW'],
+    certifications: ['OEKO-TEX 100', 'WRAP Platinum', 'Tokyo Std Passed'],
+    supplierId: 'sup-plummy',
+    supplierName: raw.supplierName || 'Plummy Fashions Ltd. (LEED Platinum)',
+    supplierVerified: true,
+    supplierRating: raw.supplierRating || 4.96,
+    images: raw.images && raw.images.length > 0 ? raw.images : ['/catalog/club-football/club-01.jpg'],
+    specifications: raw.specifications || [],
+    materials: raw.materials || ['100% Combed Ring-Spun Cotton', 'Eco-Reactive Dye'],
+    ecoFriendly: true,
+    sampleAvailable: true,
+    samplePriceUSD: Math.round((raw.price || 4) * 5),
+    customizationOffered: true,
+    colorVariants: raw.colorVariants || [
+      { name: 'Pitch Black', hex: '#0f172a', inStock: true },
+      { name: 'Raw Natural Ecru', hex: '#f4f0ea', inStock: true },
+    ],
+    bestseller: true,
+    trendingRank: raw.brand ? `#1 ${raw.brand} Sourcing` : '#1 Export Lot',
+    artisanDirect: raw.categorySlug === 'leather-bags',
+    reorderRate: 78,
+    totalSold: 42000,
+    deliveryDate: `Delivery in ${raw.leadTimeDays || 21} days`,
+    category: raw.category,
+    brand: raw.brand,
+    club: raw.club,
+    frontPrint: raw.frontPrint,
+    backPrint: raw.backPrint,
+  };
+}
+
 /**
  * Local master normalized catalog store
- * Ingests from Google Drive, Arutemika, and federated cluster nodes
+ * Ingests verified physical B2B items, federated cluster nodes, and core collections
  */
 let memoryCatalogStore: B2BProduct[] | null = null;
 
@@ -102,29 +195,46 @@ function initializeMasterNormalizedCatalog(): B2BProduct[] {
     return memoryCatalogStore;
   }
 
-  // 1. Ingest Master Federated 12 Domains products from handsandhead.ai.studio
-  const masterFederated = [...MASTER_FEDERATED_PRODUCTS];
+  // 1. Ingest verified physical B2B catalog items (all 28 club football kits, blanks, leather goods)
+  const catalogProducts = (((rawCatalogData as any).products || []) as any[]).map(normalizeJsonCatalogProduct);
 
-  // 2. Ingest & normalize raw Google Drive assets from shop.handsandhead.com
-  const normalizedDrive = normalizeDriveBatch(RAW_GOOGLE_DRIVE_FEED);
-
-  // 3. Ingest & normalize raw flagship items from arutemika.com
-  const normalizedArutemika = normalizeArutemikaBatch(RAW_ARUTEMIKA_FEED);
-
-  // 4. Ingest federated cluster items (all divisions)
+  // 2. Ingest federated cluster items (all 9 satellite divisions)
   const federated = [...FEDERATED_PRODUCTS];
 
-  // 5. Extended procedural catalog items (96+ verified lots)
+  // 3. Ingest primary export products (selvedge denim jeans, jute burlap, leather footwear, etc.)
+  const mockProducts = [...MOCK_PRODUCTS];
+
+  // 4. Ingest & normalize raw Google Drive assets from shop.handsandhead.com
+  const normalizedDrive = normalizeDriveBatch(RAW_GOOGLE_DRIVE_FEED);
+
+  // 5. Ingest & normalize raw flagship items from arutemika.com
+  const normalizedArutemika = normalizeArutemikaBatch(RAW_ARUTEMIKA_FEED);
+
+  // 6. Ingest physical products from masterFederated (exclude digital dossier/allocation services from product cards)
+  const physicalMaster = MASTER_FEDERATED_PRODUCTS.filter(
+    (p) => p.id !== 'ais-01' && p.id !== 'hub-01'
+  );
+
+  // 7. Extended procedural catalog items (96+ verified lots)
   const extendedCatalog = generateMoreProducts(1, 96, undefined, undefined);
 
-  // Deduplicate by ID
+  // Deduplicate by ID with high-priority physical products first
   const map = new Map<string, B2BProduct>();
 
-  // Prioritize master portal & live items across all 12 domains
-  masterFederated.forEach((p) => map.set(p.id, p));
-  normalizedDrive.forEach((p) => map.set(p.id, p));
-  normalizedArutemika.forEach((p) => map.set(p.id, p));
+  catalogProducts.forEach((p) => map.set(p.id, p));
   federated.forEach((p) => {
+    if (!map.has(p.id)) map.set(p.id, p);
+  });
+  mockProducts.forEach((p) => {
+    if (!map.has(p.id)) map.set(p.id, p as B2BProduct);
+  });
+  physicalMaster.forEach((p) => {
+    if (!map.has(p.id)) map.set(p.id, p);
+  });
+  normalizedDrive.forEach((p) => {
+    if (!map.has(p.id)) map.set(p.id, p);
+  });
+  normalizedArutemika.forEach((p) => {
     if (!map.has(p.id)) map.set(p.id, p);
   });
   extendedCatalog.forEach((p) => {

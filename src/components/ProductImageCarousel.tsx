@@ -13,6 +13,7 @@ export interface ProductImageCarouselProps {
   isParentHovered?: boolean;
   angleBadgePosition?: 'top-right' | 'top-center' | 'top-left' | 'bottom-center';
   paginationBottomClass?: string;
+  fallbackImage?: string;
 }
 
 export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
@@ -26,9 +27,12 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
   isParentHovered = false,
   angleBadgePosition = 'top-right',
   paginationBottomClass = 'bottom-2.5',
+  fallbackImage = '/catalog/club-football/club-01.jpg',
 }) => {
   // Ensure we have at least one valid image
-  const validImages = images.length > 0 ? images : ['/catalog/club-football/club-01.jpg'];
+  const validImages = images.length > 0 && images.some((img) => Boolean(img?.trim()))
+    ? images.filter((img) => Boolean(img?.trim()))
+    : [fallbackImage];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right
   const [imageErrorMap, setImageErrorMap] = useState<Record<number, boolean>>({});
@@ -157,7 +161,7 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.img
           key={currentIndex}
-          src={isCurrentErrored ? '/catalog/club-football/club-01.jpg' : currentSrc}
+          src={isCurrentErrored ? fallbackImage : currentSrc}
           alt={`${title} - ${currentAngleLabel}`}
           custom={direction}
           variants={slideVariants}

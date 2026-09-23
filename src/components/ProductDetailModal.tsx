@@ -127,27 +127,50 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Gallery Column (5 cols) */}
             <div className="lg:col-span-5 space-y-3">
-              <div className="aspect-4/3 rounded-xl overflow-hidden bg-[#171717] border border-white/10">
+              <div className="aspect-4/3 rounded-xl overflow-hidden bg-[#171717] border border-white/10 relative">
                 <img
-                  src={product.images[activeImageIndex] || product.images[0]}
+                  src={product.images[activeImageIndex] || product.images[0] || '/catalog/club-football/club-01.jpg'}
                   alt={product.title}
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = '/catalog/club-football/club-01.jpg';
+                  }}
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md border border-white/15 text-[10px] font-mono text-slate-200">
+                  {activeImageIndex === 0
+                    ? '1/4 Front Studio Cut'
+                    : activeImageIndex === 1
+                    ? product.frontPrint ? `2/4 Print: ${product.frontPrint}` : '2/4 Chest Print Detail'
+                    : activeImageIndex === 2
+                    ? product.club ? `3/4 ${product.club} Back #` : '3/4 Back Silhouette'
+                    : '4/4 Tokyo Std QC & Fabric'}
+                </div>
               </div>
 
               {/* Thumbnails */}
               {product.images.length > 1 && (
-                <div className="flex space-x-2">
+                <div className="grid grid-cols-4 gap-2">
                   {product.images.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
-                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer ${
-                        activeImageIndex === idx ? 'border-[#e11d48]' : 'border-white/10 opacity-70'
+                      className={`relative aspect-square rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
+                        activeImageIndex === idx ? 'border-[#e11d48] ring-1 ring-[#e11d48]' : 'border-white/10 opacity-70 hover:opacity-100'
                       }`}
                     >
-                      <img src={img} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                      <img
+                        src={img}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = '/catalog/club-football/club-01.jpg';
+                        }}
+                      />
+                      <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[8.5px] font-mono text-center text-white py-0.5 truncate px-0.5">
+                        {idx === 0 ? 'Front' : idx === 1 ? 'Print' : idx === 2 ? 'Back' : 'QC'}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -186,6 +209,28 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             {/* Product Specifications & Pricing Column (7 cols) */}
             <div className="lg:col-span-7 space-y-5">
               <div>
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  {product.brand && (
+                    <span className="text-[11px] font-black uppercase px-2.5 py-0.5 rounded-full bg-rose-600/30 text-rose-300 border border-rose-500/40 font-mono">
+                      {product.brand}
+                    </span>
+                  )}
+                  {product.club && (
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40">
+                      {product.club}
+                    </span>
+                  )}
+                  {product.frontPrint && (
+                    <span className="text-[11px] font-mono text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                      Print: {product.frontPrint}
+                    </span>
+                  )}
+                  {product.backPrint && (
+                    <span className="text-[11px] font-mono text-slate-400 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
+                      Back: {product.backPrint}
+                    </span>
+                  )}
+                </div>
                 <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight leading-snug">
                   {product.title}
                 </h2>

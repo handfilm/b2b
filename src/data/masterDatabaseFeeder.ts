@@ -90,8 +90,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.98,
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Facility', value: 'Narayanganj Green Knit Cluster' },
@@ -228,7 +228,7 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierRating: 4.92,
     images: [
       'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1625910513413-7a988162f275?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'GSM', value: '200 GSM Mercerized Pique' },
@@ -273,8 +273,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.96,
     images: [
-      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Substance', value: '1.4 - 1.6 mm' },
@@ -318,8 +318,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.88,
     images: [
-      'https://images.unsplash.com/photo-1611591475878-a32065842813?w=800&auto=format&fit=crop&q=80',
       'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Leather', value: '4mm Vegetable Tanned Bridle' },
@@ -545,8 +545,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80',
     ],
     specifications: [
       { label: 'Leather Thickness', value: '4.5 - 5.0 mm (10-12 oz)' },
