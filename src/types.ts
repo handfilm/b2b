@@ -145,7 +145,47 @@ export interface Product {
   bestseller?: boolean;
   trendingRank?: string;
   artisanDirect?: boolean;
+  slug?: string;
+  categorySlug?: string;
+  subcategorySlug?: string;
+  subdivision?: string;
+  exportComplianceStatus?: string;
+  moqBadge?: string;
+  techPackAvailable?: boolean;
+  price?: number;
+  complianceBadges?: string[];
+  supplierLocation?: string;
+  brand?: string;
+  club?: string;
+  frontPrint?: string;
 }
+
+export interface B2bSubcategory {
+  id: string;
+  slug: string;
+  name: string;
+  count?: number;
+}
+
+export interface B2bCatalogCategory {
+  id: string;
+  slug: string;
+  name: string;
+  title: string;
+  description: string;
+  icon?: string;
+  subcategories: B2bSubcategory[];
+}
+
+export interface B2bCatalogProduct extends Product {
+  slug: string;
+  categorySlug: string;
+  subcategorySlug: string;
+  exportComplianceStatus: string;
+  moqBadge: string;
+  price: number;
+}
+
 
 export interface Supplier {
   id: string;

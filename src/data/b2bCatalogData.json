@@ -1,0 +1,3871 @@
+{
+  "version": "2.4.0",
+  "updatedAt": "2026-09-23T21:50:00Z",
+  "tenant": "b2b.handsandhead.com",
+  "categories": [
+    {
+      "id": "all",
+      "slug": "all",
+      "name": "All Categories",
+      "title": "Complete B2B Export Catalog",
+      "description": "Direct factory wholesale sourcing for global fashion houses, apparel brands, and retail chains.",
+      "icon": "LayoutGrid",
+      "subcategories": [
+        {
+          "id": "all-items",
+          "slug": "all",
+          "name": "All Products"
+        }
+      ]
+    },
+    {
+      "id": "t-shirts",
+      "slug": "t-shirts",
+      "name": "T-Shirts",
+      "title": "Knitwear & Circular Fashion Pavilion",
+      "description": "Heavyweight combed cotton, vintage enzyme wash, drop-shoulder streetwear, and authentic club football kits.",
+      "icon": "Shirt",
+      "subcategories": [
+        {
+          "id": "club-football",
+          "slug": "club-football",
+          "name": "Club Football",
+          "count": 28
+        },
+        {
+          "id": "heavyweight-oversized",
+          "slug": "heavyweight-oversized",
+          "name": "Heavyweight Oversized",
+          "count": 6
+        },
+        {
+          "id": "vintage-wash",
+          "slug": "vintage-wash",
+          "name": "Vintage Mineral Wash",
+          "count": 4
+        },
+        {
+          "id": "organic-blanks",
+          "slug": "organic-blanks",
+          "name": "Organic Combed Blanks",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "accessories",
+      "slug": "accessories",
+      "name": "Accessories",
+      "title": "Hardware, Leather & Lifestyle Accoutrements",
+      "description": "Solid brass hardware, full-grain cowhide cuffs & belts, embroidered tech caps, and biodegradable golden jute accoutrements.",
+      "icon": "Watch",
+      "subcategories": [
+        {
+          "id": "leather-belts",
+          "slug": "leather-belts",
+          "name": "Leather Belts & Cuffs",
+          "count": 4
+        },
+        {
+          "id": "brass-hardware",
+          "slug": "brass-hardware",
+          "name": "Brass & Metal Hardware",
+          "count": 3
+        },
+        {
+          "id": "caps-headwear",
+          "slug": "caps-headwear",
+          "name": "Caps & Headwear",
+          "count": 4
+        },
+        {
+          "id": "jute-totes",
+          "slug": "jute-totes",
+          "name": "Golden Jute Totes",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "id": "leather-bags",
+      "slug": "leather-bags",
+      "name": "Leather Bags",
+      "title": "Artisan Full-Grain Leather Atelier",
+      "description": "Vegetable-tanned Savar cowhide, Goodyear welted craftsmanship, brass hardware, and bespoke export duffles.",
+      "icon": "Briefcase",
+      "subcategories": [
+        {
+          "id": "full-grain-duffles",
+          "slug": "full-grain-duffles",
+          "name": "Full-Grain Duffles",
+          "count": 4
+        },
+        {
+          "id": "executive-briefcases",
+          "slug": "executive-briefcases",
+          "name": "Executive Briefcases",
+          "count": 3
+        },
+        {
+          "id": "artisan-backpacks",
+          "slug": "artisan-backpacks",
+          "name": "Artisan Backpacks",
+          "count": 3
+        },
+        {
+          "id": "tote-bags",
+          "slug": "tote-bags",
+          "name": "Savar Cowhide Totes",
+          "count": 3
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "id": "club-foot-1",
+      "slug": "nike-fc-barcelona-spotify-oversized-tee",
+      "title": "Nike x FC Barcelona 'Spotify' Oversized Heavyweight Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Heavyweight 240 GSM Combed Ring-Spun Cotton tee engineered for export. Features official Nike silhouette styling with high-density Spotify chest graphic and Catalan heritage crest embroidery.",
+      "price": 4.85,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.85
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.27
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.78
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-fc-barcelona-spotify-tee.jpg",
+        "/nike-fc-barcelona-spotify-tee.jpg",
+        "/football_club (1).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Blaugrana Maroon",
+          "hex": "#4a1525"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Combed Ring-Spun Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "FC Barcelona",
+      "frontPrint": "Spotify Heritage Maroon"
+    },
+    {
+      "id": "club-foot-2",
+      "slug": "adidas-real-madrid-benq-siemens-vintage-tee",
+      "title": "Adidas x Real Madrid 'BenQ Siemens' Gal\u00e1cticos Vintage Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Vintage 2006 Gal\u00e1cticos aesthetic featuring BenQ Siemens archival chest typography, Adidas 3-stripes sleeve trim, and 240 GSM pre-shrunk cotton build.",
+      "price": 4.95,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.95
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.36
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.86
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-benq-siemens-tee.jpg",
+        "/adidas-real-madrid-benq-siemens-tee.jpg",
+        "/football_club (2).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Gal\u00e1cticos Black",
+          "hex": "#14151a"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Heavy Drop-Shoulder Knit"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "BenQ Siemens 2006 Vintage"
+    },
+    {
+      "id": "club-foot-3",
+      "slug": "nike-liverpool-fc-standard-chartered-crimson-tee",
+      "title": "Nike x Liverpool FC 'Standard Chartered' Crimson Heritage Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Anfield crimson 230 GSM combed cotton tee with crisp Standard Chartered front typography and Liverbird gold crest.",
+      "price": 4.75,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.75
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.18
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.71
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-liverpool-fc-standard-chartered-tee.jpg",
+        "/nike-liverpool-fc-standard-chartered-tee.jpg",
+        "/football_club (3).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Anfield Crimson",
+          "hex": "#5c1320"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 25,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Heavy Single Jersey"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Liverpool FC",
+      "frontPrint": "Standard Chartered Anfield"
+    },
+    {
+      "id": "club-foot-4",
+      "slug": "adidas-real-madrid-fifa-champions-shield-tee",
+      "title": "Adidas x Real Madrid 'FIFA World Champions Shield' Gold Edition Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Commemorative Madrid FIFA World Champions edition with metallic foil gold shield badge, Trefoil embroidery, and 250 GSM heavy French terry finish.",
+      "price": 5.2,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.2
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.58
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.06
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-fifa-champions-shield-tee.jpg",
+        "/adidas-real-madrid-fifa-champions-shield-tee.jpg",
+        "/football_club (4).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pitch Gold Black",
+          "hex": "#101115"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "250 GSM Compact French Terry Finish"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "FIFA World Champions Gold Shield"
+    },
+    {
+      "id": "club-foot-5",
+      "slug": "nike-borussia-dortmund-vodafone-acid-wash-tee",
+      "title": "Nike x Borussia Dortmund 'Vodafone' Vintage Acid Wash Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Silicone mineral-washed charcoal cotton (240 GSM) adorned with retro Vodafone red circular logo and BVB Signal Iduna badge.",
+      "price": 5.1,
+      "currency": "USD",
+      "moq": 75,
+      "moqBadge": "MOQ: 75 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 75,
+          "maxQty": 300,
+          "priceUSD": 5.1
+        },
+        {
+          "minQty": 301,
+          "maxQty": 750,
+          "priceUSD": 4.49
+        },
+        {
+          "minQty": 751,
+          "priceUSD": 3.98
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-borussia-dortmund-vodafone-tee.jpg",
+        "/nike-borussia-dortmund-vodafone-tee.jpg",
+        "/football_club (5).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Acid Mineral Charcoal",
+          "hex": "#2e3037"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 24,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Silicone Stone-Washed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Borussia Dortmund",
+      "frontPrint": "Vodafone Vintage Signal Red"
+    },
+    {
+      "id": "club-foot-6",
+      "slug": "puma-manchester-city-holographic-iridescent-tee",
+      "title": "Puma x Manchester City 'Holographic Puma' Iridescent White Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Clean optic white 230 GSM combed cotton with high-sheen holographic Puma feline and Manchester City iridescent badge that shifts color under light.",
+      "price": 4.9,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.9
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.31
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.82
+        }
+      ],
+      "images": [
+        "/catalog/club-football/puma-manchester-city-holographic-iridescent-tee.jpg",
+        "/puma-manchester-city-holographic-iridescent-tee.jpg",
+        "/football_club (6).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Iridescent Optic White",
+          "hex": "#f1f5f9"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Premium Combed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Puma",
+      "club": "Manchester City",
+      "frontPrint": "Holographic Iridescent Puma"
+    },
+    {
+      "id": "club-foot-7",
+      "slug": "nike-fc-barcelona-midnight-gold-spotify-tee",
+      "title": "Nike x FC Barcelona 'Spotify' Midnight Black & Gold Edition Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Pitch black 240 GSM ring-spun cotton tee with high-density metallic gold Spotify soundwave emblem and Blaugrana crest.",
+      "price": 4.7,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.7
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.14
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.67
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-fc-barcelona-midnight-gold-spotify-tee.jpg",
+        "/nike-fc-barcelona-midnight-gold-spotify-tee.jpg",
+        "/football_club (7).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Midnight Gold Black",
+          "hex": "#14151a"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Ring-Spun Heavy Knit"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "FC Barcelona",
+      "frontPrint": "Midnight Gold Spotify"
+    },
+    {
+      "id": "club-foot-8",
+      "slug": "adidas-real-madrid-fly-better-emerald-third-tee",
+      "title": "Adidas x Real Madrid 'Fly Better Emirates' Forest Emerald Third Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Deep forest emerald green drop-shoulder streetwear tee with crisp white Emirates Fly Better print and Madrid gold crest.",
+      "price": 4.95,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.95
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.36
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.86
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-fly-better-emerald-tee.jpg",
+        "/adidas-real-madrid-fly-better-emerald-tee.jpg",
+        "/football_club (8).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Forest Emerald",
+          "hex": "#143a29"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Drop-Shoulder Oversized"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "Fly Better Emirates Forest"
+    },
+    {
+      "id": "club-foot-9",
+      "slug": "puma-manchester-city-etihad-maroon-wine-tee",
+      "title": "Puma x Manchester City 'Etihad Airways' Deep Wine Maroon Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Rich wine maroon 230 GSM single jersey with brushed gold Etihad Airways sponsor script and City crest.",
+      "price": 4.65,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.65
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.09
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.63
+        }
+      ],
+      "images": [
+        "/catalog/club-football/puma-manchester-city-etihad-maroon-wine-tee.jpg",
+        "/puma-manchester-city-etihad-maroon-wine-tee.jpg",
+        "/football_club (9).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Deep Wine Maroon",
+          "hex": "#54192b"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Compact Combed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Puma",
+      "club": "Manchester City",
+      "frontPrint": "Etihad Airways Gold Font"
+    },
+    {
+      "id": "club-foot-10",
+      "slug": "adidas-real-madrid-burgundy-trefoil-emirates-tee",
+      "title": "Adidas x Real Madrid 'Emirates' Royal Burgundy Trefoil Streetwear Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Royal burgundy 240 GSM heavy cotton featuring vintage Adidas Trefoil and white Fly Emirates print.",
+      "price": 4.9,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.9
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.31
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.82
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-burgundy-trefoil-emirates-tee.jpg",
+        "/adidas-real-madrid-burgundy-trefoil-emirates-tee.jpg",
+        "/football_club (10).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Royal Burgundy",
+          "hex": "#4c1622"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Heavyweight Streetwear Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "Royal Burgundy Trefoil Emirates"
+    },
+    {
+      "id": "club-foot-11",
+      "slug": "nike-chelsea-fc-damac-poppy-flower-tee",
+      "title": "Nike x Chelsea FC 'Damac Remembrance Poppy' Acid Purple Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Enzyme-washed acid purple jersey with crimson remembrance poppy flower print, Damac sponsor, and Chelsea blue lion crest.",
+      "price": 5.25,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.25
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.62
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.09
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-chelsea-fc-damac-poppy-flower-tee.jpg",
+        "/nike-chelsea-fc-damac-poppy-flower-tee.jpg",
+        "/football_club (11).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Acid Wash Purple",
+          "hex": "#382f48"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 24,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "250 GSM Heavy Enzyme Wash"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Chelsea FC",
+      "frontPrint": "Damac Remembrance Poppy Flower"
+    },
+    {
+      "id": "club-foot-12",
+      "slug": "puma-ac-milan-rossoneri-pitch-black-crimson-tee",
+      "title": "Puma x AC Milan 'Fly Better' Rossoneri Pitch Black & Crimson Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Rossoneri aesthetic on 240 GSM pitch black combed cotton with crimson red Fly Better print and AC Milan devil motif.",
+      "price": 4.8,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.8
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.22
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.74
+        }
+      ],
+      "images": [
+        "/catalog/club-football/puma-ac-milan-rossoneri-pitch-black-crimson-tee.jpg",
+        "/puma-ac-milan-rossoneri-pitch-black-crimson-tee.jpg",
+        "/football_club (12).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pitch Black Rossoneri",
+          "hex": "#131316"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Combed Ring-Spun Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Puma",
+      "club": "AC Milan",
+      "frontPrint": "Fly Better Devil Crimson"
+    },
+    {
+      "id": "club-foot-13",
+      "slug": "nike-liverpool-fc-pine-green-away-tee",
+      "title": "Nike x Liverpool FC 'Standard Chartered' Deep Pine Green Away Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Pine green away kit inspired streetwear tee with clean white Standard Chartered script and crimson Liverpool accents.",
+      "price": 4.85,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.85
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.27
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.78
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-liverpool-fc-pine-green-away-tee.jpg",
+        "/nike-liverpool-fc-pine-green-away-tee.jpg",
+        "/football_club (13).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pine Green",
+          "hex": "#173b2a"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Combed Heavy Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Liverpool FC",
+      "frontPrint": "Standard Chartered Pine Green"
+    },
+    {
+      "id": "club-foot-14",
+      "slug": "adidas-bayern-munich-telekom-trefoil-tee",
+      "title": "Adidas x Bayern Munich 'Telekom' Pure White Navy Trefoil Edition Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Crisp optic white 230 GSM single jersey with navy blue Trefoil logo, Magenta Telekom chest mark, and Bayern crest.",
+      "price": 4.75,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.75
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.18
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.71
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-bayern-munich-telekom-trefoil-tee.jpg",
+        "/adidas-bayern-munich-telekom-trefoil-tee.jpg",
+        "/football_club (14).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Optic White Navy",
+          "hex": "#f8f9fa"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Compact Combed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Bayern Munich",
+      "frontPrint": "Telekom Bavarian Navy Trefoil"
+    },
+    {
+      "id": "club-foot-15",
+      "slug": "nike-al-nassr-ronaldo-7-riyadh-knight-tee",
+      "title": "Nike x Al Nassr FC 'Cristiano #7 Riyadh Knight' Gold & Black Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Exclusive Riyadh Knight edition in pitch black 250 GSM cotton with metallic gold Cristiano #7 typography and Al Nassr crest.",
+      "price": 5.3,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.3
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.66
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.13
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-al-nassr-ronaldo-7-riyadh-knight-tee.jpg",
+        "/nike-al-nassr-ronaldo-7-riyadh-knight-tee.jpg",
+        "/football_club (15).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Riyadh Knight Black",
+          "hex": "#101115"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "250 GSM Heavy Drop-Shoulder Knit"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Al Nassr FC",
+      "frontPrint": "Cristiano #7 Riyadh Knight Gold"
+    },
+    {
+      "id": "club-foot-16",
+      "slug": "adidas-real-madrid-emerald-stripes-emirates-tee",
+      "title": "Adidas x Real Madrid 'Emirates' Pure White Forest Green Stripes Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Classic white heavyweight tee with forest green 3-stripes shoulder execution and green Fly Better Emirates chest print.",
+      "price": 4.6,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.6
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.05
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.59
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-emerald-stripes-emirates-tee.jpg",
+        "/adidas-real-madrid-emerald-stripes-emirates-tee.jpg",
+        "/football_club (16).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pure White Green",
+          "hex": "#fafafa"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Single Jersey Combed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "Emirates Fly Better Green Stripes"
+    },
+    {
+      "id": "club-foot-17",
+      "slug": "nike-fc-barcelona-bottle-green-spotify-tee",
+      "title": "Nike x FC Barcelona 'Spotify' Olive Bottle Green Oversized Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Bottle green 240 GSM drop-shoulder knit with warm gold Spotify chest print and Senyera Catalan flag sleeve label.",
+      "price": 4.95,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.95
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.36
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.86
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-fc-barcelona-bottle-green-spotify-tee.jpg",
+        "/nike-fc-barcelona-bottle-green-spotify-tee.jpg",
+        "/football_club (17).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Olive Bottle Green",
+          "hex": "#1c3626"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Heavy Drop-Shoulder Knit"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "FC Barcelona",
+      "frontPrint": "Spotify Gold Catalan Emblem"
+    },
+    {
+      "id": "club-foot-18",
+      "slug": "nike-fc-barcelona-gold-medallion-spotify-tee",
+      "title": "Nike x FC Barcelona 'Spotify' Pitch Black Gold Medallion Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Pitch black silicone-washed cotton tee with heavy circular gold medallion Barca crest and golden Spotify typography.",
+      "price": 5.15,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.15
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.53
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.02
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-fc-barcelona-gold-medallion-spotify-tee.jpg",
+        "/nike-fc-barcelona-gold-medallion-spotify-tee.jpg",
+        "/football_club (18).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pitch Black Gold",
+          "hex": "#111114"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Silicon-Washed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "FC Barcelona",
+      "frontPrint": "Spotify Gold Medallion Crest"
+    },
+    {
+      "id": "club-foot-19",
+      "slug": "adidas-arsenal-fc-golden-cannon-trefoil-tee",
+      "title": "Adidas x Arsenal FC 'Highbury Golden Cannon' Trefoil Streetwear Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Gunners heritage tee in pitch black with historic Highbury golden cannon embroidery, Adidas Trefoil, and 240 GSM streetwear cut.",
+      "price": 5.1,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.1
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.49
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.98
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
+        "/football_club (19).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Gunners Black Gold",
+          "hex": "#121318"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Heavy Streetwear Knit"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Arsenal FC",
+      "frontPrint": "Highbury Golden Cannon Trefoil"
+    },
+    {
+      "id": "club-foot-20",
+      "slug": "adidas-real-madrid-mineral-wash-charcoal-tee",
+      "title": "Adidas x Real Madrid 'Emirates' Mineral Wash Charcoal Gold Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Mineral-washed charcoal 250 GSM single jersey with vintage gold Emirates script and distressed Madrid crest.",
+      "price": 5.4,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.4
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.75
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.21
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-mineral-wash-charcoal-tee.jpg",
+        "/adidas-real-madrid-mineral-wash-charcoal-tee.jpg",
+        "/football_club (20).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Charcoal Mineral Wash",
+          "hex": "#292b31"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 24,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "250 GSM Mineral Washed Jersey"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "Emirates Vintage Gold Script"
+    },
+    {
+      "id": "club-foot-21",
+      "slug": "nike-liverpool-fc-white-crimson-stripes-tee",
+      "title": "Nike x Liverpool FC 'Standard Chartered' Clean White Crimson Stripes Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Clean white 230 GSM cotton tee featuring crimson Kop red Standard Chartered print and red contrast ribbing.",
+      "price": 4.7,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.7
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.14
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.67
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-liverpool-fc-white-crimson-stripes-tee.jpg",
+        "/nike-liverpool-fc-white-crimson-stripes-tee.jpg",
+        "/football_club (21).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Clean White Crimson",
+          "hex": "#fafafa"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Ring-Spun Combed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Liverpool FC",
+      "frontPrint": "Standard Chartered Kop Red"
+    },
+    {
+      "id": "club-foot-22",
+      "slug": "nike-chelsea-fc-three-3-sponsor-tee",
+      "title": "Nike x Chelsea FC 'Three #3 Sponsor' Midnight Black Streetwear Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Midnight black 240 GSM heavyweight cotton tee with oversized '3' chest sponsor print and royal blue Chelsea lion crest.",
+      "price": 4.85,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 4.85
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.27
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.78
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-chelsea-fc-three-3-sponsor-tee.jpg",
+        "/nike-chelsea-fc-three-3-sponsor-tee.jpg",
+        "/football_club (22).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Midnight Black Royal",
+          "hex": "#101115"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Heavyweight Streetwear"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "Chelsea FC",
+      "frontPrint": "Three Sponsor #3 Blue Emblem"
+    },
+    {
+      "id": "club-foot-23",
+      "slug": "air-jordan-psg-qatar-airways-gold-shield-tee",
+      "title": "Air Jordan x Paris Saint-Germain 'Qatar Airways' Gold Shield Edition Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Parc Des Princes capsule in heavy 245 GSM cotton with iconic Jumpman emblem, golden Qatar Airways print, and PSG circular shield.",
+      "price": 5.2,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.2
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.58
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.06
+        }
+      ],
+      "images": [
+        "/catalog/club-football/air-jordan-psg-qatar-airways-gold-shield-tee.jpg",
+        "/air-jordan-psg-qatar-airways-gold-shield-tee.jpg",
+        "/football_club (23).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Parc Des Princes Black",
+          "hex": "#121419"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "245 GSM Heavy Combed Cotton"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Air Jordan",
+      "club": "Paris Saint-Germain",
+      "frontPrint": "Qatar Airways Gold Champions Shield"
+    },
+    {
+      "id": "club-foot-24",
+      "slug": "puma-manchester-city-neon-pink-etihad-tee",
+      "title": "Puma x Manchester City 'Etihad Airways' Pitch Black Neon Hot Pink Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Vibrant streetwear edition featuring high-voltage neon hot pink Etihad Airways and Puma cat prints against pitch black 240 GSM jersey.",
+      "price": 5.0,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.0
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.4
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 3.9
+        }
+      ],
+      "images": [
+        "/catalog/club-football/puma-manchester-city-neon-pink-etihad-tee.jpg",
+        "/puma-manchester-city-neon-pink-etihad-tee.jpg",
+        "/football_club (24).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pitch Black Neon Pink",
+          "hex": "#101114"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Dense Single Jersey"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Puma",
+      "club": "Manchester City",
+      "frontPrint": "Etihad Airways Neon Hot Pink"
+    },
+    {
+      "id": "club-foot-25",
+      "slug": "cactus-jack-fc-barcelona-travis-scott-tee",
+      "title": "Cactus Jack x FC Barcelona 'Travis Scott Flame' Limited Collab Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Hypebeast limited collab in 260 GSM heavyweight French terry with Travis Scott Cactus Jack cross, Barcelona Spotify branding, and raw edge hems.",
+      "price": 5.6,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.6
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.93
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.37
+        }
+      ],
+      "images": [
+        "/catalog/club-football/cactus-jack-fc-barcelona-travis-scott-tee.jpg",
+        "/cactus-jack-fc-barcelona-travis-scott-tee.jpg",
+        "/football_club (25).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Cactus Washed Black",
+          "hex": "#131417"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 25,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "260 GSM Heavyweight Streetwear Terry"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Cactus Jack",
+      "club": "FC Barcelona",
+      "frontPrint": "Travis Scott Flame Cross & Spotify"
+    },
+    {
+      "id": "club-foot-26",
+      "slug": "mamba-fc-barcelona-kobe-bryant-24-tee",
+      "title": "Mamba x FC Barcelona 'Kobe Bryant 24 Mentality' Tribute Heavyweight Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Commemorative Kobe Bryant Mamba Mentality tribute on 260 GSM drop-shoulder knit with metallic gold #24 typography and Barca crest.",
+      "price": 5.5,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.5
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.84
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.29
+        }
+      ],
+      "images": [
+        "/catalog/club-football/mamba-fc-barcelona-kobe-bryant-24-tee.jpg",
+        "/mamba-fc-barcelona-kobe-bryant-24-tee.jpg",
+        "/football_club (26).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Mamba Pitch Black",
+          "hex": "#111215"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 25,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "260 GSM Heavy Drop-Shoulder Knit"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Mamba",
+      "club": "FC Barcelona",
+      "frontPrint": "Kobe Bryant 24 Mamba Mentality Gold"
+    },
+    {
+      "id": "club-foot-27",
+      "slug": "nike-fc-barcelona-white-royal-blue-spotify-tee",
+      "title": "Nike x FC Barcelona 'Spotify' Pure White & Royal Blue Away Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Classic away kit aesthetic in crisp white 230 GSM cotton with royal blue Spotify chest print and Blaugrana tricolor stripe cuffs.",
+      "price": 4.65,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 400,
+          "priceUSD": 4.65
+        },
+        {
+          "minQty": 401,
+          "maxQty": 1000,
+          "priceUSD": 4.09
+        },
+        {
+          "minQty": 1001,
+          "priceUSD": 3.63
+        }
+      ],
+      "images": [
+        "/catalog/club-football/nike-fc-barcelona-white-royal-blue-spotify-tee.jpg",
+        "/nike-fc-barcelona-white-royal-blue-spotify-tee.jpg",
+        "/football_club (27).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pure White Royal Blue",
+          "hex": "#ffffff"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "230 GSM Combed Single Jersey"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Nike",
+      "club": "FC Barcelona",
+      "frontPrint": "Spotify Blaugrana Blue Ribbon"
+    },
+    {
+      "id": "club-foot-28",
+      "slug": "adidas-real-madrid-acid-purple-trefoil-tee",
+      "title": "Adidas x Real Madrid 'Emirates' Royal Purple Trefoil Acid Wash Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "club-football",
+      "subdivision": "Club Football Kits",
+      "description": "Acid-washed royal purple 250 GSM mineral wash jersey with white retro Adidas Trefoil, Fly Emirates sponsor, and vintage Madrid crown crest.",
+      "price": 5.35,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "OEKO-TEX 100 Class I",
+        "BSCI A-Grade",
+        "Bonded Direct"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 200,
+          "priceUSD": 5.35
+        },
+        {
+          "minQty": 201,
+          "maxQty": 500,
+          "priceUSD": 4.71
+        },
+        {
+          "minQty": 501,
+          "priceUSD": 4.17
+        }
+      ],
+      "images": [
+        "/catalog/club-football/adidas-real-madrid-acid-purple-trefoil-tee.jpg",
+        "/adidas-real-madrid-acid-purple-trefoil-tee.jpg",
+        "/football_club (28).jpg"
+      ],
+      "colorVariants": [
+        {
+          "name": "Royal Purple Acid Wash",
+          "hex": "#493166"
+        },
+        {
+          "name": "Export Raw Black",
+          "hex": "#0a0a0c"
+        }
+      ],
+      "leadTimeDays": 23,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Plummy Fashions Ltd. (LEED Platinum Certified)",
+      "supplierLocation": "Narayanganj / Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Combed Cotton",
+        "Reactive Low-Impact Eco Dyes"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "250 GSM Heavyweight Mineral Wash"
+        },
+        {
+          "label": "Fit Profile",
+          "value": "Oversized Streetwear Drop-Shoulder"
+        },
+        {
+          "label": "Wash Treatment",
+          "value": "Enzyme Silicon Bio-Polish (Pre-Shrunk <2%)"
+        },
+        {
+          "label": "Collar Construction",
+          "value": "1x1 Lycra Heavy Ribbed Crewneck (2.8cm width)"
+        },
+        {
+          "label": "Stitching",
+          "value": "Reinforced Twin-Needle Armhole & Bottom Hem"
+        },
+        {
+          "label": "Color Fastness",
+          "value": "Grade 4.5 ISO 105 Standard"
+        },
+        {
+          "label": "Available Sizes",
+          "value": "XS, S, M, L, XL, 2XL, 3XL (EU/US Specs)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true,
+      "brand": "Adidas",
+      "club": "Real Madrid CF",
+      "frontPrint": "Emirates Clean White Retro Trefoil"
+    },
+    {
+      "id": "tshirt-heavy-01",
+      "slug": "300gsm-ultra-heavyweight-vintage-boxy-blank-tee",
+      "title": "300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "heavyweight-oversized",
+      "subdivision": "Heavyweight Streetwear",
+      "description": "True 300 GSM carded heavyweight combed cotton with vintage boxy cut and dropped shoulder. Engineered for luxury private label streetwear.",
+      "price": 5.4,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "Accord Platinum",
+        "OEKO-TEX 100"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 5.4
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 4.65
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 3.95
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Raw Natural Bone",
+          "hex": "#e9e5dd"
+        },
+        {
+          "name": "Washed Charcoal",
+          "hex": "#2c2d30"
+        },
+        {
+          "name": "Pitch Black",
+          "hex": "#111112"
+        }
+      ],
+      "leadTimeDays": 25,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "World Apparel Ltd. (EPB Bonded)",
+      "supplierLocation": "Gazipur Industrial Zone",
+      "supplierRating": 4.9,
+      "supplierVerified": true,
+      "materials": [
+        "100% Organic Heavyweight Cotton"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "300 GSM Heavyweight Jersey"
+        },
+        {
+          "label": "Yarn Count",
+          "value": "16s Combed Open-End Knit"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 28.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "tshirt-vintage-01",
+      "slug": "mineral-wash-acid-charcoal-relaxed-skater-tee",
+      "title": "Mineral Wash Acid Charcoal Relaxed Skater Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "vintage-wash",
+      "subdivision": "Vintage Washes",
+      "description": "Authentic stone acid-washed finish with distressed seam wear and garment dyed patina.",
+      "price": 5.1,
+      "currency": "USD",
+      "moq": 75,
+      "moqBadge": "MOQ: 75 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "BSCI A-Grade"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 75,
+          "maxQty": 299,
+          "priceUSD": 5.1
+        },
+        {
+          "minQty": 300,
+          "maxQty": 999,
+          "priceUSD": 4.45
+        },
+        {
+          "minQty": 1000,
+          "priceUSD": 3.8
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Acid Charcoal",
+          "hex": "#37383e"
+        },
+        {
+          "name": "Vintage Faded Olive",
+          "hex": "#424838"
+        }
+      ],
+      "leadTimeDays": 24,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Knit Concern Group",
+      "supplierLocation": "Narayanganj Industrial Hub",
+      "supplierRating": 4.88,
+      "supplierVerified": true,
+      "materials": [
+        "100% Ring-Spun Cotton"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "240 GSM Mineral Wash"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 30.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "tshirt-organic-01",
+      "slug": "gots-certified-organic-combed-cotton-daily-blank",
+      "title": "GOTS Certified 100% Organic Combed Cotton Blank Tee",
+      "categorySlug": "t-shirts",
+      "subcategorySlug": "organic-blanks",
+      "subdivision": "Eco Organic Knits",
+      "description": "Ultra-soft 200 GSM single jersey manufactured under LEED Platinum certified zero-toxic-discharge facility.",
+      "price": 3.9,
+      "currency": "USD",
+      "moq": 150,
+      "moqBadge": "MOQ: 150 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "GOTS Organic",
+        "LEED Platinum"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 150,
+          "maxQty": 499,
+          "priceUSD": 3.9
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 3.35
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 2.85
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pure White",
+          "hex": "#ffffff"
+        },
+        {
+          "name": "Jet Black",
+          "hex": "#111111"
+        },
+        {
+          "name": "Sage Green",
+          "hex": "#768670"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6109.10.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Plummy Fashions Ltd.",
+      "supplierLocation": "Narayanganj",
+      "supplierRating": 4.98,
+      "supplierVerified": true,
+      "materials": [
+        "100% GOTS Organic Cotton"
+      ],
+      "specifications": [
+        {
+          "label": "Fabric Weight",
+          "value": "200 GSM Single Jersey"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 25.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "acc-belt-01",
+      "slug": "full-grain-cowhide-artisan-leather-belt-solid-brass",
+      "title": "Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle)",
+      "categorySlug": "accessories",
+      "subcategorySlug": "leather-belts",
+      "subdivision": "Leather Accoutrements",
+      "description": "Vegetable-tanned 3.8mm thick cowhide harness leather with beveled hand-burnished edges and Japanese solid brass roller buckle.",
+      "price": 12.5,
+      "currency": "USD",
+      "moq": 50,
+      "moqBadge": "MOQ: 50 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "LWG Gold Rated",
+        "REACH Standard"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "maxQty": 199,
+          "priceUSD": 12.5
+        },
+        {
+          "minQty": 200,
+          "maxQty": 499,
+          "priceUSD": 10.8
+        },
+        {
+          "minQty": 500,
+          "priceUSD": 9.2
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Espresso Brown",
+          "hex": "#382218"
+        },
+        {
+          "name": "Onyx Black",
+          "hex": "#1a1a1a"
+        },
+        {
+          "name": "Cognac Tan",
+          "hex": "#964b00"
+        }
+      ],
+      "leadTimeDays": 25,
+      "hsCode": "4203.30.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Arutemika Japan-BD Atelier",
+      "supplierLocation": "Hazaribagh / Savar Tannery Estate",
+      "supplierRating": 4.96,
+      "supplierVerified": true,
+      "materials": [
+        "Full-Grain Veg-Tan Cowhide",
+        "Solid Brass Hardware"
+      ],
+      "specifications": [
+        {
+          "label": "Thickness",
+          "value": "3.8mm - 4.0mm Saddle Leather"
+        },
+        {
+          "label": "Hardware",
+          "value": "Cast Solid Brass (Nickel-Free)"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 35.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "acc-brass-01",
+      "slug": "custom-debossed-solid-brass-key-shackle-carabiner",
+      "title": "Custom Debossed Solid Brass Key Shackle Carabiner",
+      "categorySlug": "accessories",
+      "subcategorySlug": "brass-hardware",
+      "subdivision": "Metal Hardware",
+      "description": "Marine-grade solid brass screw shackle key clip with laser custom logo engraving. Heavy vintage tumbled hand patina.",
+      "price": 4.2,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "ISO 9001:2015"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 4.2
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 3.5
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 2.85
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Aged Brass",
+          "hex": "#b59410"
+        },
+        {
+          "name": "Matte Gunmetal",
+          "hex": "#3e424b"
+        }
+      ],
+      "leadTimeDays": 18,
+      "hsCode": "8308.10.00",
+      "portOfLoading": "Dhaka Air Cargo (DAC)",
+      "incoterms": [
+        "FOB",
+        "EXW"
+      ],
+      "supplierName": "Dhaka Precision Hardware Foundry",
+      "supplierLocation": "Dhaka Industrial Cluster",
+      "supplierRating": 4.9,
+      "supplierVerified": true,
+      "materials": [
+        "Solid Naval Brass"
+      ],
+      "specifications": [
+        {
+          "label": "Tensile Strength",
+          "value": "180 kgf Proof Load"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 20.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "acc-cap-01",
+      "slug": "heavy-cotton-twill-unstructured-6-panel-dad-cap",
+      "title": "Heavy Cotton Twill Unstructured 6-Panel Dad Cap",
+      "categorySlug": "accessories",
+      "subcategorySlug": "caps-headwear",
+      "subdivision": "Headwear",
+      "description": "100% chino cotton twill with brass tuck-in buckle strap and high-density 3D direct embroidery.",
+      "price": 3.8,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "BSCI A-Grade"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 3.8
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 3.1
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 2.6
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Pitch Black",
+          "hex": "#141414"
+        },
+        {
+          "name": "Washed Navy",
+          "hex": "#1e293b"
+        },
+        {
+          "name": "Khaki Sand",
+          "hex": "#d4b996"
+        }
+      ],
+      "leadTimeDays": 20,
+      "hsCode": "6505.00.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Apex Headwear & Apparel",
+      "supplierLocation": "Gazipur Industrial Zone",
+      "supplierRating": 4.92,
+      "supplierVerified": true,
+      "materials": [
+        "100% Chino Cotton Twill"
+      ],
+      "specifications": [
+        {
+          "label": "Crown",
+          "value": "Unstructured Low-Profile"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 25.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "acc-jute-01",
+      "slug": "golden-jute-natural-biodegradable-daily-market-tote",
+      "title": "Golden Jute Natural Biodegradable Daily Market Tote",
+      "categorySlug": "accessories",
+      "subcategorySlug": "jute-totes",
+      "subdivision": "Eco Goods",
+      "description": "Export-grade 340 GSM laminated natural golden jute fiber with 100% cotton herringbone webbed handles.",
+      "price": 2.45,
+      "currency": "USD",
+      "moq": 200,
+      "moqBadge": "MOQ: 200 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "EPB Eco Passport",
+        "Zero Plastic"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 200,
+          "maxQty": 999,
+          "priceUSD": 2.45
+        },
+        {
+          "minQty": 1000,
+          "maxQty": 4999,
+          "priceUSD": 1.95
+        },
+        {
+          "minQty": 5000,
+          "priceUSD": 1.6
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Golden Natural",
+          "hex": "#c4a470"
+        },
+        {
+          "name": "Bleached White",
+          "hex": "#f5f0e6"
+        }
+      ],
+      "leadTimeDays": 22,
+      "hsCode": "6305.10.00",
+      "portOfLoading": "Chattogram Port (CGP) / Mongla Port",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Janata Jute Mills Ltd.",
+      "supplierLocation": "Narsingdi / Dhaka Division",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "100% Biodegradable Golden Jute"
+      ],
+      "specifications": [
+        {
+          "label": "Load Capacity",
+          "value": "25 kg Tested Load"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 15.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "bag-duffle-01",
+      "slug": "full-grain-vegetable-tanned-cowhide-weekender-duffle",
+      "title": "Full-Grain Vegetable-Tanned Cowhide Weekender Duffle",
+      "categorySlug": "leather-bags",
+      "subcategorySlug": "full-grain-duffles",
+      "subdivision": "Heritage Luggage",
+      "description": "Handcrafted 1.8mm full-grain pull-up cowhide from Savar Tannery. Heavy-duty YKK Excella two-way brass zippers, solid copper rivets, and waterproof twill lining.",
+      "price": 68.0,
+      "currency": "USD",
+      "moq": 25,
+      "moqBadge": "MOQ: 25 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "LWG Gold Medal",
+        "REACH Standard"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 25,
+          "maxQty": 99,
+          "priceUSD": 68.0
+        },
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 56.0
+        },
+        {
+          "minQty": 500,
+          "priceUSD": 48.0
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Vintage Cognac",
+          "hex": "#8c4819"
+        },
+        {
+          "name": "Midnight Black",
+          "hex": "#151515"
+        },
+        {
+          "name": "Chocolate Brown",
+          "hex": "#3d2314"
+        }
+      ],
+      "leadTimeDays": 35,
+      "hsCode": "4202.11.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF",
+        "EXW"
+      ],
+      "supplierName": "Arutemika Heritage Atelier",
+      "supplierLocation": "Savar Tannery Industrial Estate",
+      "supplierRating": 4.98,
+      "supplierVerified": true,
+      "materials": [
+        "1.8mm Savar Full-Grain Veg-Tan Leather",
+        "YKK Brass Zippers"
+      ],
+      "specifications": [
+        {
+          "label": "Dimensions",
+          "value": "52cm x 28cm x 26cm (Cabin Approved)"
+        },
+        {
+          "label": "Capacity",
+          "value": "42 Liters"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 95.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "bag-brief-01",
+      "slug": "executive-slim-laptop-briefcase-full-grain-leather",
+      "title": "Executive Slim Laptop Briefcase (Full-Grain Cowhide)",
+      "categorySlug": "leather-bags",
+      "subcategorySlug": "executive-briefcases",
+      "subdivision": "Executive Gear",
+      "description": "Structured executive briefcase with padded 16-inch MacBook Pro compartment, organizer slip pockets, and detachable leather shoulder strap.",
+      "price": 54.0,
+      "currency": "USD",
+      "moq": 30,
+      "moqBadge": "MOQ: 30 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "LWG Certified",
+        "ISO 9001"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 30,
+          "maxQty": 99,
+          "priceUSD": 54.0
+        },
+        {
+          "minQty": 100,
+          "maxQty": 299,
+          "priceUSD": 45.0
+        },
+        {
+          "minQty": 300,
+          "priceUSD": 38.5
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Classic Saddle Tan",
+          "hex": "#9c5a2b"
+        },
+        {
+          "name": "Obsidian Black",
+          "hex": "#1a1a1a"
+        }
+      ],
+      "leadTimeDays": 30,
+      "hsCode": "4202.12.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Apex Footwear & Tanning Enterprise",
+      "supplierLocation": "Gazipur Industrial Zone",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "Full-Grain Oil-Pullup Cowhide",
+        "Brushed Antique Brass"
+      ],
+      "specifications": [
+        {
+          "label": "Laptop Fit",
+          "value": "Up to 16.2 inch Laptop"
+        },
+        {
+          "label": "Hardware",
+          "value": "Solid Cast Brass D-Rings & Clips"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 80.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "bag-backpack-01",
+      "slug": "minimalist-commuter-rolltop-leather-backpack",
+      "title": "Minimalist Commuter Rolltop Full-Grain Leather Backpack",
+      "categorySlug": "leather-bags",
+      "subcategorySlug": "artisan-backpacks",
+      "subdivision": "Artisan Backpacks",
+      "description": "Modern ergonomic leather backpack with Fidlock magnetic buckle, padded air-mesh back panel, and quick-access side passport pocket.",
+      "price": 59.0,
+      "currency": "USD",
+      "moq": 30,
+      "moqBadge": "MOQ: 30 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "Accord Safety Certified",
+        "LWG Gold"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 30,
+          "maxQty": 99,
+          "priceUSD": 59.0
+        },
+        {
+          "minQty": 100,
+          "maxQty": 299,
+          "priceUSD": 49.0
+        },
+        {
+          "minQty": 300,
+          "priceUSD": 42.0
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1546938576-6e6a64f317cc?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Matte Charcoal Black",
+          "hex": "#1f2124"
+        },
+        {
+          "name": "Olive Drab Leather",
+          "hex": "#3b4436"
+        }
+      ],
+      "leadTimeDays": 30,
+      "hsCode": "4202.92.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Arutemika Japan-BD Atelier",
+      "supplierLocation": "Savar Tannery Estate",
+      "supplierRating": 4.97,
+      "supplierVerified": true,
+      "materials": [
+        "Full-Grain Cowhide",
+        "Ballistic Nylon Reinforcements"
+      ],
+      "specifications": [
+        {
+          "label": "Capacity",
+          "value": "22 - 28 Liters (Expandable Rolltop)"
+        },
+        {
+          "label": "Buckle",
+          "value": "Fidlock V-Buckle 25 Magnetic Hardware"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 85.0,
+      "techPackAvailable": true
+    },
+    {
+      "id": "bag-tote-01",
+      "slug": "savar-artisan-full-grain-leather-shopper-tote",
+      "title": "Savar Artisan Full-Grain Leather Shopper Tote",
+      "categorySlug": "leather-bags",
+      "subcategorySlug": "tote-bags",
+      "subdivision": "Atelier Totes",
+      "description": "Seamless raw-edge construction in thick supple cowhide with interior key leash and zip pouch.",
+      "price": 38.0,
+      "currency": "USD",
+      "moq": 40,
+      "moqBadge": "MOQ: 40 pcs",
+      "unit": "pcs",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "LWG Gold"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 40,
+          "maxQty": 149,
+          "priceUSD": 38.0
+        },
+        {
+          "minQty": 150,
+          "maxQty": 499,
+          "priceUSD": 31.0
+        },
+        {
+          "minQty": 500,
+          "priceUSD": 26.5
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Caramel Brown",
+          "hex": "#a3602d"
+        },
+        {
+          "name": "Pitch Black",
+          "hex": "#141414"
+        }
+      ],
+      "leadTimeDays": 25,
+      "hsCode": "4202.21.00",
+      "portOfLoading": "Chattogram Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "CIF"
+      ],
+      "supplierName": "Apex Footwear & Tanning Enterprise",
+      "supplierLocation": "Gazipur",
+      "supplierRating": 4.93,
+      "supplierVerified": true,
+      "materials": [
+        "100% Full-Grain Cowhide"
+      ],
+      "specifications": [
+        {
+          "label": "Drop Handle Length",
+          "value": "26 cm Shoulder Drop"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 55.0,
+      "techPackAvailable": true
+    }
+  ]
+}

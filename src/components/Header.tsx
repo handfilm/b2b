@@ -20,6 +20,7 @@ import {
   Bookmark,
   ShoppingCart,
   Check,
+  Package,
 } from 'lucide-react';
 import { useInquiryCart } from '../context/InquiryCartContext';
 import { useI18n } from '../context/I18nContext';
@@ -67,6 +68,8 @@ interface HeaderProps {
   onOpenPipeline?: () => void;
   onNavigateToBuyerDashboard?: (tab?: string) => void;
   onNavigateToSellerDashboard?: () => void;
+  onNavigateToCatalog?: (path?: string) => void;
+  currentPath?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -98,6 +101,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenPipeline,
   onNavigateToBuyerDashboard,
   onNavigateToSellerDashboard,
+  onNavigateToCatalog,
+  currentPath,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isCurrencyMenuOpen, setIsCurrencyMenuOpen] = useState(false);
@@ -489,6 +494,25 @@ export const Header: React.FC<HeaderProps> = ({
               Made in BD
             </span>
           </div>
+
+          {onNavigateToCatalog && (
+            <button
+              type="button"
+              id="header-b2b-catalog-btn"
+              onClick={() => onNavigateToCatalog('/catalog')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 border shrink-0 ${
+                currentPath?.startsWith('/catalog')
+                  ? 'bg-gradient-to-r from-rose-600 to-rose-700 border-rose-500 text-white shadow-md shadow-rose-950/40'
+                  : isDark
+                  ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200 hover:text-white'
+                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
+              }`}
+              title="B2B Catalog"
+            >
+              <Package className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>B2B Catalog</span>
+            </button>
+          )}
         </div>
 
         {/* Center: Subtle Verticals Dropdown + Tiny Search Bar with Magnifier Clipart */}

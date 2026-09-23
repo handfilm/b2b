@@ -23,7 +23,7 @@ import { EcosystemGridSection } from './components/EcosystemGridSection';
 import { FloatingRightDock } from './components/FloatingRightDock';
 import { Footer } from './components/Footer';
 import { NexosSyncProvider, useNexosSync } from './context/NexosSyncContext';
-import { InquiryCartProvider } from './context/InquiryCartContext';
+import { InquiryCartProvider, useInquiryCart } from './context/InquiryCartContext';
 import { I18nProvider, useI18n } from './context/I18nContext';
 import { InquiryCart } from './components/InquiryCart';
 import { RawxBotChat } from './components/RawxBotChat';
@@ -35,6 +35,7 @@ import { CatalogGrid } from './components/CatalogGrid';
 import { FactoryProfileDrawer } from './components/FactoryProfileDrawer';
 import { BuyerDashboardShell } from './pages/BuyerDashboard';
 import { SellerDashboardShell } from './pages/SellerDashboard';
+import { B2bCatalogPage } from './pages/B2bCatalogPage';
 import {
   saveRfqToFirestore,
   saveSampleToFirestore,
@@ -140,6 +141,8 @@ const AppContent: React.FC = () => {
     isLoadingMore,
     loadMore,
   } = useNexosSync();
+
+  const { addToCart } = useInquiryCart();
 
   // URL / Route Navigation State: supporting /buyer/dashboard and /seller/dashboard
   const [currentPath, setCurrentPath] = useState<string>(() => {
@@ -697,6 +700,69 @@ const AppContent: React.FC = () => {
           onLogout={handleLogout}
           theme={theme}
         />
+      ) : currentPath.startsWith('/catalog') ? (
+        <>
+          <Header
+            currentCurrency={currency}
+            onCurrencyChange={setCurrency}
+            lang={lang}
+            onLanguageChange={setLang}
+            selectedCategory={selectedCategory}
+            onSelectCategory={(cat) => {
+              navigate('/');
+              setSelectedCategory(cat);
+            }}
+            selectedDivision={selectedDivision}
+            onSelectDivision={(div) => {
+              navigate('/');
+              setSelectedDivision(div);
+            }}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+            onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+            onOpenAutomation={() => setIsAutomationModalOpen(true)}
+            inquiryCount={rfqs.length + samples.length}
+            activeView={activeView}
+            onViewChange={(v) => {
+              navigate('/');
+              setActiveView(v);
+              setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
+              setSupplierFilter(null);
+            }}
+            persona={persona}
+            onPersonaChange={setPersona}
+            authUser={authUser}
+            onOpenAuth={() => setIsAuthModalOpen(true)}
+            onLogout={handleLogout}
+            onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+            activeRfqCount={rfqs.length}
+            onOpenAiAssistant={() => handleOpenAiAssistant()}
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            onOpenPipeline={() => setIsPipelineModalOpen(true)}
+            onNavigateToBuyerDashboard={() => navigate('/buyer/dashboard')}
+            onNavigateToSellerDashboard={() => navigate('/seller/dashboard')}
+            onNavigateToCatalog={(path) => navigate(path || '/catalog')}
+            currentPath={currentPath}
+          />
+
+          <B2bCatalogPage
+            currentPath={currentPath}
+            onNavigate={navigate}
+            currency={currentCurrencyConfig}
+            onRequestSample={handleOpenSampleModal}
+            onRequestTechPack={(prod) => {
+              setSelectedProduct(prod);
+              setIsTechPackModalOpen(true);
+            }}
+            onAddToCart={(prod) => {
+              addToCart(prod, { requestedQty: prod.moq || 50, targetPrice: prod.price || 4.85 });
+              showNotification(`Added "${prod.title}" (${prod.moq || 50} pcs) to B2B Inquiry Cart`);
+            }}
+          />
+        </>
       ) : (
         <>
           {/* 1. TOP BAR: Consolidated 3-Tier Alibaba/Etsy Hybrid Header */}
@@ -724,9 +790,6 @@ const AppContent: React.FC = () => {
             }}
             persona={persona}
             onPersonaChange={setPersona}
-            apiSource={apiSource}
-            onForceSync={handleForceSync}
-            isSyncing={isSyncing}
             authUser={authUser}
             onOpenAuth={() => setIsAuthModalOpen(true)}
             onLogout={handleLogout}
@@ -738,6 +801,8 @@ const AppContent: React.FC = () => {
             onOpenPipeline={() => setIsPipelineModalOpen(true)}
             onNavigateToBuyerDashboard={() => navigate('/buyer/dashboard')}
             onNavigateToSellerDashboard={() => navigate('/seller/dashboard')}
+            onNavigateToCatalog={(path) => navigate(path || '/catalog')}
+            currentPath={currentPath}
           />
 
       {/* 2. HERO SECTION: AI Mode, Products, BD Exporters, Global Buyer with Big Search Bar */}
