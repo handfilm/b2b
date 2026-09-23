@@ -310,7 +310,7 @@ export interface Customer {
   sourcingBudgetUSD?: number | string;
   minOrderQty?: number;
   sectorsOfInterest: CategoryId[];
-  verifiedStatus: 'Gold Verified Enterprise' | 'Retail Conglomerate' | 'Chamber Registered' | 'Global Sourcing Agent';
+  verifiedStatus: 'Gold Verified Enterprise' | 'Retail Conglomerate' | 'Chamber Registered' | 'Global Sourcing Agent' | 'Verified B2B Lead';
   totalOrdersPlaced: number;
   activeLcs: number;
   totalVolumeExported: string;
@@ -323,6 +323,16 @@ export interface Customer {
     rating: number;
     date: string;
   };
+  customerId?: string;
+  email?: string;
+  phone?: string;
+  city?: string;
+  address?: string;
+  totalSpentUSD?: number;
+  tags?: string[];
+  note?: string;
+  taxExempt?: boolean;
+  leadType?: 'RMG' | 'RMLG' | 'Leather Goods';
 }
 
 export interface LiveTradeEvent {

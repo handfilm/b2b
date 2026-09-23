@@ -14,6 +14,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { B2bCatalogProduct, CurrencyConfig } from '../types';
+import { ProductImageCarousel } from './ProductImageCarousel';
 
 interface B2bCatalogCardProps {
   product: B2bCatalogProduct;
@@ -51,48 +52,47 @@ export const B2bCatalogCard: React.FC<B2bCatalogCardProps> = ({
         setShowCtaMenu(false);
       }}
     >
-      {/* Top Media Section */}
-      <div className="relative aspect-[4/3] w-full bg-slate-950 overflow-hidden cursor-pointer" onClick={() => onSelectProduct(product)}>
-        <img
-          src={currentImage}
-          alt={product.title}
-          loading="lazy"
-          onError={(e) => {
-            if (!imageError) {
-              setImageError(true);
-              // Fallback to primary alias
-              (e.target as HTMLImageElement).src = `/catalog/club-football/club-${String(product.id.replace(/\D/g, '') || '01').padStart(2, '0')}.jpg`;
-            }
-          }}
-          className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+      {/* Top Media Section: Horizontal Image Carousel with Multiple Angles & Prints */}
+      <div className="relative aspect-[4/3] w-full bg-slate-950 overflow-hidden">
+        <ProductImageCarousel
+          images={product.images && product.images.length > 0 ? product.images : [currentImage]}
+          title={product.title}
+          aspectRatioClass="aspect-[4/3]"
+          onCardClick={() => onSelectProduct(product)}
+          isParentHovered={isHovered}
+          angleBadgePosition="top-center"
+          paginationBottomClass="bottom-8"
+          angleLabels={[
+            'Front Studio Cut',
+            product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic Detail',
+            product.club ? `${product.club} Squad #` : 'Back View',
+            'Tokyo Std QC Audit',
+          ]}
         />
 
-        {/* Gradient Scrim */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#131720] via-transparent to-black/30 pointer-events-none" />
-
         {/* Top Floating Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10 pointer-events-none">
+        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2 z-20 pointer-events-none">
           {/* Export Compliance Status (Tokyo Standard) */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-emerald-500/40 text-emerald-400 font-mono text-[11px] font-bold shadow-md">
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 font-mono text-[10.5px] font-bold shadow-md">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0 animate-pulse" />
             <span className="tracking-tight uppercase">{product.exportComplianceStatus || 'Tokyo Standard'}</span>
           </div>
 
           {/* MOQ Badge */}
-          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 font-mono text-[11px] font-black shadow-md">
+          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 font-mono text-[10.5px] font-black shadow-md">
             <Package className="w-3 h-3 text-slate-950 shrink-0" />
             <span>{product.moqBadge || `MOQ: ${product.moq} pcs`}</span>
           </div>
         </div>
 
         {/* Lead time & HS Code pill bottom of image */}
-        <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px] text-slate-300 font-mono pointer-events-none">
-          <span className="px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 flex items-center gap-1">
+        <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[10.5px] text-slate-300 font-mono pointer-events-none z-20">
+          <span className="px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-sm border border-white/10 flex items-center gap-1">
             <Clock className="w-3 h-3 text-emerald-400" />
             <span>{product.leadTimeDays}d FOB Lead</span>
           </span>
           {product.hsCode && (
-            <span className="px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-sm border border-white/10 text-slate-400">
+            <span className="px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-sm border border-white/10 text-slate-400">
               HS {product.hsCode}
             </span>
           )}

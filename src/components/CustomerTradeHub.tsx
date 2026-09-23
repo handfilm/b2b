@@ -54,16 +54,25 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
   const t = getTranslation(lang);
   const [customerSearch, setCustomerSearch] = useState('');
   const [selectedVerification, setSelectedVerification] = useState<string>('all');
+  const [buyerSegment, setBuyerSegment] = useState<'all' | 'rmg' | 'leather' | 'eu' | 'us'>('all');
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
   const isDark = theme === 'dark';
 
   const filteredCustomers = customers.filter((c) => {
+    const q = customerSearch.toLowerCase();
+    const tagsStr = (c.tags || []).join(' ').toLowerCase();
     const matchesSearch =
-      c.companyName.toLowerCase().includes(customerSearch.toLowerCase()) ||
-      c.country.toLowerCase().includes(customerSearch.toLowerCase()) ||
-      c.contactPerson.toLowerCase().includes(customerSearch.toLowerCase()) ||
-      c.recentInquiry.toLowerCase().includes(customerSearch.toLowerCase());
+      !customerSearch ||
+      c.companyName.toLowerCase().includes(q) ||
+      c.country.toLowerCase().includes(q) ||
+      c.contactPerson.toLowerCase().includes(q) ||
+      (c.city && c.city.toLowerCase().includes(q)) ||
+      (c.email && c.email.toLowerCase().includes(q)) ||
+      (c.phone && c.phone.toLowerCase().includes(q)) ||
+      (c.note && c.note.toLowerCase().includes(q)) ||
+      tagsStr.includes(q) ||
+      c.recentInquiry.toLowerCase().includes(q);
 
     const matchesCategory =
       selectedCategory === 'all' || c.sectorsOfInterest.includes(selectedCategory);
@@ -71,7 +80,18 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
     const matchesVerification =
       selectedVerification === 'all' || c.verifiedStatus === selectedVerification;
 
-    return matchesSearch && matchesCategory && matchesVerification;
+    let matchesSegment = true;
+    if (buyerSegment === 'rmg') {
+      matchesSegment = c.sectorsOfInterest.includes('rmg-apparel') || c.leadType === 'RMG';
+    } else if (buyerSegment === 'leather') {
+      matchesSegment = c.sectorsOfInterest.includes('leather-footwear') || c.leadType === 'RMLG';
+    } else if (buyerSegment === 'eu') {
+      matchesSegment = ['GB', 'DE', 'FR', 'NL', 'DK', 'ES', 'SE'].includes(c.countryCode);
+    } else if (buyerSegment === 'us') {
+      matchesSegment = c.countryCode === 'US';
+    }
+
+    return matchesSearch && matchesCategory && matchesVerification && matchesSegment;
   });
 
   const getEventIcon = (type: LiveTradeEvent['type']) => {
@@ -162,6 +182,100 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
         </div>
       </div>
 
+      {/* Sector / Region Segment Filter Rail */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setBuyerSegment('all')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              buyerSegment === 'all'
+                ? 'bg-[#e11d48] text-white shadow-md'
+                : isDark
+                ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+            }`}
+          >
+            <span>All Global Buyers</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/30 text-white font-mono">
+              {customers.length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBuyerSegment('rmg')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              buyerSegment === 'rmg'
+                ? 'bg-[#10b981] text-slate-950 shadow-md font-black'
+                : isDark
+                ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+            }`}
+          >
+            <span>👕 RMG Apparel Buyers</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
+              {customers.filter((c) => c.sectorsOfInterest.includes('rmg-apparel') || c.leadType === 'RMG').length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBuyerSegment('leather')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              buyerSegment === 'leather'
+                ? 'bg-amber-500 text-slate-950 shadow-md font-black'
+                : isDark
+                ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+            }`}
+          >
+            <span>👜 Leather Goods & RMLG</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
+              {customers.filter((c) => c.sectorsOfInterest.includes('leather-footwear') || c.leadType === 'RMLG').length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBuyerSegment('eu')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              buyerSegment === 'eu'
+                ? 'bg-sky-500 text-white shadow-md font-black'
+                : isDark
+                ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+            }`}
+          >
+            <span>🇪🇺 EU & UK Buying Houses</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
+              {customers.filter((c) => ['GB', 'DE', 'FR', 'NL', 'DK', 'ES', 'SE'].includes(c.countryCode)).length}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setBuyerSegment('us')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              buyerSegment === 'us'
+                ? 'bg-indigo-500 text-white shadow-md font-black'
+                : isDark
+                ? 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200'
+            }`}
+          >
+            <span>🇺🇸 US Retailers</span>
+            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-black/20 font-mono">
+              {customers.filter((c) => c.countryCode === 'US').length}
+            </span>
+          </button>
+        </div>
+
+        <span className="text-xs font-mono text-slate-400">
+          Showing <strong className="text-emerald-400">{filteredCustomers.length}</strong> active verified buyers
+        </span>
+      </div>
+
       {/* Search & Verification Badges Filter Bar */}
       <div
         className={`flex flex-col sm:flex-row items-center justify-between gap-3 p-3.5 rounded-xl border ${
@@ -174,15 +288,23 @@ export const CustomerTradeHub: React.FC<CustomerTradeHubProps> = ({
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
             type="text"
-            placeholder="Search enterprise buyers, countries..."
+            placeholder="Search by company, buyer, email, phone, city..."
             value={customerSearch}
             onChange={(e) => setCustomerSearch(e.target.value)}
-            className={`w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border focus:outline-none focus:border-[#e11d48] ${
+            className={`w-full pl-9 pr-8 py-1.5 text-xs rounded-lg border focus:outline-none focus:border-[#e11d48] ${
               isDark
                 ? 'bg-[#1a1a1a] text-white border-white/10'
                 : 'bg-slate-50 text-slate-900 border-slate-200'
             }`}
           />
+          {customerSearch && (
+            <button
+              onClick={() => setCustomerSearch('')}
+              className="absolute right-2.5 top-2 text-slate-400 hover:text-white text-xs cursor-pointer"
+            >
+              ✕
+            </button>
+          )}
         </div>
 
         <div className="flex items-center space-x-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">

@@ -15,7 +15,10 @@ import {
   Sparkles,
   ArrowRight,
   ExternalLink,
-  Info
+  Info,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
 } from 'lucide-react';
 import { B2bCatalogProduct, CurrencyConfig } from '../types';
 
@@ -93,27 +96,77 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
         <div className="flex-1 overflow-y-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Gallery */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 border border-white/10 shadow-inner">
+            {/* Main Interactive Angle Viewer */}
+            <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 border border-white/10 shadow-inner group/modalImg">
               <img
                 src={currentImg}
                 alt={product.title}
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center transition-transform duration-300 group-hover/modalImg:scale-102"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = `/catalog/club-football/club-${String(product.id.replace(/\D/g, '') || '01').padStart(2, '0')}.jpg`;
                 }}
               />
 
               {/* Floating badges */}
-              <div className="absolute top-3 left-3 flex flex-wrap gap-2">
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/85 backdrop-blur-md border border-emerald-500/50 text-emerald-400 font-mono text-xs font-bold">
+              <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10 pointer-events-none">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/85 backdrop-blur-md border border-emerald-500/50 text-emerald-400 font-mono text-xs font-bold shadow-md">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
                   <span>{product.exportComplianceStatus || 'Tokyo Standard'}</span>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-mono text-xs font-black">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-mono text-xs font-black shadow-md">
                   <Package className="w-4 h-4 text-slate-950" />
                   <span>{product.moqBadge || `MOQ: ${product.moq} pcs`}</span>
                 </div>
               </div>
+
+              {/* Angle indicator badge top right */}
+              {product.images && product.images.length > 1 && (
+                <div className="absolute top-3 right-3 z-10 pointer-events-none">
+                  <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-semibold shadow-lg">
+                    <Eye className="w-3 h-3 text-rose-400" />
+                    <span>
+                      {selectedImgIdx === 0
+                        ? 'Front Cut'
+                        : selectedImgIdx === 1
+                        ? product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic'
+                        : selectedImgIdx === 2
+                        ? product.club ? `${product.club} #` : 'Back View'
+                        : 'QC & Spec'}
+                    </span>
+                    <span className="text-white/40 text-[10px]">
+                      {selectedImgIdx + 1}/{product.images.length}
+                    </span>
+                  </span>
+                </div>
+              )}
+
+              {/* Navigation Chevrons */}
+              {product.images && product.images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Previous angle"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedImgIdx((prev) => (prev - 1 + product.images.length) % product.images.length);
+                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/70 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md transition-all shadow-xl hover:scale-110 active:scale-95 cursor-pointer"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-white" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next angle"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedImgIdx((prev) => (prev + 1) % product.images.length);
+                    }}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/70 hover:bg-black/90 text-white border border-white/20 backdrop-blur-md transition-all shadow-xl hover:scale-110 active:scale-95 cursor-pointer"
+                  >
+                    <ChevronRight className="w-5 h-5 text-white" />
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Thumbnail selector */}

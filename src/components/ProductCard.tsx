@@ -15,11 +15,14 @@ import {
   TrendingDown,
   ShoppingCart,
   X,
+  SlidersHorizontal,
+  Eye,
 } from 'lucide-react';
 import { Product, CurrencyConfig } from '../types';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
 import { useInquiryCart } from '../context/InquiryCartContext';
 import { useI18n } from '../context/I18nContext';
+import { ProductImageCarousel } from './ProductImageCarousel';
 
 interface ProductCardProps {
   product: Product;
@@ -48,6 +51,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const isBn = lang === 'BN';
   const [selectedSwatchIndex, setSelectedSwatchIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [showSpecsOverlay, setShowSpecsOverlay] = useState(false);
   const [hoveredTierIndex, setHoveredTierIndex] = useState<number | null>(null);
 
   const { addToCart } = useInquiryCart();
@@ -141,11 +145,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
+        setShowSpecsOverlay(false);
         setHoveredTierIndex(null);
       }}
       onFocus={() => setIsHovered(true)}
       onBlur={() => {
         setIsHovered(false);
+        setShowSpecsOverlay(false);
         setHoveredTierIndex(null);
       }}
       tabIndex={0}
@@ -159,16 +165,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           : 'bg-white border border-slate-200 hover:border-[#e11d48]/60 shadow-xs hover:shadow-xl'
       }`}
     >
-      {/* 1. DEFAULT STATE: Square Product Image with High-Performance Motion Zoom */}
-      <motion.img
-        src={product.images[0]}
-        alt={product.title}
-        referrerPolicy="no-referrer"
-        animate={{ scale: isHovered ? 1.05 : 1 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
-        style={{ willChange: 'transform', transformOrigin: 'center center' }}
-        className="w-full h-full object-cover transform-gpu"
-        loading="lazy"
+      {/* 1. DEFAULT STATE: Square Product Image Carousel supporting Multiple Angles & Print Variations */}
+      <ProductImageCarousel
+        images={product.images && product.images.length > 0 ? product.images : []}
+        title={product.title}
+        aspectRatioClass="aspect-square"
+        onCardClick={handleCardClick}
+        isParentHovered={isHovered}
+        angleBadgePosition="top-center"
+        paginationBottomClass="bottom-18"
+        angleLabels={[
+          'Front Studio Cut',
+          product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic Detail',
+          product.club ? `${product.club} Squad #` : 'Back Silhouette',
+          'Tokyo Std QC & Fabric',
+        ]}
       />
 
       {/* Top Gradient & Minimal Provenance Pill (Fades out smoothly on hover to reveal glassmorphic tooltip) */}
@@ -199,7 +210,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* 2. SUBTLE, ANIMATED GLASSMORPHIC TOOLTIP ON PRODUCT IMAGE BORDER (Framer Motion reveal on hover) */}
       <AnimatePresence>
-        {isHovered && (
+        {isHovered && !showSpecsOverlay && (
           <motion.div
             key="tooltip"
             role="tooltip"
@@ -255,9 +266,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Default State Bottom Overlay */}
       <motion.div
-        animate={{ opacity: isHovered ? 0 : 1, y: isHovered ? 12 : 0 }}
+        animate={{ opacity: showSpecsOverlay ? 0 : 1, y: showSpecsOverlay ? 12 : 0 }}
         transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="absolute inset-x-0 bottom-0 p-3.5 bg-gradient-to-t from-black/90 via-black/60 to-transparent pointer-events-none"
+        className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-auto z-10"
       >
         <p className="text-white text-xs sm:text-sm font-extrabold truncate drop-shadow-md">
           {product.title}
@@ -282,11 +293,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {isBn ? 'নূন্যতম:' : 'MOQ:'} {toDigits(product.moq)} {product.unit}
           </span>
         </div>
+
+        {/* Quick Specs / Pricing Tiers Expand Button */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowSpecsOverlay(true);
+          }}
+          className="mt-1.5 w-full py-1 px-2 rounded-lg bg-white/10 hover:bg-[#e11d48] text-white text-[10.5px] font-bold border border-white/15 backdrop-blur-md transition-all flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+        >
+          <SlidersHorizontal className="w-3 h-3 text-[#10b981]" />
+          <span>{isBn ? 'স্পেক্স ও ভলিউম মূল্য' : 'Quick Specs & Pricing Ladder'}</span>
+        </button>
       </motion.div>
 
-      {/* 3. ON HOVER: FRAMER MOTION GLASSMORPHIC OPERATIONAL OVERLAY (Slides up from the bottom with 300ms ease-out) */}
+      {/* 3. ON SPEC EXPAND: FRAMER MOTION GLASSMORPHIC OPERATIONAL OVERLAY */}
       <AnimatePresence>
-        {isHovered && (
+        {showSpecsOverlay && (
           <motion.div
             key="operational-overlay"
             initial={{ opacity: 0, y: '100%' }}
@@ -294,7 +318,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             exit={{ opacity: 0, y: '100%' }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             style={{ willChange: 'opacity, transform' }}
-            className="absolute inset-0 pt-12 p-3.5 bg-[#0a0a0a]/95 backdrop-blur-md flex flex-col justify-between z-20 text-white transform-gpu"
+            className="absolute inset-0 pt-10 p-3.5 bg-[#0a0a0a]/95 backdrop-blur-md flex flex-col justify-between z-20 text-white transform-gpu"
             onClick={(e) => {
               // Click inside overlay delegates to full view unless an action button is clicked
             }}
@@ -314,14 +338,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsHovered(false);
+                      setShowSpecsOverlay(false);
                       setHoveredTierIndex(null);
                     }}
-                    className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                    title="Dismiss overlay"
-                    aria-label="Dismiss overlay"
+                    className="flex items-center gap-1 px-2 py-0.5 rounded-md text-slate-300 hover:text-white bg-white/10 hover:bg-white/20 transition-colors cursor-pointer text-[10px] font-mono"
+                    title="Return to image carousel"
+                    aria-label="Return to image carousel"
                   >
-                    <X className="w-3.5 h-3.5" />
+                    <Eye className="w-3 h-3 text-rose-400" />
+                    <span>{isBn ? 'ছবি দেখুন' : 'Angles'}</span>
+                    <X className="w-3.5 h-3.5 text-slate-400 ml-0.5" />
                   </button>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   X,
   Building2,
@@ -11,6 +11,12 @@ import {
   Send,
   ExternalLink,
   Lock,
+  Mail,
+  Phone,
+  MapPin,
+  Tag,
+  Copy,
+  Check,
 } from 'lucide-react';
 import { Customer } from '../types';
 
@@ -29,9 +35,17 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
   onOpenRfq,
   theme = 'dark',
 }) => {
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
   if (!isOpen || !customer) return null;
 
   const isDark = theme === 'dark';
+
+  const copyToClipboard = (text: string, fieldName: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(fieldName);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
@@ -64,6 +78,11 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
                 <div className="flex items-center space-x-2">
                   <h3 className="text-base sm:text-lg font-black tracking-tight">{customer.companyName}</h3>
                   <span className="text-base" title={customer.country}>{customer.flag}</span>
+                  {customer.customerId && (
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-slate-300">
+                      ID: {customer.customerId}
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-slate-400">
                   {customer.contactPerson} • {customer.role}
@@ -80,7 +99,106 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
           </div>
 
           {/* Body */}
-          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
+            {/* Direct Sourcing Credentials & Verified Contact */}
+            {(customer.email || customer.phone || customer.address || customer.note) && (
+              <div
+                className={`p-4 rounded-xl border space-y-3 ${
+                  isDark ? 'bg-[#141414] border-white/10' : 'bg-slate-50 border-slate-200'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 flex items-center space-x-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Direct Buyer Contact & Official Coordinates</span>
+                  </span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                    Permanent Account
+                  </span>
+                </div>
+
+                {customer.note && (
+                  <div className="p-2.5 rounded-lg bg-black/30 border border-white/5 text-xs text-slate-300 font-mono">
+                    <span className="text-slate-500 block text-[9.5px] uppercase font-bold mb-0.5">Procurement Role / Directive:</span>
+                    {customer.note}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                  {customer.email && (
+                    <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between gap-2">
+                      <div className="flex items-center space-x-2 truncate">
+                        <Mail className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                        <a
+                          href={`mailto:${customer.email}`}
+                          className="font-mono text-[11px] text-slate-200 hover:text-white truncate hover:underline"
+                        >
+                          {customer.email}
+                        </a>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard(customer.email!, 'email')}
+                        className="text-slate-400 hover:text-white shrink-0 p-1"
+                        title="Copy Email"
+                      >
+                        {copiedField === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                  )}
+
+                  {customer.phone && (
+                    <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 flex items-center justify-between gap-2">
+                      <div className="flex items-center space-x-2 truncate">
+                        <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <a
+                          href={`tel:${customer.phone}`}
+                          className="font-mono text-[11px] text-slate-200 hover:text-white truncate hover:underline"
+                        >
+                          {customer.phone}
+                        </a>
+                      </div>
+                      <button
+                        onClick={() => copyToClipboard(customer.phone!, 'phone')}
+                        className="text-slate-400 hover:text-white shrink-0 p-1"
+                        title="Copy Phone"
+                      >
+                        {copiedField === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {customer.address && (
+                  <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 flex items-start space-x-2 text-xs">
+                    <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <span className="text-[10px] text-slate-400 block font-bold uppercase">Official Address / HQ:</span>
+                      <span className="text-slate-200 font-mono text-[11px]">{customer.address}</span>
+                    </div>
+                  </div>
+                )}
+
+                {customer.tags && customer.tags.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                    <Tag className="w-3 h-3 text-slate-400 shrink-0" />
+                    {customer.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-300"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {customer.taxExempt && (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                        Tax Exempt
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Sourcing Volume & Verification */}
             <div className="grid grid-cols-2 gap-3">
               <div className="p-3.5 rounded-xl bg-[#141414] border border-white/10 space-y-1">
@@ -99,7 +217,11 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
                   <ShieldCheck className="w-4 h-4" />
                   <span>{customer.verifiedStatus}</span>
                 </span>
-                <span className="text-[10px] text-[#10b981] block">KYC & Credit Approved</span>
+                <span className="text-[10px] text-[#10b981] block">
+                  {customer.totalSpentUSD && customer.totalSpentUSD > 0
+                    ? `$${customer.totalSpentUSD.toLocaleString()} USD Completed`
+                    : 'KYC & Credit Approved'}
+                </span>
               </div>
             </div>
 
@@ -114,7 +236,11 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
                     key={i}
                     className="text-xs font-bold px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white"
                   >
-                    {sec}
+                    {sec === 'rmg-apparel'
+                      ? '👕 RMG & Knitwear Apparel'
+                      : sec === 'leather-footwear'
+                      ? '👜 Leather Goods & Footwear'
+                      : sec}
                   </span>
                 ))}
               </div>
@@ -132,7 +258,9 @@ export const BuyerDetailDrawer: React.FC<BuyerDetailDrawerProps> = ({
                 </div>
                 <div>
                   <span className="text-slate-500 text-[10px] block">Preferred Incoterms:</span>
-                  <span className="font-mono font-bold text-[#10b981]">FOB Chattogram Port</span>
+                  <span className="font-mono font-bold text-[#10b981]">
+                    {customer.preferredIncoterms?.join(', ') || 'FOB Chattogram Port'}
+                  </span>
                 </div>
               </div>
             </div>

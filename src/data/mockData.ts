@@ -9,6 +9,7 @@ import {
   AutomationWorkflow,
   AutomationLog,
 } from '../types';
+import { PERMANENT_BUYERS } from './permanentBuyersData';
 
 export const CURRENCIES: Record<string, CurrencyConfig> = {
   USD: { code: 'USD', symbol: '$', rate: 1.0 },
@@ -971,6 +972,7 @@ export const FACTORY_PRODUCTION_LINES: FactoryProductionLine[] = [
 ];
 
 export const CUSTOMERS: Customer[] = [
+  ...PERMANENT_BUYERS,
   {
     id: 'cust-hm-sweden',
     companyName: 'H&M Hennes & Mauritz AB',

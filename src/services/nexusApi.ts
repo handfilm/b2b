@@ -373,7 +373,10 @@ export const nexusApi = {
           ? json
           : [];
         if (liveBuyers.length > 0) {
-          const res = { buyers: liveBuyers, totalCount: json.totalCount || json.total || 15420, source: 'live' as const };
+          // Ensure permanent buyers are always retained at the forefront
+          const existingIds = new Set(FALLBACK_CUSTOMERS.map((b) => b.id));
+          const merged = [...FALLBACK_CUSTOMERS, ...liveBuyers.filter((b) => !existingIds.has(b.id))];
+          const res = { buyers: merged, totalCount: json.totalCount || json.total || 15420, source: 'live' as const };
           setCached(cacheKey, res);
           return res;
         }
