@@ -157,6 +157,9 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
       onTouchEnd={handleTouchEnd}
       onClick={onCardClick}
     >
+      {/* Dark theme skeleton loader to prevent flashes during rapid scrolling */}
+      <div className="absolute inset-0 animate-pulse bg-neutral-900 pointer-events-none" />
+
       {/* Animated Image Slide */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.img

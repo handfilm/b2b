@@ -23,32 +23,28 @@
       "slug": "t-shirts",
       "name": "T-Shirts",
       "title": "Knitwear & Circular Fashion Pavilion",
-      "description": "Heavyweight combed cotton, vintage enzyme wash, drop-shoulder streetwear, and authentic club football kits.",
+      "description": "Heavyweight combed cotton, vintage enzyme wash, drop-shoulder streetwear, architectural box-tees, and raw-edge custom graphic blanks.",
       "icon": "Shirt",
       "subcategories": [
         {
-          "id": "club-football",
-          "slug": "club-football",
-          "name": "Club Football",
-          "count": 28
+          "id": "streetwear-silhouettes",
+          "name": "RAWx Streetwear Silhouettes",
+          "slug": "streetwear-silhouettes"
         },
         {
-          "id": "heavyweight-oversized",
-          "slug": "heavyweight-oversized",
-          "name": "Heavyweight Oversized",
-          "count": 6
+          "id": "heavyweight-blanks",
+          "name": "Heavyweight Blanks (260-300 GSM)",
+          "slug": "heavyweight-blanks"
         },
         {
           "id": "vintage-wash",
-          "slug": "vintage-wash",
-          "name": "Vintage Mineral Wash",
-          "count": 4
+          "name": "Vintage & Acid Wash",
+          "slug": "vintage-wash"
         },
         {
-          "id": "organic-blanks",
-          "slug": "organic-blanks",
-          "name": "Organic Combed Blanks",
-          "count": 4
+          "id": "organic",
+          "name": "Organic & Sustainable",
+          "slug": "organic"
         }
       ]
     },
@@ -124,12 +120,12 @@
   "products": [
     {
       "id": "club-foot-1",
-      "slug": "nike-fc-barcelona-spotify-oversized-tee",
-      "title": "Nike x FC Barcelona 'Spotify' Oversized Heavyweight Tee",
+      "slug": "rawx-architectural-heavyweight-box-tee",
+      "title": "Architectural 260–300 GSM Heavyweight Box-Tee (Custom Graphic / Screen-Print Ready)",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Heavyweight 240 GSM Combed Ring-Spun Cotton tee engineered for export. Features official Nike silhouette styling with high-density Spotify chest graphic and Catalan heritage crest embroidery.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.85,
       "currency": "USD",
       "moq": 50,
@@ -159,9 +155,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-fc-barcelona-spotify-tee.jpg",
-        "/nike-fc-barcelona-spotify-tee.jpg",
-        "/football_club (1).jpg"
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -220,20 +215,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "FC Barcelona",
-      "frontPrint": "Spotify Heritage Maroon"
+      "brand": "RAWx Studio",
+      "frontPrint": "Architectural RAWx Grid Print"
     },
     {
       "id": "club-foot-2",
-      "slug": "adidas-real-madrid-benq-siemens-vintage-tee",
-      "title": "Adidas x Real Madrid 'BenQ Siemens' Gal\u00e1cticos Vintage Tee",
+      "slug": "rawx-garment-dyed-dual-tone-ombre-tee",
+      "title": "Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Vintage 2006 Gal\u00e1cticos aesthetic featuring BenQ Siemens archival chest typography, Adidas 3-stripes sleeve trim, and 240 GSM pre-shrunk cotton build.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.95,
       "currency": "USD",
       "moq": 50,
@@ -263,13 +257,12 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-benq-siemens-tee.jpg",
-        "/adidas-real-madrid-benq-siemens-tee.jpg",
-        "/football_club (2).jpg"
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
-          "name": "Gal\u00e1cticos Black",
+          "name": "Galácticos Black",
           "hex": "#14151a"
         },
         {
@@ -324,20 +317,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "BenQ Siemens 2006 Vintage"
+      "brand": "RAWx Studio",
+      "frontPrint": "Dual-Tone Ombre Dip-Dye Vector"
     },
     {
       "id": "club-foot-3",
-      "slug": "nike-liverpool-fc-standard-chartered-crimson-tee",
-      "title": "Nike x Liverpool FC 'Standard Chartered' Crimson Heritage Tee",
+      "slug": "rawx-acid-washed-vintage-streetwear-blank",
+      "title": "Acid-Washed Vintage Heavyweight Streetwear Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Anfield crimson 230 GSM combed cotton tee with crisp Standard Chartered front typography and Liverbird gold crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.75,
       "currency": "USD",
       "moq": 100,
@@ -367,9 +359,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-liverpool-fc-standard-chartered-tee.jpg",
-        "/nike-liverpool-fc-standard-chartered-tee.jpg",
-        "/football_club (3).jpg"
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -428,20 +419,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Liverpool FC",
-      "frontPrint": "Standard Chartered Anfield"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Vintage Mineral Wash Spec"
     },
     {
       "id": "club-foot-4",
-      "slug": "adidas-real-madrid-fifa-champions-shield-tee",
-      "title": "Adidas x Real Madrid 'FIFA World Champions Shield' Gold Edition Tee",
+      "slug": "rawx-300-gsm-double-faced-heavyweight-box-tee",
+      "title": "Architectural 300 GSM Double-Faced Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Commemorative Madrid FIFA World Champions edition with metallic foil gold shield badge, Trefoil embroidery, and 250 GSM heavy French terry finish.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.2,
       "currency": "USD",
       "moq": 50,
@@ -471,9 +461,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-fifa-champions-shield-tee.jpg",
-        "/adidas-real-madrid-fifa-champions-shield-tee.jpg",
-        "/football_club (4).jpg"
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -532,20 +521,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "FIFA World Champions Gold Shield"
+      "brand": "RAWx Studio",
+      "frontPrint": "Minimalist Structural Vector"
     },
     {
       "id": "club-foot-5",
-      "slug": "nike-borussia-dortmund-vodafone-acid-wash-tee",
-      "title": "Nike x Borussia Dortmund 'Vodafone' Vintage Acid Wash Tee",
+      "slug": "rawx-carbon-charcoal-mineral-wash-tee",
+      "title": "Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Silicone mineral-washed charcoal cotton (240 GSM) adorned with retro Vodafone red circular logo and BVB Signal Iduna badge.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.1,
       "currency": "USD",
       "moq": 75,
@@ -575,9 +563,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-borussia-dortmund-vodafone-tee.jpg",
-        "/nike-borussia-dortmund-vodafone-tee.jpg",
-        "/football_club (5).jpg"
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -636,20 +623,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Borussia Dortmund",
-      "frontPrint": "Vodafone Vintage Signal Red"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Tonal Atelier Monogram"
     },
     {
       "id": "club-foot-6",
-      "slug": "puma-manchester-city-holographic-iridescent-tee",
-      "title": "Puma x Manchester City 'Holographic Puma' Iridescent White Tee",
+      "slug": "rawx-optic-white-heavyweight-box-tee",
+      "title": "Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready)",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Clean optic white 230 GSM combed cotton with high-sheen holographic Puma feline and Manchester City iridescent badge that shifts color under light.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.9,
       "currency": "USD",
       "moq": 50,
@@ -679,9 +665,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/puma-manchester-city-holographic-iridescent-tee.jpg",
-        "/puma-manchester-city-holographic-iridescent-tee.jpg",
-        "/football_club (6).jpg"
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -740,20 +725,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Puma",
-      "club": "Manchester City",
-      "frontPrint": "Holographic Iridescent Puma"
+      "brand": "RAWx Studio",
+      "frontPrint": "High-Density Screen-Print Matrix"
     },
     {
       "id": "club-foot-7",
-      "slug": "nike-fc-barcelona-midnight-gold-spotify-tee",
-      "title": "Nike x FC Barcelona 'Spotify' Midnight Black & Gold Edition Tee",
+      "slug": "rawx-midnight-black-300-gsm-architectural-tee",
+      "title": "Midnight Black 300 GSM Architectural Drop-Shoulder Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Pitch black 240 GSM ring-spun cotton tee with high-density metallic gold Spotify soundwave emblem and Blaugrana crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.7,
       "currency": "USD",
       "moq": 100,
@@ -783,9 +767,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-fc-barcelona-midnight-gold-spotify-tee.jpg",
-        "/nike-fc-barcelona-midnight-gold-spotify-tee.jpg",
-        "/football_club (7).jpg"
+        "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -844,20 +827,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "FC Barcelona",
-      "frontPrint": "Midnight Gold Spotify"
+      "brand": "RAWx Studio",
+      "frontPrint": "Subtle Matte Carbon Vector"
     },
     {
       "id": "club-foot-8",
-      "slug": "adidas-real-madrid-fly-better-emerald-third-tee",
-      "title": "Adidas x Real Madrid 'Fly Better Emirates' Forest Emerald Third Tee",
+      "slug": "rawx-forest-emerald-garment-dyed-boxy-tee",
+      "title": "Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Deep forest emerald green drop-shoulder streetwear tee with crisp white Emirates Fly Better print and Madrid gold crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.95,
       "currency": "USD",
       "moq": 50,
@@ -887,9 +869,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-fly-better-emerald-tee.jpg",
-        "/adidas-real-madrid-fly-better-emerald-tee.jpg",
-        "/football_club (8).jpg"
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -948,20 +929,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "Fly Better Emirates Forest"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Botanical Reactive Spec"
     },
     {
       "id": "club-foot-9",
-      "slug": "puma-manchester-city-etihad-maroon-wine-tee",
-      "title": "Puma x Manchester City 'Etihad Airways' Deep Wine Maroon Tee",
+      "slug": "rawx-deep-burgundy-heavyweight-blank-tee",
+      "title": "Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Rich wine maroon 230 GSM single jersey with brushed gold Etihad Airways sponsor script and City crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.65,
       "currency": "USD",
       "moq": 100,
@@ -991,9 +971,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/puma-manchester-city-etihad-maroon-wine-tee.jpg",
-        "/puma-manchester-city-etihad-maroon-wine-tee.jpg",
-        "/football_club (9).jpg"
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1052,20 +1031,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Puma",
-      "club": "Manchester City",
-      "frontPrint": "Etihad Airways Gold Font"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Studio Geometric Print"
     },
     {
       "id": "club-foot-10",
-      "slug": "adidas-real-madrid-burgundy-trefoil-emirates-tee",
-      "title": "Adidas x Real Madrid 'Emirates' Royal Burgundy Trefoil Streetwear Tee",
+      "slug": "rawx-acid-washed-dual-tone-ombre-tee",
+      "title": "Acid-Washed Vintage Dual-Tone Ombre Oversized Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Royal burgundy 240 GSM heavy cotton featuring vintage Adidas Trefoil and white Fly Emirates print.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.9,
       "currency": "USD",
       "moq": 50,
@@ -1095,9 +1073,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-burgundy-trefoil-emirates-tee.jpg",
-        "/adidas-real-madrid-burgundy-trefoil-emirates-tee.jpg",
-        "/football_club (10).jpg"
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1156,20 +1133,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "Royal Burgundy Trefoil Emirates"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Dual-Tone Vector"
     },
     {
       "id": "club-foot-11",
-      "slug": "nike-chelsea-fc-damac-poppy-flower-tee",
-      "title": "Nike x Chelsea FC 'Damac Remembrance Poppy' Acid Purple Tee",
+      "slug": "rawx-washed-lavender-vintage-enzyme-tee",
+      "title": "Washed Lavender 260 GSM Vintage Enzyme Streetwear Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Enzyme-washed acid purple jersey with crimson remembrance poppy flower print, Damac sponsor, and Chelsea blue lion crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.25,
       "currency": "USD",
       "moq": 50,
@@ -1199,9 +1175,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-chelsea-fc-damac-poppy-flower-tee.jpg",
-        "/nike-chelsea-fc-damac-poppy-flower-tee.jpg",
-        "/football_club (11).jpg"
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1260,20 +1235,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Chelsea FC",
-      "frontPrint": "Damac Remembrance Poppy Flower"
+      "brand": "RAWx Studio",
+      "frontPrint": "Clean Minimalist Graphic"
     },
     {
       "id": "club-foot-12",
-      "slug": "puma-ac-milan-rossoneri-pitch-black-crimson-tee",
-      "title": "Puma x AC Milan 'Fly Better' Rossoneri Pitch Black & Crimson Tee",
+      "slug": "rawx-contrast-stitch-heavyweight-box-tee",
+      "title": "Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Rossoneri aesthetic on 240 GSM pitch black combed cotton with crimson red Fly Better print and AC Milan devil motif.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.8,
       "currency": "USD",
       "moq": 100,
@@ -1303,9 +1277,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/puma-ac-milan-rossoneri-pitch-black-crimson-tee.jpg",
-        "/puma-ac-milan-rossoneri-pitch-black-crimson-tee.jpg",
-        "/football_club (12).jpg"
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1364,20 +1337,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Puma",
-      "club": "AC Milan",
-      "frontPrint": "Fly Better Devil Crimson"
+      "brand": "RAWx Studio",
+      "frontPrint": "Architectural Contrast Overlock"
     },
     {
       "id": "club-foot-13",
-      "slug": "nike-liverpool-fc-pine-green-away-tee",
-      "title": "Nike x Liverpool FC 'Standard Chartered' Deep Pine Green Away Tee",
+      "slug": "rawx-deep-pine-green-box-tee",
+      "title": "Deep Pine Green 280 GSM Architectural Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Pine green away kit inspired streetwear tee with clean white Standard Chartered script and crimson Liverpool accents.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.85,
       "currency": "USD",
       "moq": 50,
@@ -1407,9 +1379,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-liverpool-fc-pine-green-away-tee.jpg",
-        "/nike-liverpool-fc-pine-green-away-tee.jpg",
-        "/football_club (13).jpg"
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1468,20 +1439,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Liverpool FC",
-      "frontPrint": "Standard Chartered Pine Green"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Architectural Line Art"
     },
     {
       "id": "club-foot-14",
-      "slug": "adidas-bayern-munich-telekom-trefoil-tee",
-      "title": "Adidas x Bayern Munich 'Telekom' Pure White Navy Trefoil Edition Tee",
+      "slug": "rawx-natural-raw-ecru-heavyweight-blank",
+      "title": "Natural Raw Ecru Unbleached Heavyweight Cotton Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Crisp optic white 230 GSM single jersey with navy blue Trefoil logo, Magenta Telekom chest mark, and Bayern crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.75,
       "currency": "USD",
       "moq": 50,
@@ -1511,9 +1481,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-bayern-munich-telekom-trefoil-tee.jpg",
-        "/adidas-bayern-munich-telekom-trefoil-tee.jpg",
-        "/football_club (14).jpg"
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1572,20 +1541,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Bayern Munich",
-      "frontPrint": "Telekom Bavarian Navy Trefoil"
+      "brand": "RAWx Studio",
+      "frontPrint": "Raw Organic Fiber Spec"
     },
     {
       "id": "club-foot-15",
-      "slug": "nike-al-nassr-ronaldo-7-riyadh-knight-tee",
-      "title": "Nike x Al Nassr FC 'Cristiano #7 Riyadh Knight' Gold & Black Tee",
+      "slug": "rawx-carbon-gold-medallion-tee",
+      "title": "Vintage Carbon & Gold Medallion Streetwear Heavyweight Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Exclusive Riyadh Knight edition in pitch black 250 GSM cotton with metallic gold Cristiano #7 typography and Al Nassr crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.3,
       "currency": "USD",
       "moq": 50,
@@ -1615,9 +1583,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-al-nassr-ronaldo-7-riyadh-knight-tee.jpg",
-        "/nike-al-nassr-ronaldo-7-riyadh-knight-tee.jpg",
-        "/football_club (15).jpg"
+        "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1676,20 +1643,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Al Nassr FC",
-      "frontPrint": "Cristiano #7 Riyadh Knight Gold"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Geometric Medallion"
     },
     {
       "id": "club-foot-16",
-      "slug": "adidas-real-madrid-emerald-stripes-emirates-tee",
-      "title": "Adidas x Real Madrid 'Emirates' Pure White Forest Green Stripes Tee",
+      "slug": "rawx-sage-chalk-ombre-boxy-fit-tee",
+      "title": "Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Classic white heavyweight tee with forest green 3-stripes shoulder execution and green Fly Better Emirates chest print.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.6,
       "currency": "USD",
       "moq": 100,
@@ -1719,9 +1685,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-emerald-stripes-emirates-tee.jpg",
-        "/adidas-real-madrid-emerald-stripes-emirates-tee.jpg",
-        "/football_club (16).jpg"
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1780,20 +1745,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "Emirates Fly Better Green Stripes"
+      "brand": "RAWx Studio",
+      "frontPrint": "Ombre Horizon Gradient"
     },
     {
       "id": "club-foot-17",
-      "slug": "nike-fc-barcelona-bottle-green-spotify-tee",
-      "title": "Nike x FC Barcelona 'Spotify' Olive Bottle Green Oversized Tee",
+      "slug": "rawx-olive-moss-mineral-wash-blank",
+      "title": "Olive Moss Vintage Mineral Wash Heavyweight Box Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Bottle green 240 GSM drop-shoulder knit with warm gold Spotify chest print and Senyera Catalan flag sleeve label.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.95,
       "currency": "USD",
       "moq": 50,
@@ -1823,9 +1787,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-fc-barcelona-bottle-green-spotify-tee.jpg",
-        "/nike-fc-barcelona-bottle-green-spotify-tee.jpg",
-        "/football_club (17).jpg"
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1884,20 +1847,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "FC Barcelona",
-      "frontPrint": "Spotify Gold Catalan Emblem"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Minimalist Sourcing Spec"
     },
     {
       "id": "club-foot-18",
-      "slug": "nike-fc-barcelona-gold-medallion-spotify-tee",
-      "title": "Nike x FC Barcelona 'Spotify' Pitch Black Gold Medallion Tee",
+      "slug": "rawx-pitch-black-300-gsm-heavyweight-box-tee",
+      "title": "Pitch Black Architectural 300 GSM Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Pitch black silicone-washed cotton tee with heavy circular gold medallion Barca crest and golden Spotify typography.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.15,
       "currency": "USD",
       "moq": 50,
@@ -1927,9 +1889,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-fc-barcelona-gold-medallion-spotify-tee.jpg",
-        "/nike-fc-barcelona-gold-medallion-spotify-tee.jpg",
-        "/football_club (18).jpg"
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -1988,20 +1949,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "FC Barcelona",
-      "frontPrint": "Spotify Gold Medallion Crest"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Tokyo Standard Mark"
     },
     {
       "id": "club-foot-19",
-      "slug": "adidas-arsenal-fc-golden-cannon-trefoil-tee",
-      "title": "Adidas x Arsenal FC 'Highbury Golden Cannon' Trefoil Streetwear Tee",
+      "slug": "rawx-acid-washed-charcoal-skater-blank",
+      "title": "Acid-Washed Vintage Charcoal Heavyweight Skater Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Gunners heritage tee in pitch black with historic Highbury golden cannon embroidery, Adidas Trefoil, and 240 GSM streetwear cut.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.1,
       "currency": "USD",
       "moq": 50,
@@ -2031,9 +1991,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
-        "/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
-        "/football_club (19).jpg"
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2092,20 +2051,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Arsenal FC",
-      "frontPrint": "Highbury Golden Cannon Trefoil"
+      "brand": "RAWx Studio",
+      "frontPrint": "Abstract Geometric Silhouette"
     },
     {
       "id": "club-foot-20",
-      "slug": "adidas-real-madrid-mineral-wash-charcoal-tee",
-      "title": "Adidas x Real Madrid 'Emirates' Mineral Wash Charcoal Gold Tee",
+      "slug": "rawx-mineral-wash-sand-slate-tee",
+      "title": "Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Mineral-washed charcoal 250 GSM single jersey with vintage gold Emirates script and distressed Madrid crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.4,
       "currency": "USD",
       "moq": 50,
@@ -2135,9 +2093,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-mineral-wash-charcoal-tee.jpg",
-        "/adidas-real-madrid-mineral-wash-charcoal-tee.jpg",
-        "/football_club (20).jpg"
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2196,20 +2153,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "Emirates Vintage Gold Script"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Patina Monogram"
     },
     {
       "id": "club-foot-21",
-      "slug": "nike-liverpool-fc-white-crimson-stripes-tee",
-      "title": "Nike x Liverpool FC 'Standard Chartered' Clean White Crimson Stripes Tee",
+      "slug": "rawx-260-gsm-minimalist-drop-shoulder-tee",
+      "title": "Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Clean white 230 GSM cotton tee featuring crimson Kop red Standard Chartered print and red contrast ribbing.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.7,
       "currency": "USD",
       "moq": 100,
@@ -2239,9 +2195,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-liverpool-fc-white-crimson-stripes-tee.jpg",
-        "/nike-liverpool-fc-white-crimson-stripes-tee.jpg",
-        "/football_club (21).jpg"
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2300,20 +2255,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Liverpool FC",
-      "frontPrint": "Standard Chartered Kop Red"
+      "brand": "RAWx Studio",
+      "frontPrint": "Clean Studio Vector"
     },
     {
       "id": "club-foot-22",
-      "slug": "nike-chelsea-fc-three-3-sponsor-tee",
-      "title": "Nike x Chelsea FC 'Three #3 Sponsor' Midnight Black Streetwear Tee",
+      "slug": "rawx-raw-edge-hemmed-acid-washed-box-tee",
+      "title": "Raw-Edge Hemmed Vintage Acid-Washed Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Midnight black 240 GSM heavyweight cotton tee with oversized '3' chest sponsor print and royal blue Chelsea lion crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.85,
       "currency": "USD",
       "moq": 50,
@@ -2343,9 +2297,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-chelsea-fc-three-3-sponsor-tee.jpg",
-        "/nike-chelsea-fc-three-3-sponsor-tee.jpg",
-        "/football_club (22).jpg"
+        "https://images.unsplash.com/photo-1562157873-818bc0726f68?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2404,20 +2357,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "Chelsea FC",
-      "frontPrint": "Three Sponsor #3 Blue Emblem"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Raw Edge Spec"
     },
     {
       "id": "club-foot-23",
-      "slug": "air-jordan-psg-qatar-airways-gold-shield-tee",
-      "title": "Air Jordan x Paris Saint-Germain 'Qatar Airways' Gold Shield Edition Tee",
+      "slug": "rawx-sunset-ombre-dip-dye-boxy-tee",
+      "title": "Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Parc Des Princes capsule in heavy 245 GSM cotton with iconic Jumpman emblem, golden Qatar Airways print, and PSG circular shield.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.2,
       "currency": "USD",
       "moq": 50,
@@ -2447,9 +2399,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/air-jordan-psg-qatar-airways-gold-shield-tee.jpg",
-        "/air-jordan-psg-qatar-airways-gold-shield-tee.jpg",
-        "/football_club (23).jpg"
+        "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2508,21 +2459,20 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Air Jordan",
-      "club": "Paris Saint-Germain",
-      "frontPrint": "Qatar Airways Gold Champions Shield"
+      "brand": "RAWx Studio",
+      "frontPrint": "Sunset Ombre Spec"
     },
     {
       "id": "club-foot-24",
-      "slug": "puma-manchester-city-neon-pink-etihad-tee",
-      "title": "Puma x Manchester City 'Etihad Airways' Pitch Black Neon Hot Pink Tee",
+      "slug": "rawx-pitch-black-neon-accent-box-tee",
+      "title": "Pitch Black & Neon Accent Architectural Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Vibrant streetwear edition featuring high-voltage neon hot pink Etihad Airways and Puma cat prints against pitch black 240 GSM jersey.",
-      "price": 5.0,
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
+      "price": 5,
       "currency": "USD",
       "moq": 50,
       "moqBadge": "MOQ: 50 pcs",
@@ -2538,7 +2488,7 @@
         {
           "minQty": 50,
           "maxQty": 200,
-          "priceUSD": 5.0
+          "priceUSD": 5
         },
         {
           "minQty": 201,
@@ -2551,9 +2501,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/puma-manchester-city-neon-pink-etihad-tee.jpg",
-        "/puma-manchester-city-neon-pink-etihad-tee.jpg",
-        "/football_club (24).jpg"
+        "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2612,20 +2561,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Puma",
-      "club": "Manchester City",
-      "frontPrint": "Etihad Airways Neon Hot Pink"
+      "brand": "RAWx Studio",
+      "frontPrint": "Cyber-Construct Geometric Vector"
     },
     {
       "id": "club-foot-25",
-      "slug": "cactus-jack-fc-barcelona-travis-scott-tee",
-      "title": "Cactus Jack x FC Barcelona 'Travis Scott Flame' Limited Collab Tee",
+      "slug": "rawx-earth-mineral-heavyweight-blank",
+      "title": "Acid-Washed Earth Mineral Heavyweight Streetwear Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Hypebeast limited collab in 260 GSM heavyweight French terry with Travis Scott Cactus Jack cross, Barcelona Spotify branding, and raw edge hems.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.6,
       "currency": "USD",
       "moq": 50,
@@ -2655,9 +2603,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/cactus-jack-fc-barcelona-travis-scott-tee.jpg",
-        "/cactus-jack-fc-barcelona-travis-scott-tee.jpg",
-        "/football_club (25).jpg"
+        "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2716,20 +2663,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Cactus Jack",
-      "club": "FC Barcelona",
-      "frontPrint": "Travis Scott Flame Cross & Spotify"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Earth Mineral Spec"
     },
     {
       "id": "club-foot-26",
-      "slug": "mamba-fc-barcelona-kobe-bryant-24-tee",
-      "title": "Mamba x FC Barcelona 'Kobe Bryant 24 Mentality' Tribute Heavyweight Tee",
+      "slug": "rawx-tokyo-atelier-standard-blank-tee",
+      "title": "Tokyo Atelier Standard 280 GSM Heavyweight Combed Cotton Blank",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Commemorative Kobe Bryant Mamba Mentality tribute on 260 GSM drop-shoulder knit with metallic gold #24 typography and Barca crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.5,
       "currency": "USD",
       "moq": 50,
@@ -2759,9 +2705,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/mamba-fc-barcelona-kobe-bryant-24-tee.jpg",
-        "/mamba-fc-barcelona-kobe-bryant-24-tee.jpg",
-        "/football_club (26).jpg"
+        "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2820,20 +2765,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Mamba",
-      "club": "FC Barcelona",
-      "frontPrint": "Kobe Bryant 24 Mamba Mentality Gold"
+      "brand": "RAWx Studio",
+      "frontPrint": "Tokyo Standard Atelier Seal"
     },
     {
       "id": "club-foot-27",
-      "slug": "nike-fc-barcelona-white-royal-blue-spotify-tee",
-      "title": "Nike x FC Barcelona 'Spotify' Pure White & Royal Blue Away Tee",
+      "slug": "rawx-ocean-ombre-dip-dye-boxy-tee",
+      "title": "Garment-Dyed Dual-Tone Ocean Ombre Dip-Dye Boxy Fit Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Classic away kit aesthetic in crisp white 230 GSM cotton with royal blue Spotify chest print and Blaugrana tricolor stripe cuffs.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 4.65,
       "currency": "USD",
       "moq": 100,
@@ -2863,9 +2807,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/nike-fc-barcelona-white-royal-blue-spotify-tee.jpg",
-        "/nike-fc-barcelona-white-royal-blue-spotify-tee.jpg",
-        "/football_club (27).jpg"
+        "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -2924,20 +2867,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Nike",
-      "club": "FC Barcelona",
-      "frontPrint": "Spotify Blaugrana Blue Ribbon"
+      "brand": "RAWx Studio",
+      "frontPrint": "Ocean Gradient Spec"
     },
     {
       "id": "club-foot-28",
-      "slug": "adidas-real-madrid-acid-purple-trefoil-tee",
-      "title": "Adidas x Real Madrid 'Emirates' Royal Purple Trefoil Acid Wash Tee",
+      "slug": "rawx-vintage-royal-purple-heavyweight-box-tee",
+      "title": "Acid-Washed Vintage Royal Purple Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
-      "subcategorySlug": "club-football",
+      "subcategorySlug": "streetwear-silhouettes",
       "subdivision": "Club Football Kits",
-      "description": "Acid-washed royal purple 250 GSM mineral wash jersey with white retro Adidas Trefoil, Fly Emirates sponsor, and vintage Madrid crown crest.",
+      "description": "Heavyweight 260-300 GSM Combed Ring-Spun Cotton tee engineered for Tokyo retail export JIS standards. Features architectural box silhouette, drop shoulders, pre-shrunk reactive wash, and zero side-torque construction. Ready for custom high-density screen-print or embroidery graphics.",
       "price": 5.35,
       "currency": "USD",
       "moq": 50,
@@ -2967,9 +2909,8 @@
         }
       ],
       "images": [
-        "/catalog/club-football/adidas-real-madrid-acid-purple-trefoil-tee.jpg",
-        "/adidas-real-madrid-acid-purple-trefoil-tee.jpg",
-        "/football_club (28).jpg"
+        "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -3028,11 +2969,10 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "Adidas",
-      "club": "Real Madrid CF",
-      "frontPrint": "Emirates Clean White Retro Trefoil"
+      "brand": "RAWx Studio",
+      "frontPrint": "RAWx Vintage Royal Vector"
     },
     {
       "id": "tshirt-heavy-01",
@@ -3111,7 +3051,7 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 28.0,
+      "samplePriceUSD": 28,
       "techPackAvailable": true
     },
     {
@@ -3182,7 +3122,7 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 30.0,
+      "samplePriceUSD": 30,
       "techPackAvailable": true
     },
     {
@@ -3258,7 +3198,7 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 25.0,
+      "samplePriceUSD": 25,
       "techPackAvailable": true
     },
     {
@@ -3339,7 +3279,7 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 35.0,
+      "samplePriceUSD": 35,
       "techPackAvailable": true
     },
     {
@@ -3410,7 +3350,7 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 20.0,
+      "samplePriceUSD": 20,
       "techPackAvailable": true
     },
     {
@@ -3485,7 +3425,7 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 25.0,
+      "samplePriceUSD": 25,
       "techPackAvailable": true
     },
     {
@@ -3557,18 +3497,18 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 15.0,
+      "samplePriceUSD": 15,
       "techPackAvailable": true
     },
     {
       "id": "bag-duffle-01",
-      "slug": "full-grain-vegetable-tanned-cowhide-weekender-duffle",
-      "title": "Full-Grain Vegetable-Tanned Cowhide Weekender Duffle",
+      "slug": "arutemika-full-grain-leather-weekender-duffle",
+      "title": "Arutemika Full-Grain Vegetable-Tanned Cowhide Weekender Duffle",
       "categorySlug": "leather-bags",
       "subcategorySlug": "full-grain-duffles",
       "subdivision": "Heritage Luggage",
-      "description": "Handcrafted 1.8mm full-grain pull-up cowhide from Savar Tannery. Heavy-duty YKK Excella two-way brass zippers, solid copper rivets, and waterproof twill lining.",
-      "price": 68.0,
+      "description": "Master-crafted 45L weekender duffle made from drum-dyed full-grain cowhide with heavy-duty solid brass hardware, detachable padded shoulder strap, and waterproof cotton drill lining.",
+      "price": 68,
       "currency": "USD",
       "moq": 25,
       "moqBadge": "MOQ: 25 pcs",
@@ -3583,16 +3523,16 @@
         {
           "minQty": 25,
           "maxQty": 99,
-          "priceUSD": 68.0
+          "priceUSD": 68
         },
         {
           "minQty": 100,
           "maxQty": 499,
-          "priceUSD": 56.0
+          "priceUSD": 56
         },
         {
           "minQty": 500,
-          "priceUSD": 48.0
+          "priceUSD": 48
         }
       ],
       "images": [
@@ -3613,7 +3553,7 @@
         }
       ],
       "leadTimeDays": 35,
-      "hsCode": "4202.11.00",
+      "hsCode": "4202.12.00",
       "portOfLoading": "Chattogram Port (CGP)",
       "incoterms": [
         "FOB",
@@ -3639,18 +3579,19 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 95.0,
-      "techPackAvailable": true
+      "samplePriceUSD": 95,
+      "techPackAvailable": true,
+      "brand": "Arutemika"
     },
     {
       "id": "bag-brief-01",
-      "slug": "executive-slim-laptop-briefcase-full-grain-leather",
-      "title": "Executive Slim Laptop Briefcase (Full-Grain Cowhide)",
+      "slug": "arutemika-executive-slim-leather-briefcase",
+      "title": "Arutemika Executive Slim Full-Grain Leather Briefcase",
       "categorySlug": "leather-bags",
       "subcategorySlug": "executive-briefcases",
       "subdivision": "Executive Gear",
-      "description": "Structured executive briefcase with padded 16-inch MacBook Pro compartment, organizer slip pockets, and detachable leather shoulder strap.",
-      "price": 54.0,
+      "description": "Minimalist executive briefcase in smooth full-grain cowhide leather with twin document compartments, trolley sleeve, magnetic quick-access passport pocket, and solid brass lock.",
+      "price": 54,
       "currency": "USD",
       "moq": 30,
       "moqBadge": "MOQ: 30 pcs",
@@ -3665,12 +3606,12 @@
         {
           "minQty": 30,
           "maxQty": 99,
-          "priceUSD": 54.0
+          "priceUSD": 54
         },
         {
           "minQty": 100,
           "maxQty": 299,
-          "priceUSD": 45.0
+          "priceUSD": 45
         },
         {
           "minQty": 300,
@@ -3716,8 +3657,9 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 80.0,
-      "techPackAvailable": true
+      "samplePriceUSD": 80,
+      "techPackAvailable": true,
+      "brand": "Arutemika"
     },
     {
       "id": "bag-backpack-01",
@@ -3727,7 +3669,7 @@
       "subcategorySlug": "artisan-backpacks",
       "subdivision": "Artisan Backpacks",
       "description": "Modern ergonomic leather backpack with Fidlock magnetic buckle, padded air-mesh back panel, and quick-access side passport pocket.",
-      "price": 59.0,
+      "price": 59,
       "currency": "USD",
       "moq": 30,
       "moqBadge": "MOQ: 30 pcs",
@@ -3742,16 +3684,16 @@
         {
           "minQty": 30,
           "maxQty": 99,
-          "priceUSD": 59.0
+          "priceUSD": 59
         },
         {
           "minQty": 100,
           "maxQty": 299,
-          "priceUSD": 49.0
+          "priceUSD": 49
         },
         {
           "minQty": 300,
-          "priceUSD": 42.0
+          "priceUSD": 42
         }
       ],
       "images": [
@@ -3793,18 +3735,18 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 85.0,
+      "samplePriceUSD": 85,
       "techPackAvailable": true
     },
     {
       "id": "bag-tote-01",
-      "slug": "savar-artisan-full-grain-leather-shopper-tote",
-      "title": "Savar Artisan Full-Grain Leather Shopper Tote",
+      "slug": "arutemika-artisan-full-grain-leather-work-tote",
+      "title": "Arutemika Artisan Full-Grain Cowhide Work Tote",
       "categorySlug": "leather-bags",
       "subcategorySlug": "tote-bags",
       "subdivision": "Atelier Totes",
-      "description": "Seamless raw-edge construction in thick supple cowhide with interior key leash and zip pouch.",
-      "price": 38.0,
+      "description": "Handcrafted from 2.2mm full-grain vegetable-tanned bovine cowhide at our Savar atelier. Features reinforced saddle-stitched shoulder straps, padded 16-inch laptop divider, YKK Excella antique brass hardware, and Tokyo JIS compliance.",
+      "price": 38,
       "currency": "USD",
       "moq": 40,
       "moqBadge": "MOQ: 40 pcs",
@@ -3818,12 +3760,12 @@
         {
           "minQty": 40,
           "maxQty": 149,
-          "priceUSD": 38.0
+          "priceUSD": 38
         },
         {
           "minQty": 150,
           "maxQty": 499,
-          "priceUSD": 31.0
+          "priceUSD": 31
         },
         {
           "minQty": 500,
@@ -3831,7 +3773,8 @@
         }
       ],
       "images": [
-        "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80"
+        "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80"
       ],
       "colorVariants": [
         {
@@ -3844,7 +3787,7 @@
         }
       ],
       "leadTimeDays": 25,
-      "hsCode": "4202.21.00",
+      "hsCode": "4202.12.00",
       "portOfLoading": "Chattogram Port (CGP)",
       "incoterms": [
         "FOB",
@@ -3864,8 +3807,97 @@
         }
       ],
       "sampleAvailable": true,
-      "samplePriceUSD": 55.0,
-      "techPackAvailable": true
+      "samplePriceUSD": 55,
+      "techPackAvailable": true,
+      "brand": "Arutemika"
+    },
+    {
+      "id": "acc-bracelet-01",
+      "slug": "arutemika-braided-leather-bracelet-316l-clasp",
+      "title": "Arutemika Full-Grain Braided Cowhide Bracelet (316L Stainless Steel Clasp)",
+      "categorySlug": "accessories",
+      "subcategorySlug": "leather-accessories",
+      "subdivision": "Artisan Leather Atelier",
+      "description": "Hand-braided 4mm full-grain vegetable-tanned cowhide with precision CNC-machined 316L marine-grade stainless steel magnetic locking clasp. Corrosion-proof and Tokyo retail packaged.",
+      "price": 3.8,
+      "currency": "USD",
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "unit": "pc",
+      "exportComplianceStatus": "Tokyo Standard",
+      "complianceBadges": [
+        "Tokyo Standard",
+        "LWG Certified Leather",
+        "JIS Compliance"
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 3.8,
+          "label": "Sample Batch"
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 3.2,
+          "label": "Retail Tier"
+        },
+        {
+          "minQty": 2000,
+          "maxQty": 10000,
+          "priceUSD": 2.65,
+          "label": "Volume Master"
+        }
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1611591475152-4735492d2427?w=800&auto=format&fit=crop&q=80"
+      ],
+      "colorVariants": [
+        {
+          "name": "Saddle Tan",
+          "hex": "#8b5a2b"
+        },
+        {
+          "name": "Onyx Black",
+          "hex": "#111827"
+        }
+      ],
+      "leadTimeDays": 21,
+      "hsCode": "7117.19.00",
+      "portOfLoading": "Chattogram Sea Port (CGP)",
+      "incoterms": [
+        "FOB",
+        "EXW",
+        "CIF"
+      ],
+      "supplierName": "Arutemika Leathercraft Atelier",
+      "supplierLocation": "Savar Tannery Estate, Dhaka",
+      "supplierRating": 4.95,
+      "supplierVerified": true,
+      "materials": [
+        "Full-Grain Veg-Tan Cowhide",
+        "316L Marine Stainless Steel"
+      ],
+      "specifications": [
+        {
+          "label": "Leather Origin",
+          "value": "Savar LWG Gold Certified Bovine"
+        },
+        {
+          "label": "Hardware Grade",
+          "value": "316L CNC Marine Stainless Steel"
+        },
+        {
+          "label": "Packaging",
+          "value": "Tokyo Retail Kraft Gift Box"
+        }
+      ],
+      "sampleAvailable": true,
+      "samplePriceUSD": 25,
+      "techPackAvailable": true,
+      "brand": "Arutemika",
+      "frontPrint": "316L Clasp Debossed Monogram"
     }
   ]
 }

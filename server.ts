@@ -2,9 +2,44 @@ import express from 'express';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
+import admin from 'firebase-admin';
 import { MASTER_FEDERATED_PRODUCTS, MASTER_LIVE_ORDERS } from './src/data/masterDatabaseFeeder';
 import { SUPPLIERS, CUSTOMERS, PRODUCTS as MOCK_PRODUCTS } from './src/data/mockData';
 import { FEDERATED_PRODUCTS } from './src/data/divisions';
+
+// Lazy initialization for Firebase Admin
+let adminDb: admin.firestore.Firestore | null = null;
+function getAdminFirestore(): admin.firestore.Firestore | null {
+  if (adminDb) return adminDb;
+  try {
+    if (admin.apps.length > 0) {
+      adminDb = admin.firestore();
+      return adminDb;
+    }
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+      try {
+        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+        admin.initializeApp({
+          credential: admin.credential.cert(serviceAccount),
+          projectId: serviceAccount.project_id || 'gen-lang-client-0857923590',
+        });
+        adminDb = admin.firestore();
+        return adminDb;
+      } catch (err) {
+        console.warn('Could not parse FIREBASE_SERVICE_ACCOUNT_KEY JSON:', err);
+      }
+    }
+    // Default initialization
+    admin.initializeApp({
+      projectId: 'gen-lang-client-0857923590',
+    });
+    adminDb = admin.firestore();
+    return adminDb;
+  } catch (e) {
+    console.warn('Firebase Admin initialization warning:', e);
+    return null;
+  }
+}
 
 // Lazy initialization for Gemini API client
 let genAIClient: GoogleGenAI | null = null;
@@ -33,6 +68,211 @@ async function startServer() {
       geminiConfigured: !!process.env.GEMINI_API_KEY,
       timestamp: new Date().toISOString(),
     });
+  });
+
+  // ============================================================================
+  // SERVERLESS API ROUTE: POST /api/rfq (Firestore & Google Chat CardsV2)
+  // ============================================================================
+  app.post('/api/rfq', async (req, res) => {
+    try {
+      const { buyer, product, requestDetails, audit, status } = req.body || {};
+
+      // Validate required payload parameters: buyer.workEmail, product.skuId, and product.requestedQuantity
+      if (!buyer?.workEmail || typeof buyer.workEmail !== 'string') {
+        return res.status(400).json({ error: 'Missing or invalid required parameter: buyer.workEmail' });
+      }
+      if (!product?.skuId || typeof product.skuId !== 'string') {
+        return res.status(400).json({ error: 'Missing or invalid required parameter: product.skuId' });
+      }
+      if (!product?.requestedQuantity || Number(product.requestedQuantity) <= 0) {
+        return res.status(400).json({ error: 'Missing or invalid required parameter: product.requestedQuantity' });
+      }
+
+      const requestedQty = Number(product.requestedQuantity);
+      const targetFob = Number(product.targetFob) || 4.5;
+      const leadTimeFobDays = Number(product.leadTimeFobDays) || 35;
+
+      const rfqDoc = {
+        sourceNode: 'b2b.handsandhead.com' as const,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        status: (status as any) || 'PENDING_SAMPLE',
+        buyer: {
+          workEmail: buyer.workEmail.trim(),
+          companyName: buyer.companyName?.trim() || 'Verified Sourcing Partner',
+          websiteUrl: buyer.websiteUrl?.trim() || '',
+          country: buyer.country?.trim() || 'International',
+          ipAddress: (req.headers['x-forwarded-for'] as string)?.split(',')[0] || req.ip || buyer.ipAddress || '',
+          source: (buyer.source as any) || 'direct_organic',
+        },
+        product: {
+          skuId: product.skuId.trim(),
+          title: product.title?.trim() || 'Architectural 260–300 GSM Heavyweight Box-Tee',
+          category: (product.category as any) || 'heavyweight_knits',
+          hsCode: product.hsCode?.trim() || '6109.10.00',
+          targetFob,
+          requestedQuantity: requestedQty,
+          leadTimeFobDays,
+          provenance: 'Tokyo Standard Export Atelier' as const,
+        },
+        requestDetails: {
+          requestType: (requestDetails?.requestType as any) || 'SAMPLE_DISPATCH',
+          targetDeliveryDate: requestDetails?.targetDeliveryDate || '',
+          techpackFileUrl: requestDetails?.techpackFileUrl || '',
+          buyerNotes: requestDetails?.buyerNotes || '',
+          dhlAccountOptional: requestDetails?.dhlAccountOptional || '',
+        },
+        audit: {
+          assignedDesk: 'Rakib Studio' as const,
+          sampleTrackingNumber: audit?.sampleTrackingNumber || `DHL-BD-${Date.now().toString().slice(-6)}`,
+          internalCostBaseBDT: Number(audit?.internalCostBaseBDT) || 480,
+          quoteSpreadMarginUSD: Number(audit?.quoteSpreadMarginUSD) || 0.85,
+        },
+      };
+
+      // Store the document into collection rfq_threads
+      let docId = `rfq_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      const db = getAdminFirestore();
+
+      if (db) {
+        try {
+          const docRef = await db.collection('rfq_threads').add(rfqDoc);
+          docId = docRef.id;
+        } catch (dbErr) {
+          console.warn('Firestore rfq_threads write warning:', dbErr);
+        }
+      }
+
+      // Dispatch an asynchronous HTTP POST payload to GOOGLE_CHAT_WEBHOOK_URL containing Google Chat CardsV2
+      const webhookUrl = process.env.GOOGLE_CHAT_WEBHOOK_URL;
+      if (webhookUrl) {
+        const cardsV2Payload = {
+          cardsV2: [
+            {
+              cardId: `rfq_${docId}`,
+              card: {
+                header: {
+                  title: `🚨 NEW HIGH-TICKET RFQ: ${rfqDoc.buyer.companyName}`,
+                  subtitle: `${rfqDoc.product.title} | ${requestedQty.toLocaleString()} Units`,
+                  imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=128&auto=format&fit=crop&q=80',
+                  imageType: 'CIRCLE',
+                },
+                sections: [
+                  {
+                    header: 'Buyer Dossier',
+                    widgets: [
+                      {
+                        decoratedText: {
+                          topLabel: 'Work Email',
+                          text: rfqDoc.buyer.workEmail,
+                          icon: { knownIcon: 'EMAIL' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Company Name',
+                          text: rfqDoc.buyer.companyName,
+                          icon: { knownIcon: 'MEMBERSHIP' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Country Origin',
+                          text: rfqDoc.buyer.country,
+                          icon: { knownIcon: 'MAP_PIN' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Acquisition Channel',
+                          text: rfqDoc.buyer.source,
+                          icon: { knownIcon: 'STAR' },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    header: 'Product & Commercial Target',
+                    widgets: [
+                      {
+                        decoratedText: {
+                          topLabel: 'SKU Identifier',
+                          text: rfqDoc.product.skuId,
+                          icon: { knownIcon: 'TICKET' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Target FOB Price',
+                          text: `$${rfqDoc.product.targetFob.toFixed(2)} USD`,
+                          icon: { knownIcon: 'DOLLAR' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Requested Quantity',
+                          text: `${requestedQty.toLocaleString()} Units`,
+                          icon: { knownIcon: 'SHOPPING_CART' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Production & Port Lead Time',
+                          text: `${rfqDoc.product.leadTimeFobDays} Days (FOB CGP Port)`,
+                          icon: { knownIcon: 'CLOCK' },
+                        },
+                      },
+                      {
+                        decoratedText: {
+                          topLabel: 'Provenance Standard',
+                          text: rfqDoc.product.provenance,
+                          icon: { knownIcon: 'CONFIRMATION_NUMBER_ICON' },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    widgets: [
+                      {
+                        buttonList: {
+                          buttons: [
+                            {
+                              text: 'Open RFQ in Admin Nexus',
+                              onClick: {
+                                openLink: {
+                                  url: `https://b2b.handsandhead.com/admin/rfq/${docId}`,
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          ],
+        };
+
+        fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(cardsV2Payload),
+        }).catch((webhookErr) => {
+          console.warn('Google Chat Webhook dispatch notice:', webhookErr);
+        });
+      }
+
+      return res.status(201).json({
+        success: true,
+        id: docId,
+        status: rfqDoc.status,
+        message: 'RFQ Thread registered successfully with Tokyo Standard provenance and dispatched to desk.',
+      });
+    } catch (err: any) {
+      console.error('Error handling /api/rfq:', err);
+      return res.status(500).json({ error: 'Internal server error processing RFQ submission' });
+    }
   });
 
   // AI Instant Trade Assistant Endpoint (IndiaMART / Alibaba Style)

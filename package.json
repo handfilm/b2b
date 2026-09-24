@@ -16,6 +16,7 @@
     "clsx": "^2.1.1",
     "express": "^5.2.1",
     "firebase": "^12.19.0",
+    "firebase-admin": "^14.5.0",
     "lucide-react": "^1.47.0",
     "motion": "^13.4.0",
     "react": "^18.3.1",

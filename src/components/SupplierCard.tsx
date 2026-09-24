@@ -91,6 +91,7 @@ export const SupplierCard: React.FC<SupplierCardProps> = ({
       >
         {/* 1. BACKGROUND PHOTO: Fit to Card with Cinematic Hover Zoom */}
         <div className="absolute inset-0 overflow-hidden z-0">
+          <div className="absolute inset-0 animate-pulse bg-neutral-900 pointer-events-none" />
           <img
             src={factoryVisual}
             alt={supplier.name}

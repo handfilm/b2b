@@ -507,3 +507,41 @@ export interface RfqThread {
   lastMessage?: string;
 }
 
+export interface RFQThreadDocument {
+  id: string;
+  sourceNode: "b2b.handsandhead.com";
+  createdAt: any;
+  status: "PENDING_SAMPLE" | "COSTING_REVIEW" | "TECHPACK_UPLOADED" | "ESCALATED";
+  buyer: {
+    workEmail: string;
+    companyName: string;
+    websiteUrl?: string;
+    country: string;
+    ipAddress?: string;
+    source: "apollo_campaign" | "direct_organic" | "rawx_bot";
+  };
+  product: {
+    skuId: string;
+    title: string;
+    category: "leather_goods" | "heavyweight_knits" | "accessories";
+    hsCode: string;
+    targetFob: number;
+    requestedQuantity: number;
+    leadTimeFobDays: number;
+    provenance: "Tokyo Standard Export Atelier";
+  };
+  requestDetails: {
+    requestType: "SAMPLE_DISPATCH" | "BULK_QUOTATION" | "CUSTOM_TECHPACK";
+    targetDeliveryDate?: string;
+    techpackFileUrl?: string;
+    buyerNotes?: string;
+    dhlAccountOptional?: string;
+  };
+  audit: {
+    assignedDesk: "Rakib Studio";
+    sampleTrackingNumber?: string;
+    internalCostBaseBDT?: number;
+    quoteSpreadMarginUSD?: number;
+  };
+}
+

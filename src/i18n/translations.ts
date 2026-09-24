@@ -97,7 +97,7 @@ export const TRANSLATIONS = {
     // Customer Hub
     customersTitle: 'Verified Global Buyers & Retail Conglomerates',
     customersSubtitle: 'International retail brands, department stores, and sourcing consortiums actively trading with Bangladesh.',
-    liveTickerTitle: 'Realtime Bangladesh Export Trading Activity',
+    liveTickerTitle: 'Live Real-Time Export Transaction Ledger',
     sourcingBudget: 'Annual Sourcing Volume',
     activeContracts: 'Active Letters of Credit (L/C)',
     totalShipped: 'Total Export Delivered',

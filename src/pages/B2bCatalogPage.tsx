@@ -181,7 +181,7 @@ export const B2bCatalogPage: React.FC<B2bCatalogPageProps> = ({
                 const isActive = activeCategorySlug === cat.slug;
                 return (
                   <button
-                    key={cat.id}
+                    key={cat.id || cat.slug}
                     type="button"
                     onClick={() => handleSelectCategory(cat.slug)}
                     className={`px-5 py-3 rounded-2xl font-bold text-sm sm:text-base transition-all duration-200 shrink-0 flex items-center gap-2.5 cursor-pointer ${
@@ -228,7 +228,7 @@ export const B2bCatalogPage: React.FC<B2bCatalogPageProps> = ({
                 const isSubActive = activeSubcategorySlug === sub.slug;
                 return (
                   <button
-                    key={sub.id}
+                    key={sub.id || sub.slug}
                     type="button"
                     onClick={() => handleSelectSubcategory(sub.slug)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all shrink-0 flex items-center gap-1.5 cursor-pointer ${

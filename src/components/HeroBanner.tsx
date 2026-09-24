@@ -69,12 +69,208 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [hoveredAction, setHoveredAction] = useState<string | null>(null);
   const [isBuyerBadgeHovered, setIsBuyerBadgeHovered] = useState(false);
+  const [hoveredModeTab, setHoveredModeTab] = useState<'ai' | 'products' | 'suppliers' | 'customers' | null>(null);
+  const [mobileDetailOpen, setMobileDetailOpen] = useState(false);
 
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const modeTabsRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const isDark = theme === 'dark';
   const { t, toDigits, lang: currentLang } = useI18n();
   const isBn = currentLang === 'BN';
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (modeTabsRef.current && !modeTabsRef.current.contains(e.target as Node)) {
+        setHoveredModeTab(null);
+        setMobileDetailOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
+  const handleTabMouseEnter = (tab: 'ai' | 'products' | 'suppliers' | 'customers') => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setHoveredModeTab(tab);
+  };
+
+  const handleTabMouseLeave = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      if (!mobileDetailOpen) {
+        setHoveredModeTab(null);
+      }
+    }, 180);
+  };
+
+  const modeDetailsData: Record<
+    'ai' | 'products' | 'suppliers' | 'customers',
+    {
+      badge: string;
+      title: string;
+      tagline: string;
+      themeColor: 'rose' | 'emerald';
+      stats: { label: string; value: string; desc: string }[];
+      actionLabel: string;
+      onAction: () => void;
+    }
+  > = {
+    ai: {
+      badge: isBn ? '⚡ এআই নিউরাল টার্মিনাল' : '⚡ AI Neural Terminal',
+      title: isBn ? 'এআই মোড · স্বয়ংক্রিয় সোর্সিং টার্মিনাল' : 'AI Mode · Autonomous Sourcing Terminal',
+      tagline: isBn
+        ? 'রিয়েল-টাইম ফ্যাক্টরি ম্যাচিং, তাৎক্ষণিক ক্যাড টেকপ্যাক তৈরি এবং টোকিও রিটেল জেআইএস রপ্তানি মান নিয়ন্ত্রণ।'
+        : 'Real-time factory matching, instant CAD TechPack generation, and Tokyo retail JIS export compliance verification.',
+      themeColor: 'rose',
+      stats: [
+        {
+          label: isBn ? 'তাৎক্ষণিক কস্টিং ও আরএফকিউ' : 'Automated Costing & RFQ',
+          value: isBn ? 'শূন্য মধ্যস্বত্বভোগী' : 'Zero Intermediary Fees',
+          desc: isBn
+            ? '৫,০০০+ মিলের মধ্যে তাৎক্ষণিক এফওবি চট্টগ্রাম স্প্রেড ও অটো নেগোসিয়েশন।'
+            : 'Instant FOB Chattogram spreads and direct mill matching across 5,000+ facilities.',
+        },
+        {
+          label: isBn ? 'ক্যাড টেকপ্যাক ইঞ্জিন' : 'CAD TechPack Engine',
+          value: isBn ? 'সেকেন্ডে রেডি' : 'Instant Specs',
+          desc: isBn
+            ? 'গার্মেন্ট কাটিং স্পেক, স্টিচ ম্যাপ ও প্যান্টোন টলারেন্স তৈরি।'
+            : 'Generate ready-to-cut garment specifications, stitch maps, and Pantone tolerances in seconds.',
+        },
+        {
+          label: isBn ? 'টোকিও রিটেল জেআইএস কমপ্লায়েন্স' : 'Tokyo JIS Export Standard',
+          value: isBn ? '৭২ ঘণ্টা নমুনা' : '72h DHL Dispatch',
+          desc: isBn
+            ? 'পারিবারিক মালিকানাধীন রপ্তানি অ্যাটেলিয়ার ও প্রাক-শিপমেন্ট মান নিয়ন্ত্রণ।'
+            : 'Rigorous Japanese retail inspection protocols with rapid international counter-sample dispatch.',
+        },
+      ],
+      actionLabel: isBn ? 'এআই মোড চালু করুন →' : 'Launch AI Sourcing Terminal →',
+      onAction: () => {
+        onHeroTabChange('ai');
+        onOpenAiAssistant();
+        setHoveredModeTab(null);
+        setMobileDetailOpen(false);
+      },
+    },
+    products: {
+      badge: isBn ? '📦 ৫০,০০০+ রপ্তানি পণ্য' : '📦 50,000+ Export SKUs',
+      title: isBn ? 'সরাসরি ফ্যাক্টরি রপ্তানি পণ্য ও পাইকারি ক্যাটালগ' : '50,000+ Factory-Direct Export SKUs',
+      tagline: isBn
+        ? 'ভারী নিটওয়্যার, সাভারের খাঁটি ফুল-গ্রেইন চামড়াজাত পণ্য এবং কাস্টম ওইএম/ওডিএম পাইকারি সোর্সিং।'
+        : 'Direct manufacturer wholesale sourcing across heavyweight knits, artisan cowhide leather goods, and custom OEM/ODM apparel.',
+      themeColor: 'rose',
+      stats: [
+        {
+          label: isBn ? 'ভারী নিটওয়্যার ও ব্ল্যাঙ্ক' : 'Heavyweight RMG Knits',
+          value: isBn ? '২৬০-৩০০ জিএসএম' : '260–300 GSM',
+          desc: isBn
+            ? 'কম্বড কটন, ড্রপ-শোল্ডার স্ট্রিটওয়্যার ও ভিন্টেজ অ্যাসিড-ওয়াশ ব্ল্যাঙ্ক।'
+            : 'Combed cotton, drop-shoulder streetwear silhouettes, and vintage acid-wash blanks.',
+        },
+        {
+          label: isBn ? 'সাভারের খাঁটি চামড়া ও অ্যাকসেসরিজ' : 'Arutemika Savar Leather',
+          value: isBn ? 'ফুল-গ্রেইন কাউহাইড' : 'Full-Grain Cowhide',
+          desc: isBn
+            ? 'এক্সিকিউটিভ ব্রিফকেস, ডাফেল ব্যাগ ও ৩১৬এল স্টেইনলেস স্টিল হার্ডওয়্যার।'
+            : 'Executive briefcases, weekender duffles, and 316L stainless steel clasp bracelets.',
+        },
+        {
+          label: isBn ? 'স্বল্প এমওকিউ ও দ্রুত নমুনা' : 'Low MOQs & Direct FOB',
+          value: isBn ? '৫০ পিস থেকে' : 'MOQ 50 Units',
+          desc: isBn
+            ? '$২.৮০ থেকে সরাসরি মিল রেট ও ৭২ ঘণ্টার ডিএইচএল এক্সপ্রেস নমুনা।'
+            : 'Factory wholesale pricing starting at $2.80/pc with 72-hour DHL express dispatch.',
+        },
+      ],
+      actionLabel: isBn ? '৫০,০০০+ পণ্য ব্রাউজ করুন →' : 'Explore 50,000+ SKUs →',
+      onAction: () => {
+        onHeroTabChange('products');
+        setHoveredModeTab(null);
+        setMobileDetailOpen(false);
+      },
+    },
+    suppliers: {
+      badge: isBn ? '🏢 ৫,০০০+ ভেরিফায়েড মিল' : '🏢 5,000+ Verified Mills',
+      title: isBn ? '৫,০০০+ ভেরিফায়েড বাংলাদেশ রপ্তানিকারক মিল' : '5,000+ Verified Bangladesh Export Mills',
+      tagline: isBn
+        ? 'গাজীপুর, নারায়ণগঞ্জ, সাভার এবং চট্টগ্রামের ইপিবি-বন্ডেড অনুবর্তী পোশাক ও চামড়া কারখানায় সরাসরি প্রবেশাধিকার।'
+        : 'Direct connection to EPB-bonded, compliant apparel and leather manufacturing powerhouses across Gazipur, Narayanganj, Savar, and Chattogram.',
+      themeColor: 'emerald',
+      stats: [
+        {
+          label: isBn ? 'সবুজ উৎপাদনে বিশ্ব নেতৃত্ব' : 'LEED Certified Green Facilities',
+          value: isBn ? '২০০+ সার্টিফাইড' : '200+ Platinum & Gold',
+          desc: isBn
+            ? 'বিশ্বের শীর্ষ লিড প্ল্যাটিনাম ও গোল্ড সার্টিফাইড পরিবেশবান্ধব টেকসই কারখানা।'
+            : 'World-leading green manufacturing with over 200+ LEED Platinum & Gold certified facilities.',
+        },
+        {
+          label: isBn ? 'আন্তর্জাতিক কমপ্লায়েন্স' : 'Global Export Accreditations',
+          value: isBn ? '১০০% অনুবর্তী' : '100% Verified',
+          desc: isBn
+            ? 'ওইকো-টেক্স ১০০, র‍্যাপ গোল্ড, গটস অর্গানিক এবং বিএসসিআই অডিট অনুমোদিত।'
+            : 'OEKO-TEX Standard 100, WRAP Gold, GOTS Organic, BSCI, and Accord/RSC safety audited.',
+        },
+        {
+          label: isBn ? 'চট্টগ্রাম বন্দর এক্সপ্রেস করিডোর' : 'Direct Port Corridor',
+          value: isBn ? '২৪৮ কিমি ট্রানজিট' : 'Dhaka – CGP Port',
+          desc: isBn
+            ? 'এন-১ এক্সপ্রেস মাল্টিমোডাল করিডোর হয়ে সরাসরি চট্টগ্রাম বন্দরে দ্রুত শিপমেন্ট।'
+            : 'Dedicated N-1 freight transit corridor directly to Chattogram Port (Berth 1–14).',
+        },
+      ],
+      actionLabel: isBn ? '৫,০০০+ রপ্তানিকারক দেখুন →' : 'Explore 5,000+ Verified Mills →',
+      onAction: () => {
+        onHeroTabChange('suppliers');
+        setHoveredModeTab(null);
+        setMobileDetailOpen(false);
+      },
+    },
+    customers: {
+      badge: isBn ? '🌐 ১৪০+ আন্তর্জাতিক ক্রেতা দেশ' : '🌐 140+ Buyer Destinations',
+      title: isBn ? '১৪০+ বৈশ্বিক ক্রেতা গন্তব্য ও ট্রেড লেজার' : '140+ Global Buyer Destinations & Trade Ledger',
+      tagline: isBn
+        ? 'বিশ্বব্যাপী ফ্যাশন ব্র্যান্ড, খুচরা বিক্রেতা এবং প্রাইভেট লেবেল আমদানিকারকদের সাথে সরাসরি বাণিজ্যিক যোগাযোগ।'
+        : 'Live international trade network connecting fashion brands, retailers, and private label importers worldwide directly with Bangladesh.',
+      themeColor: 'emerald',
+      stats: [
+        {
+          label: isBn ? 'আন্তর্জাতিক এন্টারপ্রাইজ করিডোর' : 'Enterprise Buyer Corridors',
+          value: isBn ? '১৪০+ দেশ' : '140+ Countries',
+          desc: isBn
+            ? 'যুক্তরাষ্ট্র, ইউরোপীয় ইউনিয়ন, যুক্তরাজ্য, জাপান এবং কানাডা জুড়ে সক্রিয় নেটওয়ার্ক।'
+            : 'Active commercial procurement networks spanning United States, EU, UK, Japan, and Canada.',
+        },
+        {
+          label: isBn ? '৫০% জেআইটি ট্রেড এসক্রো' : '50% JIT Trade Escrow',
+          value: isBn ? 'ব্যাংক এল/সি সুরক্ষা' : 'Irrevocable Bank L/C',
+          desc: isBn
+            ? '৫০% ডিপোজিট এবং ৫০% বিল অব লেডিং (BL) রিলিজে ১০০% নিরাপদ পেমেন্ট।'
+            : 'Milestone protection with 50% deposit and 50% on Bill of Lading (BL) release.',
+        },
+        {
+          label: isBn ? 'লাইভ এক্সপোর্ট ট্রানজিট লেজার' : 'Real-Time Customs Ledger',
+          value: isBn ? 'রিয়েলটাইম ট্র্যাকিং' : 'Container Dispatch',
+          desc: isBn
+            ? 'রিয়েল-টাইম কন্টেইনার ট্র্যাকিং, কাস্টমস ক্লিয়ারিং এবং ভেসেল শিডিউলিং রেকর্ড।'
+            : 'Live container dispatch tracking, customs clearing timestamps, and vessel scheduling.',
+        },
+      ],
+      actionLabel: isBn ? '১৪০+ ক্রেতা গন্তব্য দেখুন →' : 'View 140+ Global Buyer Destinations →',
+      onAction: () => {
+        onHeroTabChange('customers');
+        setHoveredModeTab(null);
+        setMobileDetailOpen(false);
+      },
+    },
+  };
 
   const popularSearches: PopularSearchItem[] = [
     {
@@ -196,19 +392,24 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
         {/* 1. Heart of the Website: Centered Mode Switcher Highlight Tabs (AI Mode, Products, Exporters, Buyers) */}
         <div
           id="hero-mode-tabs"
-          className={`flex items-center justify-center flex-wrap gap-2 sm:gap-3 border-b pb-3 pt-1 ${
+          ref={modeTabsRef}
+          className={`relative flex items-center justify-center flex-wrap gap-2 sm:gap-3 border-b pb-3 pt-1 ${
             isDark ? 'border-white/10' : 'border-slate-200/80'
           }`}
         >
-          {/* AI Mode Tab - Next Level Craft */}
+          {/* AI Mode Tab - Lean & Clean */}
           <motion.button
             type="button"
             id="tab-ai-mode"
             whileHover={{ y: -2, scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
+            onMouseEnter={() => handleTabMouseEnter('ai')}
+            onMouseLeave={handleTabMouseLeave}
             onClick={() => {
               onHeroTabChange('ai');
               onOpenAiAssistant();
+              setHoveredModeTab('ai');
+              setMobileDetailOpen(true);
             }}
             className={`relative px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-black transition-all cursor-pointer flex items-center space-x-2 shadow-lg ${
               activeHeroTab === 'ai'
@@ -218,11 +419,11 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 : 'bg-white border-2 border-[#e11d48]/60 text-slate-900 hover:border-[#e11d48] shadow-md'
             }`}
           >
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
             </span>
-            <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
             <span className="tracking-tight">{isBn ? 'এআই মোড' : 'AI Mode'}</span>
           </motion.button>
 
@@ -232,7 +433,13 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             id="tab-products"
             whileHover={{ y: -2, scale: 1.03 }}
             whileTap={{ scale: 0.96 }}
-            onClick={() => onHeroTabChange('products')}
+            onMouseEnter={() => handleTabMouseEnter('products')}
+            onMouseLeave={handleTabMouseLeave}
+            onClick={() => {
+              onHeroTabChange('products');
+              setHoveredModeTab('products');
+              setMobileDetailOpen(true);
+            }}
             className={`px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
               activeHeroTab === 'products'
                 ? 'bg-[#e11d48] text-white border-[#e11d48] shadow-md shadow-[#e11d48]/30 font-black ring-2 ring-[#e11d48]/30'
@@ -241,9 +448,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
           >
-            <Package className="w-4 h-4 text-[#e11d48]" />
+            <Package className="w-3.5 h-3.5 text-[#e11d48]" />
             <span>{isBn ? 'পণ্যসমূহ' : 'Products'}</span>
-            <span className="text-[10px] opacity-70 font-mono">{toDigits('50,000+')}</span>
           </motion.button>
 
           {/* Exporters Tab */}
@@ -252,7 +458,13 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             id="tab-exporters"
             whileHover={{ y: -2, scale: 1.03 }}
             whileTap={{ scale: 0.96 }}
-            onClick={() => onHeroTabChange('suppliers')}
+            onMouseEnter={() => handleTabMouseEnter('suppliers')}
+            onMouseLeave={handleTabMouseLeave}
+            onClick={() => {
+              onHeroTabChange('suppliers');
+              setHoveredModeTab('suppliers');
+              setMobileDetailOpen(true);
+            }}
             className={`px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
               activeHeroTab === 'suppliers'
                 ? 'bg-[#10b981] text-slate-950 border-[#10b981] shadow-md shadow-[#10b981]/30 font-black ring-2 ring-[#10b981]/30'
@@ -261,9 +473,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
           >
-            <Building2 className="w-4 h-4 text-[#10b981]" />
+            <Building2 className="w-3.5 h-3.5 text-[#10b981]" />
             <span>{isBn ? 'রপ্তানিকারক' : 'Exporters'}</span>
-            <span className="text-[10px] opacity-70 font-mono">{toDigits('5,000+')}</span>
           </motion.button>
 
           {/* Buyers Tab */}
@@ -272,7 +483,13 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             id="tab-buyers"
             whileHover={{ y: -2, scale: 1.03 }}
             whileTap={{ scale: 0.96 }}
-            onClick={() => onHeroTabChange('customers')}
+            onMouseEnter={() => handleTabMouseEnter('customers')}
+            onMouseLeave={handleTabMouseLeave}
+            onClick={() => {
+              onHeroTabChange('customers');
+              setHoveredModeTab('customers');
+              setMobileDetailOpen(true);
+            }}
             className={`px-4 sm:px-5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center space-x-2 border shadow-xs ${
               activeHeroTab === 'customers'
                 ? 'bg-[#10b981] text-slate-950 border-[#10b981] shadow-md shadow-[#10b981]/30 font-black ring-2 ring-[#10b981]/30'
@@ -281,10 +498,116 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200'
             }`}
           >
-            <Users className="w-4 h-4 text-[#10b981]" />
+            <Users className="w-3.5 h-3.5 text-[#10b981]" />
             <span>{isBn ? 'ক্রেতাসমূহ' : 'Buyers'}</span>
-            <span className="text-[10px] opacity-70 font-mono">{isBn ? `${toDigits(140)}+ দেশ` : '140+ Countries'}</span>
           </motion.button>
+
+          {/* Hover / Touch Details Card in Bigger Texts */}
+          <AnimatePresence>
+            {hoveredModeTab && modeDetailsData[hoveredModeTab] && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                onMouseEnter={() => {
+                  if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+                }}
+                onMouseLeave={handleTabMouseLeave}
+                className={`absolute top-full left-1/2 -translate-x-1/2 mt-2.5 z-50 w-[95vw] max-w-4xl rounded-3xl p-5 sm:p-7 shadow-2xl backdrop-blur-2xl border transition-all ${
+                  isDark
+                    ? modeDetailsData[hoveredModeTab].themeColor === 'rose'
+                      ? 'bg-[#0f131f]/98 border-rose-500/40 shadow-rose-950/70 ring-1 ring-rose-500/20'
+                      : 'bg-[#0b1414]/98 border-emerald-500/40 shadow-emerald-950/70 ring-1 ring-emerald-500/20'
+                    : 'bg-white/98 border-slate-300 shadow-2xl ring-1 ring-black/5'
+                }`}
+              >
+                {/* Header inside popover: Big Badge + Big Title + Close Button */}
+                <div className="flex items-start justify-between gap-4 border-b pb-4 mb-4 border-white/10">
+                  <div className="space-y-1.5">
+                    <span
+                      className={`inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-sm font-black tracking-wide uppercase ${
+                        modeDetailsData[hoveredModeTab].themeColor === 'rose'
+                          ? 'bg-rose-500/15 text-rose-300 border border-rose-500/30'
+                          : 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+                      }`}
+                    >
+                      {modeDetailsData[hoveredModeTab].badge}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-snug">
+                      {modeDetailsData[hoveredModeTab].title}
+                    </h3>
+                    <p className="text-xs sm:text-base text-slate-300 leading-relaxed max-w-2xl font-medium">
+                      {modeDetailsData[hoveredModeTab].tagline}
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHoveredModeTab(null);
+                      setMobileDetailOpen(false);
+                    }}
+                    className="p-1.5 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer shrink-0"
+                    title="Close details"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* 3 Detail Cards with BIGGER TEXTS */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 my-4">
+                  {modeDetailsData[hoveredModeTab].stats.map((stat, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-3.5 sm:p-4 rounded-2xl border transition-all ${
+                        isDark
+                          ? 'bg-white/[0.04] border-white/10 hover:border-white/20'
+                          : 'bg-slate-50 border-slate-200'
+                      }`}
+                    >
+                      <div className="text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider text-slate-400 mb-1">
+                        {stat.label}
+                      </div>
+                      <div
+                        className={`text-base sm:text-lg lg:text-xl font-black tracking-tight mb-1.5 ${
+                          modeDetailsData[hoveredModeTab].themeColor === 'rose'
+                            ? 'text-rose-400'
+                            : 'text-emerald-400'
+                        }`}
+                      >
+                        {stat.value}
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                        {stat.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Action Footer */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-white/10">
+                  <span className="text-xs sm:text-sm font-medium text-slate-400 hidden sm:inline">
+                    {isBn
+                      ? 'বিস্তারিত দেখতে ক্লিক করুন বা ট্যাব পরিবর্তন করুন'
+                      : 'Click button to activate mode or explore live data'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={modeDetailsData[hoveredModeTab].onAction}
+                    className={`w-full sm:w-auto px-6 py-2.5 rounded-xl font-black text-xs sm:text-sm flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-lg active:scale-95 ${
+                      modeDetailsData[hoveredModeTab].themeColor === 'rose'
+                        ? 'bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white shadow-rose-950/50'
+                        : 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-slate-950 shadow-emerald-950/50'
+                    }`}
+                  >
+                    <span>{modeDetailsData[hoveredModeTab].actionLabel}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* 2. Bigger, Dynamic Executive Search Bar with Hover Glow & Interactive Click Card */}
@@ -586,7 +909,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <FileText className="w-3.5 h-3.5 text-[#e11d48]" />
-                <span>{isBn ? 'আরএফকিউ পোস্ট' : 'Post RFQ'}</span>
+                <span>{isBn ? 'আরএফকিউ পোস্ট' : 'Post Direct RFQ'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'rfq' && (
@@ -634,7 +957,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <TrendingUp className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>{isBn ? 'শীর্ষ র‍্যাঙ্কিং' : 'Top Ranking'}</span>
+                <span>{isBn ? 'শীর্ষ র‍্যাংকিং' : 'Top Mill Rankings'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'ranking' && (
@@ -682,7 +1005,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <Sliders className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>{isBn ? 'ক্যাড টেকপ্যাক' : 'TechPack CAD'}</span>
+                <span>{isBn ? 'ক্যাড টেকপ্যাক' : 'CAD TechPack Engine'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'cad' && (
@@ -730,7 +1053,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 }`}
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-                <span>{isBn ? 'ব্যাংক এল/সি ও এসক্রো' : 'Bank L/C & Escrow'}</span>
+                <span>{isBn ? 'ব্যাংক এল/সি ও এসক্রো' : 'LC & Escrow Protocols'}</span>
               </motion.button>
               <AnimatePresence>
                 {hoveredAction === 'escrow' && (

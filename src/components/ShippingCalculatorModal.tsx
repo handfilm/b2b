@@ -176,6 +176,114 @@ export const ShippingCalculatorModal: React.FC<ShippingCalculatorModalProps> = (
             </div>
           )}
 
+          {/* Dhaka-Chattogram Transit Corridor SVG Vector Map */}
+          <div className="p-3.5 rounded-xl bg-[#0d1017] border border-white/10 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold text-slate-300 font-mono flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Dhaka–Chattogram Dedicated Transit Corridor (N-1 Highway &amp; Rail ICD)</span>
+              </span>
+              <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-500/30">
+                248 km • 4-6h Inland Transit
+              </span>
+            </div>
+
+            <div className="relative w-full h-36 bg-[#080a0f] rounded-lg border border-white/5 overflow-hidden flex items-center justify-center">
+              <svg viewBox="0 0 540 120" className="w-full h-full">
+                <defs>
+                  <linearGradient id="corridorGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#e11d48" />
+                    <stop offset="40%" stopColor="#8b5cf6" />
+                    <stop offset="70%" stopColor="#06b6d4" />
+                    <stop offset="100%" stopColor="#10b981" />
+                  </linearGradient>
+                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+                  </pattern>
+                </defs>
+
+                {/* Grid backdrop */}
+                <rect width="540" height="120" fill="url(#grid)" />
+
+                {/* Bay of Bengal contour curve */}
+                <path
+                  d="M 330 120 Q 370 70 410 70 T 540 85"
+                  fill="none"
+                  stroke="rgba(6, 182, 212, 0.15)"
+                  strokeWidth="24"
+                />
+
+                {/* Connecting Transit Track */}
+                <path
+                  d="M 60 60 L 190 60 L 320 60 L 470 60"
+                  fill="none"
+                  stroke="rgba(255,255,255,0.12)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 60 60 L 190 60 L 320 60 L 470 60"
+                  fill="none"
+                  stroke="url(#corridorGrad)"
+                  strokeWidth="2.5"
+                  strokeDasharray="6 4"
+                  strokeLinecap="round"
+                />
+
+                {/* Node 1: Dhaka / Gazipur / Savar Mills */}
+                <g transform="translate(60, 60)">
+                  <circle r="14" fill="#e11d48" fillOpacity="0.15" />
+                  <circle r="7" fill="#e11d48" />
+                  <circle r="3" fill="#ffffff" />
+                  <text x="0" y="-18" textAnchor="middle" fill="#ffffff" fontSize="9" fontWeight="bold" fontFamily="monospace">
+                    DHAKA/SAVAR
+                  </text>
+                  <text x="0" y="24" textAnchor="middle" fill="#94a3b8" fontSize="7.5" fontFamily="monospace">
+                    Factory Loading (ICD)
+                  </text>
+                </g>
+
+                {/* Node 2: Comilla / Feni Waypoint */}
+                <g transform="translate(190, 60)">
+                  <circle r="10" fill="#8b5cf6" fillOpacity="0.15" />
+                  <circle r="5" fill="#8b5cf6" />
+                  <text x="0" y="-14" textAnchor="middle" fill="#cbd5e1" fontSize="8" fontWeight="bold" fontFamily="monospace">
+                    COMILLA EPZ
+                  </text>
+                  <text x="0" y="20" textAnchor="middle" fill="#64748b" fontSize="7" fontFamily="monospace">
+                    N-1 Fast Corridor
+                  </text>
+                </g>
+
+                {/* Node 3: Chattogram Sea Port (CGP) */}
+                <g transform="translate(320, 60)">
+                  <circle r="14" fill="#06b6d4" fillOpacity="0.2" className="animate-ping" style={{ transformOrigin: '320px 60px', animationDuration: '3s' }} />
+                  <circle r="8" fill="#06b6d4" />
+                  <circle r="3.5" fill="#ffffff" />
+                  <text x="0" y="-18" textAnchor="middle" fill="#38bdf8" fontSize="9.5" fontWeight="black" fontFamily="monospace">
+                    CGP SEAPORT
+                  </text>
+                  <text x="0" y="24" textAnchor="middle" fill="#94a3b8" fontSize="7.5" fontFamily="monospace">
+                    Customs &amp; Berth 1-14
+                  </text>
+                </g>
+
+                {/* Node 4: Destination Port Ocean Leg */}
+                <g transform="translate(470, 60)">
+                  <circle r="12" fill="#10b981" fillOpacity="0.15" />
+                  <circle r="6" fill="#10b981" />
+                  <circle r="2.5" fill="#ffffff" />
+                  <text x="0" y="-18" textAnchor="middle" fill="#34d399" fontSize="9" fontWeight="bold" fontFamily="monospace">
+                    {dest.port.toUpperCase()}
+                  </text>
+                  <text x="0" y="24" textAnchor="middle" fill="#94a3b8" fontSize="7.5" fontFamily="monospace">
+                    {dest.transitDays} Days Feeder Leg
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </div>
+
           {/* Freight Estimation Output Card */}
           <div className="p-4 rounded-xl bg-[#141414] border border-white/10 space-y-3 font-mono">
             <div className="flex items-center justify-between pb-2 border-b border-white/10">

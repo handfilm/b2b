@@ -33,6 +33,7 @@ import { BangladeshManufacturerMap } from './components/BangladeshManufacturerMa
 import { GoogleMapsManufacturerDirectory } from './components/GoogleMapsManufacturerDirectory';
 import { CatalogGrid } from './components/CatalogGrid';
 import { FactoryProfileDrawer } from './components/FactoryProfileDrawer';
+import { RequestSpecDrawer } from './components/RequestSpecDrawer';
 import { BuyerDashboardShell } from './pages/BuyerDashboard';
 import { SellerDashboardShell } from './pages/SellerDashboard';
 import { B2bCatalogPage } from './pages/B2bCatalogPage';
@@ -245,11 +246,25 @@ const AppContent: React.FC = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState<string>('all');
   const [bondedOnly, setBondedOnly] = useState<boolean>(false);
-  const [visibleSupplierLimit, setVisibleSupplierLimit] = useState<number>(36);
+  const [visibleSupplierLimit, setVisibleSupplierLimit] = useState<number>(100);
 
   // Modals & Drawers
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [sampleProduct, setSampleProduct] = useState<Product | null>(null);
+  const [isSpecDrawerOpen, setIsSpecDrawerOpen] = useState(false);
+  const [specDrawerProduct, setSpecDrawerProduct] = useState<{
+    skuId?: string;
+    title?: string;
+    category?: 'leather_goods' | 'heavyweight_knits' | 'accessories';
+    hsCode?: string;
+    targetFob?: number;
+    requestedQuantity?: number;
+    leadTimeFobDays?: number;
+    imageUrl?: string;
+  } | undefined>(undefined);
+  const [specDrawerType, setSpecDrawerType] = useState<
+    'SAMPLE_DISPATCH' | 'BULK_QUOTATION' | 'CUSTOM_TECHPACK'
+  >('SAMPLE_DISPATCH');
   const [isRfqModalOpen, setIsRfqModalOpen] = useState(false);
   const [isShippingCalcOpen, setIsShippingCalcOpen] = useState(false);
   const [isInquiryDrawerOpen, setIsInquiryDrawerOpen] = useState(false);
@@ -557,8 +572,61 @@ const AppContent: React.FC = () => {
     setIsAiAssistantOpen(true);
   };
 
-  const handleOpenSampleModal = (product: Product) => {
+  const handleOpenSpecDrawer = (
+    product?: any,
+    requestType: 'SAMPLE_DISPATCH' | 'BULK_QUOTATION' | 'CUSTOM_TECHPACK' = 'SAMPLE_DISPATCH'
+  ) => {
+    if (product) {
+      const isLeather =
+        product.category === 'leather' ||
+        product.category === 'leather_goods' ||
+        product.subcategorySlug?.includes('leather') ||
+        product.title?.toLowerCase().includes('leather') ||
+        product.title?.toLowerCase().includes('cowhide') ||
+        product.title?.toLowerCase().includes('tote') ||
+        product.title?.toLowerCase().includes('duffle');
+
+      const isAccessory =
+        product.category === 'accessories' ||
+        product.subcategorySlug?.includes('access') ||
+        product.title?.toLowerCase().includes('bracelet') ||
+        product.title?.toLowerCase().includes('clasp');
+
+      const cat: 'leather_goods' | 'heavyweight_knits' | 'accessories' = isLeather
+        ? 'leather_goods'
+        : isAccessory
+        ? 'accessories'
+        : 'heavyweight_knits';
+
+      const cleanHs = product.hsCode
+        ? String(product.hsCode).replace(/^HS\s*/i, '')
+        : cat === 'leather_goods'
+        ? '4202.12.00'
+        : '6109.10.00';
+
+      setSpecDrawerProduct({
+        skuId: product.sku || product.skuId || (product.id ? `SKU-${product.id}` : 'RAWX-BOX-280-BLK'),
+        title: product.title || product.name || 'Architectural 260–300 GSM Heavyweight Box-Tee',
+        category: cat,
+        hsCode: cleanHs,
+        targetFob: Number(product.price) || 4.25,
+        requestedQuantity: Number(product.moq) || 2500,
+        leadTimeFobDays: Number(product.leadTimeDays) || 35,
+        imageUrl: product.imageUrl || product.images?.[0] || product.image,
+      });
+    } else {
+      setSpecDrawerProduct(undefined);
+    }
+    setSpecDrawerType(requestType);
+    setIsSpecDrawerOpen(true);
+  };
+
+  const handleOpenSampleModal = (
+    product: any,
+    reqType: 'SAMPLE_DISPATCH' | 'BULK_QUOTATION' | 'CUSTOM_TECHPACK' = 'SAMPLE_DISPATCH'
+  ) => {
     setSampleProduct(product);
+    handleOpenSpecDrawer(product, reqType);
   };
 
   const handleInquireProduct = (product: Product, customMessage?: string) => {
@@ -758,11 +826,8 @@ const AppContent: React.FC = () => {
             currentPath={currentPath}
             onNavigate={navigate}
             currency={currentCurrencyConfig}
-            onRequestSample={handleOpenSampleModal}
-            onRequestTechPack={(prod) => {
-              setSelectedProduct(prod);
-              setIsTechPackModalOpen(true);
-            }}
+            onRequestSample={(prod) => handleOpenSampleModal(prod, 'SAMPLE_DISPATCH')}
+            onRequestTechPack={(prod) => handleOpenSampleModal(prod, 'CUSTOM_TECHPACK')}
             onAddToCart={(prod) => {
               addToCart(prod, { requestedQty: prod.moq || 50, targetPrice: prod.price || 4.85 });
               showNotification(`Added "${prod.title}" (${prod.moq || 50} pcs) to B2B Inquiry Cart`);
@@ -1805,6 +1870,15 @@ const AppContent: React.FC = () => {
           setIsShippingCalcOpen(true);
         }}
         onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
+      />
+
+      {/* Tokyo Standard JIS Requisition & RFQ Spec Drawer */}
+      <RequestSpecDrawer
+        isOpen={isSpecDrawerOpen}
+        onClose={() => setIsSpecDrawerOpen(false)}
+        currency={currentCurrencyConfig}
+        initialProduct={specDrawerProduct}
+        initialRequestType={specDrawerType}
       />
 
       {/* Sample Order Modal */}

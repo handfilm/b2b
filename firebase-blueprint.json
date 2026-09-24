@@ -72,13 +72,13 @@
     "RfqThread": {
       "collection": "rfq_threads",
       "fields": {
-        "buyerId": { "type": "string", "required": true },
-        "supplierId": { "type": "string", "required": true },
-        "products": { "type": "array" },
-        "initialMessage": { "type": "string" },
-        "status": { "type": "string" },
-        "handledBy": { "type": "string" },
-        "createdAt": { "type": "timestamp" }
+        "sourceNode": { "type": "string", "required": true },
+        "createdAt": { "type": "timestamp" },
+        "status": { "type": "string", "required": true },
+        "buyer": { "type": "map", "required": true },
+        "product": { "type": "map", "required": true },
+        "requestDetails": { "type": "map", "required": true },
+        "audit": { "type": "map", "required": true }
       }
     }
   }

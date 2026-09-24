@@ -210,6 +210,7 @@ export const GoogleMapsManufacturerDirectory: React.FC<GoogleMapsManufacturerDir
 
   // Retrieve API key from environment variable
   const apiKey = (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY || '';
+  const [mapMode, setMapMode] = useState<'google' | 'vector'>(apiKey ? 'google' : 'vector');
 
   // Selected marker state for InfoWindow
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
@@ -356,6 +357,19 @@ export const GoogleMapsManufacturerDirectory: React.FC<GoogleMapsManufacturerDir
 
           <button
             type="button"
+            onClick={() => setMapMode(mapMode === 'google' ? 'vector' : 'google')}
+            className={`px-3 py-1.5 rounded-xl border font-bold text-xs flex items-center space-x-1.5 transition-colors cursor-pointer ${
+              mapMode === 'vector'
+                ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                : 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5 text-rose-400" />
+            <span>{mapMode === 'google' ? 'Vector Corridor' : 'Live Satellite Map'}</span>
+          </button>
+
+          <button
+            type="button"
             onClick={onSwitchToListView}
             className={`px-3 py-1.5 rounded-xl border font-bold text-xs flex items-center space-x-1.5 transition-colors cursor-pointer ${
               isDark
@@ -371,6 +385,7 @@ export const GoogleMapsManufacturerDirectory: React.FC<GoogleMapsManufacturerDir
 
       {/* 2. MAP CONTAINER */}
       <div className="relative w-full h-[540px]">
+        {mapMode === 'google' && apiKey ? (
         <APIProvider apiKey={apiKey}>
           <Map
             mapId={(import.meta as any).env?.VITE_GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID'}
@@ -548,6 +563,142 @@ export const GoogleMapsManufacturerDirectory: React.FC<GoogleMapsManufacturerDir
             )}
           </Map>
         </APIProvider>
+        ) : (
+          /* STYLED SVG VECTOR CORRIDOR MAP FOR DHAKA-CHATTOGRAM TRANSIT */
+          <div className="w-full h-full bg-[#080b11] relative overflow-hidden flex flex-col items-center justify-between p-4 sm:p-6 select-none">
+            <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#e11d48_1px,transparent_1px)] [background-size:24px_24px]" />
+
+            {/* Corridor Header */}
+            <div className="relative z-10 w-full flex items-center justify-between bg-black/60 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10">
+              <div className="flex items-center space-x-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                  Dhaka–Chattogram High-Speed Industrial Export Corridor
+                </span>
+              </div>
+              <div className="text-[11px] font-mono text-cyan-400">
+                N-1 Express • 248 km • CGP Berth 1–14
+              </div>
+            </div>
+
+            {/* Vector SVG Canvas */}
+            <div className="relative z-10 w-full flex-1 flex items-center justify-center my-2 max-h-[360px]">
+              <svg viewBox="0 0 800 320" className="w-full h-full">
+                {/* Highway Contour */}
+                <path
+                  d="M 100 80 Q 220 100 320 140 T 520 200 T 700 260"
+                  fill="none"
+                  stroke="#1e293b"
+                  strokeWidth="16"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 100 80 Q 220 100 320 140 T 520 200 T 700 260"
+                  fill="none"
+                  stroke="#e11d48"
+                  strokeWidth="3.5"
+                  strokeDasharray="8 6"
+                  className="animate-pulse"
+                />
+
+                {/* Waypoint 1: Gazipur / Savar Denim Hub */}
+                <g
+                  transform="translate(100, 80)"
+                  className="cursor-pointer"
+                  onClick={() => setSelectedHub(BANGLADESH_INDUSTRIAL_HUBS[0])}
+                >
+                  <circle r="22" fill="#e11d48" fillOpacity="0.2" className="animate-ping" style={{ animationDuration: '3s' }} />
+                  <circle r="12" fill="#e11d48" />
+                  <circle r="4" fill="#ffffff" />
+                  <text x="0" y="-22" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold" fontFamily="monospace">
+                    GAZIPUR &amp; SAVAR
+                  </text>
+                  <text x="0" y="28" textAnchor="middle" fill="#94a3b8" fontSize="10" fontFamily="monospace">
+                    980+ LEED Platinum Mills
+                  </text>
+                </g>
+
+                {/* Waypoint 2: Narayanganj & DAC Airport */}
+                <g
+                  transform="translate(250, 115)"
+                  className="cursor-pointer"
+                  onClick={() => setSelectedHub(BANGLADESH_INDUSTRIAL_HUBS[1])}
+                >
+                  <circle r="16" fill="#8b5cf6" fillOpacity="0.25" />
+                  <circle r="9" fill="#8b5cf6" />
+                  <circle r="3" fill="#ffffff" />
+                  <text x="0" y="-18" textAnchor="middle" fill="#c084fc" fontSize="11" fontWeight="bold" fontFamily="monospace">
+                    NARAYANGANJ / DAC
+                  </text>
+                  <text x="0" y="24" textAnchor="middle" fill="#94a3b8" fontSize="9.5" fontFamily="monospace">
+                    BKMEA Circular Knit Hub
+                  </text>
+                </g>
+
+                {/* Waypoint 3: Comilla EPZ */}
+                <g transform="translate(420, 165)" className="cursor-pointer">
+                  <circle r="14" fill="#3b82f6" fillOpacity="0.2" />
+                  <circle r="8" fill="#3b82f6" />
+                  <text x="0" y="-16" textAnchor="middle" fill="#93c5fd" fontSize="11" fontWeight="bold" fontFamily="monospace">
+                    COMILLA EPZ
+                  </text>
+                  <text x="0" y="22" textAnchor="middle" fill="#64748b" fontSize="9" fontFamily="monospace">
+                    Bonded Customs Gate
+                  </text>
+                </g>
+
+                {/* Waypoint 4: Feni Transit */}
+                <g transform="translate(540, 205)" className="cursor-pointer">
+                  <circle r="12" fill="#10b981" fillOpacity="0.2" />
+                  <circle r="7" fill="#10b981" />
+                  <text x="0" y="-14" textAnchor="middle" fill="#6ee7b7" fontSize="10" fontWeight="bold" fontFamily="monospace">
+                    FENI OVERPASS
+                  </text>
+                  <text x="0" y="20" textAnchor="middle" fill="#64748b" fontSize="8.5" fontFamily="monospace">
+                    Dedicated Fast Lane
+                  </text>
+                </g>
+
+                {/* Waypoint 5: Chattogram Seaport (CGP) */}
+                <g
+                  transform="translate(700, 260)"
+                  className="cursor-pointer"
+                  onClick={() => setSelectedHub(BANGLADESH_INDUSTRIAL_HUBS[3] || BANGLADESH_INDUSTRIAL_HUBS[0])}
+                >
+                  <circle r="26" fill="#06b6d4" fillOpacity="0.25" className="animate-ping" style={{ animationDuration: '2.5s' }} />
+                  <circle r="15" fill="#06b6d4" />
+                  <circle r="5" fill="#ffffff" />
+                  <text x="0" y="-24" textAnchor="middle" fill="#38bdf8" fontSize="13" fontWeight="black" fontFamily="monospace">
+                    CHATTOGRAM SEAPORT (CGP)
+                  </text>
+                  <text x="0" y="30" textAnchor="middle" fill="#34d399" fontSize="10" fontWeight="bold" fontFamily="monospace">
+                    Berth 1-14 • Bay Terminal Active
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            {/* Corridor Footnote Stats */}
+            <div className="relative z-10 w-full grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
+              <div className="p-2 rounded-lg bg-black/60 border border-white/10">
+                <div className="text-[10px] text-slate-400">Total Corridor Length</div>
+                <div className="text-white font-bold">248 km Dedicated Highway</div>
+              </div>
+              <div className="p-2 rounded-lg bg-black/60 border border-white/10">
+                <div className="text-[10px] text-slate-400">Transit Duration</div>
+                <div className="text-emerald-400 font-bold">4 – 6 Hours Factory-to-Berth</div>
+              </div>
+              <div className="p-2 rounded-lg bg-black/60 border border-white/10">
+                <div className="text-[10px] text-slate-400">Active Container Capacity</div>
+                <div className="text-cyan-400 font-bold">3.2M TEUs / Annum</div>
+              </div>
+              <div className="p-2 rounded-lg bg-black/60 border border-white/10">
+                <div className="text-[10px] text-slate-400">Customs Clearance SLA</div>
+                <div className="text-rose-400 font-bold">24h Direct Wharfside</div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Legend Overlay */}
         <div className="absolute top-4 left-4 z-10 hidden sm:flex items-center space-x-3 bg-black/75 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 text-[11px] text-white">

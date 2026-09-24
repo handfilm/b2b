@@ -98,6 +98,7 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
           <div className="lg:col-span-6 space-y-4">
             {/* Main Interactive Angle Viewer */}
             <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 border border-white/10 shadow-inner group/modalImg">
+              <div className="absolute inset-0 animate-pulse bg-neutral-900 pointer-events-none" />
               <img
                 src={currentImg}
                 alt={product.title}
