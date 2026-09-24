@@ -442,7 +442,7 @@ export const nexusApi = {
       list = list.filter((s) => s.bondedWarehouse);
     }
     if (filters?.district && filters.district !== 'all') {
-      list = list.filter((s) => s.district.toLowerCase() === filters.district?.toLowerCase());
+      list = list.filter((s) => s.district.toLowerCase().includes(filters.district!.toLowerCase()));
     }
     if (filters?.leedOnly) {
       list = list.filter((s) => s.leedStatus);

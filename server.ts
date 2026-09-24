@@ -227,7 +227,7 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
         fetch(`${AI_STUDIO_BACKEND_URL}/products`, { headers: { 'Accept': 'application/json' } })
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null),
-        fetch(`${AI_STUDIO_BACKEND_URL}/suppliers`, { headers: { 'Accept': 'application/json' } })
+        fetch(`${AI_STUDIO_BACKEND_URL}/suppliers?limit=120`, { headers: { 'Accept': 'application/json' } })
           .then((r) => (r.ok ? r.json() : null))
           .catch(() => null),
         fetch(`${AI_STUDIO_BACKEND_URL}/customers`, { headers: { 'Accept': 'application/json' } })
@@ -413,7 +413,7 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
     list = Array.from(supMap.values());
 
     if (district && district !== 'all') {
-      list = list.filter((s) => s.district.toLowerCase() === district.toLowerCase());
+      list = list.filter((s) => s.district.toLowerCase().includes(district.toLowerCase()));
     }
     if (query) {
       list = list.filter((s) =>

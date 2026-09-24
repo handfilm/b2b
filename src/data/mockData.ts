@@ -10,6 +10,7 @@ import {
   AutomationLog,
 } from '../types';
 import { PERMANENT_BUYERS } from './permanentBuyersData';
+import { HANDSANDHEAD_SUPPLIERS } from './handsandheadSuppliers';
 
 export const CURRENCIES: Record<string, CurrencyConfig> = {
   USD: { code: 'USD', symbol: '$', rate: 1.0 },
@@ -85,7 +86,7 @@ export const CATEGORIES: Category[] = [
   },
 ];
 
-export const SUPPLIERS: Supplier[] = [
+export const BASE_SUPPLIERS: Supplier[] = [
   {
     id: 'sup-plummy',
     name: 'Plummy Fashions Ltd.',
@@ -577,6 +578,11 @@ export const SUPPLIERS: Supplier[] = [
       'State-of-the-art export shoe and boot manufacturer inside export processing zones (EPZ) with integrated LWG Gold certified tannery, supplying global sport and luxury brands.',
     avatarUrl: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&auto=format&fit=crop&q=80',
   },
+];
+
+export const SUPPLIERS: Supplier[] = [
+  ...BASE_SUPPLIERS,
+  ...HANDSANDHEAD_SUPPLIERS,
 ];
 
 export const PRODUCTS: Product[] = [

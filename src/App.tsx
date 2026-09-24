@@ -245,6 +245,7 @@ const AppContent: React.FC = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState<string>('all');
   const [bondedOnly, setBondedOnly] = useState<boolean>(false);
+  const [visibleSupplierLimit, setVisibleSupplierLimit] = useState<number>(36);
 
   // Modals & Drawers
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -520,7 +521,7 @@ const AppContent: React.FC = () => {
   const filteredSuppliers = useMemo(() => {
     return suppliers.filter((s) => {
       if (bondedOnly && !s.bondedWarehouse) return false;
-      if (selectedDistrict !== 'all' && s.district.toLowerCase() !== selectedDistrict.toLowerCase()) {
+      if (selectedDistrict !== 'all' && !s.district.toLowerCase().includes(selectedDistrict.toLowerCase())) {
         return false;
       }
       if (searchQuery.trim()) {
@@ -534,6 +535,11 @@ const AppContent: React.FC = () => {
       return true;
     });
   }, [suppliers, bondedOnly, selectedDistrict, searchQuery]);
+
+  // Paginated/windowed displayed suppliers for smooth performance
+  const displayedSuppliers = useMemo(() => {
+    return filteredSuppliers.slice(0, visibleSupplierLimit);
+  }, [filteredSuppliers, visibleSupplierLimit]);
 
   // Handlers
   const handleHeroTabChange = (tab: 'ai' | 'products' | 'suppliers' | 'customers') => {
@@ -1501,11 +1507,16 @@ const AppContent: React.FC = () => {
                   }`}
                 >
                   <div>
-                    <h2 className="text-lg font-black tracking-tight">
-                      Verified Bangladesh Exporters & Certified Green Mills
-                    </h2>
+                    <div className="flex items-center space-x-2">
+                      <h2 className="text-lg font-black tracking-tight">
+                        Verified Bangladesh Exporters & Certified Green Mills
+                      </h2>
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#10b981]/15 text-[#10b981] border border-[#10b981]/30">
+                        {filteredSuppliers.length} Exporters
+                      </span>
+                    </div>
                     <p className="text-xs text-slate-400 mt-0.5">
-                      Direct contact with BGMEA, BKMEA, and USGBC LEED Platinum compliant factories
+                      Direct contact with BGMEA, BKMEA, and USGBC LEED Platinum compliant factories (admin.handsandhead.com database)
                     </p>
                   </div>
 
