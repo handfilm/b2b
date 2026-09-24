@@ -1582,15 +1582,20 @@ const AppContent: React.FC = () => {
                       <span className="text-slate-400">District:</span>
                       <select
                         value={selectedDistrict}
-                        onChange={(e) => setSelectedDistrict(e.target.value)}
+                        onChange={(e) => {
+                          setSelectedDistrict(e.target.value);
+                          setVisibleSupplierLimit(36);
+                        }}
                         className="bg-transparent font-bold focus:outline-none cursor-pointer text-xs"
                       >
-                        <option value="all" className="bg-[#141414] text-white">All Districts</option>
-                        <option value="Narayanganj" className="bg-[#141414] text-white">Narayanganj (Knit Hub)</option>
-                        <option value="Gazipur" className="bg-[#141414] text-white">Gazipur (Woven & Denim)</option>
-                        <option value="Dhaka" className="bg-[#141414] text-white">Dhaka (Apparel & Tech)</option>
-                        <option value="Chattogram" className="bg-[#141414] text-white">Chattogram (Port Mills)</option>
-                        <option value="Savar" className="bg-[#141414] text-white">Savar (Leather Tannery)</option>
+                        <option value="all" className="bg-[#141414] text-white">All Industrial Districts</option>
+                        <option value="Dhaka" className="bg-[#141414] text-white">Dhaka & Ashulia (Apparel & Tech)</option>
+                        <option value="Gazipur" className="bg-[#141414] text-white">Gazipur (Woven, Denim & LEED Mills)</option>
+                        <option value="Narayanganj" className="bg-[#141414] text-white">Narayanganj (Knit Hub & Adamjee)</option>
+                        <option value="Chattogram" className="bg-[#141414] text-white">Chattogram (Port & EPZ Mills)</option>
+                        <option value="Narsingdi" className="bg-[#141414] text-white">Narsingdi (Textile & Weaving)</option>
+                        <option value="Savar" className="bg-[#141414] text-white">Savar (Leather Tannery Park)</option>
+                        <option value="Mymensingh" className="bg-[#141414] text-white">Bhaluka / Mymensingh (Spinning)</option>
                       </select>
                     </div>
 
@@ -1671,28 +1676,71 @@ const AppContent: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 w-full">
-                    {filteredSuppliers.map((supplier) => (
-                      <SupplierCard
-                        key={supplier.id}
-                        supplier={supplier}
-                        onContactSupplier={() => {
-                          setIsRfqModalOpen(true);
-                        }}
-                        onFilterBySupplier={(id) => {
-                          setSupplierFilter(id);
-                          setActiveView('products');
-                        }}
-                        onOpenComplianceVault={handleOpenComplianceVault}
-                        onReserveLineSlot={handleReserveLineSlot}
-                        onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
-                        onOpenFactoryDrawer={(s) => {
-                          setProfileDrawerSupplier(s);
-                          setIsProfileDrawerOpen(true);
-                        }}
-                        theme={theme}
-                      />
-                    ))}
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-5 w-full">
+                      {displayedSuppliers.map((supplier) => (
+                        <SupplierCard
+                          key={supplier.id}
+                          supplier={supplier}
+                          onContactSupplier={() => {
+                            setIsRfqModalOpen(true);
+                          }}
+                          onFilterBySupplier={(id) => {
+                            setSupplierFilter(id);
+                            setActiveView('products');
+                          }}
+                          onOpenComplianceVault={handleOpenComplianceVault}
+                          onReserveLineSlot={handleReserveLineSlot}
+                          onOpenAiAssistant={(s) => handleOpenAiAssistant(null, s)}
+                          onOpenFactoryDrawer={(s) => {
+                            setProfileDrawerSupplier(s);
+                            setIsProfileDrawerOpen(true);
+                          }}
+                          theme={theme}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Pagination / Load More Bar */}
+                    <div
+                      className={`flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl border ${
+                        theme === 'dark'
+                          ? 'bg-[#141414] border-white/10 text-slate-300'
+                          : 'bg-white border-slate-200 text-slate-700'
+                      }`}
+                    >
+                      <div className="text-xs font-medium flex items-center space-x-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>
+                          Showing <strong className="text-rose-500">{displayedSuppliers.length}</strong> of{' '}
+                          <strong className="text-rose-500">{filteredSuppliers.length}</strong> Verified Exporters
+                          (admin.handsandhead.com database)
+                        </span>
+                      </div>
+
+                      {displayedSuppliers.length < filteredSuppliers.length && (
+                        <div className="flex items-center space-x-2">
+                          <button
+                            type="button"
+                            onClick={() => setVisibleSupplierLimit((prev) => prev + 36)}
+                            className="px-4 py-2 rounded-xl bg-[#e11d48] hover:bg-[#ff1e42] text-white text-xs font-bold transition-all shadow-md cursor-pointer"
+                          >
+                            Load More Factories (+36)
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setVisibleSupplierLimit(filteredSuppliers.length)}
+                            className={`px-4 py-2 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+                              theme === 'dark'
+                                ? 'bg-white/5 hover:bg-white/10 border-white/10 text-white'
+                                : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
+                            }`}
+                          >
+                            Show All ({filteredSuppliers.length})
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

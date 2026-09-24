@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAuth,
   onLogout,
   onOpenTechPackStudio,
-  onOpenAiAssistant: _onOpenAiAssistant,
+  onOpenAiAssistant,
   theme = 'dark',
   onToggleTheme,
   onOpenPipeline,
@@ -516,64 +516,134 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="whitespace-nowrap">B2B Catalog</span>
               </button>
             )}
+
+            {/* Top Bar AI Mode Button */}
+            {onOpenAiAssistant && (
+              <button
+                type="button"
+                id="header-topbar-ai-mode-btn"
+                onClick={onOpenAiAssistant}
+                className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-black transition-all cursor-pointer flex items-center space-x-1 sm:space-x-1.5 border shrink-0 bg-gradient-to-r from-rose-600 via-rose-500 to-red-600 hover:from-rose-500 hover:to-red-500 text-white border-rose-400/50 shadow-md shadow-rose-950/50 group"
+                title="AI Mode - Sourcing & Freight Intelligence"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse shrink-0" />
+                <span className="whitespace-nowrap tracking-tight">AI Mode</span>
+                <span className="hidden xl:inline-block px-1 py-0.2 text-[9px] font-mono bg-white/20 rounded text-rose-100">
+                  LIVE
+                </span>
+              </button>
+            )}
           </div>
 
-          {/* Center: Subtle Verticals Dropdown + Tiny Search Bar (Desktop only, hidden on mobile) */}
+          {/* Center: Fit Scale Verticals Dropdown + Tiny Search Bar (Desktop only, hidden on mobile) */}
           <div className="hidden md:flex flex-1 min-w-0 max-w-xl mx-2 items-center space-x-1.5">
-          {/* Subtle Verticals Dropdown */}
+          {/* Fit Scale Verticals Dropdown */}
           <div className="relative shrink-0">
             <button
               type="button"
               id="header-verticals-dropdown-btn"
               onClick={() => setIsVerticalMenuOpen(!isVerticalMenuOpen)}
-              className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+              className={`flex items-center space-x-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
                 isDark
-                  ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300'
-                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+                  ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
               }`}
-              title="All Verticals (2,749)"
+              title="All Verticals (2,749 Styles)"
             >
-              <span className="max-w-[130px] truncate">
+              <span className="max-w-[120px] lg:max-w-[170px] xl:max-w-[200px] truncate">
                 {selectedDivision === 'all'
                   ? (lang === 'BN' ? 'সব বিভাগ' : 'All Verticals')
                   : FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.pavilionLabel || 'Vertical'}
               </span>
-              <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isVerticalMenuOpen ? 'rotate-180' : ''}`} />
+              <span className="px-1.5 py-0.2 rounded-md text-[10px] font-mono font-bold bg-[#e11d48]/15 text-[#ff4b72] border border-[#e11d48]/25 shrink-0">
+                {toDigits(2749)}
+              </span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                  isVerticalMenuOpen ? 'rotate-180 text-rose-500' : ''
+                }`}
+              />
             </button>
 
             {isVerticalMenuOpen && (
               <div
                 onMouseLeave={() => setIsVerticalMenuOpen(false)}
-                className={`absolute left-0 top-full mt-1.5 w-64 rounded-xl shadow-2xl border p-1.5 z-50 max-h-80 overflow-y-auto ${
-                  isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+                className={`absolute left-0 top-full mt-2 w-[340px] sm:w-[480px] md:w-[540px] rounded-2xl shadow-2xl border p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150 backdrop-blur-xl ${
+                  isDark
+                    ? 'bg-[#121319]/95 border-white/15 text-white shadow-black/80'
+                    : 'bg-white/95 border-slate-200 text-slate-900 shadow-slate-300'
                 }`}
               >
-                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1">
-                  {lang === 'BN' ? 'রপ্তানি বিভাগসমূহ' : 'Export Verticals'} ({toDigits(2749)})
+                <div className="flex items-center justify-between px-2 pb-2 mb-2 border-b border-inherit">
+                  <div>
+                    <span className="text-xs font-black tracking-tight">
+                      {lang === 'BN' ? 'রপ্তানি বিভাগসমূহ ও শিল্প ক্লাস্টার' : 'Export Verticals & Industrial Clusters'}
+                    </span>
+                    <p className="text-[11px] text-slate-400">
+                      Direct factory sourcing across specialized Bangladesh pavilions
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
+                    {toDigits(2749)} Styles Live
+                  </span>
                 </div>
-                {FEDERATED_DIVISIONS.map((div) => {
-                  const isSelected = selectedDivision === div.slug;
-                  return (
-                    <button
-                      key={div.slug}
-                      type="button"
-                      onClick={() => {
-                        handleDivisionClick(div.slug);
-                        setIsVerticalMenuOpen(false);
-                      }}
-                      className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center justify-between ${
-                        isSelected
-                          ? 'bg-[#e11d48] text-white'
-                          : isDark
-                          ? 'hover:bg-white/10 text-slate-300'
-                          : 'hover:bg-slate-100 text-slate-700'
-                      }`}
-                    >
-                      <span>{div.pavilionLabel}</span>
-                      {isSelected && <Check className="w-3 h-3 text-white" />}
-                    </button>
-                  );
-                })}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-[380px] overflow-y-auto pr-1">
+                  {FEDERATED_DIVISIONS.map((div) => {
+                    const isSelected = selectedDivision === div.slug;
+                    return (
+                      <button
+                        key={div.slug}
+                        type="button"
+                        onClick={() => {
+                          handleDivisionClick(div.slug);
+                          setIsVerticalMenuOpen(false);
+                        }}
+                        className={`text-left p-2 rounded-xl transition-all cursor-pointer flex items-start justify-between border ${
+                          isSelected
+                            ? 'bg-[#e11d48] text-white border-[#e11d48] shadow-md shadow-rose-950/30'
+                            : isDark
+                            ? 'bg-white/[0.03] hover:bg-white/10 text-slate-200 border-white/5 hover:border-white/15'
+                            : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200/80'
+                        }`}
+                      >
+                        <div className="min-w-0 pr-1">
+                          <div className="flex items-center space-x-1.5">
+                            <span className="font-bold text-xs truncate">
+                              {div.slug === 'all'
+                                ? (lang === 'BN' ? 'সব বিভাগ' : 'All Verticals')
+                                : div.divisionTitle}
+                            </span>
+                          </div>
+                          <div className="flex items-center space-x-1.5 mt-0.5">
+                            <span
+                              className={`text-[10px] font-mono truncate ${
+                                isSelected ? 'text-rose-100' : 'text-slate-400'
+                              }`}
+                            >
+                              {div.domain}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col items-end shrink-0 pl-1">
+                          <span
+                            className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md ${
+                              isSelected
+                                ? 'bg-white/20 text-white'
+                                : isDark
+                                ? 'bg-white/10 text-slate-300'
+                                : 'bg-slate-200/80 text-slate-700'
+                            }`}
+                          >
+                            {toDigits(div.itemCount)}
+                          </span>
+                          {isSelected && <Check className="w-3.5 h-3.5 text-white mt-1" />}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
@@ -865,54 +935,78 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="header-verticals-dropdown-btn-mobile"
             onClick={() => setIsVerticalMenuOpen(!isVerticalMenuOpen)}
-            className={`flex items-center space-x-1 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
+            className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
               isDark
                 ? 'bg-white/10 hover:bg-white/15 border-white/15 text-white'
                 : 'bg-slate-100 hover:bg-slate-200 border-slate-300 text-slate-800'
             }`}
-            title="All Verticals (2,749)"
+            title="All Verticals (2,749 Styles)"
           >
-            <span className="max-w-[110px] truncate">
+            <span className="max-w-[120px] truncate">
               {selectedDivision === 'all'
                 ? (lang === 'BN' ? 'সব বিভাগ' : 'All Verticals')
                 : FEDERATED_DIVISIONS.find((d) => d.slug === selectedDivision)?.pavilionLabel || 'Vertical'}
             </span>
-            <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${isVerticalMenuOpen ? 'rotate-180' : ''}`} />
+            <span className="px-1 py-0.2 rounded text-[10px] font-mono font-bold bg-[#e11d48]/20 text-[#ff4b72]">
+              {toDigits(2749)}
+            </span>
+            <ChevronDown
+              className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                isVerticalMenuOpen ? 'rotate-180 text-rose-500' : ''
+              }`}
+            />
           </button>
 
           {isVerticalMenuOpen && (
             <div
               onMouseLeave={() => setIsVerticalMenuOpen(false)}
-              className={`absolute left-0 top-full mt-1.5 w-64 max-w-[85vw] rounded-xl shadow-2xl border p-1.5 z-50 max-h-80 overflow-y-auto ${
-                isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+              className={`absolute left-0 top-full mt-2 w-[calc(100vw-24px)] max-w-sm rounded-2xl shadow-2xl border p-2 z-50 max-h-[380px] overflow-y-auto backdrop-blur-xl ${
+                isDark ? 'bg-[#141414]/95 border-white/15 text-white shadow-black/80' : 'bg-white/95 border-slate-200 text-slate-900'
               }`}
             >
-              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1">
-                {lang === 'BN' ? 'রপ্তানি বিভাগসমূহ' : 'Export Verticals'} ({toDigits(2749)})
+              <div className="flex items-center justify-between px-2 pb-1.5 mb-1.5 border-b border-inherit">
+                <span className="text-[11px] font-black uppercase tracking-wider text-slate-400">
+                  {lang === 'BN' ? 'রপ্তানি বিভাগসমূহ' : 'Export Verticals'} ({toDigits(2749)})
+                </span>
+                <span className="text-[10px] font-mono font-bold text-emerald-400">
+                  EPB Direct
+                </span>
               </div>
-              {FEDERATED_DIVISIONS.map((div) => {
-                const isSelected = selectedDivision === div.slug;
-                return (
-                  <button
-                    key={`mob-${div.slug}`}
-                    type="button"
-                    onClick={() => {
-                      handleDivisionClick(div.slug);
-                      setIsVerticalMenuOpen(false);
-                    }}
-                    className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center justify-between ${
-                      isSelected
-                        ? 'bg-[#e11d48] text-white'
-                        : isDark
-                        ? 'hover:bg-white/10 text-slate-300'
-                        : 'hover:bg-slate-100 text-slate-700'
-                    }`}
-                  >
-                    <span className="truncate">{div.pavilionLabel}</span>
-                    {isSelected && <Check className="w-3 h-3 text-white shrink-0 ml-1" />}
-                  </button>
-                );
-              })}
+              <div className="space-y-1">
+                {FEDERATED_DIVISIONS.map((div) => {
+                  const isSelected = selectedDivision === div.slug;
+                  return (
+                    <button
+                      key={`mob-${div.slug}`}
+                      type="button"
+                      onClick={() => {
+                        handleDivisionClick(div.slug);
+                        setIsVerticalMenuOpen(false);
+                      }}
+                      className={`w-full text-left p-2 rounded-xl text-xs font-bold transition-colors cursor-pointer flex items-center justify-between border ${
+                        isSelected
+                          ? 'bg-[#e11d48] text-white border-[#e11d48]'
+                          : isDark
+                          ? 'bg-white/[0.03] hover:bg-white/10 text-slate-200 border-white/5'
+                          : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200/60'
+                      }`}
+                    >
+                      <div className="min-w-0 pr-1">
+                        <div className="truncate">{div.pavilionLabel}</div>
+                        <div className={`text-[10px] font-mono truncate ${isSelected ? 'text-rose-100' : 'text-slate-400'}`}>
+                          {div.domain}
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-1.5 shrink-0 pl-1">
+                        <span className="text-[10px] font-mono font-bold opacity-80">
+                          {toDigits(div.itemCount)}
+                        </span>
+                        {isSelected && <Check className="w-3 h-3 text-white" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>

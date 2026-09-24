@@ -152,7 +152,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     previewFallbackImg: '/catalog/jute/jute-card-hero.jpg',
   },
   {
-    id: 'textiles-handsandhead',
+    id: 'textile-handsandhead',
     domain: 'textile.handsandhead.com',
     url: 'https://textile.handsandhead.com',
     name: 'textile.handsandhead.com',
