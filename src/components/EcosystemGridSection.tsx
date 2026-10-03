@@ -29,6 +29,7 @@ export interface EcosystemPortalNode {
   metricsLabel: string;
   latencyMs: number;
   previewFallbackImg: string;
+  hoverImage?: string;
 }
 
 interface EcosystemGridSectionProps {
@@ -52,6 +53,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '6.5 Cr Ledger • 15.4k Buyers',
     latencyMs: 18,
     previewFallbackImg: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/1. handsandhead.ai.studio (Master Portal).jpg',
   },
   {
     id: 'handsandhead-com',
@@ -66,6 +68,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '3,105 Factories • Verified Gateway',
     latencyMs: 24,
     previewFallbackImg: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/2. handsandhead.com (The Hub).jpg',
   },
   {
     id: 'shop-handsandhead',
@@ -80,6 +83,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: 'Ready Stock • Low MOQ 100',
     latencyMs: 32,
     previewFallbackImg: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/3. shop.handsandhead.com (D2C & Rapid Wholesale).jpg',
   },
   {
     id: 'rmg-handsandhead',
@@ -94,6 +98,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '684 Products • OEKO-TEX 100',
     latencyMs: 26,
     previewFallbackImg: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/4. rmg.handsandhead.com (RMG Knits & Wovens).jpg',
   },
   {
     id: 'leather-handsandhead',
@@ -108,6 +113,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '145 Lots • Hemayetpur Tannery',
     latencyMs: 35,
     previewFallbackImg: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/5. leather.handsandhead.com (Hide Registry).jpg',
   },
   {
     id: 'bracelets-handsandhead',
@@ -122,6 +128,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '195 Designs • 316L Stainless',
     latencyMs: 29,
     previewFallbackImg: 'https://images.unsplash.com/photo-1611591475878-a32065842813?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/6. bracelets.handsandhead.com (Leather Cuffs & Hardware).jpg',
   },
   {
     id: 'jacket-handsandhead',
@@ -136,6 +143,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '412 Styles • 14oz-16oz Selvedge',
     latencyMs: 28,
     previewFallbackImg: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/7. jacket.handsandhead.com (Heavy Outerwear) .jpg',
   },
   {
     id: 'jute-handsandhead',
@@ -150,6 +158,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '289 Products • 100% Organic Eco',
     latencyMs: 22,
     previewFallbackImg: '/catalog/jute/jute-card-hero.jpg',
+    hoverImage: '/8. jute.handsandhead.com (Golden Jute & Eco).jpg',
   },
   {
     id: 'textile-handsandhead',
@@ -164,6 +173,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '326 Mills • 650 GSM Zero-Twist',
     latencyMs: 31,
     previewFallbackImg: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/9. textile.handsandhead.com (Home Textiles).jpg',
   },
   {
     id: 'lingerie-handsandhead',
@@ -178,6 +188,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '210 Collections • Seamless Tech',
     latencyMs: 33,
     previewFallbackImg: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/10. lingerie.handsandhead.com (Intimates & Seamless).jpg',
   },
   {
     id: 'harness-handsandhead',
@@ -192,6 +203,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '178 Items • Heavy Harness Grade',
     latencyMs: 25,
     previewFallbackImg: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/11. harness.handsandhead.com (Tactical & Heavy Gear).jpg',
   },
   {
     id: 'arutemika-com',
@@ -206,6 +218,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     metricsLabel: '340 Atelier SKUs • Goodyear Welt',
     latencyMs: 38,
     previewFallbackImg: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80',
+    hoverImage: '/12. arutemika.com (Japan Wholesale Atelier) .jpg',
   },
 ];
 
@@ -411,18 +424,31 @@ export const EcosystemGridSection: React.FC<EcosystemGridSectionProps> = ({
                   <ExternalLink className="w-2.5 h-2.5 opacity-60" />
                 </div>
 
-                {/* Screenshot Image Viewport */}
+                {/* Screenshot Image Viewport with Editorial Hover-Zoom Reveal */}
                 <div className="relative flex-1 w-full overflow-hidden bg-slate-900 flex items-center justify-center">
+                  {/* Default Standard UI Image */}
                   <img
                     src={getScreenshotUrl(node)}
                     alt={`${node.domain} home page screenshot`}
                     loading="lazy"
                     onError={() => handleImageError(node.id)}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/preview:scale-105"
+                    className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out ${
+                      node.hoverImage ? 'group-hover:opacity-0' : ''
+                    }`}
                   />
 
+                  {/* Editorial Hover Image with Dynamic Scale-110 Zoom Effect */}
+                  {node.hoverImage && (
+                    <img
+                      src={node.hoverImage}
+                      alt={`${node.name} editorial preview`}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-in-out group-hover:scale-110 opacity-0 group-hover:opacity-100 transition-opacity"
+                    />
+                  )}
+
                   {/* Dark Vignette Overlay on Hover with Instant Launch CTA */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/preview:opacity-100 transition-opacity flex items-end p-2 justify-between">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-2 justify-between">
                     <span className="text-[10px] text-white font-mono font-bold drop-shadow">
                       Visit Home Page
                     </span>
