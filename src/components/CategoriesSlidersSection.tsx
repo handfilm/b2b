@@ -289,7 +289,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                     onMouseEnter={() => setHoveredCardId(p.id)}
                     onMouseLeave={() => setHoveredCardId(null)}
                     onClick={() => onSelectProduct(p)}
-                    className={`w-44 sm:w-48 md:w-52 lg:w-56 shrink-0 rounded-xl p-2.5 border transition-all cursor-pointer group/card shadow-2xs relative flex flex-col justify-between ${
+                    className={`w-44 sm:w-48 md:w-52 lg:w-56 shrink-0 rounded-xl p-2.5 border transition-all cursor-pointer group/card group shadow-2xs relative flex flex-col justify-between ${
                       isDark
                         ? 'bg-white/[0.04] hover:bg-white/[0.08] border-white/10 hover:border-[#e11d48]'
                         : 'bg-slate-50/80 hover:bg-white border-slate-200/80 hover:border-[#e11d48] shadow-slate-100'
@@ -298,15 +298,34 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                     <div>
                       {/* Image Frame with Aspect Square & Badges */}
                       <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
+                        {/* Default Standard Image */}
                         <img
-                          src={p.images?.[0] || '/catalog/rawx/rawx-denim-jeans-01.jpg'}
+                          src={p.image || p.images?.[0] || '/catalog/rawx/rawx-denim-jeans-01.jpg'}
                           alt={p.title}
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover/card:scale-106 transition-transform duration-500 ease-out"
+                          className={`w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                            p.hoverImage
+                              ? 'group-hover/card:opacity-0 group-hover:opacity-0'
+                              : 'group-hover/card:scale-110 group-hover:scale-110'
+                          }`}
                           onError={(e) => {
                             (e.currentTarget as HTMLImageElement).src = '/catalog/rawx/rawx-denim-jeans-01.jpg';
                           }}
                         />
+
+                        {/* Cinematic Hover-Zoom Paired Image */}
+                        {p.hoverImage && (
+                          <img
+                            src={p.hoverImage}
+                            alt={`${p.title} alternate view`}
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-in-out group-hover/card:scale-110 group-hover:scale-110 opacity-0 group-hover/card:opacity-100 group-hover:opacity-100 transition-opacity"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        )}
 
                         {/* Top-Left Badge */}
                         <span className="absolute top-1.5 left-1.5 bg-[#e11d48] text-white text-[9px] font-black px-1.5 py-0.5 rounded font-mono z-10 shadow-xs">
@@ -490,7 +509,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                     onMouseEnter={() => setHoveredCardId(p.id)}
                     onMouseLeave={() => setHoveredCardId(null)}
                     onClick={() => onSelectProduct(p)}
-                    className={`w-44 sm:w-48 md:w-52 lg:w-56 shrink-0 rounded-xl p-2.5 border transition-all cursor-pointer group/card shadow-2xs relative flex flex-col justify-between ${
+                    className={`w-44 sm:w-48 md:w-52 lg:w-56 shrink-0 rounded-xl p-2.5 border transition-all cursor-pointer group/card group shadow-2xs relative flex flex-col justify-between ${
                       isDark
                         ? 'bg-white/[0.04] hover:bg-white/[0.08] border-white/10 hover:border-amber-500'
                         : 'bg-slate-50/80 hover:bg-white border-slate-200/80 hover:border-amber-500 shadow-slate-100'
@@ -499,15 +518,34 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                     <div>
                       {/* Image Frame with Aspect Square & Badges */}
                       <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
+                        {/* Default Standard Image */}
                         <img
-                          src={p.images?.[0] || '/catalog/arutemika/arutemika-origami-tote-01.jpg'}
+                          src={p.image || p.images?.[0] || '/catalog/arutemika/arutemika-origami-tote-01.jpg'}
                           alt={p.title}
                           referrerPolicy="no-referrer"
-                          className="w-full h-full object-cover group-hover/card:scale-106 transition-transform duration-500 ease-out"
+                          className={`w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                            p.hoverImage
+                              ? 'group-hover/card:opacity-0 group-hover:opacity-0'
+                              : 'group-hover/card:scale-110 group-hover:scale-110'
+                          }`}
                           onError={(e) => {
                             (e.currentTarget as HTMLImageElement).src = '/catalog/arutemika/arutemika-origami-tote-01.jpg';
                           }}
                         />
+
+                        {/* Cinematic Hover-Zoom Paired Image */}
+                        {p.hoverImage && (
+                          <img
+                            src={p.hoverImage}
+                            alt={`${p.title} alternate view`}
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-in-out group-hover/card:scale-110 group-hover:scale-110 opacity-0 group-hover/card:opacity-100 group-hover:opacity-100 transition-opacity"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        )}
 
                         {/* Top-Left Badge */}
                         <span className="absolute top-1.5 left-1.5 bg-amber-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded font-mono z-10 shadow-xs">

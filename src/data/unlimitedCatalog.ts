@@ -25,6 +25,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Envoy Textiles & RAWx Atelier Ltd.',
     supplierVerified: true,
     supplierRating: 4.96,
+    image: '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg',
+    hoverImage: '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans  2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-02.jpg',
@@ -68,6 +70,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Plummy Fashions & Activewear Ltd.',
     supplierVerified: true,
     supplierRating: 4.95,
+    image: '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set 1.jpg',
+    hoverImage: '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set  2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
@@ -111,6 +115,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Apex Footwear & RAWx Leathercraft',
     supplierVerified: true,
     supplierRating: 4.94,
+    image: '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 1.jpg',
+    hoverImage: '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
@@ -197,6 +203,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'DBL Group (Dulal Brothers Ltd.)',
     supplierVerified: true,
     supplierRating: 4.88,
+    image: '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 1.jpg',
+    hoverImage: '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
@@ -238,6 +246,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Apex Footwear & Tanning Enterprise',
     supplierVerified: true,
     supplierRating: 4.91,
+    image: '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 1.jpg',
+    hoverImage: '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
@@ -403,6 +413,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'ARUTEMIKA Leather Atelier & Export Ltd.',
     supplierVerified: true,
     supplierRating: 4.99,
+    image: '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg',
+    hoverImage: '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
@@ -489,6 +501,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'RAWx Atelier & Performance Ltd.',
     supplierVerified: true,
     supplierRating: 4.98,
+    image: '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  1.jpg',
+    hoverImage: '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
@@ -532,6 +546,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'RAWx Junior Atelier & Export Guild',
     supplierVerified: true,
     supplierRating: 4.96,
+    image: '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 1.jpg',
+    hoverImage: '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 2.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-junior-lookbook-01.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-junior-lookbook-02.jpg',
@@ -575,6 +591,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'ARUTEMIKA Bengal Atelier & Crafts',
     supplierVerified: true,
     supplierRating: 4.96,
+    image: '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt .jpg',
+    hoverImage: '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt_.jpg',
     images: [
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-08.jpg',
       'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-09.jpg',

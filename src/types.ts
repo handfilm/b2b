@@ -120,6 +120,8 @@ export interface Product {
   supplierVerified: boolean;
   supplierRating: number;
   images: string[];
+  image?: string;
+  hoverImage?: string;
   specifications: ProductSpecification[];
   materials: string[];
   ecoFriendly: boolean;
