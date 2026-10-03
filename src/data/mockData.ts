@@ -609,8 +609,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg',
+      '/GOTS Certified 100_ Organic Combed Cotton Blank Tee.jpg',
+      '/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg',
     ],
     specifications: [
       { label: 'Fabric Composition', value: '100% GOTS Certified Organic Cotton' },
@@ -649,8 +649,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-02.jpg',
+      '/rawx-stealth-jacket-01.jpg',
+      '/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg',
     ],
     specifications: [
       { label: 'Denim Weight', value: '12.5 oz / sq yard' },
@@ -689,8 +689,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.8,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/jute-card-hero.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/golden-jute-burlap.jpg',
+      '/Golden Jute Natural Biodegradable Daily Market Tote.jpg',
+      '/arutemika-origami-tote-01.jpg',
     ],
     specifications: [
       { label: 'Dimensions', value: '44 inch x 26.5 inch (112 cm x 67 cm) / 60 kg Capacity' },
@@ -728,8 +728,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
+      '/rawx-leather-sneakers-01.jpg',
+      '/rawx-leather-sneakers-02.jpg',
     ],
     specifications: [
       { label: 'Upper Leather', value: '1.4 - 1.6 mm Full Grain Crust Cow Leather' },
