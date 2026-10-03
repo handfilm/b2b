@@ -152,8 +152,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.97,
     images: [
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg',
     ],
     specifications: [
       { label: 'Yarn Count', value: '24/1 Ne Super Combed' },
@@ -209,8 +209,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.95,
     images: [
-      'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
     ],
     specifications: [
       { label: 'Weave', value: '3x1 RHT Shuttle-Loom Selvedge' },
@@ -322,8 +322,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.98,
     images: [
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
     ],
     specifications: [
       { label: 'Construction', value: '360° Goodyear Storm Welt' },
@@ -378,8 +378,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.93,
     images: [
-      'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
     ],
     specifications: [
       { label: 'Leather Width', value: '12mm Double Wrap' },
@@ -434,8 +434,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.89,
     images: [
-      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-alt.jpg',
     ],
     specifications: [
       { label: 'Leather Thickness', value: '10-11 oz Heavy Latigo' },
@@ -490,8 +490,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.97,
     images: [
-      'https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
     ],
     specifications: [
       { label: 'Loop Type', value: 'Zero-Twist Micro Spun Cotton' },
@@ -547,8 +547,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.92,
     images: [
-      'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
     ],
     specifications: [
       { label: 'Tannage', value: '100% Vegetable Chestnut/Mimosa' },
@@ -603,8 +603,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.94,
     images: [
-      'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(6).jpg',
     ],
     specifications: [
       { label: 'Weight', value: '300 GSM 100% Combed Cotton' },

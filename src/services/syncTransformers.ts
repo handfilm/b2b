@@ -45,11 +45,11 @@ export function normalizeDriveProduct(driveData: RawGoogleDriveAsset): B2BProduc
     driveData.webContentLink ||
     driveData.thumbnailUrl ||
     (driveData.driveFileId ? `https://drive.google.com/uc?export=view&id=${driveData.driveFileId}` : '') ||
-    'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80';
+    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg';
 
   const secondaryImage =
     driveData.thumbnailUrl ||
-    'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80';
+    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg';
 
   // Origin routing URL back to shop.handsandhead.com for checkout
   const targetRoutingUrl = `https://shop.handsandhead.com/checkout?sku=${encodeURIComponent(sku)}&source=b2b_sync&ref=nexos_drive`;
@@ -169,8 +169,8 @@ export function normalizeArutemikaProduct(arutemikaData: RawArutemikaProduct): B
   const images = arutemikaData.images && arutemikaData.images.length > 0
     ? arutemikaData.images
     : [
-        'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80',
+        'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+        'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
       ];
 
   return {
@@ -262,7 +262,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Natural Ecru Chalk', hex: '#f1f5f9' },
       { name: 'Vintage Olive', hex: '#3f4f34' },
     ],
-    directImageUrl: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
+    directImageUrl: 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
   },
   {
     driveFileId: 'DRV-HOOD-450-FR',
@@ -281,7 +281,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Jet Carbon', hex: '#1e293b' },
       { name: 'Deep Burgundy', hex: '#831843' },
     ],
-    directImageUrl: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80',
+    directImageUrl: 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
   },
   {
     driveFileId: 'DRV-DEN-CHORE-13',
@@ -299,7 +299,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Pure Indigo Raw', hex: '#1e3a8a' },
       { name: 'Overdyed Black', hex: '#0a0a0a' },
     ],
-    directImageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
+    directImageUrl: 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
   },
 ];
 
@@ -315,8 +315,8 @@ export const RAW_ARUTEMIKA_FEED: RawArutemikaProduct[] = [
     wholesalePriceUSD: 44.0,
     moq: 50,
     images: [
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
     ],
     hardware: 'Reinforced Italian Herringbone Elastic Gusset',
     soling: 'Vibram #430 Mini-Lug Commando Sole',
@@ -341,8 +341,8 @@ export const RAW_ARUTEMIKA_FEED: RawArutemikaProduct[] = [
     wholesalePriceUSD: 52.0,
     moq: 50,
     images: [
-      'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-alt.jpg',
     ],
     hardware: 'Concealed Blind Eyelets & Waxed Cotton Laces',
     soling: '5mm Vegetable-Tanned Sole Leather with Brass Toe Taps',
@@ -367,8 +367,8 @@ export const RAW_ARUTEMIKA_FEED: RawArutemikaProduct[] = [
     wholesalePriceUSD: 78.0,
     moq: 30,
     images: [
-      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
     ],
     hardware: 'Solid Forged British Brass Quick-Release Tuck Locks',
     soling: 'Reinforced Suede Lining with 16-inch Laptop Divider',

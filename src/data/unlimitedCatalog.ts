@@ -26,9 +26,9 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.96,
     images: [
-      '/catalog/rawx/rawx-denim-jeans-01.jpg',
-      '/catalog/rawx/rawx-denim-jeans-02.jpg',
-      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-alt.jpg',
     ],
     specifications: [
       { label: 'Denim', value: '13.5 oz Redline Shuttle-Loom Selvedge' },
@@ -69,9 +69,9 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.95,
     images: [
-      '/catalog/rawx/rawx-activewear-01.jpg',
-      '/catalog/rawx/rawx-activewear-02.jpg',
-      'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-alt.jpg',
     ],
     specifications: [
       { label: 'Fabric', value: '280 GSM Poly-Spandex 4-Way Stretch' },
@@ -112,9 +112,9 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.94,
     images: [
-      '/catalog/rawx/rawx-leather-sneakers-01.jpg',
-      '/catalog/rawx/rawx-leather-sneakers-02.jpg',
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-alt.jpg',
     ],
     specifications: [
       { label: 'Upper', value: '1.6mm Full-Grain Nappa Calfskin' },
@@ -155,9 +155,9 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.92,
     images: [
-      '/catalog/rawx/rawx-leather-bracelet-01.jpg',
-      '/catalog/rawx/rawx-leather-bracelet-02.jpg',
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-alt.jpg',
     ],
     specifications: [
       { label: 'Leather', value: '8-Strand Hand-Braided Vegetable-Tanned' },
@@ -198,8 +198,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.88,
     images: [
-      'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
     ],
     specifications: [
       { label: 'Fabric', value: '420 GSM 100% Combed Cotton Terry' },
@@ -239,8 +239,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.91,
     images: [
-      'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
     ],
     specifications: [
       { label: 'Upper', value: '1.8-2.0mm Full Grain Pull-Up Cowhide' },
@@ -280,8 +280,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.89,
     images: [
-      'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1544441893-675973e31985?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-03.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-04.jpg',
     ],
     specifications: [
       { label: 'Waterproofness', value: '15,000 mm / Breathability 10,000 g/m²' },
@@ -321,8 +321,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.93,
     images: [
-      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-05.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-alt.jpg',
     ],
     specifications: [
       { label: 'Yarn', value: '88% Micro-Nylon, 12% Spandex' },
@@ -361,8 +361,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.87,
     images: [
-      'https://images.unsplash.com/photo-1627123424574-724758594e93?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1554412933-514a83d2f3c8?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-07.jpg',
     ],
     specifications: [
       { label: 'Leather', value: '1.2mm Semi-Vegetable Crust Cowhide' },
@@ -404,9 +404,9 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.99,
     images: [
-      '/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      '/catalog/arutemika/arutemika-origami-tote-02.jpg',
-      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
     ],
     specifications: [
       { label: 'Color Editions', value: 'Noir Black, Espresso Brown, Cognac Tan, Oxblood Burgundy' },
@@ -447,9 +447,9 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.97,
     images: [
-      '/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
-      '/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-base.jpg',
     ],
     specifications: [
       { label: 'Braid Structure', value: 'Dual 8-Strand Architectural Round Braid' },
@@ -490,9 +490,9 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.98,
     images: [
-      '/catalog/arutemika/rawx-stealth-jacket-01.jpg',
-      '/catalog/arutemika/rawx-stealth-jacket-02.jpg',
-      'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
     ],
     specifications: [
       { label: 'Shell', value: 'Matte Bonded Lambskin & Technical Elastomer Shell' },
@@ -533,9 +533,9 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.96,
     images: [
-      '/catalog/arutemika/rawx-junior-lookbook-01.jpg',
-      '/catalog/arutemika/rawx-junior-lookbook-02.jpg',
-      'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-junior-lookbook-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-junior-lookbook-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
     ],
     specifications: [
       { label: 'Tee Fabric', value: '220 GSM Combed Compact Cotton with RAWx Graphic' },
@@ -576,8 +576,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.96,
     images: [
-      'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-08.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-09.jpg',
     ],
     specifications: [
       { label: 'Yarn', value: 'Handspun Desi Khadi Cotton 32s' },
@@ -617,8 +617,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.91,
     images: [
-      'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/golden-jute-burlap.jpg',
     ],
     specifications: [
       { label: 'Sizes', value: 'Large 35cm, Medium 28cm, Small 22cm' },
@@ -657,8 +657,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.99,
     images: [
-      'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/jute-card-hero.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/raw-golden-fiber.jpg',
     ],
     specifications: [
       { label: 'Weave', value: 'Discontinuous Weft Jamdani Supplementary' },
@@ -698,8 +698,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.90,
     images: [
-      'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1614983646436-b3d7a8398b3d?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
     ],
     specifications: [
       { label: 'Clay', value: 'High Density Alluvial Clay Soil' },

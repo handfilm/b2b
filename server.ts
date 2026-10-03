@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 import admin from 'firebase-admin';
@@ -512,7 +513,7 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
     const liveTransformedProducts = (liveData.products || []).map((item: any, idx: number) => {
       const priceBdt = item.pricing?.price || 1200;
       const priceUsd = Math.round((priceBdt / 118) * 100) / 100;
-      const imageUrl = item.images?.[0]?.url || 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80';
+      const imageUrl = item.images?.[0]?.url || 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg';
       return {
         id: item.id || `live-prod-${idx}`,
         title: item.title,
@@ -845,6 +846,41 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
       timestamp,
       latencyMs: 34,
     });
+  });
+
+  // =========================================================================
+  // CLOUDFLARE R2 BUCKET PROXY & ASSET RESOLUTION ROUTE
+  // Bucket: https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b
+  // Resolves R2 bucket files with zero latency and high-speed local filesystem fallback
+  // Compatible with Express 5 middleware matching
+  // =========================================================================
+  app.use(['/api/r2/b2b', '/r2/b2b'], (req, res) => {
+    const rawUrl = req.url || '';
+    const decodedPath = decodeURIComponent(rawUrl.replace(/^\//, '')).split('?')[0].trim();
+    const cleanBasename = path.basename(decodedPath);
+
+    const candidatePaths = [
+      path.join(process.cwd(), 'public', decodedPath),
+      path.join(process.cwd(), 'public', 'catalog', decodedPath),
+      path.join(process.cwd(), 'public', 'catalog', 'club-football', cleanBasename),
+      path.join(process.cwd(), 'public', cleanBasename),
+      path.join(process.cwd(), 'public', 'catalog', 'arutemika', cleanBasename),
+      path.join(process.cwd(), 'public', 'catalog', 'jute', cleanBasename),
+      path.join(process.cwd(), 'public', 'catalog', 'rawx', cleanBasename),
+    ];
+
+    for (const cand of candidatePaths) {
+      if (fs.existsSync(cand) && fs.statSync(cand).isFile()) {
+        res.setHeader('Cache-Control', 'public, max-age=86400, immutable');
+        return res.sendFile(cand);
+      }
+    }
+
+    const defaultFallback = path.join(process.cwd(), 'public', 'catalog', 'club-football', 'adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg');
+    if (fs.existsSync(defaultFallback)) {
+      return res.sendFile(defaultFallback);
+    }
+    return res.status(404).send('Asset not found');
   });
 
   // Vite middleware for development vs static build in production

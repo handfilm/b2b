@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { B2bCatalogProduct, CurrencyConfig } from '../types';
 import { ProductImageCarousel } from './ProductImageCarousel';
+import { getCatalogImageUrl } from '../utils/imageUrl';
 
 interface B2bCatalogCardProps {
   product: B2bCatalogProduct;
@@ -41,7 +42,7 @@ export const B2bCatalogCard: React.FC<B2bCatalogCardProps> = ({
   const priceConv = (product.price * currency.rate).toFixed(2);
   const unitSymbol = currency.symbol;
 
-  const currentImage = product.images?.[activeImgIdx] || product.images?.[0] || '/football_club (1).jpg';
+  const currentImage = product.images?.[activeImgIdx] || product.images?.[0] || '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg';
 
   return (
     <div
@@ -62,6 +63,7 @@ export const B2bCatalogCard: React.FC<B2bCatalogCardProps> = ({
           isParentHovered={isHovered}
           angleBadgePosition="top-center"
           paginationBottomClass="bottom-8"
+          fallbackImage="/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg"
           angleLabels={[
             'Front Studio Cut',
             product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic Detail',

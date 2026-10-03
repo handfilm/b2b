@@ -43,8 +43,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 5.0,
     images: [
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg',
     ],
     specifications: [
       { label: 'Platform', value: 'handsandhead.ai.studio' },
@@ -90,8 +90,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.98,
     images: [
-      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-03.jpg',
     ],
     specifications: [
       { label: 'Facility', value: 'Narayanganj Green Knit Cluster' },
@@ -137,8 +137,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.95,
     images: [
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-03.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-04.jpg',
     ],
     specifications: [
       { label: 'Weight', value: '240 GSM Heavyweight Jersey' },
@@ -182,8 +182,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-05.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
     ],
     specifications: [
       { label: 'Fabric', value: '450 GSM Diagonal French Terry' },
@@ -227,8 +227,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.92,
     images: [
-      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1626497764746-6dc36546b388?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-07.jpg',
     ],
     specifications: [
       { label: 'GSM', value: '200 GSM Mercerized Pique' },
@@ -273,8 +273,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.96,
     images: [
-      'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
     ],
     specifications: [
       { label: 'Substance', value: '1.4 - 1.6 mm' },
@@ -318,8 +318,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.88,
     images: [
-      'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
     ],
     specifications: [
       { label: 'Leather', value: '4mm Vegetable Tanned Bridle' },
@@ -363,8 +363,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.97,
     images: [
-      'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
     ],
     specifications: [
       { label: 'Fabric', value: '14.5 oz Redline Shuttle-Loom Selvedge' },
@@ -409,8 +409,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.93,
     images: [
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/golden-jute-burlap.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/jute-card-hero.jpg',
     ],
     specifications: [
       { label: 'Dimensions', value: '40 inch x 28 inch (Standard 60kg)' },
@@ -455,8 +455,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.95,
     images: [
-      'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/raw-golden-fiber.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
     ],
     specifications: [
       { label: 'Weight', value: '650 GSM High Pile' },
@@ -500,8 +500,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.91,
     images: [
-      'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-alt.jpg',
     ],
     specifications: [
       { label: 'Technology', value: 'Santoni Seamless 28G' },
@@ -545,8 +545,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
     ],
     specifications: [
       { label: 'Leather Thickness', value: '4.5 - 5.0 mm (10-12 oz)' },
@@ -590,8 +590,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.98,
     images: [
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
     ],
     specifications: [
       { label: 'Construction', value: '360° Goodyear Storm Welt' },

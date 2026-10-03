@@ -21,6 +21,7 @@ import {
 import { Product, Supplier, CurrencyConfig } from '../types';
 import { useInquiryCart } from '../context/InquiryCartContext';
 import { useI18n } from '../context/I18nContext';
+import { getCatalogImageUrl, handleImageFallback } from '../utils/imageUrl';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -129,11 +130,11 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="lg:col-span-5 space-y-3">
               <div className="aspect-4/3 rounded-xl overflow-hidden bg-[#171717] border border-white/10 relative">
                 <img
-                  src={product.images[activeImageIndex] || product.images[0] || '/catalog/club-football/club-01.jpg'}
+                  src={getCatalogImageUrl(product.images[activeImageIndex] || product.images[0] || '/catalog/club-football/club-01.jpg')}
                   alt={product.title}
                   referrerPolicy="no-referrer"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = '/catalog/club-football/club-01.jpg';
+                    handleImageFallback(e, '/catalog/club-football/club-01.jpg');
                   }}
                   className="w-full h-full object-cover"
                 />
@@ -160,12 +161,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                       }`}
                     >
                       <img
-                        src={img}
+                        src={getCatalogImageUrl(img)}
                         alt=""
                         className="w-full h-full object-cover"
                         referrerPolicy="no-referrer"
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = '/catalog/club-football/club-01.jpg';
+                          handleImageFallback(e, '/catalog/club-football/club-01.jpg');
                         }}
                       />
                       <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[8.5px] font-mono text-center text-white py-0.5 truncate px-0.5">

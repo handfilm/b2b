@@ -44,12 +44,12 @@ export function normalizeDriveProduct(driveData: RawGoogleDriveAsset | any): B2B
     driveData.webContentLink ||
     driveData.thumbnailUrl ||
     (driveData.images && driveData.images[0]) ||
-    'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80';
+    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg';
 
   const secondaryImage =
     driveData.thumbnailUrl ||
     (driveData.images && driveData.images[1]) ||
-    'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop&q=80';
+    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg';
 
   let categoryId: CategoryId = (driveData.categoryId as CategoryId) || 'rmg-apparel';
   const folderLower = (driveData.folderPath || driveData.categoryFolder || driveData.category || '').toLowerCase();
@@ -139,8 +139,8 @@ export function normalizeArutemikaProduct(arutemikaData: RawArutemikaProduct | a
   const images = arutemikaData.images && arutemikaData.images.length > 0
     ? arutemikaData.images
     : [
-        arutemikaData.imageUrl || 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80',
-        'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=800&auto=format&fit=crop&q=80',
+        arutemikaData.imageUrl || 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+        'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
       ];
 
   const specs: ProductSpecification[] = [

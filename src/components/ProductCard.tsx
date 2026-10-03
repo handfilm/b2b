@@ -136,14 +136,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const fallbackImage =
     product.categoryId === 'rmg-apparel'
-      ? '/catalog/club-football/club-01.jpg'
+      ? '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg'
       : product.categoryId === 'leather-footwear'
-      ? 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&auto=format&fit=crop&q=80'
+      ? '/catalog/rawx/rawx-leather-sneakers-base.jpg'
       : product.categoryId === 'jute-eco'
-      ? 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80'
+      ? '/catalog/jute/jute-card-hero.jpg'
       : product.categoryId === 'home-textiles'
-      ? 'https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=800&auto=format&fit=crop&q=80'
-      : 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80';
+      ? '/catalog/rawx/rawx-activewear-01.jpg'
+      : '/catalog/club-football/adidas-real-madrid-acid-purple-trefoil-tee.jpg';
 
   const handleCardClick = () => {
     onSelectProduct(product);

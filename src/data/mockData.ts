@@ -609,8 +609,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg',
     ],
     specifications: [
       { label: 'Fabric Composition', value: '100% GOTS Certified Organic Cotton' },
@@ -649,8 +649,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-02.jpg',
     ],
     specifications: [
       { label: 'Denim Weight', value: '12.5 oz / sq yard' },
@@ -689,8 +689,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.8,
     images: [
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1589365278144-c9e705f843ba?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/jute-card-hero.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/golden-jute-burlap.jpg',
     ],
     specifications: [
       { label: 'Dimensions', value: '44 inch x 26.5 inch (112 cm x 67 cm) / 60 kg Capacity' },
@@ -728,8 +728,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
     ],
     specifications: [
       { label: 'Upper Leather', value: '1.4 - 1.6 mm Full Grain Crust Cow Leather' },
@@ -768,8 +768,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.8,
     images: [
-      'https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
     ],
     specifications: [
       { label: 'Material Composition', value: '45%+ Bone Ash Content (High Translucency)' },
@@ -807,8 +807,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.9,
     images: [
-      'https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
     ],
     specifications: [
       { label: 'Pile Yarn', value: '100% Zero-Twist Long Staple Combed Cotton' },
@@ -846,8 +846,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.8,
     images: [
-      'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1534483509719-3feaee7c30da?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
     ],
     specifications: [
       { label: 'Counts / Size Grades', value: '16/20, 21/25, 26/30 pcs per lb (Customizable)' },
@@ -885,8 +885,8 @@ export const PRODUCTS: Product[] = [
     supplierVerified: true,
     supplierRating: 4.8,
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1606744837616-56c9a5c6a6eb?w=800&auto=format&fit=crop&q=80',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
+      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
     ],
     specifications: [
       { label: 'Craft Technique', value: '100% Hand-Stitched Bengal Nakshi Kantha' },

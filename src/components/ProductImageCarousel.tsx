@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronLeft, ChevronRight, Eye } from 'lucide-react';
+import { getCatalogImageUrl, handleImageFallback } from '../utils/imageUrl';
 
 export interface ProductImageCarouselProps {
   images: string[];
@@ -27,7 +28,7 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
   isParentHovered = false,
   angleBadgePosition = 'top-right',
   paginationBottomClass = 'bottom-2.5',
-  fallbackImage = '/catalog/club-football/club-01.jpg',
+  fallbackImage = '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg',
 }) => {
   // Ensure we have at least one valid image
   const validImages = images.length > 0 && images.some((img) => Boolean(img?.trim()))
@@ -164,14 +165,15 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
         <motion.img
           key={currentIndex}
-          src={isCurrentErrored ? fallbackImage : currentSrc}
+          src={isCurrentErrored ? fallbackImage : getCatalogImageUrl(currentSrc)}
           alt={`${title} - ${currentAngleLabel}`}
           custom={direction}
           variants={slideVariants}
           initial="enter"
           animate="center"
           exit="exit"
-          onError={() => {
+          onError={(e) => {
+            handleImageFallback(e, fallbackImage);
             setImageErrorMap((prev) => ({ ...prev, [currentIndex]: true }));
           }}
           referrerPolicy="no-referrer"

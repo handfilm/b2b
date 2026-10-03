@@ -21,6 +21,7 @@ import {
   Eye,
 } from 'lucide-react';
 import { B2bCatalogProduct, CurrencyConfig } from '../types';
+import { getCatalogImageUrl, handleImageFallback } from '../utils/imageUrl';
 
 interface B2bProductDetailModalProps {
   product: B2bCatalogProduct | null;
@@ -100,11 +101,11 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
             <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 border border-white/10 shadow-inner group/modalImg">
               <div className="absolute inset-0 animate-pulse bg-neutral-900 pointer-events-none" />
               <img
-                src={currentImg}
+                src={getCatalogImageUrl(currentImg)}
                 alt={product.title}
                 className="w-full h-full object-cover object-center transition-transform duration-300 group-hover/modalImg:scale-102"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = `/catalog/club-football/club-${String(product.id.replace(/\D/g, '') || '01').padStart(2, '0')}.jpg`;
+                  handleImageFallback(e, `/catalog/club-football/club-${String(product.id.replace(/\D/g, '') || '01').padStart(2, '0')}.jpg`);
                 }}
               />
 
@@ -182,7 +183,12 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
                       selectedImgIdx === idx ? 'border-emerald-500 scale-105 shadow-md shadow-emerald-500/20' : 'border-white/10 opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img src={img} alt="thumb" className="w-full h-full object-cover" />
+                    <img
+                      src={getCatalogImageUrl(img)}
+                      alt="thumb"
+                      className="w-full h-full object-cover"
+                      onError={(e) => handleImageFallback(e)}
+                    />
                   </button>
                 ))}
               </div>
