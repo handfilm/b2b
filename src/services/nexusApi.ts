@@ -22,7 +22,7 @@ import {
 import rawCatalogData from '../data/b2bCatalogData.json';
 import { FEDERATED_PRODUCTS } from '../data/divisions';
 import { MASTER_FEDERATED_PRODUCTS, MASTER_LIVE_ORDERS } from '../data/masterDatabaseFeeder';
-import { generateMoreProducts } from '../data/unlimitedCatalog';
+import { generateMoreProducts, resolveCatalogRootImage, resolveCatalogImages } from '../data/unlimitedCatalog';
 import {
   normalizeDriveBatch,
   normalizeArutemikaBatch,
@@ -159,7 +159,7 @@ function normalizeJsonCatalogProduct(raw: any): B2BProduct {
     supplierName: raw.supplierName || 'Plummy Fashions Ltd. (LEED Platinum)',
     supplierVerified: true,
     supplierRating: raw.supplierRating || 4.96,
-    images: raw.images && raw.images.length > 0 ? raw.images : ['/catalog/club-football/club-01.jpg'],
+    images: raw.images && raw.images.length > 0 ? raw.images : [],
     specifications: raw.specifications || [],
     materials: raw.materials || ['100% Combed Ring-Spun Cotton', 'Eco-Reactive Dye'],
     ecoFriendly: true,
@@ -195,7 +195,7 @@ function initializeMasterNormalizedCatalog(): B2BProduct[] {
     return memoryCatalogStore;
   }
 
-  // 1. Ingest verified physical B2B catalog items (all 28 club football kits, blanks, leather goods)
+  // 1. Ingest verified physical B2B catalog items (blanks, leather goods, knitwear)
   const catalogProducts = (((rawCatalogData as any).products || []) as any[]).map(normalizeJsonCatalogProduct);
 
   // 2. Ingest federated cluster items (all 9 satellite divisions)
@@ -215,8 +215,8 @@ function initializeMasterNormalizedCatalog(): B2BProduct[] {
     (p) => p.id !== 'ais-01' && p.id !== 'hub-01'
   );
 
-  // 7. Extended procedural catalog items (96+ verified lots)
-  const extendedCatalog = generateMoreProducts(1, 96, undefined, undefined);
+  // 7. Extended procedural catalog items (120+ verified lots)
+  const extendedCatalog = generateMoreProducts(1, 120, undefined, undefined);
 
   // Deduplicate by ID with high-priority physical products first
   const map = new Map<string, B2BProduct>();
@@ -241,7 +241,39 @@ function initializeMasterNormalizedCatalog(): B2BProduct[] {
     if (!map.has(p.id)) map.set(p.id, p);
   });
 
-  memoryCatalogStore = Array.from(map.values());
+  memoryCatalogStore = Array.from(map.values()).map((p) => {
+    let resolvedImage: string | null = null;
+    const verifiedRoot = resolveCatalogRootImage(p.title, p.categoryId);
+    if (verifiedRoot) {
+      resolvedImage = verifiedRoot;
+    } else if (
+      p.image &&
+      typeof p.image === 'string' &&
+      p.image.trim() &&
+      p.image.startsWith('/') &&
+      !p.image.includes('cloudflarestorage')
+    ) {
+      resolvedImage = p.image.trim();
+    }
+
+    const multiAngles = resolveCatalogImages(p.title, resolvedImage);
+    const combinedRaw = [...(p.images || []), ...multiAngles];
+    const cleanExtraImages = Array.from(new Set(combinedRaw)).filter((img): img is string =>
+      Boolean(
+        img &&
+        typeof img === 'string' &&
+        img.trim() &&
+        img !== resolvedImage &&
+        !img.includes('cloudflarestorage')
+      )
+    );
+
+    return {
+      ...p,
+      image: resolvedImage || null,
+      images: resolvedImage ? [resolvedImage, ...cleanExtraImages] : cleanExtraImages,
+    };
+  });
   return memoryCatalogStore;
 }
 

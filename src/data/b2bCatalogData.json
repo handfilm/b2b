@@ -119,7 +119,7 @@
   ],
   "products": [
     {
-      "id": "club-foot-1",
+      "id": "b2b-01",
       "slug": "rawx-architectural-heavyweight-box-tee",
       "title": "Architectural 260–300 GSM Heavyweight Box-Tee (Custom Graphic / Screen-Print Ready)",
       "categorySlug": "t-shirts",
@@ -155,8 +155,7 @@
         }
       ],
       "images": [
-        "/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg",
-        "/300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee.jpg"
+        "/Architectural 260–300 GSM Heavyweight Box-Tee (Custom Graphic _ Screen-Print Ready).jpg"
       ],
       "colorVariants": [
         {
@@ -218,10 +217,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Architectural RAWx Grid Print"
+      "frontPrint": "Architectural RAWx Grid Print",
+      "image": "/Architectural 260–300 GSM Heavyweight Box-Tee (Custom Graphic _ Screen-Print Ready).jpg"
     },
     {
-      "id": "club-foot-2",
+      "id": "b2b-02",
       "slug": "rawx-garment-dyed-dual-tone-ombre-tee",
       "title": "Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee",
       "categorySlug": "t-shirts",
@@ -257,8 +257,7 @@
         }
       ],
       "images": [
-        "/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg",
-        "/Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee.jpg"
+        "/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -320,10 +319,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Dual-Tone Ombre Dip-Dye Vector"
+      "frontPrint": "Dual-Tone Ombre Dip-Dye Vector",
+      "image": "/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg"
     },
     {
-      "id": "club-foot-3",
+      "id": "b2b-03",
       "slug": "rawx-acid-washed-vintage-streetwear-blank",
       "title": "Acid-Washed Vintage Heavyweight Streetwear Blank",
       "categorySlug": "t-shirts",
@@ -359,8 +359,7 @@
         }
       ],
       "images": [
-        "/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg",
-        "/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg"
+        "/Acid-Washed Vintage Heavyweight Streetwear Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -422,10 +421,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Vintage Mineral Wash Spec"
+      "frontPrint": "RAWx Vintage Mineral Wash Spec",
+      "image": "/Acid-Washed Vintage Heavyweight Streetwear Blank.jpg"
     },
     {
-      "id": "club-foot-4",
+      "id": "b2b-04",
       "slug": "rawx-300-gsm-double-faced-heavyweight-box-tee",
       "title": "Architectural 300 GSM Double-Faced Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
@@ -461,8 +461,7 @@
         }
       ],
       "images": [
-        "/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg",
-        "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
+        "/Architectural 300 GSM Double-Faced Heavyweight Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -524,10 +523,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Minimalist Structural Vector"
+      "frontPrint": "Minimalist Structural Vector",
+      "image": "/Architectural 300 GSM Double-Faced Heavyweight Box-Tee.jpg"
     },
     {
-      "id": "club-foot-5",
+      "id": "b2b-05",
       "slug": "rawx-carbon-charcoal-mineral-wash-tee",
       "title": "Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee",
       "categorySlug": "t-shirts",
@@ -563,8 +563,7 @@
         }
       ],
       "images": [
-        "/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg",
-        "/Mineral Wash Acid Charcoal Relaxed Skater Tee.jpg"
+        "/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -626,10 +625,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Tonal Atelier Monogram"
+      "frontPrint": "RAWx Tonal Atelier Monogram",
+      "image": "/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg"
     },
     {
-      "id": "club-foot-6",
+      "id": "b2b-06",
       "slug": "rawx-optic-white-heavyweight-box-tee",
       "title": "Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready)",
       "categorySlug": "t-shirts",
@@ -665,8 +665,7 @@
         }
       ],
       "images": [
-        "/Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready).jpg",
-        "/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg"
+        "/Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready).jpg"
       ],
       "colorVariants": [
         {
@@ -728,10 +727,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "High-Density Screen-Print Matrix"
+      "frontPrint": "High-Density Screen-Print Matrix",
+      "image": "/Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready).jpg"
     },
     {
-      "id": "club-foot-7",
+      "id": "b2b-07",
       "slug": "rawx-midnight-black-300-gsm-architectural-tee",
       "title": "Midnight Black 300 GSM Architectural Drop-Shoulder Tee",
       "categorySlug": "t-shirts",
@@ -767,7 +767,6 @@
         }
       ],
       "images": [
-        "/Midnight Black 300 GSM Architectural Drop-Shoulder Tee.jpg",
         "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
       ],
       "colorVariants": [
@@ -830,10 +829,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Subtle Matte Carbon Vector"
+      "frontPrint": "Subtle Matte Carbon Vector",
+      "image": "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
     },
     {
-      "id": "club-foot-8",
+      "id": "b2b-08",
       "slug": "rawx-forest-emerald-garment-dyed-boxy-tee",
       "title": "Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee",
       "categorySlug": "t-shirts",
@@ -869,8 +869,7 @@
         }
       ],
       "images": [
-        "/Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee.jpg",
-        "/Deep Pine Green 280 GSM Architectural Box-Tee.jpg"
+        "/Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -932,10 +931,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Botanical Reactive Spec"
+      "frontPrint": "RAWx Botanical Reactive Spec",
+      "image": "/Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee.jpg"
     },
     {
-      "id": "club-foot-9",
+      "id": "b2b-09",
       "slug": "rawx-deep-burgundy-heavyweight-blank-tee",
       "title": "Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank",
       "categorySlug": "t-shirts",
@@ -971,8 +971,7 @@
         }
       ],
       "images": [
-        "/Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank.jpg",
-        "/Acid-Washed Vintage Royal Purple Heavyweight Box-Tee.jpg"
+        "/Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -1034,10 +1033,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Studio Geometric Print"
+      "frontPrint": "RAWx Studio Geometric Print",
+      "image": "/Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank.jpg"
     },
     {
-      "id": "club-foot-10",
+      "id": "b2b-10",
       "slug": "rawx-acid-washed-dual-tone-ombre-tee",
       "title": "Acid-Washed Vintage Dual-Tone Ombre Oversized Tee",
       "categorySlug": "t-shirts",
@@ -1073,8 +1073,7 @@
         }
       ],
       "images": [
-        "/Acid-Washed Vintage Dual-Tone Ombre Oversized Tee.jpg",
-        "/Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee.jpg"
+        "/Acid-Washed Vintage Dual-Tone Ombre Oversized Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -1136,10 +1135,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Dual-Tone Vector"
+      "frontPrint": "RAWx Dual-Tone Vector",
+      "image": "/Acid-Washed Vintage Dual-Tone Ombre Oversized Tee.jpg"
     },
     {
-      "id": "club-foot-11",
+      "id": "b2b-11",
       "slug": "rawx-washed-lavender-vintage-enzyme-tee",
       "title": "Washed Lavender 260 GSM Vintage Enzyme Streetwear Tee",
       "categorySlug": "t-shirts",
@@ -1175,8 +1175,7 @@
         }
       ],
       "images": [
-        "/Acid-Washed Vintage Royal Purple Heavyweight Box-Tee.jpg",
-        "/Raw-Edge Hemmed Vintage Acid-Washed Box-Tee.jpg"
+        "/Washed Lavender 260 GSM Vintage Enzyme Streetwear Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -1238,10 +1237,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Clean Minimalist Graphic"
+      "frontPrint": "Clean Minimalist Graphic",
+      "image": "/Washed Lavender 260 GSM Vintage Enzyme Streetwear Tee.jpg"
     },
     {
-      "id": "club-foot-12",
+      "id": "b2b-12",
       "slug": "rawx-contrast-stitch-heavyweight-box-tee",
       "title": "Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
@@ -1277,8 +1277,7 @@
         }
       ],
       "images": [
-        "/Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee.jpg",
-        "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
+        "/Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -1340,10 +1339,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Architectural Contrast Overlock"
+      "frontPrint": "Architectural Contrast Overlock",
+      "image": "/Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee.jpg"
     },
     {
-      "id": "club-foot-13",
+      "id": "b2b-13",
       "slug": "rawx-deep-pine-green-box-tee",
       "title": "Deep Pine Green 280 GSM Architectural Box-Tee",
       "categorySlug": "t-shirts",
@@ -1379,8 +1379,7 @@
         }
       ],
       "images": [
-        "/Deep Pine Green 280 GSM Architectural Box-Tee.jpg",
-        "/Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee.jpg"
+        "/Deep Pine Green 280 GSM Architectural Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -1442,10 +1441,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Architectural Line Art"
+      "frontPrint": "RAWx Architectural Line Art",
+      "image": "/Deep Pine Green 280 GSM Architectural Box-Tee.jpg"
     },
     {
-      "id": "club-foot-14",
+      "id": "b2b-14",
       "slug": "rawx-natural-raw-ecru-heavyweight-blank",
       "title": "Natural Raw Ecru Unbleached Heavyweight Cotton Blank",
       "categorySlug": "t-shirts",
@@ -1481,8 +1481,7 @@
         }
       ],
       "images": [
-        "/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg",
-        "/Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready).jpg"
+        "/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -1544,10 +1543,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Raw Organic Fiber Spec"
+      "frontPrint": "Raw Organic Fiber Spec",
+      "image": "/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg"
     },
     {
-      "id": "club-foot-15",
+      "id": "b2b-15",
       "slug": "rawx-carbon-gold-medallion-tee",
       "title": "Vintage Carbon & Gold Medallion Streetwear Heavyweight Tee",
       "categorySlug": "t-shirts",
@@ -1583,8 +1583,10 @@
         }
       ],
       "images": [
-        "/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg",
-        "/Mineral Wash Acid Charcoal Relaxed Skater Tee.jpg"
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee-back.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee-detail.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee-print.jpg"
       ],
       "colorVariants": [
         {
@@ -1645,11 +1647,13 @@
       "sampleAvailable": true,
       "samplePriceUSD": 30,
       "techPackAvailable": true,
-      "brand": "RAWx Studio",
-      "frontPrint": "RAWx Geometric Medallion"
+      "brand": "Adidas",
+      "frontPrint": "Golden Cannon Trefoil",
+      "image": "/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
+      "club": "Arsenal FC"
     },
     {
-      "id": "club-foot-16",
+      "id": "b2b-16",
       "slug": "rawx-sage-chalk-ombre-boxy-fit-tee",
       "title": "Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee",
       "categorySlug": "t-shirts",
@@ -1685,8 +1689,7 @@
         }
       ],
       "images": [
-        "/Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee.jpg",
-        "/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg"
+        "/Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -1748,10 +1751,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Ombre Horizon Gradient"
+      "frontPrint": "Ombre Horizon Gradient",
+      "image": "/Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee.jpg"
     },
     {
-      "id": "club-foot-17",
+      "id": "b2b-17",
       "slug": "rawx-olive-moss-mineral-wash-blank",
       "title": "Olive Moss Vintage Mineral Wash Heavyweight Box Blank",
       "categorySlug": "t-shirts",
@@ -1787,8 +1791,7 @@
         }
       ],
       "images": [
-        "/Olive Moss Vintage Mineral Wash Heavyweight Box Blank.jpg",
-        "/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg"
+        "/Olive Moss Vintage Mineral Wash Heavyweight Box Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -1850,10 +1853,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Minimalist Sourcing Spec"
+      "frontPrint": "RAWx Minimalist Sourcing Spec",
+      "image": "/Olive Moss Vintage Mineral Wash Heavyweight Box Blank.jpg"
     },
     {
-      "id": "club-foot-18",
+      "id": "b2b-18",
       "slug": "rawx-pitch-black-300-gsm-heavyweight-box-tee",
       "title": "Pitch Black Architectural 300 GSM Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
@@ -1889,8 +1893,7 @@
         }
       ],
       "images": [
-        "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg",
-        "/Midnight Black 300 GSM Architectural Drop-Shoulder Tee.jpg"
+        "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -1952,10 +1955,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Tokyo Standard Mark"
+      "frontPrint": "RAWx Tokyo Standard Mark",
+      "image": "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
     },
     {
-      "id": "club-foot-19",
+      "id": "b2b-19",
       "slug": "rawx-acid-washed-charcoal-skater-blank",
       "title": "Acid-Washed Vintage Charcoal Heavyweight Skater Blank",
       "categorySlug": "t-shirts",
@@ -1991,8 +1995,7 @@
         }
       ],
       "images": [
-        "/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg",
-        "/Mineral Wash Acid Charcoal Relaxed Skater Tee.jpg"
+        "/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -2054,10 +2057,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Abstract Geometric Silhouette"
+      "frontPrint": "Abstract Geometric Silhouette",
+      "image": "/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg"
     },
     {
-      "id": "club-foot-20",
+      "id": "b2b-20",
       "slug": "rawx-mineral-wash-sand-slate-tee",
       "title": "Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee",
       "categorySlug": "t-shirts",
@@ -2093,8 +2097,7 @@
         }
       ],
       "images": [
-        "/Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee.jpg",
-        "/Acid-Washed Vintage Dual-Tone Ombre Oversized Tee.jpg"
+        "/Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2156,10 +2159,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Patina Monogram"
+      "frontPrint": "RAWx Patina Monogram",
+      "image": "/Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee.jpg"
     },
     {
-      "id": "club-foot-21",
+      "id": "b2b-21",
       "slug": "rawx-260-gsm-minimalist-drop-shoulder-tee",
       "title": "Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee",
       "categorySlug": "t-shirts",
@@ -2195,8 +2199,7 @@
         }
       ],
       "images": [
-        "/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg",
-        "/300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee.jpg"
+        "/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2258,10 +2261,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Clean Studio Vector"
+      "frontPrint": "Clean Studio Vector",
+      "image": "/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg"
     },
     {
-      "id": "club-foot-22",
+      "id": "b2b-22",
       "slug": "rawx-raw-edge-hemmed-acid-washed-box-tee",
       "title": "Raw-Edge Hemmed Vintage Acid-Washed Box-Tee",
       "categorySlug": "t-shirts",
@@ -2297,8 +2301,7 @@
         }
       ],
       "images": [
-        "/Raw-Edge Hemmed Vintage Acid-Washed Box-Tee.jpg",
-        "/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg"
+        "/Raw-Edge Hemmed Vintage Acid-Washed Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2360,10 +2363,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Raw Edge Spec"
+      "frontPrint": "RAWx Raw Edge Spec",
+      "image": "/Raw-Edge Hemmed Vintage Acid-Washed Box-Tee.jpg"
     },
     {
-      "id": "club-foot-23",
+      "id": "b2b-23",
       "slug": "rawx-sunset-ombre-dip-dye-boxy-tee",
       "title": "Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee",
       "categorySlug": "t-shirts",
@@ -2399,8 +2403,7 @@
         }
       ],
       "images": [
-        "/Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee.jpg",
-        "/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg"
+        "/Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2462,10 +2465,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Sunset Ombre Spec"
+      "frontPrint": "Sunset Ombre Spec",
+      "image": "/Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee.jpg"
     },
     {
-      "id": "club-foot-24",
+      "id": "b2b-24",
       "slug": "rawx-pitch-black-neon-accent-box-tee",
       "title": "Pitch Black & Neon Accent Architectural Box-Tee",
       "categorySlug": "t-shirts",
@@ -2501,8 +2505,7 @@
         }
       ],
       "images": [
-        "/Pitch Black & Neon Accent Architectural Box-Tee.jpg",
-        "/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg"
+        "/Pitch Black & Neon Accent Architectural Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2564,10 +2567,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Cyber-Construct Geometric Vector"
+      "frontPrint": "Cyber-Construct Geometric Vector",
+      "image": "/Pitch Black & Neon Accent Architectural Box-Tee.jpg"
     },
     {
-      "id": "club-foot-25",
+      "id": "b2b-25",
       "slug": "rawx-earth-mineral-heavyweight-blank",
       "title": "Acid-Washed Earth Mineral Heavyweight Streetwear Blank",
       "categorySlug": "t-shirts",
@@ -2603,8 +2607,7 @@
         }
       ],
       "images": [
-        "/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg",
-        "/Olive Moss Vintage Mineral Wash Heavyweight Box Blank.jpg"
+        "/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -2666,10 +2669,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Earth Mineral Spec"
+      "frontPrint": "RAWx Earth Mineral Spec",
+      "image": "/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg"
     },
     {
-      "id": "club-foot-26",
+      "id": "b2b-26",
       "slug": "rawx-tokyo-atelier-standard-blank-tee",
       "title": "Tokyo Atelier Standard 280 GSM Heavyweight Combed Cotton Blank",
       "categorySlug": "t-shirts",
@@ -2705,8 +2709,7 @@
         }
       ],
       "images": [
-        "/Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready).jpg",
-        "/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg"
+        "/Tokyo Atelier Standard 280 GSM Heavyweight Combed Cotton Blank.jpg"
       ],
       "colorVariants": [
         {
@@ -2768,10 +2771,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Tokyo Standard Atelier Seal"
+      "frontPrint": "Tokyo Standard Atelier Seal",
+      "image": "/Tokyo Atelier Standard 280 GSM Heavyweight Combed Cotton Blank.jpg"
     },
     {
-      "id": "club-foot-27",
+      "id": "b2b-27",
       "slug": "rawx-ocean-ombre-dip-dye-boxy-tee",
       "title": "Garment-Dyed Dual-Tone Ocean Ombre Dip-Dye Boxy Fit Tee",
       "categorySlug": "t-shirts",
@@ -2807,8 +2811,7 @@
         }
       ],
       "images": [
-        "/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg",
-        "/Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee.jpg"
+        "/Garment-Dyed Dual-Tone Ocean Ombre Dip-Dye Boxy Fit Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2870,10 +2873,11 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "Ocean Gradient Spec"
+      "frontPrint": "Ocean Gradient Spec",
+      "image": "/Garment-Dyed Dual-Tone Ocean Ombre Dip-Dye Boxy Fit Tee.jpg"
     },
     {
-      "id": "club-foot-28",
+      "id": "b2b-28",
       "slug": "rawx-vintage-royal-purple-heavyweight-box-tee",
       "title": "Acid-Washed Vintage Royal Purple Heavyweight Box-Tee",
       "categorySlug": "t-shirts",
@@ -2909,8 +2913,7 @@
         }
       ],
       "images": [
-        "/Acid-Washed Vintage Royal Purple Heavyweight Box-Tee.jpg",
-        "/Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank.jpg"
+        "/Acid-Washed Vintage Royal Purple Heavyweight Box-Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -2972,7 +2975,8 @@
       "samplePriceUSD": 30,
       "techPackAvailable": true,
       "brand": "RAWx Studio",
-      "frontPrint": "RAWx Vintage Royal Vector"
+      "frontPrint": "RAWx Vintage Royal Vector",
+      "image": "/Acid-Washed Vintage Royal Purple Heavyweight Box-Tee.jpg"
     },
     {
       "id": "tshirt-heavy-01",
@@ -3010,8 +3014,7 @@
         }
       ],
       "images": [
-        "/300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee.jpg",
-        "/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg"
+        "/300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee.jpg"
       ],
       "colorVariants": [
         {
@@ -3053,7 +3056,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 28,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee.jpg"
     },
     {
       "id": "tshirt-vintage-01",
@@ -3090,7 +3094,6 @@
         }
       ],
       "images": [
-        "/Mineral Wash Acid Charcoal Relaxed Skater Tee.jpg",
         "/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg"
       ],
       "colorVariants": [
@@ -3125,7 +3128,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 30,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg"
     },
     {
       "id": "tshirt-organic-01",
@@ -3163,8 +3167,7 @@
         }
       ],
       "images": [
-        "/GOTS Certified 100_ Organic Combed Cotton Blank Tee.jpg",
-        "/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg"
+        "/Rapid Turnaround Edition • 100% Organic Combed Ring-Spun Cotton Heavyweight Crewneck T-Shirt.jpg"
       ],
       "colorVariants": [
         {
@@ -3202,7 +3205,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 25,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/Rapid Turnaround Edition • 100% Organic Combed Ring-Spun Cotton Heavyweight Crewneck T-Shirt.jpg"
     },
     {
       "id": "acc-belt-01",
@@ -3240,8 +3244,7 @@
         }
       ],
       "images": [
-        "/Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle).jpg",
-        "/rawx-leather-bracelet-01.jpg"
+        "/Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle).jpg"
       ],
       "colorVariants": [
         {
@@ -3284,7 +3287,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 35,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle).jpg"
     },
     {
       "id": "acc-brass-01",
@@ -3321,8 +3325,7 @@
         }
       ],
       "images": [
-        "/Custom Debossed Solid Brass Key Shackle Carabiner.jpg",
-        "/Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle).jpg"
+        "/Custom Debossed Solid Brass Key Shackle Carabiner.jpg"
       ],
       "colorVariants": [
         {
@@ -3356,7 +3359,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 20,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/Custom Debossed Solid Brass Key Shackle Carabiner.jpg"
     },
     {
       "id": "acc-cap-01",
@@ -3393,8 +3397,7 @@
         }
       ],
       "images": [
-        "/Heavy Cotton Twill Unstructured 6-Panel Dad Cap.jpg",
-        "/rawx-stealth-jacket-01.jpg"
+        "/air-jordan-psg-qatar-airways-gold-shield-tee.jpg"
       ],
       "colorVariants": [
         {
@@ -3432,7 +3435,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 25,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/air-jordan-psg-qatar-airways-gold-shield-tee.jpg"
     },
     {
       "id": "acc-jute-01",
@@ -3470,8 +3474,7 @@
         }
       ],
       "images": [
-        "/Golden Jute Natural Biodegradable Daily Market Tote.jpg",
-        "/arutemika-origami-tote-01.jpg"
+        "/Rapid Turnaround Edition • Natural Grade-A Hydrocarbon-Free Golden Jute Hessian Burlap Bags (A-Twill) .jpg"
       ],
       "colorVariants": [
         {
@@ -3505,7 +3508,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 15,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/Rapid Turnaround Edition • Natural Grade-A Hydrocarbon-Free Golden Jute Hessian Burlap Bags (A-Twill) .jpg"
     },
     {
       "id": "bag-duffle-01",
@@ -3543,8 +3547,7 @@
         }
       ],
       "images": [
-        "/Arutemika Full-Grain Vegetable-Tanned Cowhide Weekender Duffle.jpg",
-        "/Arutemika Artisan Full-Grain Cowhide Work Tote.jpg"
+        "/Arutemika Full-Grain Vegetable-Tanned Cowhide Weekender Duffle.jpg"
       ],
       "colorVariants": [
         {
@@ -3589,7 +3592,8 @@
       "sampleAvailable": true,
       "samplePriceUSD": 95,
       "techPackAvailable": true,
-      "brand": "Arutemika"
+      "brand": "Arutemika",
+      "image": "/Arutemika Full-Grain Vegetable-Tanned Cowhide Weekender Duffle.jpg"
     },
     {
       "id": "bag-brief-01",
@@ -3627,8 +3631,7 @@
         }
       ],
       "images": [
-        "/Arutemika Executive Slim Full-Grain Leather Briefcase.jpg",
-        "/Arutemika Artisan Full-Grain Cowhide Work Tote.jpg"
+        "/Arutemika Executive Slim Full-Grain Leather Briefcase.jpg"
       ],
       "colorVariants": [
         {
@@ -3668,7 +3671,8 @@
       "sampleAvailable": true,
       "samplePriceUSD": 80,
       "techPackAvailable": true,
-      "brand": "Arutemika"
+      "brand": "Arutemika",
+      "image": "/Arutemika Executive Slim Full-Grain Leather Briefcase.jpg"
     },
     {
       "id": "bag-backpack-01",
@@ -3706,8 +3710,7 @@
         }
       ],
       "images": [
-        "/Minimalist Commuter Rolltop Full-Grain Leather Backpack.jpg",
-        "/rawx-stealth-jacket-01.jpg"
+        "/Minimalist Commuter Rolltop Full-Grain Leather Backpack.jpg"
       ],
       "colorVariants": [
         {
@@ -3746,7 +3749,8 @@
       ],
       "sampleAvailable": true,
       "samplePriceUSD": 85,
-      "techPackAvailable": true
+      "techPackAvailable": true,
+      "image": "/Minimalist Commuter Rolltop Full-Grain Leather Backpack.jpg"
     },
     {
       "id": "bag-tote-01",
@@ -3783,9 +3787,7 @@
         }
       ],
       "images": [
-        "/Arutemika Artisan Full-Grain Cowhide Work Tote.jpg",
-        "/arutemika-origami-tote-01.jpg",
-        "/arutemika-origami-tote-02.jpg"
+        "/Arutemika Artisan Full-Grain Cowhide Work Tote.jpg"
       ],
       "colorVariants": [
         {
@@ -3820,7 +3822,8 @@
       "sampleAvailable": true,
       "samplePriceUSD": 55,
       "techPackAvailable": true,
-      "brand": "Arutemika"
+      "brand": "Arutemika",
+      "image": "/Arutemika Artisan Full-Grain Cowhide Work Tote.jpg"
     },
     {
       "id": "acc-bracelet-01",
@@ -3862,10 +3865,7 @@
         }
       ],
       "images": [
-        "/arutemika-braided-magnetic-bracelet-01.jpg",
-        "/arutemika-braided-magnetic-bracelet-02.jpg",
-        "/rawx-leather-bracelet-01.jpg",
-        "/rawx-leather-bracelet-02.jpg"
+        "/Arutemika Full-Grain Braided Cowhide Bracelet (316L Stainless Steel Clasp).jpg"
       ],
       "colorVariants": [
         {
@@ -3911,7 +3911,366 @@
       "samplePriceUSD": 25,
       "techPackAvailable": true,
       "brand": "Arutemika",
-      "frontPrint": "316L Clasp Debossed Monogram"
+      "frontPrint": "316L Clasp Debossed Monogram",
+      "image": "/Arutemika Full-Grain Braided Cowhide Bracelet (316L Stainless Steel Clasp).jpg"
+    },
+    {
+      "id": "b2b-club-01",
+      "title": "Adidas Arsenal FC Golden Cannon Trefoil Streetwear Tee",
+      "category": "RMG & Apparel",
+      "division": "RMG Knits",
+      "brand": "Adidas",
+      "club": "Arsenal FC",
+      "frontPrint": "Golden Cannon Trefoil",
+      "price": 4.8,
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "leadTimeDays": 25,
+      "exportComplianceStatus": "Tokyo Standard",
+      "hsCode": "6109.10",
+      "image": "/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
+      "images": [
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee-back.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee-detail.jpg",
+        "/adidas-arsenal-fc-golden-cannon-trefoil-tee-print.jpg"
+      ],
+      "description": "Custom heavy 280 GSM single jersey streetwear t-shirt featuring metallic golden cannon silicone print and vintage trefoil branding. Engineered with combed ring-spun cotton and enzyme silicon wash.",
+      "specs": {
+        "fabric": "100% Combed Ring-Spun Cotton",
+        "weight": "280 GSM",
+        "printTech": "High-Density Metallic Silicone + Plastisol",
+        "fit": "Drop-Shoulder Relaxed Boxy Fit",
+        "certification": "OEKO-TEX Standard 100 Class I"
+      },
+      "colors": [
+        {
+          "name": "Pitch Black",
+          "hex": "#111827"
+        },
+        {
+          "name": "Arsenal Crimson",
+          "hex": "#991b1b"
+        },
+        {
+          "name": "Cannon Gold",
+          "hex": "#d97706"
+        }
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 5.4
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 4.8
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 4.2
+        }
+      ],
+      "supplierName": "Dhaka Knitting & Dyeing Mills Ltd.",
+      "supplierRating": 4.9,
+      "supplierVerified": true
+    },
+    {
+      "id": "b2b-club-02",
+      "title": "Adidas Bayern Munich Telekom Trefoil Heritage Tee",
+      "category": "RMG & Apparel",
+      "division": "RMG Knits",
+      "brand": "Adidas",
+      "club": "Bayern Munich",
+      "frontPrint": "Telekom Trefoil Heritage",
+      "price": 4.75,
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "leadTimeDays": 25,
+      "exportComplianceStatus": "Tokyo Standard",
+      "hsCode": "6109.10",
+      "image": "/adidas-bayern-munich-telekom-trefoil-tee.jpg",
+      "images": [
+        "/adidas-bayern-munich-telekom-trefoil-tee.jpg",
+        "/adidas-bayern-munich-telekom-trefoil-tee-back.jpg",
+        "/adidas-bayern-munich-telekom-trefoil-tee-detail.jpg",
+        "/adidas-bayern-munich-telekom-trefoil-tee-print.jpg"
+      ],
+      "description": "Authentic retro European heritage squad t-shirt with signature T-Mobile chest branding and classic trefoil emblem. Heavyweight combed jersey with twin-needle collar rib.",
+      "specs": {
+        "fabric": "100% Organic Combed Cotton",
+        "weight": "260 GSM",
+        "printTech": "Discharge Screen Print + Silicone Crest",
+        "fit": "Standard Athletic Boxy Cut",
+        "certification": "GOTS & OEKO-TEX Certified"
+      },
+      "colors": [
+        {
+          "name": "Bavaria Red",
+          "hex": "#b91c1c"
+        },
+        {
+          "name": "Optic White",
+          "hex": "#f8fafc"
+        },
+        {
+          "name": "Deep Navy",
+          "hex": "#1e3a8a"
+        }
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 5.3
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 4.75
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 4.15
+        }
+      ],
+      "supplierName": "Apex Spinning & Weaving Mills",
+      "supplierRating": 4.95,
+      "supplierVerified": true
+    },
+    {
+      "id": "b2b-club-03",
+      "title": "Adidas Real Madrid Acid Purple Trefoil Oversized Tee",
+      "category": "RMG & Apparel",
+      "division": "RMG Knits",
+      "brand": "Adidas",
+      "club": "Real Madrid",
+      "frontPrint": "Acid Purple Crown Trefoil",
+      "price": 4.9,
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "leadTimeDays": 25,
+      "exportComplianceStatus": "Tokyo Standard",
+      "hsCode": "6109.10",
+      "image": "/adidas-real-madrid-acid-purple-trefoil-tee.jpg",
+      "images": [
+        "/adidas-real-madrid-acid-purple-trefoil-tee.jpg",
+        "/adidas-real-madrid-acid-purple-trefoil-tee-back.jpg",
+        "/adidas-real-madrid-acid-purple-trefoil-tee-detail.jpg",
+        "/adidas-real-madrid-acid-purple-trefoil-tee-print.jpg"
+      ],
+      "description": "Contemporary acid-washed royal purple heavyweight streetwear blank featuring high-density Real Madrid crest and retro trefoil graphic. Finished with custom mineral vintage wash.",
+      "specs": {
+        "fabric": "100% Combed Cotton Single Jersey",
+        "weight": "300 GSM Ultra-Heavyweight",
+        "printTech": "Puff Print + High Density Screen",
+        "fit": "Drop-Shoulder Oversized Studio Fit",
+        "certification": "LEED Platinum Factory Spec"
+      },
+      "colors": [
+        {
+          "name": "Acid Purple",
+          "hex": "#6b21a8"
+        },
+        {
+          "name": "Royal Gold",
+          "hex": "#eab308"
+        },
+        {
+          "name": "Midnight Charcoal",
+          "hex": "#1f2937"
+        }
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 5.5
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 4.9
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 4.3
+        }
+      ],
+      "supplierName": "Square Fashions Ltd.",
+      "supplierRating": 4.98,
+      "supplierVerified": true
+    },
+    {
+      "id": "b2b-club-04",
+      "title": "Adidas Real Madrid BenQ Siemens Classic Retro Tee",
+      "category": "RMG & Apparel",
+      "division": "RMG Knits",
+      "brand": "Adidas",
+      "club": "Real Madrid",
+      "frontPrint": "BenQ Siemens Galacticos",
+      "price": 4.7,
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "leadTimeDays": 20,
+      "exportComplianceStatus": "Tokyo Standard",
+      "hsCode": "6109.10",
+      "image": "/adidas-real-madrid-benq-siemens-tee.jpg",
+      "images": [
+        "/adidas-real-madrid-benq-siemens-tee.jpg",
+        "/adidas-real-madrid-benq-siemens-tee-back.jpg"
+      ],
+      "description": "Historic Galacticos era retro tribute kit t-shirt in pure optic white with BenQ Siemens chest graphic and contrasting trim.",
+      "specs": {
+        "fabric": "100% Ring-Spun Combed Cotton",
+        "weight": "240 GSM",
+        "printTech": "Flock Screen Print + Embroidered Crest",
+        "fit": "Relaxed Retro European Cut",
+        "certification": "ISO 9001:2015 Export Standard"
+      },
+      "colors": [
+        {
+          "name": "Blanco Pure White",
+          "hex": "#ffffff"
+        },
+        {
+          "name": "Galactico Navy",
+          "hex": "#1e3a8a"
+        }
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 5.25
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 4.7
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 4.1
+        }
+      ],
+      "supplierName": "Beximco Apparels Industrial Cluster",
+      "supplierRating": 4.92,
+      "supplierVerified": true
+    },
+    {
+      "id": "b2b-club-05",
+      "title": "Air Jordan PSG Qatar Airways Gold Shield Streetwear Tee",
+      "category": "RMG & Apparel",
+      "division": "RMG Knits",
+      "brand": "Jordan x PSG",
+      "club": "Paris Saint-Germain",
+      "frontPrint": "Jumpman Gold Shield Qatar Airways",
+      "price": 5.2,
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "leadTimeDays": 25,
+      "exportComplianceStatus": "Tokyo Standard",
+      "hsCode": "6109.10",
+      "image": "/air-jordan-psg-qatar-airways-gold-shield-tee.jpg",
+      "images": [
+        "/air-jordan-psg-qatar-airways-gold-shield-tee.jpg"
+      ],
+      "description": "Premium Parisian luxury streetwear collaboration featuring gold metallic PSG shield crest and Jumpman flight graphic on 300 GSM dense jersey.",
+      "specs": {
+        "fabric": "100% Combed Heavy Cotton",
+        "weight": "300 GSM",
+        "printTech": "Direct-to-Film High Density + Metallic Foil",
+        "fit": "Oversized Streetwear Silhouette",
+        "certification": "OEKO-TEX Certified Export"
+      },
+      "colors": [
+        {
+          "name": "Parisian Black",
+          "hex": "#0f172a"
+        },
+        {
+          "name": "Matte Gold",
+          "hex": "#ca8a04"
+        }
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 5.8
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 5.2
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 4.6
+        }
+      ],
+      "supplierName": "Ha-Meem Group Industrial City",
+      "supplierRating": 4.96,
+      "supplierVerified": true
+    },
+    {
+      "id": "b2b-club-06",
+      "title": "Cactus Jack x FC Barcelona Travis Scott Limited Edition Tee",
+      "category": "RMG & Apparel",
+      "division": "RMG Knits",
+      "brand": "Cactus Jack",
+      "club": "FC Barcelona",
+      "frontPrint": "Cactus Jack Cross & Blaugrana Crest",
+      "price": 5.5,
+      "moq": 100,
+      "moqBadge": "MOQ: 100 pcs",
+      "leadTimeDays": 28,
+      "exportComplianceStatus": "Tokyo Standard",
+      "hsCode": "6109.10",
+      "image": "/cactus-jack-fc-barcelona-travis-scott-tee.jpg",
+      "images": [
+        "/cactus-jack-fc-barcelona-travis-scott-tee.jpg"
+      ],
+      "description": "Exclusive music x football capsule streetwear tee with distressed vintage wash, cracked puff print detailing, and heavy gauge knit construction.",
+      "specs": {
+        "fabric": "100% Heavy Combed Cotton",
+        "weight": "320 GSM Double-Faced",
+        "printTech": "Distressed Cracked Puff Print",
+        "fit": "Boxy Skater Cut with Raw Dropped Shoulders",
+        "certification": "EPB Export Benchmark"
+      },
+      "colors": [
+        {
+          "name": "Washed Charcoal",
+          "hex": "#374151"
+        },
+        {
+          "name": "Blaugrana Crimson",
+          "hex": "#831843"
+        }
+      ],
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "maxQty": 499,
+          "priceUSD": 6.2
+        },
+        {
+          "minQty": 500,
+          "maxQty": 1999,
+          "priceUSD": 5.5
+        },
+        {
+          "minQty": 2000,
+          "priceUSD": 4.9
+        }
+      ],
+      "supplierName": "Epyllion Knitwear Division",
+      "supplierRating": 4.94,
+      "supplierVerified": true
     }
   ],
   "r2Bucket": {

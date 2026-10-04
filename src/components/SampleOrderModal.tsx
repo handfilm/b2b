@@ -132,12 +132,20 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto">
             <div className="p-3 bg-[#141414] rounded-xl border border-white/5 flex items-center space-x-3">
-              <img
-                src={product.images[0]}
-                alt=""
-                referrerPolicy="no-referrer"
-                className="w-12 h-12 rounded-lg object-cover"
-              />
+              {product.images?.[0] || product.image ? (
+                <img
+                  src={product.images?.[0] || product.image || ''}
+                  alt=""
+                  referrerPolicy="no-referrer"
+                  className="w-12 h-12 rounded-lg object-cover"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center shrink-0">
+                  <span className="text-red-600 font-mono text-xs font-black">
+                    {product.title.slice(0, 2).toUpperCase()}
+                  </span>
+                </div>
+              )}
               <div className="min-w-0 flex-1">
                 <h4 className="text-xs font-bold text-white truncate">{product.title}</h4>
                 <p className="text-[11px] text-slate-400">{product.supplierName}</p>

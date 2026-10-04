@@ -608,10 +608,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Plummy Fashions Ltd.',
     supplierVerified: true,
     supplierRating: 4.9,
-    images: [
-      '/GOTS Certified 100_ Organic Combed Cotton Blank Tee.jpg',
-      '/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Fabric Composition', value: '100% GOTS Certified Organic Cotton' },
       { label: 'Weight / Density', value: '220 GSM Heavyweight Jersey' },
@@ -648,10 +646,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Envoy Textiles Limited',
     supplierVerified: true,
     supplierRating: 4.9,
-    images: [
-      '/rawx-stealth-jacket-01.jpg',
-      '/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Denim Weight', value: '12.5 oz / sq yard' },
       { label: 'Weave Type', value: '3x1 Right Hand Twill, Selvedge ID' },
@@ -688,10 +684,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Janata Jute Mills & Fibers',
     supplierVerified: true,
     supplierRating: 4.8,
-    images: [
-      '/Golden Jute Natural Biodegradable Daily Market Tote.jpg',
-      '/arutemika-origami-tote-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Dimensions', value: '44 inch x 26.5 inch (112 cm x 67 cm) / 60 kg Capacity' },
       { label: 'Weight per Bag', value: '2.25 lbs (1020 grams)' },
@@ -727,10 +721,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Apex Footwear & Tanning Enterprise',
     supplierVerified: true,
     supplierRating: 4.9,
-    images: [
-      '/rawx-leather-sneakers-01.jpg',
-      '/rawx-leather-sneakers-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Upper Leather', value: '1.4 - 1.6 mm Full Grain Crust Cow Leather' },
       { label: 'Lining', value: 'Natural breathable drum-dyed calfskin' },
@@ -767,10 +759,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Monno Ceramic Industries Ltd.',
     supplierVerified: true,
     supplierRating: 4.8,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Material Composition', value: '45%+ Bone Ash Content (High Translucency)' },
       { label: 'Set Contents', value: '4 Dinner Plates, 4 Salad Plates, 4 Soup Bowls, 4 Cups & Saucers' },
@@ -806,10 +796,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Plummy Fashions Ltd.',
     supplierVerified: true,
     supplierRating: 4.9,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Pile Yarn', value: '100% Zero-Twist Long Staple Combed Cotton' },
       { label: 'Bath Towel Size', value: '70 cm x 140 cm (27.5" x 55")' },
@@ -845,10 +833,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Bengal Coastal Agro & Fisheries Ltd.',
     supplierVerified: true,
     supplierRating: 4.8,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Counts / Size Grades', value: '16/20, 21/25, 26/30 pcs per lb (Customizable)' },
       { label: 'Freezing Process', value: 'IQF (Individually Quick Frozen) at -38°C' },
@@ -884,10 +870,8 @@ export const PRODUCTS: Product[] = [
     supplierName: 'Janata Jute Mills & Fibers',
     supplierVerified: true,
     supplierRating: 4.8,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Craft Technique', value: '100% Hand-Stitched Bengal Nakshi Kantha' },
       { label: 'Dimensions', value: '90 inch x 108 inch (Queen / King Bedspread)' },

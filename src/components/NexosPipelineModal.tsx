@@ -348,11 +348,19 @@ export const NexosPipelineModal: React.FC<NexosPipelineModalProps> = ({
                       }`}
                     >
                       <div className="flex items-start space-x-3">
-                        <img
-                          src={prod.images[0]}
-                          alt={prod.title}
-                          className="w-16 h-16 rounded-lg object-cover border border-white/10 shrink-0"
-                        />
+                        {prod.images?.[0] || prod.image ? (
+                          <img
+                            src={prod.images?.[0] || prod.image || ''}
+                            alt={prod.title}
+                            className="w-16 h-16 rounded-lg object-cover border border-white/10 shrink-0"
+                          />
+                        ) : (
+                          <div className="w-16 h-16 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center shrink-0">
+                            <span className="text-red-600 font-mono text-xs font-black">
+                              {prod.title.slice(0, 2).toUpperCase()}
+                            </span>
+                          </div>
+                        )}
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center space-x-1.5">
                             <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300">
@@ -419,11 +427,19 @@ export const NexosPipelineModal: React.FC<NexosPipelineModalProps> = ({
                       }`}
                     >
                       <div className="flex items-start space-x-3">
-                        <img
-                          src={prod.images[0]}
-                          alt={prod.title}
-                          className="w-16 h-16 rounded-lg object-cover border border-white/10 shrink-0"
-                        />
+                        {prod.images?.[0] || prod.image ? (
+                          <img
+                            src={prod.images?.[0] || prod.image || ''}
+                            alt={prod.title}
+                            className="w-16 h-16 rounded-lg object-cover border border-white/10 shrink-0"
+                          />
+                        ) : (
+                          <div className="w-16 h-16 rounded-lg bg-zinc-950 border border-zinc-800 flex items-center justify-center shrink-0">
+                            <span className="text-red-600 font-mono text-xs font-black">
+                              {prod.title.slice(0, 2).toUpperCase()}
+                            </span>
+                          </div>
+                        )}
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap gap-1 mb-1">
                             <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-bold">

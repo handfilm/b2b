@@ -44,12 +44,12 @@ export function normalizeDriveProduct(driveData: RawGoogleDriveAsset | any): B2B
     driveData.webContentLink ||
     driveData.thumbnailUrl ||
     (driveData.images && driveData.images[0]) ||
-    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg';
+    '';
 
   const secondaryImage =
     driveData.thumbnailUrl ||
     (driveData.images && driveData.images[1]) ||
-    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg';
+    '';
 
   let categoryId: CategoryId = (driveData.categoryId as CategoryId) || 'rmg-apparel';
   const folderLower = (driveData.folderPath || driveData.categoryFolder || driveData.category || '').toLowerCase();
@@ -136,12 +136,10 @@ export function normalizeArutemikaProduct(arutemikaData: RawArutemikaProduct | a
   const sku = arutemikaData.sku || `ARTM-${(arutemikaData.id || Math.random().toString(36).substring(7)).toUpperCase().replace(/^ARTM-?/, '')}`;
   const title = arutemikaData.title || 'Arutemika Cordwainer Leather Goods';
 
+  const primaryImg = arutemikaData.imageUrl || null;
   const images = arutemikaData.images && arutemikaData.images.length > 0
     ? arutemikaData.images
-    : [
-        arutemikaData.imageUrl || 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-        'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
-      ];
+    : (primaryImg ? [primaryImg] : []);
 
   const specs: ProductSpecification[] = [
     { label: 'Provenance', value: 'Arutemika Heritage Atelier (Tokyo & Dhaka Guild)' },

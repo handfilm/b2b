@@ -300,7 +300,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                       <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
                         {/* Default Standard Image */}
                         <img
-                          src={p.image || p.images?.[0] || '/catalog/rawx/rawx-denim-jeans-01.jpg'}
+                          src={p.image || p.images?.[0] || '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg'}
                           alt={p.title}
                           referrerPolicy="no-referrer"
                           className={`w-full h-full object-cover transition-all duration-700 ease-in-out ${
@@ -309,7 +309,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                               : 'group-hover/card:scale-110 group-hover:scale-110'
                           }`}
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = '/catalog/rawx/rawx-denim-jeans-01.jpg';
+                            (e.currentTarget as HTMLImageElement).src = '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg';
                           }}
                         />
 
@@ -520,7 +520,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                       <div className="relative aspect-square rounded-lg overflow-hidden mb-2 bg-black/20 group/img">
                         {/* Default Standard Image */}
                         <img
-                          src={p.image || p.images?.[0] || '/catalog/arutemika/arutemika-origami-tote-01.jpg'}
+                          src={p.image || p.images?.[0] || '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg'}
                           alt={p.title}
                           referrerPolicy="no-referrer"
                           className={`w-full h-full object-cover transition-all duration-700 ease-in-out ${
@@ -529,7 +529,7 @@ export const CategoriesSlidersSection: React.FC<CategoriesSlidersSectionProps> =
                               : 'group-hover/card:scale-110 group-hover:scale-110'
                           }`}
                           onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = '/catalog/arutemika/arutemika-origami-tote-01.jpg';
+                            (e.currentTarget as HTMLImageElement).src = '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg';
                           }}
                         />
 

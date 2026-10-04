@@ -9,7 +9,7 @@ export const CLOUDFLARE_R2_BUCKET_URL = 'https://a8fd2c76b4d3e6bbb74ce313746d2cb
  */
 export function getCatalogImageUrl(url: string | undefined | null): string {
   if (!url || typeof url !== 'string' || !url.trim()) {
-    return '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg';
+    return '';
   }
 
   const cleanUrl = url.trim();
@@ -20,10 +20,7 @@ export function getCatalogImageUrl(url: string | undefined | null): string {
     const keyPath = cleanUrl.replace(/https?:\/\/a8fd2c76b4d3e6bbb74ce313746d2cbf\.r2\.cloudflarestorage\.com\/b2b\/?/, '');
     const decodedKey = decodeURIComponent(keyPath);
 
-    // If key starts with catalog/ or public/
-    if (decodedKey.startsWith('catalog/')) {
-      return `/${decodedKey}`;
-    }
+    // If key starts with root public/
     if (decodedKey.startsWith('public/')) {
       return `/${decodedKey.replace(/^public\//, '')}`;
     }
@@ -41,7 +38,7 @@ export function getCatalogImageUrl(url: string | undefined | null): string {
  */
 export function handleImageFallback(
   e: React.SyntheticEvent<HTMLImageElement, Event>,
-  defaultFallback = '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg'
+  defaultFallback?: string
 ) {
   const target = e.currentTarget;
   if (target.dataset.hasFailedTwice) return;
@@ -52,37 +49,9 @@ export function handleImageFallback(
       const src = target.src || '';
       const filename = decodeURIComponent(src.split('/').pop()?.split('?')[0] || '');
 
-      if (filename.includes('club-')) {
-        target.src = `/catalog/club-football/${filename}`;
-        return;
-      }
-      if (filename.includes('football_club')) {
+      if (filename) {
+        // Direct root lookup
         target.src = `/${filename}`;
-        return;
-      }
-      if (
-        filename.includes('adidas-') ||
-        filename.includes('nike-') ||
-        filename.includes('cactus-') ||
-        filename.includes('air-jordan-')
-      ) {
-        target.src = `/catalog/club-football/${filename}`;
-        return;
-      }
-      if (
-        filename.includes('arutemika-') ||
-        filename.includes('rawx-junior') ||
-        filename.includes('rawx-stealth')
-      ) {
-        target.src = `/catalog/arutemika/${filename}`;
-        return;
-      }
-      if (filename.includes('jute') || filename.includes('golden-jute') || filename.includes('fiber')) {
-        target.src = `/catalog/jute/${filename}`;
-        return;
-      }
-      if (filename.includes('rawx-')) {
-        target.src = `/catalog/rawx/${filename}`;
         return;
       }
     } catch {
@@ -91,5 +60,7 @@ export function handleImageFallback(
   }
 
   target.dataset.hasFailedTwice = 'true';
-  target.src = defaultFallback;
+  if (defaultFallback) {
+    target.src = defaultFallback;
+  }
 }

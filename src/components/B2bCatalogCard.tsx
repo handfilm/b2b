@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   ShieldCheck,
   Package,
@@ -11,7 +12,11 @@ import {
   Sparkles,
   Info,
   Building2,
-  CheckCircle2
+  CheckCircle2,
+  ShoppingCart,
+  SlidersHorizontal,
+  Flame,
+  Eye,
 } from 'lucide-react';
 import { B2bCatalogProduct, CurrencyConfig } from '../types';
 import { ProductImageCarousel } from './ProductImageCarousel';
@@ -34,184 +39,289 @@ export const B2bCatalogCard: React.FC<B2bCatalogCardProps> = ({
   onRequestTechPack,
   onAddToCart,
 }) => {
-  const [activeImgIdx, setActiveImgIdx] = useState(0);
-  const [imageError, setImageError] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [showCtaMenu, setShowCtaMenu] = useState(false);
+  const [selectedSwatchIndex, setSelectedSwatchIndex] = useState(0);
+  const [hoveredTierIndex, setHoveredTierIndex] = useState<number | null>(null);
 
   const priceConv = (product.price * currency.rate).toFixed(2);
   const unitSymbol = currency.symbol;
 
-  const currentImage = product.images?.[activeImgIdx] || product.images?.[0] || '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg';
+  const validImages = (product.images || []).filter((img): img is string => Boolean(img && typeof img === 'string' && img.trim()));
+  const currentImage = validImages[0] || (product.image && typeof product.image === 'string' && product.image.trim() ? product.image : '');
+
+  const lowestPriceUSD = product.priceTiers?.[product.priceTiers.length - 1]?.priceUSD ?? product.price ?? 4.5;
+  const highestPriceUSD = product.priceTiers?.[0]?.priceUSD ?? product.price ?? lowestPriceUSD;
+  const lowestConverted = (lowestPriceUSD * currency.rate).toFixed(2);
+  const highestConverted = (highestPriceUSD * currency.rate).toFixed(2);
+
+  const handleCardClick = () => {
+    onSelectProduct(product);
+  };
+
+  const handleTouchToggle = (e: React.TouchEvent) => {
+    // On touch screens, toggle reveal state if not clicking a button
+    if (!isHovered) {
+      setIsHovered(true);
+    }
+  };
 
   return (
-    <div
-      className="group relative bg-[#131720]/90 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-emerald-500/10 flex flex-col overflow-hidden text-slate-100"
+    <motion.div
+      id={`b2b-card-${product.id}`}
+      onClick={handleCardClick}
+      onTouchStart={handleTouchToggle}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setShowCtaMenu(false);
+        setHoveredTierIndex(null);
       }}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => {
+        setIsHovered(false);
+        setHoveredTierIndex(null);
+      }}
+      tabIndex={0}
+      role="article"
+      aria-label={`${product.title} - ${unitSymbol}${priceConv}`}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+      className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 bg-[#12151e] border border-white/10 hover:border-emerald-500/60 shadow-lg hover:shadow-2xl hover:shadow-emerald-500/15 transition-shadow duration-300 transform-gpu"
     >
-      {/* Top Media Section: Horizontal Image Carousel with Multiple Angles & Prints */}
-      <div className="relative aspect-[4/3] w-full bg-slate-950 overflow-hidden">
-        <ProductImageCarousel
-          images={product.images && product.images.length > 0 ? product.images : [currentImage]}
-          title={product.title}
-          aspectRatioClass="aspect-[4/3]"
-          onCardClick={() => onSelectProduct(product)}
-          isParentHovered={isHovered}
-          angleBadgePosition="top-center"
-          paginationBottomClass="bottom-8"
-          fallbackImage="/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg"
-          angleLabels={[
-            'Front Studio Cut',
-            product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic Detail',
-            product.club ? `${product.club} Squad #` : 'Back View',
-            'Tokyo Std QC Audit',
-          ]}
-        />
+      {/* 1. MEDIA CAROUSEL SECTION */}
+      <ProductImageCarousel
+        images={validImages.length > 0 ? validImages : (currentImage ? [currentImage] : [])}
+        title={product.title}
+        aspectRatioClass="aspect-square"
+        onCardClick={handleCardClick}
+        isParentHovered={isHovered}
+        angleBadgePosition="top-center"
+        paginationBottomClass="top-12 sm:top-14"
+        angleLabels={[
+          'Front Studio Cut',
+          product.frontPrint ? `Print: ${product.frontPrint}` : 'Chest Graphic Detail',
+          product.club ? `${product.club} Squad #` : 'Back Silhouette',
+          'Tokyo Std QC Audit',
+        ]}
+      />
 
-        {/* Top Floating Badges */}
-        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-2 z-20 pointer-events-none">
-          {/* Export Compliance Status (Tokyo Standard) */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 font-mono text-[10.5px] font-bold shadow-md">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0 animate-pulse" />
-            <span className="tracking-tight uppercase">{product.exportComplianceStatus || 'Tokyo Standard'}</span>
-          </div>
-
-          {/* MOQ Badge */}
-          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/90 text-slate-950 font-mono text-[10.5px] font-black shadow-md">
-            <Package className="w-3 h-3 text-slate-950 shrink-0" />
-            <span>{product.moqBadge || `MOQ: ${product.moq} pcs`}</span>
-          </div>
-        </div>
-
-        {/* Lead time & HS Code pill bottom of image */}
-        <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[10.5px] text-slate-300 font-mono pointer-events-none z-20">
-          <span className="px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-sm border border-white/10 flex items-center gap-1">
-            <Clock className="w-3 h-3 text-emerald-400" />
-            <span>{product.leadTimeDays}d FOB Lead</span>
-          </span>
-          {product.hsCode && (
-            <span className="px-2 py-0.5 rounded-md bg-black/70 backdrop-blur-sm border border-white/10 text-slate-400">
-              HS {product.hsCode}
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Body Content */}
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
-        {/* Category & Club Division Tag */}
-        {/* Category, Brand, Print & Club Tag */}
-        <div>
-          <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
-            <div className="flex items-center gap-1.5 flex-wrap">
+      {/* 2. TOP BADGES (Smooth animated reveal on hover/touch) */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            key="b2b-top-badges"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="absolute inset-x-0 top-0 p-3 bg-gradient-to-b from-black/85 via-black/40 to-transparent flex items-start justify-between pointer-events-none z-20"
+          >
+            <div className="flex flex-wrap gap-1.5 items-center">
               {product.brand && (
-                <span className="px-2 py-0.5 rounded bg-rose-950/80 border border-rose-500/40 text-[10px] font-black font-mono text-rose-300 uppercase tracking-wide">
+                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-rose-600/30 text-rose-300 border border-rose-500/40 backdrop-blur-md font-mono shadow-xs">
                   {product.brand}
                 </span>
               )}
-              {product.club && (
-                <span className="px-2 py-0.5 rounded bg-blue-950/80 border border-blue-500/40 text-[10px] font-bold font-mono text-blue-300 tracking-tight">
+              {product.club ? (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-500/40 backdrop-blur-md shadow-xs">
                   {product.club}
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-950/85 text-emerald-300 border border-emerald-500/40 backdrop-blur-md shadow-xs flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-emerald-400 shrink-0" />
+                  <span>{product.exportComplianceStatus || 'Tokyo Standard'}</span>
                 </span>
               )}
             </div>
 
-            {product.frontPrint && (
-              <span className="text-[10px] font-mono font-medium text-amber-400/90 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-500/20 truncate max-w-[150px]" title={`Print: ${product.frontPrint}`}>
-                Print: {product.frontPrint}
-              </span>
-            )}
-          </div>
-
-          {/* Title */}
-          <h3
-            onClick={() => onSelectProduct(product)}
-            className="text-sm sm:text-base font-bold text-white hover:text-rose-400 transition-colors line-clamp-2 cursor-pointer leading-snug"
-            title={product.title}
-          >
-            {product.title}
-          </h3>
-        </div>
-
-        {/* Color Variants Swatches */}
-        {product.colorVariants && product.colorVariants.length > 0 && (
-          <div className="flex items-center gap-1.5 pt-0.5">
-            <span className="text-[10px] font-mono text-slate-400 mr-1">Tones:</span>
-            {product.colorVariants.slice(0, 4).map((c, i) => (
-              <span
-                key={i}
-                className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-sm"
-                style={{ backgroundColor: c.hex }}
-                title={c.name}
-              />
-            ))}
-            {product.colorVariants.length > 4 && (
-              <span className="text-[10px] text-slate-400 font-mono">+{product.colorVariants.length - 4}</span>
-            )}
-          </div>
+            <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/90 text-slate-950 shadow-xs flex items-center gap-1">
+              <Package className="w-2.5 h-2.5 text-slate-950" />
+              <span>{product.moqBadge || `MOQ: ${product.moq}`}</span>
+            </span>
+          </motion.div>
         )}
+      </AnimatePresence>
 
-        {/* Pricing Ladder / MOQ Price */}
-        <div className="pt-2 border-t border-white/10 flex items-baseline justify-between">
-          <div>
-            <div className="text-[10px] uppercase font-mono text-slate-400">Wholesale FOB</div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-xl font-black text-emerald-400 tracking-tight">
-                {unitSymbol}{priceConv}
+      {/* 3. MINIMAL RESTING BOTTOM BAR (ONLY Title, Price, MOQ - Super clean grid view) */}
+      <AnimatePresence>
+        {!isHovered && (
+          <motion.div
+            key="b2b-minimal-resting-footer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="absolute inset-x-0 bottom-0 p-3.5 bg-gradient-to-t from-black/95 via-black/80 to-transparent pointer-events-none z-10"
+          >
+            <p className="text-white text-xs sm:text-sm font-black truncate drop-shadow-md tracking-tight">
+              {product.title}
+            </p>
+
+            <div className="mt-1 flex items-center justify-between gap-2">
+              <div className="flex items-baseline space-x-1">
+                <span className="text-sm sm:text-base font-black text-[#10b981] font-mono">
+                  {unitSymbol}{lowestConverted}
+                </span>
+                {highestConverted !== lowestConverted && (
+                  <span className="text-[10px] text-slate-300 font-mono">
+                    - {unitSymbol}{highestConverted}
+                  </span>
+                )}
+                <span className="text-[10px] text-slate-400">/ {product.unit || 'pc'}</span>
+              </div>
+
+              <span className="text-[10px] font-mono font-semibold text-slate-200 bg-white/10 px-2 py-0.5 rounded-full border border-white/15 backdrop-blur-md">
+                MOQ: {product.moq}
               </span>
-              <span className="text-xs text-slate-400 font-mono">/ {product.unit || 'pc'}</span>
             </div>
-          </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-          {/* Volume tiers hint */}
-          {product.priceTiers && product.priceTiers.length > 1 && (
-            <div className="text-right">
-              <span className="text-[10px] font-mono text-slate-400 block">Bulk Scale</span>
-              <span className="text-xs font-bold text-amber-300 font-mono">
-                {unitSymbol}{(product.priceTiers[product.priceTiers.length - 1].priceUSD * currency.rate).toFixed(2)}
+      {/* 4. NEXT-LEVEL ANIMATED HOVER OVERLAY: All Rich Details with Carousel Active */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            key="b2b-hover-details-sheet"
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            style={{ willChange: 'opacity, transform' }}
+            className="absolute inset-x-0 bottom-0 pt-8 pb-3 px-3 bg-gradient-to-t from-[#0a0a0c]/98 via-[#0f1118]/95 to-transparent backdrop-blur-md flex flex-col justify-end z-20 text-white transform-gpu space-y-2 border-t border-white/10"
+            onClick={(e) => {
+              // Click inside overlay opens modal unless specific button clicked
+            }}
+          >
+            {/* Title & Specs line */}
+            <div>
+              <div className="flex items-center justify-between text-[9px] font-mono text-emerald-400 mb-0.5">
+                <span className="uppercase font-bold flex items-center gap-1">
+                  <Sparkles className="w-2.5 h-2.5 text-emerald-400" />
+                  <span>{product.division || 'Export RMG Cluster'}</span>
+                </span>
+                <span className="text-slate-400">HS {product.hsCode || '6109.10'}</span>
+              </div>
+              <h4 className="text-xs sm:text-[13px] font-black line-clamp-1 text-white leading-tight">
+                {product.title}
+              </h4>
+              <div className="text-[10px] text-slate-300 font-mono flex items-center justify-between mt-0.5">
+                <span className="truncate max-w-[200px] text-slate-300">
+                  {product.specs?.weight || product.specs?.fabric || 'Export Lot 240 GSM'}
+                </span>
+                <span className="text-emerald-400 shrink-0">Lead: {product.leadTimeDays || 25}d</span>
+              </div>
+            </div>
+
+            {/* Volume Pricing Tiers if available */}
+            {product.priceTiers && product.priceTiers.length > 0 && (
+              <div className="space-y-1 relative">
+                <div className="flex items-center justify-between text-[9px]">
+                  <span className="uppercase font-bold text-slate-400">Volume Ladder</span>
+                  <span className="text-[8.5px] font-mono text-[#10b981]">Wholesale Tiers</span>
+                </div>
+                <div className="grid grid-cols-3 gap-1 text-center font-mono">
+                  {product.priceTiers.slice(0, 3).map((tier, i) => {
+                    const tierPriceConv = (tier.priceUSD * currency.rate).toFixed(2);
+                    return (
+                      <div
+                        key={i}
+                        className="p-1 rounded-md border border-white/10 bg-white/5 flex flex-col justify-between items-center"
+                      >
+                        <div className="text-[8px] text-slate-400 font-sans truncate w-full">
+                          {tier.minQty}+ {product.unit || 'pcs'}
+                        </div>
+                        <div className="text-[10px] font-bold text-[#10b981] leading-tight mt-0.5">
+                          {unitSymbol}{tierPriceConv}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Color Swatches if available */}
+            {product.colors && product.colors.length > 0 && (
+              <div className="flex items-center justify-between pt-0.5">
+                <span className="text-[9px] text-slate-400 font-bold uppercase">Color Swatches</span>
+                <div className="flex items-center space-x-1.5">
+                  {product.colors.slice(0, 4).map((c, idx) => (
+                    <span
+                      key={idx}
+                      className="w-3.5 h-3.5 rounded-full border border-white/30"
+                      style={{ backgroundColor: c.hex }}
+                      title={c.name}
+                    />
+                  ))}
+                  {product.colors.length > 4 && (
+                    <span className="text-[8.5px] text-slate-400 font-mono">+{product.colors.length - 4}</span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="grid grid-cols-3 gap-1 pt-1.5 border-t border-white/10">
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRequestSample(product);
+                }}
+                className="py-1.5 px-1 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-[10px] font-black shadow-md flex items-center justify-center gap-1 cursor-pointer"
+                title="Request Sample"
+              >
+                <FileCheck className="w-2.5 h-2.5" />
+                <span>Sample</span>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRequestTechPack(product);
+                }}
+                className="py-1.5 px-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold flex items-center justify-center gap-1 cursor-pointer"
+                title="Request TechPack"
+              >
+                <Layers className="w-2.5 h-2.5" />
+                <span>TechPack</span>
+              </motion.button>
+
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onAddToCart) {
+                    onAddToCart(product);
+                  } else {
+                    onSelectProduct(product);
+                  }
+                }}
+                className="py-1.5 px-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center gap-1 cursor-pointer"
+                title="Add to Cart / Inquire"
+              >
+                <ShoppingCart className="w-2.5 h-2.5" />
+                <span>+Cart</span>
+              </motion.button>
+            </div>
+
+            {/* Cinema View & Zoom Hint */}
+            <div className="pt-0.5 text-center">
+              <span className="text-[9px] font-mono text-zinc-400 hover:text-white flex items-center justify-center gap-1">
+                <SlidersHorizontal className="w-2.5 h-2.5 text-emerald-400" />
+                <span>Click for Cinema View & 2.4x Zoom</span>
               </span>
             </div>
-          )}
-        </div>
-
-        {/* Action Button: Direct 'Request TechPack/Sample' CTA */}
-        <div className="pt-2 relative">
-          <div className="grid grid-cols-1 gap-1.5">
-            <button
-              type="button"
-              onClick={() => onRequestSample(product)}
-              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-xs shadow-md shadow-rose-950/40 hover:shadow-rose-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
-            >
-              <FileCheck className="w-4 h-4 text-rose-200" />
-              <span>Request TechPack / Sample</span>
-            </button>
-
-            <div className="grid grid-cols-2 gap-1.5 pt-0.5">
-              <button
-                type="button"
-                onClick={() => onRequestTechPack(product)}
-                className="py-1.5 px-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-[11px] font-semibold transition-colors flex items-center justify-center gap-1 cursor-pointer"
-              >
-                <Layers className="w-3 h-3 text-cyan-400" />
-                <span>TechPack Spec</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => onSelectProduct(product)}
-                className="py-1.5 px-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-[11px] font-semibold transition-colors flex items-center justify-center gap-1 cursor-pointer"
-              >
-                <span>Full Spec</span>
-                <ChevronRight className="w-3 h-3 text-slate-400" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };

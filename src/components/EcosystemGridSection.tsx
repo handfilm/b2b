@@ -157,7 +157,7 @@ export const ECOSYSTEM_PORTALS: EcosystemPortalNode[] = [
     divisionSlug: 'golden-jute',
     metricsLabel: '289 Products • 100% Organic Eco',
     latencyMs: 22,
-    previewFallbackImg: '/catalog/jute/jute-card-hero.jpg',
+    previewFallbackImg: '/8. jute.handsandhead.com (Golden Jute & Eco).jpg',
     hoverImage: '/8. jute.handsandhead.com (Golden Jute & Eco).jpg',
   },
   {

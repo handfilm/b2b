@@ -28,15 +28,47 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
   isParentHovered = false,
   angleBadgePosition = 'top-right',
   paginationBottomClass = 'bottom-2.5',
-  fallbackImage = '/catalog/club-football/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg',
+  fallbackImage,
 }) => {
-  // Ensure we have at least one valid image
-  const validImages = images.length > 0 && images.some((img) => Boolean(img?.trim()))
-    ? images.filter((img) => Boolean(img?.trim()))
-    : [fallbackImage];
+  // Ensure we only have valid images
+  const validImages = images.filter((img) => Boolean(img && typeof img === 'string' && img.trim()));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right
   const [imageErrorMap, setImageErrorMap] = useState<Record<number, boolean>>({});
+
+  // Clean initials helper
+  const cleanTitle = title.replace(/^(Bulk Custom Batch|Rapid Turnaround Edition|Premium Export Spec|Eco-Wash Sustainable|Organic Certified Lot|High-Tensile Contract|Private Label Ready)\s*[•·-]\s*/i, '').trim();
+  const words = cleanTitle.split(/\s+/).filter((w) => /^[a-zA-Z0-9]/.test(w));
+  const initials = (
+    words.length >= 2
+      ? ((words[0].replace(/[^a-zA-Z0-9]/g, '')[0] || '') + (words[1].replace(/[^a-zA-Z0-9]/g, '')[0] || ''))
+      : cleanTitle.replace(/[^a-zA-Z0-9]/g, '').slice(0, 2)
+  ).toUpperCase() || 'BD';
+
+  if (validImages.length === 0) {
+    return (
+      <div
+        className={`relative w-full overflow-hidden select-none bg-zinc-950 border border-zinc-800 flex flex-col items-center justify-center p-6 text-center group/fallback ${aspectRatioClass} ${className}`}
+        onClick={onCardClick}
+      >
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, #71717a 1px, transparent 0)',
+            backgroundSize: '16px 16px',
+          }}
+        />
+        <div className="relative z-10 flex flex-col items-center justify-center space-y-2">
+          <span className="text-red-600 font-mono text-2xl uppercase font-black tracking-widest leading-none">
+            {initials}
+          </span>
+          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-semibold border-t border-zinc-800/80 pt-2 px-2">
+            IMAGE PENDING
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   // Touch tracking for mobile swipe
   const touchStartX = useRef<number | null>(null);
@@ -161,26 +193,45 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
       {/* Dark theme skeleton loader to prevent flashes during rapid scrolling */}
       <div className="absolute inset-0 animate-pulse bg-neutral-900 pointer-events-none" />
 
-      {/* Animated Image Slide */}
-      <AnimatePresence initial={false} custom={direction} mode="popLayout">
-        <motion.img
-          key={currentIndex}
-          src={isCurrentErrored ? fallbackImage : getCatalogImageUrl(currentSrc)}
-          alt={`${title} - ${currentAngleLabel}`}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          onError={(e) => {
-            handleImageFallback(e, fallbackImage);
-            setImageErrorMap((prev) => ({ ...prev, [currentIndex]: true }));
-          }}
-          referrerPolicy="no-referrer"
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transform-gpu"
-        />
-      </AnimatePresence>
+      {/* Animated Image Slide or Brutalist Error Fallback */}
+      {isCurrentErrored ? (
+        <div className="absolute inset-0 bg-zinc-950 border border-zinc-800 flex flex-col items-center justify-center p-6 text-center select-none">
+          <div
+            className="absolute inset-0 opacity-10 pointer-events-none"
+            style={{
+              backgroundImage: 'radial-gradient(circle at 1px 1px, #71717a 1px, transparent 0)',
+              backgroundSize: '16px 16px',
+            }}
+          />
+          <div className="relative z-10 flex flex-col items-center justify-center space-y-2">
+            <span className="text-red-600 font-mono text-2xl uppercase font-black tracking-widest leading-none">
+              {initials}
+            </span>
+            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-semibold border-t border-zinc-800/80 pt-2 px-2">
+              IMAGE PENDING
+            </span>
+          </div>
+        </div>
+      ) : (
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <motion.img
+            key={currentIndex}
+            src={getCatalogImageUrl(currentSrc)}
+            alt={`${title} - ${currentAngleLabel}`}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            onError={() => {
+              setImageErrorMap((prev) => ({ ...prev, [currentIndex]: true }));
+            }}
+            referrerPolicy="no-referrer"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transform-gpu"
+          />
+        </AnimatePresence>
+      )}
 
       {/* Persistent Soft Vignette at Top and Bottom */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/25 pointer-events-none" />
@@ -188,7 +239,7 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
       {/* Angle/Variation Pill Indicator */}
       {hasMultipleImages && showAngleBadge && (
         <div
-          className={`absolute z-20 pointer-events-none transition-all duration-300 ${
+          className={`absolute z-20 pointer-events-none transition-all duration-300 transform-gpu ${
             angleBadgePosition === 'top-center'
               ? 'top-2.5 left-1/2 -translate-x-1/2'
               : angleBadgePosition === 'top-left'
@@ -197,7 +248,9 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
               ? 'bottom-8 left-1/2 -translate-x-1/2'
               : 'top-3 right-3'
           } ${
-            isParentHovered ? 'opacity-100 translate-y-0' : 'opacity-85 translate-y-0 sm:opacity-75'
+            isParentHovered
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 -translate-y-2 pointer-events-none'
           }`}
         >
           <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] font-semibold shadow-lg">
@@ -219,7 +272,9 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
             aria-label="Previous angle variation"
             onClick={goToPrev}
             className={`absolute left-2 top-1/2 -translate-y-1/2 z-20 p-1.5 sm:p-2 rounded-full bg-slate-950/75 hover:bg-slate-900 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all duration-200 cursor-pointer active:scale-90 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-rose-500/70 ${
-              isParentHovered ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2 sm:opacity-0 pointer-events-none sm:pointer-events-none group-hover/carousel:opacity-100 group-hover/carousel:translate-x-0 group-hover/carousel:pointer-events-auto'
+              isParentHovered
+                ? 'opacity-100 translate-x-0 pointer-events-auto'
+                : 'opacity-0 -translate-x-2 pointer-events-none'
             }`}
           >
             <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
@@ -231,7 +286,9 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
             aria-label="Next angle variation"
             onClick={goToNext}
             className={`absolute right-2 top-1/2 -translate-y-1/2 z-20 p-1.5 sm:p-2 rounded-full bg-slate-950/75 hover:bg-slate-900 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all duration-200 cursor-pointer active:scale-90 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-rose-500/70 ${
-              isParentHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 sm:opacity-0 pointer-events-none sm:pointer-events-none group-hover/carousel:opacity-100 group-hover/carousel:translate-x-0 group-hover/carousel:pointer-events-auto'
+              isParentHovered
+                ? 'opacity-100 translate-x-0 pointer-events-auto'
+                : 'opacity-0 translate-x-2 pointer-events-none'
             }`}
           >
             <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
@@ -239,7 +296,11 @@ export const ProductImageCarousel: React.FC<ProductImageCarouselProps> = ({
 
           {/* Bottom Dot / Segment Pagination Indicators */}
           <div
-            className={`absolute ${paginationBottomClass} inset-x-0 z-20 flex items-center justify-center gap-1.5 px-3 pointer-events-auto`}
+            className={`absolute ${paginationBottomClass} inset-x-0 z-20 flex items-center justify-center gap-1.5 px-3 transition-all duration-300 ${
+              isParentHovered
+                ? 'opacity-100 translate-y-0 pointer-events-auto'
+                : 'opacity-0 translate-y-2 pointer-events-none'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 shadow-md">

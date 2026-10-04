@@ -119,9 +119,9 @@ export interface Product {
   supplierName: string;
   supplierVerified: boolean;
   supplierRating: number;
-  images: string[];
-  image?: string;
-  hoverImage?: string;
+  images: (string | null)[];
+  image?: string | null;
+  hoverImage?: string | null;
   specifications: ProductSpecification[];
   materials: string[];
   ecoFriendly: boolean;

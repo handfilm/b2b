@@ -28,9 +28,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     image: '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg',
     hoverImage: '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans  2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-alt.jpg',
+      '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg',
+      '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans  2.jpg',
     ],
     specifications: [
       { label: 'Denim', value: '13.5 oz Redline Shuttle-Loom Selvedge' },
@@ -73,9 +72,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     image: '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set 1.jpg',
     hoverImage: '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set  2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-alt.jpg',
+      '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set 1.jpg',
+      '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set  2.jpg',
     ],
     specifications: [
       { label: 'Fabric', value: '280 GSM Poly-Spandex 4-Way Stretch' },
@@ -118,9 +116,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     image: '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 1.jpg',
     hoverImage: '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-alt.jpg',
+      '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 1.jpg',
+      '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 2.jpg',
     ],
     specifications: [
       { label: 'Upper', value: '1.6mm Full-Grain Nappa Calfskin' },
@@ -160,10 +157,11 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Savar Artisan Leather Goods & Hardware',
     supplierVerified: true,
     supplierRating: 4.92,
+    image: '/rawx-leather-bracelet-01.jpg',
+    hoverImage: '/rawx-leather-bracelet-02.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-alt.jpg',
+      '/rawx-leather-bracelet-01.jpg',
+      '/rawx-leather-bracelet-02.jpg',
     ],
     specifications: [
       { label: 'Leather', value: '8-Strand Hand-Braided Vegetable-Tanned' },
@@ -204,10 +202,9 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.88,
     image: '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 1.jpg',
-    hoverImage: '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 2.jpg',
+    hoverImage: null,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
+      '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 1.jpg',
     ],
     specifications: [
       { label: 'Fabric', value: '420 GSM 100% Combed Cotton Terry' },
@@ -249,8 +246,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     image: '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 1.jpg',
     hoverImage: '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
+      '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 1.jpg',
+      '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 2.jpg',
     ],
     specifications: [
       { label: 'Upper', value: '1.8-2.0mm Full Grain Pull-Up Cowhide' },
@@ -289,10 +286,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Ananta Workwear & Technical Textiles Ltd.',
     supplierVerified: true,
     supplierRating: 4.89,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-03.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-04.jpg',
-    ],
+    image: null,
+    images: [],
     specifications: [
       { label: 'Waterproofness', value: '15,000 mm / Breathability 10,000 g/m²' },
       { label: 'Taping', value: 'Full Seam Sealing Hot Air Melded' },
@@ -330,10 +325,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Square Fashions Limited',
     supplierVerified: true,
     supplierRating: 4.93,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-05.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-alt.jpg',
-    ],
+    image: null,
+    images: [],
     specifications: [
       { label: 'Yarn', value: '88% Micro-Nylon, 12% Spandex' },
       { label: 'Tech', value: 'Dry-Fit Hydrophilic Moisture Management' },
@@ -370,10 +363,8 @@ export const SEED_SHOP_HANDSANDHEAD: Product[] = [
     supplierName: 'Bay Footwear & Leather Epz Ltd.',
     supplierVerified: true,
     supplierRating: 4.87,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-07.jpg',
-    ],
+    image: null,
+    images: [],
     specifications: [
       { label: 'Leather', value: '1.2mm Semi-Vegetable Crust Cowhide' },
       { label: 'Security', value: 'Full RFID Shielding 13.56 MHz' },
@@ -416,9 +407,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     image: '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg',
     hoverImage: '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
+      '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg',
+      '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 2.jpg',
     ],
     specifications: [
       { label: 'Color Editions', value: 'Noir Black, Espresso Brown, Cognac Tan, Oxblood Burgundy' },
@@ -458,10 +448,11 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'ARUTEMIKA Precision Hardware & Leather Guild',
     supplierVerified: true,
     supplierRating: 4.97,
+    image: '/arutemika-braided-magnetic-bracelet-01.jpg',
+    hoverImage: '/arutemika-braided-magnetic-bracelet-02.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-base.jpg',
+      '/arutemika-braided-magnetic-bracelet-01.jpg',
+      '/arutemika-braided-magnetic-bracelet-02.jpg',
     ],
     specifications: [
       { label: 'Braid Structure', value: 'Dual 8-Strand Architectural Round Braid' },
@@ -504,9 +495,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     image: '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  1.jpg',
     hoverImage: '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
+      '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  1.jpg',
+      '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  2.jpg',
     ],
     specifications: [
       { label: 'Shell', value: 'Matte Bonded Lambskin & Technical Elastomer Shell' },
@@ -549,9 +539,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     image: '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 1.jpg',
     hoverImage: '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 2.jpg',
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-junior-lookbook-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-junior-lookbook-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
+      '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 1.jpg',
+      '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 2.jpg',
     ],
     specifications: [
       { label: 'Tee Fabric', value: '220 GSM Combed Compact Cotton with RAWx Graphic' },
@@ -592,10 +581,9 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierVerified: true,
     supplierRating: 4.96,
     image: '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt .jpg',
-    hoverImage: '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt_.jpg',
+    hoverImage: null,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-08.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-09.jpg',
+      '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt .jpg',
     ],
     specifications: [
       { label: 'Yarn', value: 'Handspun Desi Khadi Cotton 32s' },
@@ -634,10 +622,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'Akij Jute Mills Limited',
     supplierVerified: true,
     supplierRating: 4.91,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/golden-jute-burlap.jpg',
-    ],
+    image: null,
+    images: [],
     specifications: [
       { label: 'Sizes', value: 'Large 35cm, Medium 28cm, Small 22cm' },
       { label: 'Material', value: '70% Jute Twine, 30% Date Palm Leaf' },
@@ -674,10 +660,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'ARUTEMIKA Bengal Atelier & Crafts',
     supplierVerified: true,
     supplierRating: 4.99,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/jute-card-hero.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/raw-golden-fiber.jpg',
-    ],
+    image: null,
+    images: [],
     specifications: [
       { label: 'Weave', value: 'Discontinuous Weft Jamdani Supplementary' },
       { label: 'Count', value: '100s Pure Mulberry Organza Silk' },
@@ -715,10 +699,8 @@ export const SEED_ARUTEMIKA_HANDSANDHEAD: Product[] = [
     supplierName: 'Shinepukur Ceramics Ltd.',
     supplierVerified: true,
     supplierRating: 4.90,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
-    ],
+    image: null,
+    images: [],
     specifications: [
       { label: 'Clay', value: 'High Density Alluvial Clay Soil' },
       { label: 'Finish', value: 'Unglazed Porous Body with Ash Ring Lip' },
@@ -959,12 +941,17 @@ export function generateMoreProducts(
 
       const newSku = `${baseItem.sku || 'RAWX'}-c${cycle}-v${i}`;
       const newUrl = buildTargetRoutingUrl(baseItem.sourceDomain || 'b2b.handsandhead.com', newSku);
+      const generatedTitle = `${adj} • ${baseItem.title}`;
+      const matchedRootImage = resolveCatalogRootImage(generatedTitle, baseItem.categoryId);
+      const matchedImages = resolveCatalogImages(generatedTitle, matchedRootImage);
 
       results.push({
         ...baseItem,
         id: `${baseItem.id}-c${cycle}-v${i}`,
         sku: newSku,
-        title: `${adj} • ${baseItem.title}`,
+        title: generatedTitle,
+        image: matchedRootImage,
+        images: matchedImages,
         moq: newMoq,
         priceTiers: modifiedPriceTiers,
         targetRoutingUrl: newUrl,
@@ -977,3 +964,313 @@ export function generateMoreProducts(
 
   return results;
 }
+
+/**
+ * Intelligent image resolver that maps product titles directly to verified root filenames.
+ * Returns null if no exact matching uploaded photo exists.
+ */
+export function resolveCatalogRootImage(title: string, categoryId?: string): string | null {
+  const cleanTitle = (title || '').trim();
+
+  // 1. Direct title lookup in verified map
+  if (PRODUCT_IMAGE_FILE_MAP[cleanTitle]) {
+    return PRODUCT_IMAGE_FILE_MAP[cleanTitle];
+  }
+
+  // 2. Check with Rapid Turnaround Edition prefix
+  const withRapid = `Rapid Turnaround Edition • ${cleanTitle}`;
+  if (PRODUCT_IMAGE_FILE_MAP[withRapid]) {
+    return PRODUCT_IMAGE_FILE_MAP[withRapid];
+  }
+
+  // 3. Check with Bulk Custom Batch prefix
+  const withBulk = `Bulk Custom Batch • ${cleanTitle}`;
+  if (PRODUCT_IMAGE_FILE_MAP[withBulk]) {
+    return PRODUCT_IMAGE_FILE_MAP[withBulk];
+  }
+
+  // 4. Strip variation prefixes and check
+  const stripped = cleanTitle.replace(/^(Bulk Custom Batch|Rapid Turnaround Edition|Premium Export Spec|Eco-Wash Sustainable|Organic Certified Lot|High-Tensile Contract|Private Label Ready)\s*[•·-]\s*/i, '').trim();
+  if (PRODUCT_IMAGE_FILE_MAP[stripped]) {
+    return PRODUCT_IMAGE_FILE_MAP[stripped];
+  }
+  if (PRODUCT_IMAGE_FILE_MAP[`Rapid Turnaround Edition • ${stripped}`]) {
+    return PRODUCT_IMAGE_FILE_MAP[`Rapid Turnaround Edition • ${stripped}`];
+  }
+  if (PRODUCT_IMAGE_FILE_MAP[`Bulk Custom Batch • ${stripped}`]) {
+    return PRODUCT_IMAGE_FILE_MAP[`Bulk Custom Batch • ${stripped}`];
+  }
+
+  // 5. Check without trailing suffixes like 'Throw'
+  const noThrow = cleanTitle.replace(/\s+Throw$/i, '').trim();
+  if (PRODUCT_IMAGE_FILE_MAP[noThrow]) {
+    return PRODUCT_IMAGE_FILE_MAP[noThrow];
+  }
+  if (PRODUCT_IMAGE_FILE_MAP[`Rapid Turnaround Edition • ${noThrow}`]) {
+    return PRODUCT_IMAGE_FILE_MAP[`Rapid Turnaround Edition • ${noThrow}`];
+  }
+
+  // 6. Normalized fuzzy lookup for slight variations (% vs _, extra spaces, etc.)
+  const normTarget = cleanTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
+  if (normTarget.length >= 8) {
+    for (const [mapKey, mapVal] of Object.entries(PRODUCT_IMAGE_FILE_MAP)) {
+      const normKey = mapKey.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (normKey === normTarget || normKey.includes(normTarget) || normTarget.includes(normKey)) {
+        return mapVal;
+      }
+    }
+  }
+
+  // Strictly return null if no exact matching uploaded image exists
+  return null;
+}
+
+/**
+ * Resolves full multi-angle image array for carousel and detailed zoom viewer.
+ */
+export function resolveCatalogImages(title: string, defaultImage?: string | null): string[] {
+  const cleanTitle = (title || '').trim();
+  const stripped = cleanTitle.replace(/^(Bulk Custom Batch|Rapid Turnaround Edition|Premium Export Spec|Eco-Wash Sustainable|Organic Certified Lot|High-Tensile Contract|Private Label Ready)\s*[•·-]\s*/i, '').trim();
+
+  if (PRODUCT_MULTI_IMAGE_MAP[cleanTitle] && PRODUCT_MULTI_IMAGE_MAP[cleanTitle].length > 0) {
+    return PRODUCT_MULTI_IMAGE_MAP[cleanTitle];
+  }
+  if (PRODUCT_MULTI_IMAGE_MAP[stripped] && PRODUCT_MULTI_IMAGE_MAP[stripped].length > 0) {
+    return PRODUCT_MULTI_IMAGE_MAP[stripped];
+  }
+  if (PRODUCT_MULTI_IMAGE_MAP[`Rapid Turnaround Edition • ${stripped}`] && PRODUCT_MULTI_IMAGE_MAP[`Rapid Turnaround Edition • ${stripped}`].length > 0) {
+    return PRODUCT_MULTI_IMAGE_MAP[`Rapid Turnaround Edition • ${stripped}`];
+  }
+  if (PRODUCT_MULTI_IMAGE_MAP[`Bulk Custom Batch • ${stripped}`] && PRODUCT_MULTI_IMAGE_MAP[`Bulk Custom Batch • ${stripped}`].length > 0) {
+    return PRODUCT_MULTI_IMAGE_MAP[`Bulk Custom Batch • ${stripped}`];
+  }
+
+  const rootImg = defaultImage || resolveCatalogRootImage(title);
+  return rootImg ? [rootImg] : [];
+}
+
+export const PRODUCT_MULTI_IMAGE_MAP: Record<string, string[]> = {
+  'RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans': [
+    '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg',
+    '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans  2.jpg',
+  ],
+  'RAWx Crimson Red Performance Activewear 2-Piece Athletic Set': [
+    '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set 1.jpg',
+    '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set  2.jpg',
+  ],
+  'RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers': [
+    '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 1.jpg',
+    '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 2.jpg',
+    '/rawx-leather-sneakers-01.jpg',
+    '/rawx-leather-sneakers-02.jpg',
+    '/rawx-leather-sneakers-alt.jpg',
+    '/rawx-leather-sneakers-base.jpg',
+  ],
+  'RAWx Artisanal Braided Calfskin Leather Cuff with Stainless Steel Shackle': [
+    '/rawx-leather-bracelet-01.jpg',
+    '/rawx-leather-bracelet-02.jpg',
+    '/rawx-leather-bracelet-alt.jpg',
+    '/rawx-leather-bracelet-base.jpg',
+  ],
+  '420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware': [
+    '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 1.jpg',
+    '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 2.jpg',
+  ],
+  'LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots': [
+    '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 1.jpg',
+    '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 2.jpg',
+    '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots  1.jpg',
+  ],
+  'ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag': [
+    '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg',
+    '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 2.jpg',
+    '/arutemika-origami-tote-01.jpg',
+    '/arutemika-origami-tote-02.jpg',
+  ],
+  'ARUTEMIKA Double 8-Strand Braided Leather Cuff Bracelet with 316L Stainless Clasp': [
+    '/arutemika-braided-magnetic-bracelet-01.jpg',
+    '/arutemika-braided-magnetic-bracelet-02.jpg',
+  ],
+  'RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket': [
+    '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  1.jpg',
+    '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  2.jpg',
+    '/rawx-stealth-jacket-01.jpg',
+  ],
+  'RAWx Junior Runway Lookbook — Signature Red Logo Tee, Stealth Bomber, White Denim & Scarlet Sneakers': [
+    '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 1.jpg',
+    '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 2.jpg',
+  ],
+  'Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt': [
+    '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt .jpg',
+    '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt_.jpg',
+  ],
+  'Bulk Custom Batch • Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt': [
+    '/Bulk Custom Batch • Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-ShirtCharkha handspun desi cotton woven on pit looms in Comilla 2.jpg',
+    '/Bulk Custom Batch • Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-ShirtCharkha handspun desi cotton woven on pit looms in Comilla.jpg',
+    '/Bulk Custom Batch • Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-ShirtCharkha handspun desi cotton woven on pit looms in Comilla. .jpg',
+  ],
+  'Bulk Custom Batch • Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole / Shawl': [
+    '/Bulk Custom Batch • Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole  ShawlUNESCO Intangible Cultural Heritage.jpg',
+    '/Bulk Custom Batch • Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole  ShawlUNESCO Intangible Cultural Heritage geometric floral weave woven.jpg',
+  ],
+  'Adidas Arsenal FC Golden Cannon Trefoil Streetwear Tee': [
+    '/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg',
+    '/adidas-arsenal-fc-golden-cannon-trefoil-tee-back.jpg',
+    '/adidas-arsenal-fc-golden-cannon-trefoil-tee-detail.jpg',
+    '/adidas-arsenal-fc-golden-cannon-trefoil-tee-print.jpg',
+  ],
+  'Adidas Bayern Munich Telekom Trefoil Heritage Tee': [
+    '/adidas-bayern-munich-telekom-trefoil-tee.jpg',
+    '/adidas-bayern-munich-telekom-trefoil-tee-back.jpg',
+    '/adidas-bayern-munich-telekom-trefoil-tee-detail.jpg',
+    '/adidas-bayern-munich-telekom-trefoil-tee-print.jpg',
+  ],
+  'Adidas Real Madrid Acid Purple Trefoil Oversized Tee': [
+    '/adidas-real-madrid-acid-purple-trefoil-tee.jpg',
+    '/adidas-real-madrid-acid-purple-trefoil-tee-back.jpg',
+    '/adidas-real-madrid-acid-purple-trefoil-tee-detail.jpg',
+    '/adidas-real-madrid-acid-purple-trefoil-tee-print.jpg',
+  ],
+  'Adidas Real Madrid BenQ Siemens Classic Retro Tee': [
+    '/adidas-real-madrid-benq-siemens-tee.jpg',
+    '/adidas-real-madrid-benq-siemens-tee-back.jpg',
+  ],
+  'Adidas Real Madrid Emerald Stripes Fly Better Tee': [
+    '/adidas-real-madrid-emerald-stripes-emirates-tee.jpg',
+    '/adidas-real-madrid-fly-better-emerald-tee.jpg',
+  ],
+  'Air Jordan PSG Qatar Airways Gold Shield Streetwear Tee': [
+    '/air-jordan-psg-qatar-airways-gold-shield-tee.jpg',
+  ],
+  'Cactus Jack x FC Barcelona Travis Scott Limited Edition Tee': [
+    '/cactus-jack-fc-barcelona-travis-scott-tee.jpg',
+  ],
+};
+
+export const PRODUCT_IMAGE_FILE_MAP: Record<string, string> = {
+  // Exact Bulk Custom Batch mapped filenames
+  'Bulk Custom Batch • ARUTEMIKA Double 8-Strand Braided Leather Cuff Bracelet with 316L Stainless Clasp': '/Bulk Custom Batch • ARUTEMIKA Double 8-Strand Braided Leather Cuff Bracelet with 316L Stainless ClaspArtisanal.jpg',
+  'Bulk Custom Batch • Biodegradable Braided Jute & Sustainable Palm Leaf Storage Basket Trio': '/Bulk Custom Batch • Biodegradable Braided Jute & Sustainable Palm Leaf Storage Basket TrioCoil-sewn.jpg',
+  'Bulk Custom Batch • Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt': '/Bulk Custom Batch • Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-ShirtCharkha handspun desi cotton woven on pit looms in Comilla 2.jpg',
+  'Bulk Custom Batch • Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole / Shawl': '/Bulk Custom Batch • Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole  ShawlUNESCO Intangible Cultural Heritage.jpg',
+  'Bulk Custom Batch • Natural Clay Terracotta Minimalist Plant Pots & Ceramic Glazed Vases': '/Bulk Custom Batch • Natural Clay Terracotta Minimalist Plant Pots & Ceramic Glazed Vases .jpg',
+  'Bulk Custom Batch • RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket': '/Bulk Custom Batch • RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket .jpg',
+  'Bulk Custom Batch • RAWx Junior Runway Lookbook — Signature Red Logo Tee, Stealth Bomber, White Denim & Scarlet Sneakers': '/Bulk Custom Batch • RAWx Junior Runway Lookbook — Signature Red Logo Tee, Stealth Bomber, White Denim & Scarlet SneakersComplete 4-piece junior high-fashion .jpg',
+
+  // Exact Rapid Turnaround Edition mapped filenames
+  'Rapid Turnaround Edition • 100% Organic Combed Ring-Spun Cotton Heavyweight Crewneck T-Shirt': '/Rapid Turnaround Edition • 100% Organic Combed Ring-Spun Cotton Heavyweight Crewneck T-Shirt.jpg',
+  'Rapid Turnaround Edition • 12.5 oz Sustainable Indigo Selvedge Stretch Denim Jeans (Laser Finished)': '/Rapid Turnaround Edition • 12.5 oz Sustainable Indigo Selvedge Stretch Denim Jeans (Laser Finished).jpg',
+  'Rapid Turnaround Edition • 14.5 oz Shuttle-Loom Raw Redline Selvedge Denim Chore Jacket': '/Rapid Turnaround Edition • 14.5 oz Shuttle-Loom Raw Redline Selvedge Denim Chore JacketAuthentic.jpg',
+  'Rapid Turnaround Edition • 240 GSM Combed Ring-Spun Cotton Drop-Shoulder Heavy Tee': '/Rapid Turnaround Edition • 240 GSM Combed Ring-Spun Cotton Drop-Shoulder Heavy TeeHeavy single jersey with silicon enzyme wash.jpg',
+  'Rapid Turnaround Edition • 300 GSM Heavyweight French Terry Blank Boxy Crewneck Sweatshirt Lot': '/Rapid Turnaround Edition • 300 GSM Heavyweight French Terry Blank Boxy Crewneck Sweatshirt Lot.jpg',
+  'Rapid Turnaround Edition • 420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware': '/Rapid Turnaround Edition • 420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware .jpg',
+  'Rapid Turnaround Edition • 650 GSM Combed Zero-Twist Ring-Spun Hotel Luxury Bath Towel (100% Cotton)': '/Rapid Turnaround Edition • 650 GSM Combed Zero-Twist Ring-Spun Hotel Luxury Bath Towel (100% Cotton).jpg',
+  'Rapid Turnaround Edition • 650 GSM Zero-Twist Long-Staple Combed Cotton 6-Piece Hotel Bath Towel Set': '/Rapid Turnaround Edition • 650 GSM Zero-Twist Long-Staple Combed Cotton 6-Piece Hotel Bath Towel Set.jpg',
+  'Rapid Turnaround Edition • ARUTEMIKA Double 8-Strand Braided Leather Cuff Bracelet with 316L Stainless Clasp': '/Rapid Turnaround Edition • ARUTEMIKA Double 8-Strand Braided Leather Cuff Bracelet with 316L Stainless Clasp .jpg',
+  'Rapid Turnaround Edition • Arutemika Goodyear Welted Full-Grain Veg-Tan Leather Chelsea Boots': '/Rapid Turnaround Edition • Arutemika Goodyear Welted Full-Grain Veg-Tan Leather Chelsea BootsBenchmade by master cordwainers with cork bed filling.jpg',
+  'Rapid Turnaround Edition • ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag': '/Rapid Turnaround Edition • ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag .jpg',
+  'Rapid Turnaround Edition • Bridle Leather Double-Wrap Cuff with CNC 316L Surgical Stainless Shackle': '/Rapid Turnaround Edition • Bridle Leather Double-Wrap Cuff with CNC 316L Surgical Stainless Shackle.jpg',
+  'Rapid Turnaround Edition • Fine Translucent Bone China 20-Piece Luxury Dinnerware Set (Gold Rimmed)': '/Rapid Turnaround Edition • Fine Translucent Bone China 20-Piece Luxury Dinnerware Set (Gold Rimmed).jpg',
+  'Rapid Turnaround Edition • Food-Grade Hydrocarbon-Free Golden Jute Coffee & Grain Burlap Sacks': '/Rapid Turnaround Edition • Food-Grade Hydrocarbon-Free Golden Jute Coffee & Grain Burlap Sacks.jpg',
+  'Rapid Turnaround Edition • Frozen Wild-Caught Black Tiger Shrimp (Raw Head-on Shell-on, IQF Grade A)': '/Rapid Turnaround Edition • Frozen Wild-Caught Black Tiger Shrimp (Raw Head-on Shell-on, IQF Grade A) .jpg',
+  'Rapid Turnaround Edition • Full-Grain Vegetable-Tanned Cow Leather Oxford Dress Shoes (Goodyear Welted)': '/Rapid Turnaround Edition • Full-Grain Vegetable-Tanned Cow Leather Oxford Dress Shoes (Goodyear Welted).jpg',
+  'Rapid Turnaround Edition • Handcrafted Heritage Nakshi Kantha Silk & Cotton Embroidered Quilt': '/Rapid Turnaround Edition • Handcrafted Heritage Nakshi Kantha Silk & Cotton Embroidered Quilt.jpg',
+  'Rapid Turnaround Edition • Heavy Structural Latigo Harness Suspender System with Solid Brass Trigger Snaps': '/Rapid Turnaround Edition • Heavy Structural Latigo Harness Suspender System with Solid Brass Trigger Snaps.jpg',
+  'Rapid Turnaround Edition • High-Visibility EN ISO 20471 Waterproof Stormproof Workwear Shell Jacket': '/Rapid Turnaround Edition • High-Visibility EN ISO 20471 Waterproof Stormproof Workwear Shell Jacket .jpg',
+  'Rapid Turnaround Edition • LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots': '/Rapid Turnaround Edition • LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots .jpg',
+  'Rapid Turnaround Edition • LWG Gold Finished Vegetable-Tanned Cowhide Minimalist Bifold Wallet': '/Rapid Turnaround Edition • LWG Gold Finished Vegetable-Tanned Cowhide Minimalist Bifold Wallet .jpg',
+  'Rapid Turnaround Edition • Moisture-Wicking Seamless Anti-Bacterial Performance Athletic Gym Tee': '/Rapid Turnaround Edition • Moisture-Wicking Seamless Anti-Bacterial Performance Athletic Gym Tee .jpg',
+  'Rapid Turnaround Edition • Natural Grade-A Hydrocarbon-Free Golden Jute Hessian Burlap Bags (A-Twill)': '/Rapid Turnaround Edition • Natural Grade-A Hydrocarbon-Free Golden Jute Hessian Burlap Bags (A-Twill) .jpg',
+  'Rapid Turnaround Edition • RAWx Artisanal Braided Calfskin Leather Cuff with Stainless Steel Shackle': '/Rapid Turnaround Edition • RAWx Artisanal Braided Calfskin Leather Cuff with Stainless Steel Shackle.jpg',
+  'Rapid Turnaround Edition • RAWx Crimson Red Performance Activewear 2-Piece Athletic Set': '/Rapid Turnaround Edition • RAWx Crimson Red Performance Activewear 2-Piece Athletic Set .jpg',
+  'Rapid Turnaround Edition • RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers': '/Rapid Turnaround Edition • RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers .jpg',
+  'Rapid Turnaround Edition • Savar Tannery Finished Veg-Tan Full Grain Crust Bovine Leather Sides (22-26 sq ft)': '/Rapid Turnaround Edition • Savar Tannery Finished Veg-Tan Full Grain Crust Bovine Leather Sides (22-26 sq ft) .jpg',
+
+  // Unprefixed Core Items Synced to User Uploads
+  '240 GSM Combed Ring-Spun Cotton Drop-Shoulder Heavy Tee': '/Rapid Turnaround Edition • 240 GSM Combed Ring-Spun Cotton Drop-Shoulder Heavy TeeHeavy single jersey with silicon enzyme wash.jpg',
+  '14.5 oz Shuttle-Loom Raw Redline Selvedge Denim Chore Jacket': '/Rapid Turnaround Edition • 14.5 oz Shuttle-Loom Raw Redline Selvedge Denim Chore JacketAuthentic.jpg',
+  'Food-Grade Hydrocarbon-Free Golden Jute Coffee & Grain Burlap Sacks': '/Rapid Turnaround Edition • Food-Grade Hydrocarbon-Free Golden Jute Coffee & Grain Burlap Sacks.jpg',
+  'Arutemika Goodyear Welted Full-Grain Veg-Tan Leather Chelsea Boots': '/Rapid Turnaround Edition • Arutemika Goodyear Welted Full-Grain Veg-Tan Leather Chelsea BootsBenchmade by master cordwainers with cork bed filling.jpg',
+  'Bridle Leather Double-Wrap Cuff with CNC 316L Surgical Stainless Shackle': '/Rapid Turnaround Edition • Bridle Leather Double-Wrap Cuff with CNC 316L Surgical Stainless Shackle.jpg',
+  'Heavy Structural Latigo Harness Suspender System with Solid Brass Trigger Snaps': '/Rapid Turnaround Edition • Heavy Structural Latigo Harness Suspender System with Solid Brass Trigger Snaps.jpg',
+  '650 GSM Zero-Twist Long-Staple Combed Cotton 6-Piece Hotel Bath Towel Set': '/Rapid Turnaround Edition • 650 GSM Zero-Twist Long-Staple Combed Cotton 6-Piece Hotel Bath Towel Set.jpg',
+  'Savar Tannery Finished Veg-Tan Full Grain Crust Bovine Leather Sides (22-26 sq ft)': '/Rapid Turnaround Edition • Savar Tannery Finished Veg-Tan Full Grain Crust Bovine Leather Sides (22-26 sq ft) .jpg',
+  '300 GSM Heavyweight French Terry Blank Boxy Crewneck Sweatshirt Lot': '/Rapid Turnaround Edition • 300 GSM Heavyweight French Terry Blank Boxy Crewneck Sweatshirt Lot.jpg',
+  '100% Organic Combed Ring-Spun Cotton Heavyweight Crewneck T-Shirt': '/Rapid Turnaround Edition • 100% Organic Combed Ring-Spun Cotton Heavyweight Crewneck T-Shirt.jpg',
+  '12.5 oz Sustainable Indigo Selvedge Stretch Denim Jeans (Laser Finished)': '/Rapid Turnaround Edition • 12.5 oz Sustainable Indigo Selvedge Stretch Denim Jeans (Laser Finished).jpg',
+  'Natural Grade-A Hydrocarbon-Free Golden Jute Hessian Burlap Bags (A-Twill)': '/Rapid Turnaround Edition • Natural Grade-A Hydrocarbon-Free Golden Jute Hessian Burlap Bags (A-Twill) .jpg',
+  'Full-Grain Vegetable-Tanned Cow Leather Oxford Dress Shoes (Goodyear Welted)': '/Rapid Turnaround Edition • Full-Grain Vegetable-Tanned Cow Leather Oxford Dress Shoes (Goodyear Welted).jpg',
+  'Fine Translucent Bone China 20-Piece Luxury Dinnerware Set (Gold Rimmed)': '/Rapid Turnaround Edition • Fine Translucent Bone China 20-Piece Luxury Dinnerware Set (Gold Rimmed).jpg',
+  '650 GSM Combed Zero-Twist Ring-Spun Hotel Luxury Bath Towel (100% Cotton)': '/Rapid Turnaround Edition • 650 GSM Combed Zero-Twist Ring-Spun Hotel Luxury Bath Towel (100% Cotton).jpg',
+  'Frozen Wild-Caught Black Tiger Shrimp (Raw Head-on Shell-on, IQF Grade A)': '/Rapid Turnaround Edition • Frozen Wild-Caught Black Tiger Shrimp (Raw Head-on Shell-on, IQF Grade A) .jpg',
+  'Handcrafted Heritage Nakshi Kantha Silk & Cotton Embroidered Quilt': '/Rapid Turnaround Edition • Handcrafted Heritage Nakshi Kantha Silk & Cotton Embroidered Quilt.jpg',
+  'Handcrafted Heritage Nakshi Kantha Silk & Cotton Embroidered Quilt Throw': '/Rapid Turnaround Edition • Handcrafted Heritage Nakshi Kantha Silk & Cotton Embroidered Quilt.jpg',
+  'High-Visibility EN ISO 20471 Waterproof Stormproof Workwear Shell Jacket': '/Rapid Turnaround Edition • High-Visibility EN ISO 20471 Waterproof Stormproof Workwear Shell Jacket .jpg',
+  'Moisture-Wicking Seamless Anti-Bacterial Performance Athletic Gym Tee': '/Rapid Turnaround Edition • Moisture-Wicking Seamless Anti-Bacterial Performance Athletic Gym Tee .jpg',
+  'LWG Gold Finished Vegetable-Tanned Cowhide Minimalist Bifold Wallet': '/Rapid Turnaround Edition • LWG Gold Finished Vegetable-Tanned Cowhide Minimalist Bifold Wallet .jpg',
+  'Biodegradable Braided Jute & Sustainable Palm Leaf Storage Basket Trio': '/Bulk Custom Batch • Biodegradable Braided Jute & Sustainable Palm Leaf Storage Basket TrioCoil-sewn.jpg',
+  'Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole / Shawl': '/Bulk Custom Batch • Jamdani Floral Motif Handwoven Pure Mulberry Silk Stole  ShawlUNESCO Intangible Cultural Heritage.jpg',
+  'Natural Clay Terracotta Minimalist Plant Pots & Ceramic Glazed Vases': '/Bulk Custom Batch • Natural Clay Terracotta Minimalist Plant Pots & Ceramic Glazed Vases .jpg',
+
+  // RAWx & Arutemika Exact Mapped Items
+  'RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans': '/RAWx 13.5 oz Raw Indigo Selvedge Denim Heritage 5-Pocket Jeans 1.jpg',
+  'RAWx Crimson Red Performance Activewear 2-Piece Athletic Set': '/RAWx Crimson Red Performance Activewear 2-Piece Athletic Set 1.jpg',
+  'RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers': '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 1.jpg',
+  'RAWx Artisanal Braided Calfskin Leather Cuff with Stainless Steel Shackle': '/rawx-leather-bracelet-01.jpg',
+  '420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware': '/420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware 1.jpg',
+  'LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots': '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 1.jpg',
+  'ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag': '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg',
+  'ARUTEMIKA Double 8-Strand Braided Leather Cuff Bracelet with 316L Stainless Clasp': '/arutemika-braided-magnetic-bracelet-01.jpg',
+  'RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket': '/RAWx Atelier Stealth Matte Technical Leather Minimalist Bomber Jacket  1.jpg',
+  'RAWx Junior Runway Lookbook — Signature Red Logo Tee, Stealth Bomber, White Denim & Scarlet Sneakers': '/RAWx Junior Runway Lookbook — Signature Red Logo Tee 1.jpg',
+  'Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt': '/Handspun Khadi Indigo Handloom Men’s Kurta & Casual Over-Shirt .jpg',
+
+  // Exact Apparel & Accessories in Root
+  'Architectural 260–300 GSM Heavyweight Box-Tee (Custom Graphic / Screen-Print Ready)': '/Architectural 260–300 GSM Heavyweight Box-Tee (Custom Graphic _ Screen-Print Ready).jpg',
+  'Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee': '/Garment-Dyed Dual-Tone Ombre Dip-Dye Boxy Fit Tee.jpg',
+  'Acid-Washed Vintage Heavyweight Streetwear Blank': '/Acid-Washed Vintage Heavyweight Streetwear Blank.jpg',
+  'Architectural 300 GSM Double-Faced Heavyweight Box-Tee': '/Architectural 300 GSM Double-Faced Heavyweight Box-Tee.jpg',
+  'Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee': '/Garment-Dyed Carbon Charcoal Mineral-Wash Streetwear Tee.jpg',
+  'Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready)': '/Optic White 280 GSM Heavyweight Box-Tee (Screen-Print Ready).jpg',
+  'Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee': '/Forest Emerald Garment-Dyed Relaxed Boxy Fit Tee.jpg',
+  'Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank': '/Deep Burgundy Pigment-Dyed Heavyweight Streetwear Blank.jpg',
+  'Acid-Washed Vintage Dual-Tone Ombre Oversized Tee': '/Acid-Washed Vintage Dual-Tone Ombre Oversized Tee.jpg',
+  'Washed Lavender 260 GSM Vintage Enzyme Streetwear Tee': '/Washed Lavender 260 GSM Vintage Enzyme Streetwear Tee.jpg',
+  'Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee': '/Pitch Black & Crimson Contrast-Stitch Heavyweight Box-Tee.jpg',
+  'Deep Pine Green 280 GSM Architectural Box-Tee': '/Deep Pine Green 280 GSM Architectural Box-Tee.jpg',
+  'Natural Raw Ecru Unbleached Heavyweight Cotton Blank': '/Natural Raw Ecru Unbleached Heavyweight Cotton Blank.jpg',
+  'Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee': '/Garment-Dyed Dual-Tone Sage & Chalk Ombre Boxy Fit Tee.jpg',
+  'Olive Moss Vintage Mineral Wash Heavyweight Box Blank': '/Olive Moss Vintage Mineral Wash Heavyweight Box Blank.jpg',
+  'Pitch Black Architectural 300 GSM Heavyweight Box-Tee': '/Pitch Black Architectural 300 GSM Heavyweight Box-Tee.jpg',
+  'Acid-Washed Vintage Charcoal Heavyweight Skater Blank': '/Acid-Washed Vintage Charcoal Heavyweight Skater Blank.jpg',
+  'Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee': '/Dual-Tone Mineral Wash Sand & Slate Heavyweight Tee.jpg',
+  'Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee': '/Architectural 260 GSM Minimalist Drop-Shoulder Studio Tee.jpg',
+  'Raw-Edge Hemmed Vintage Acid-Washed Box-Tee': '/Raw-Edge Hemmed Vintage Acid-Washed Box-Tee.jpg',
+  'Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee': '/Garment-Dyed Dual-Tone Sunset Ombre Dip-Dye Boxy Tee.jpg',
+  'Pitch Black & Neon Accent Architectural Box-Tee': '/Pitch Black & Neon Accent Architectural Box-Tee.jpg',
+  'Acid-Washed Earth Mineral Heavyweight Streetwear Blank': '/Acid-Washed Earth Mineral Heavyweight Streetwear Blank.jpg',
+  'Tokyo Atelier Standard 280 GSM Heavyweight Combed Cotton Blank': '/Tokyo Atelier Standard 280 GSM Heavyweight Combed Cotton Blank.jpg',
+  'Garment-Dyed Dual-Tone Ocean Ombre Dip-Dye Boxy Fit Tee': '/Garment-Dyed Dual-Tone Ocean Ombre Dip-Dye Boxy Fit Tee.jpg',
+  'Acid-Washed Vintage Royal Purple Heavyweight Box-Tee': '/Acid-Washed Vintage Royal Purple Heavyweight Box-Tee.jpg',
+  '300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee': '/300 GSM Ultra-Heavyweight Vintage Boxy Blank Tee.jpg',
+  'Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle)': '/Full-Grain Cowhide Artisan Leather Belt (Solid Brass Buckle).jpg',
+  'Custom Debossed Solid Brass Key Shackle Carabiner': '/Custom Debossed Solid Brass Key Shackle Carabiner.jpg',
+  'Arutemika Full-Grain Vegetable-Tanned Cowhide Weekender Duffle': '/Arutemika Full-Grain Vegetable-Tanned Cowhide Weekender Duffle.jpg',
+  'Arutemika Executive Slim Full-Grain Leather Briefcase': '/Arutemika Executive Slim Full-Grain Leather Briefcase.jpg',
+  'Minimalist Commuter Rolltop Full-Grain Leather Backpack': '/Minimalist Commuter Rolltop Full-Grain Leather Backpack.jpg',
+  'Arutemika Artisan Full-Grain Cowhide Work Tote': '/Arutemika Artisan Full-Grain Cowhide Work Tote.jpg',
+  'Arutemika Full-Grain Braided Cowhide Bracelet (316L Stainless Steel Clasp)': '/Arutemika Full-Grain Braided Cowhide Bracelet (316L Stainless Steel Clasp).jpg',
+
+  // Football Club Streetwear Tees
+  'Adidas Arsenal FC Golden Cannon Trefoil Streetwear Tee': '/adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg',
+  'Adidas Bayern Munich Telekom Trefoil Heritage Tee': '/adidas-bayern-munich-telekom-trefoil-tee.jpg',
+  'Adidas Real Madrid Acid Purple Trefoil Oversized Tee': '/adidas-real-madrid-acid-purple-trefoil-tee.jpg',
+  'Adidas Real Madrid BenQ Siemens Classic Retro Tee': '/adidas-real-madrid-benq-siemens-tee.jpg',
+  'Adidas Real Madrid Burgundy Trefoil Emirates Tee': '/adidas-real-madrid-burgundy-trefoil-emirates-tee.jpg',
+  'Adidas Real Madrid Emerald Stripes Fly Better Tee': '/adidas-real-madrid-emerald-stripes-emirates-tee.jpg',
+  'Adidas Real Madrid FIFA World Champions Gold Shield Tee': '/adidas-real-madrid-fifa-champions-shield-tee.jpg',
+  'Adidas Real Madrid Fly Better Emerald Tee': '/adidas-real-madrid-fly-better-emerald-tee.jpg',
+  'Adidas Real Madrid Mineral Wash Charcoal Tee': '/adidas-real-madrid-mineral-wash-charcoal-tee.jpg',
+  'Air Jordan PSG Qatar Airways Gold Shield Streetwear Tee': '/air-jordan-psg-qatar-airways-gold-shield-tee.jpg',
+  'Cactus Jack x FC Barcelona Travis Scott Limited Edition Tee': '/cactus-jack-fc-barcelona-travis-scott-tee.jpg',
+};

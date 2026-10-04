@@ -166,36 +166,96 @@ export const FactoryProfileDrawer: React.FC<FactoryProfileDrawerProps> = ({
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-5">
           {activeTab === 'logistics' && (
             <div className="space-y-4 animate-in fade-in duration-200">
-              {/* Google Maps Integration (Dark Mode) */}
+              {/* Google Maps Integration (Dark Mode) or Interactive Corridor Fallback */}
               <div className="rounded-2xl border border-white/10 overflow-hidden relative shadow-2xl h-[260px] bg-black">
-                <APIProvider apiKey={apiKey}>
-                  <Map
-                    mapId={(import.meta as any).env?.VITE_GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID'}
-                    style={{ width: '100%', height: '100%' }}
-                    defaultCenter={{ lat: coords.lat, lng: coords.lng }}
-                    defaultZoom={9}
-                    gestureHandling="greedy"
-                    disableDefaultUI={false}
-                    internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
-                    colorScheme="DARK"
-                  >
-                    {/* Mill Marker */}
-                    <AdvancedMarker position={{ lat: coords.lat, lng: coords.lng }} title={supplier.name}>
-                      <div className="p-2 rounded-xl bg-[#e11d48] text-white shadow-lg border border-white/50 flex items-center space-x-1.5 animate-bounce">
-                        <Building2 className="w-4 h-4" />
-                        <span className="text-[10px] font-black">{supplier.name.split(' ')[0]}</span>
-                      </div>
-                    </AdvancedMarker>
+                {apiKey ? (
+                  <APIProvider apiKey={apiKey}>
+                    <Map
+                      mapId={(import.meta as any).env?.VITE_GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID'}
+                      style={{ width: '100%', height: '100%' }}
+                      defaultCenter={{ lat: coords.lat, lng: coords.lng }}
+                      defaultZoom={9}
+                      gestureHandling="greedy"
+                      disableDefaultUI={false}
+                      internalUsageAttributionIds={['gmp_mcp_codeassist_v1_aistudio']}
+                      colorScheme="DARK"
+                    >
+                      {/* Mill Marker */}
+                      <AdvancedMarker position={{ lat: coords.lat, lng: coords.lng }} title={supplier.name}>
+                        <div className="p-2 rounded-xl bg-[#e11d48] text-white shadow-lg border border-white/50 flex items-center space-x-1.5 animate-bounce">
+                          <Building2 className="w-4 h-4" />
+                          <span className="text-[10px] font-black">{supplier.name.split(' ')[0]}</span>
+                        </div>
+                      </AdvancedMarker>
 
-                    {/* Chattogram Sea Port (CGP) Marker */}
-                    <AdvancedMarker position={{ lat: 22.2986, lng: 91.8153 }} title="Chattogram Sea Port (CGP)">
-                      <div className="p-2 rounded-xl bg-[#0284c7] text-white shadow-lg border border-white/50 flex items-center space-x-1">
-                        <Anchor className="w-3.5 h-3.5" />
-                        <span className="text-[9px] font-mono font-bold">PORT (CGP)</span>
+                      {/* Chattogram Sea Port (CGP) Marker */}
+                      <AdvancedMarker position={{ lat: 22.2986, lng: 91.8153 }} title="Chattogram Sea Port (CGP)">
+                        <div className="p-2 rounded-xl bg-[#0284c7] text-white shadow-lg border border-white/50 flex items-center space-x-1">
+                          <Anchor className="w-3.5 h-3.5" />
+                          <span className="text-[9px] font-mono font-bold">PORT (CGP)</span>
+                        </div>
+                      </AdvancedMarker>
+                    </Map>
+                  </APIProvider>
+                ) : (
+                  /* Interactive Vector Freight Corridor Map Fallback */
+                  <div className="w-full h-full bg-[#0a0f1d] relative flex flex-col justify-between p-4 overflow-hidden select-none">
+                    {/* Grid Background */}
+                    <div
+                      className="absolute inset-0 opacity-15 pointer-events-none"
+                      style={{
+                        backgroundImage: 'radial-gradient(circle at 1px 1px, #38bdf8 1px, transparent 0)',
+                        backgroundSize: '24px 24px',
+                      }}
+                    />
+
+                    {/* SVG Transit Line */}
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 240" preserveAspectRatio="none">
+                      <defs>
+                        <linearGradient id="corridorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#e11d48" stopOpacity="0.8" />
+                          <stop offset="100%" stopColor="#0284c7" stopOpacity="0.8" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M 120 70 Q 220 120, 290 180"
+                        fill="none"
+                        stroke="url(#corridorGrad)"
+                        strokeWidth="3"
+                        strokeDasharray="6 4"
+                        className="animate-pulse"
+                      />
+                    </svg>
+
+                    {/* Mill Pin (Top Left quadrant) */}
+                    <div className="absolute top-12 left-16 z-10 flex flex-col items-center">
+                      <div className="px-2.5 py-1.5 rounded-xl bg-[#e11d48] text-white shadow-lg border border-white/40 flex items-center space-x-1.5">
+                        <Building2 className="w-3.5 h-3.5 shrink-0" />
+                        <span className="text-[10px] font-bold truncate max-w-[130px]">{supplier.name}</span>
                       </div>
-                    </AdvancedMarker>
-                  </Map>
-                </APIProvider>
+                      <span className="text-[9px] font-mono text-slate-400 mt-1 bg-black/60 px-1.5 py-0.5 rounded">
+                        {coords.lat.toFixed(4)}°N, {coords.lng.toFixed(4)}°E
+                      </span>
+                    </div>
+
+                    {/* Chattogram Port Pin (Bottom Right quadrant) */}
+                    <div className="absolute bottom-8 right-16 z-10 flex flex-col items-center">
+                      <div className="px-2.5 py-1.5 rounded-xl bg-[#0284c7] text-white shadow-lg border border-white/40 flex items-center space-x-1.5">
+                        <Anchor className="w-3.5 h-3.5 shrink-0" />
+                        <span className="text-[10px] font-mono font-bold">Chattogram Port (CGP)</span>
+                      </div>
+                      <span className="text-[9px] font-mono text-slate-400 mt-1 bg-black/60 px-1.5 py-0.5 rounded">
+                        22.2986°N, 91.8153°E
+                      </span>
+                    </div>
+
+                    {/* Midpoint Distance Badge */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-[#06121e]/90 border border-sky-500/40 rounded-xl px-3 py-1.5 text-center shadow-xl">
+                      <div className="text-[9px] font-mono text-sky-400 uppercase tracking-wider">Direct Corridor</div>
+                      <div className="text-xs font-black text-white">{distanceToPortKm} km • ~{transitHours}h Transit</div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Top Badge Overlay */}
                 <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-[11px] font-mono flex items-center space-x-2">

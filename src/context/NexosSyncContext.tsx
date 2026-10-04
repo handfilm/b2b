@@ -145,7 +145,7 @@ export const NexosSyncProvider: React.FC<{ children: ReactNode }> = ({ children 
       setIsLoading(true);
       try {
         const [catalogRes, suppliersRes, buyersRes, metricsRes] = await Promise.all([
-          nexusApi.fetchB2BCatalog({ page: 1, limit: 120, division: 'all' }),
+          nexusApi.fetchB2BCatalog({ page: 1, limit: 150, division: 'all' }),
           nexusApi.fetchVerifiedSuppliers(),
           nexusApi.fetchGlobalBuyers(),
           nexusApi.fetchDatabaseMetrics(),
@@ -235,7 +235,7 @@ export const NexosSyncProvider: React.FC<{ children: ReactNode }> = ({ children 
         const [refreshed, suppliersRes, buyersRes, refreshedMetrics] = await Promise.all([
           nexusApi.fetchB2BCatalog({
             page: 1,
-            limit: 120,
+            limit: 150,
             division: 'all',
             forceRefresh: true,
           }),

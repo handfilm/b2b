@@ -42,10 +42,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Hands & Head Master Portal (AI Studio)',
     supplierVerified: true,
     supplierRating: 5.0,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Platform', value: 'handsandhead.ai.studio' },
       { label: 'Output', value: 'Vector DXF / Gerber CAD / JSON Spec' },
@@ -89,10 +87,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Plummy Fashions Ltd. (Via handsandhead.com)',
     supplierVerified: true,
     supplierRating: 4.98,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-03.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Facility', value: 'Narayanganj Green Knit Cluster' },
       { label: 'Capacity', value: '50,000 pcs / month slot' },
@@ -136,10 +132,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Plummy Fashions Ltd.',
     supplierVerified: true,
     supplierRating: 4.95,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-03.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-04.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Weight', value: '240 GSM Heavyweight Jersey' },
       { label: 'Yarn', value: '24/1 Combed Compact 100% Cotton' },
@@ -181,10 +175,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Fakir Knitwears Ltd.',
     supplierVerified: true,
     supplierRating: 4.9,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-05.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Fabric', value: '450 GSM Diagonal French Terry' },
       { label: 'Treatment', value: 'Mineral Wash / Garment Dye' },
@@ -226,10 +218,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Fakir Knitwears Ltd.',
     supplierVerified: true,
     supplierRating: 4.92,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-07.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'GSM', value: '200 GSM Mercerized Pique' },
       { label: 'Color Fastness', value: 'Grade 4.5 Reactive' },
@@ -272,10 +262,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Apex Footwear & Tannery Unit',
     supplierVerified: true,
     supplierRating: 4.96,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Substance', value: '1.4 - 1.6 mm' },
       { label: 'Selection', value: 'A/B/C Grade 70/20/10' },
@@ -317,10 +305,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Bengal Steel & Leather Atelier',
     supplierVerified: true,
     supplierRating: 4.88,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Leather', value: '4mm Vegetable Tanned Bridle' },
       { label: 'Hardware', value: '316L CNC Machined Stainless Steel' },
@@ -362,10 +348,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Envoy Textiles Ltd. (LEED Platinum)',
     supplierVerified: true,
     supplierRating: 4.97,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Fabric', value: '14.5 oz Redline Shuttle-Loom Selvedge' },
       { label: 'Hardware', value: 'Pure Copper Solid Rivets & Shank Buttons' },
@@ -408,10 +392,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Janata Jute Mills Ltd.',
     supplierVerified: true,
     supplierRating: 4.93,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/golden-jute-burlap.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/jute-card-hero.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Dimensions', value: '40 inch x 28 inch (Standard 60kg)' },
       { label: 'Yarn Quality', value: 'Tossa Grade-A Golden Fiber' },
@@ -454,10 +436,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Zaber & Zubair Fabrics Ltd.',
     supplierVerified: true,
     supplierRating: 4.95,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/jute/raw-golden-fiber.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Weight', value: '650 GSM High Pile' },
       { label: 'Size', value: '90 cm x 150 cm Bath Sheet' },
@@ -499,10 +479,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Fakir Knitwears Ltd. (Intimates Div)',
     supplierVerified: true,
     supplierRating: 4.91,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-alt.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Technology', value: 'Santoni Seamless 28G' },
       { label: 'Composition', value: '88% Polyamide Microfiber, 12% Spandex' },
@@ -544,10 +522,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Bengal Steel & Leather Atelier',
     supplierVerified: true,
     supplierRating: 4.9,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Leather Thickness', value: '4.5 - 5.0 mm (10-12 oz)' },
       { label: 'Hardware', value: 'Solid Cast Brass Hardware & Rivets' },
@@ -589,10 +565,8 @@ export const MASTER_FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Arutemika Atelier (Japan Guild)',
     supplierVerified: true,
     supplierRating: 4.98,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Construction', value: '360° Goodyear Storm Welt' },
       { label: 'Outsole', value: 'English Dainite Studded Sole' },

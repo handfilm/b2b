@@ -7,6 +7,7 @@ import admin from 'firebase-admin';
 import { MASTER_FEDERATED_PRODUCTS, MASTER_LIVE_ORDERS } from './src/data/masterDatabaseFeeder';
 import { SUPPLIERS, CUSTOMERS, PRODUCTS as MOCK_PRODUCTS } from './src/data/mockData';
 import { FEDERATED_PRODUCTS } from './src/data/divisions';
+import { generateMoreProducts, resolveCatalogRootImage, resolveCatalogImages } from './src/data/unlimitedCatalog';
 
 // Lazy initialization for Firebase Admin
 let adminDb: admin.firestore.Firestore | null = null;
@@ -513,7 +514,7 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
     const liveTransformedProducts = (liveData.products || []).map((item: any, idx: number) => {
       const priceBdt = item.pricing?.price || 1200;
       const priceUsd = Math.round((priceBdt / 118) * 100) / 100;
-      const imageUrl = item.images?.[0]?.url || 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg';
+      const imageUrl = item.images?.[0]?.url || null;
       return {
         id: item.id || `live-prod-${idx}`,
         title: item.title,
@@ -552,13 +553,58 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
       };
     });
 
-    // Combine live products, federated products, mock products and master federated products
-    const allProducts = [...liveTransformedProducts, ...MASTER_FEDERATED_PRODUCTS, ...FEDERATED_PRODUCTS, ...MOCK_PRODUCTS];
-    // Deduplicate by ID
+    // Ingest extended procedural catalog items to reach full 150+ items
+    const extendedCatalog = generateMoreProducts(1, 140);
+
+    // Combine live products, federated products, mock products, master federated products, and extended catalog
+    const allProducts = [
+      ...liveTransformedProducts,
+      ...MASTER_FEDERATED_PRODUCTS,
+      ...FEDERATED_PRODUCTS,
+      ...MOCK_PRODUCTS,
+      ...extendedCatalog,
+    ];
+    // Deduplicate by ID and ensure root image paths are resolved
     const productMap = new Map();
     for (const p of allProducts) {
       if (!productMap.has(p.id)) {
-        productMap.set(p.id, p);
+        let resolvedImage: string | null = null;
+        if (
+          p.image &&
+          typeof p.image === 'string' &&
+          p.image.trim() &&
+          p.image.startsWith('/') &&
+          !p.image.includes('cloudflarestorage')
+        ) {
+          const checkRel = p.image.trim().slice(1);
+          if (fs.existsSync(path.join(process.cwd(), 'public', checkRel))) {
+            resolvedImage = p.image.trim();
+          }
+        }
+        if (!resolvedImage) {
+          resolvedImage = resolveCatalogRootImage(p.title, p.categoryId);
+        }
+
+        const multiAngles = resolveCatalogImages(p.title, resolvedImage);
+        const combinedRaw = [...(p.images || []), ...multiAngles];
+        const cleanImages = Array.from(new Set(combinedRaw)).filter(
+          (img: string) => {
+            if (!img || typeof img !== 'string' || !img.trim() || img === resolvedImage || img.includes('cloudflarestorage')) {
+              return false;
+            }
+            if (img.startsWith('/')) {
+              const rel = img.slice(1);
+              return fs.existsSync(path.join(process.cwd(), 'public', rel));
+            }
+            return true;
+          }
+        );
+
+        productMap.set(p.id, {
+          ...p,
+          image: resolvedImage || null,
+          images: resolvedImage ? [resolvedImage, ...cleanImages] : cleanImages,
+        });
       }
     }
     let catalog = Array.from(productMap.values());
@@ -861,12 +907,7 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
 
     const candidatePaths = [
       path.join(process.cwd(), 'public', decodedPath),
-      path.join(process.cwd(), 'public', 'catalog', decodedPath),
-      path.join(process.cwd(), 'public', 'catalog', 'club-football', cleanBasename),
       path.join(process.cwd(), 'public', cleanBasename),
-      path.join(process.cwd(), 'public', 'catalog', 'arutemika', cleanBasename),
-      path.join(process.cwd(), 'public', 'catalog', 'jute', cleanBasename),
-      path.join(process.cwd(), 'public', 'catalog', 'rawx', cleanBasename),
     ];
 
     for (const cand of candidatePaths) {
@@ -876,10 +917,6 @@ Available Lines: ${supplierContext.activeLines || '8'}\n\n`;
       }
     }
 
-    const defaultFallback = path.join(process.cwd(), 'public', 'catalog', 'club-football', 'adidas-arsenal-fc-golden-cannon-trefoil-tee.jpg');
-    if (fs.existsSync(defaultFallback)) {
-      return res.sendFile(defaultFallback);
-    }
     return res.status(404).send('Asset not found');
   });
 

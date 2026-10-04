@@ -45,11 +45,11 @@ export function normalizeDriveProduct(driveData: RawGoogleDriveAsset): B2BProduc
     driveData.webContentLink ||
     driveData.thumbnailUrl ||
     (driveData.driveFileId ? `https://drive.google.com/uc?export=view&id=${driveData.driveFileId}` : '') ||
-    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg';
+    '';
 
   const secondaryImage =
     driveData.thumbnailUrl ||
-    'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg';
+    '';
 
   // Origin routing URL back to shop.handsandhead.com for checkout
   const targetRoutingUrl = `https://shop.handsandhead.com/checkout?sku=${encodeURIComponent(sku)}&source=b2b_sync&ref=nexos_drive`;
@@ -168,10 +168,7 @@ export function normalizeArutemikaProduct(arutemikaData: RawArutemikaProduct): B
 
   const images = arutemikaData.images && arutemikaData.images.length > 0
     ? arutemikaData.images
-    : [
-        'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-        'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
-      ];
+    : [];
 
   return {
     id: `artm-${arutemikaData.id}`,
@@ -262,7 +259,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Natural Ecru Chalk', hex: '#f1f5f9' },
       { name: 'Vintage Olive', hex: '#3f4f34' },
     ],
-    directImageUrl: 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
+    directImageUrl: '/Rapid Turnaround Edition • 240 GSM Combed Ring-Spun Cotton Drop-Shoulder Heavy TeeHeavy single jersey with silicon enzyme wash.jpg',
   },
   {
     driveFileId: 'DRV-HOOD-450-FR',
@@ -281,7 +278,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Jet Carbon', hex: '#1e293b' },
       { name: 'Deep Burgundy', hex: '#831843' },
     ],
-    directImageUrl: 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
+    directImageUrl: '/Rapid Turnaround Edition • 420 GSM French Terry Cotton Zip Hoodie with YKK Anti-Brass Hardware .jpg',
   },
   {
     driveFileId: 'DRV-DEN-CHORE-13',
@@ -299,7 +296,7 @@ export const RAW_GOOGLE_DRIVE_FEED: RawGoogleDriveAsset[] = [
       { name: 'Pure Indigo Raw', hex: '#1e3a8a' },
       { name: 'Overdyed Black', hex: '#0a0a0a' },
     ],
-    directImageUrl: 'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
+    directImageUrl: '/Rapid Turnaround Edition • 14.5 oz Shuttle-Loom Raw Redline Selvedge Denim Chore JacketAuthentic.jpg',
   },
 ];
 
@@ -315,8 +312,8 @@ export const RAW_ARUTEMIKA_FEED: RawArutemikaProduct[] = [
     wholesalePriceUSD: 44.0,
     moq: 50,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
+      '/Rapid Turnaround Edition • Arutemika Goodyear Welted Full-Grain Veg-Tan Leather Chelsea BootsBenchmade by master cordwainers with cork bed filling.jpg',
+      '/LWG Gold Certified Full Grain Cowhide Leather Goodyear Welted Boots 1.jpg',
     ],
     hardware: 'Reinforced Italian Herringbone Elastic Gusset',
     soling: 'Vibram #430 Mini-Lug Commando Sole',
@@ -341,8 +338,8 @@ export const RAW_ARUTEMIKA_FEED: RawArutemikaProduct[] = [
     wholesalePriceUSD: 52.0,
     moq: 50,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-02.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-alt.jpg',
+      '/Rapid Turnaround Edition • Full-Grain Vegetable-Tanned Cow Leather Oxford Dress Shoes (Goodyear Welted).jpg',
+      '/RAWx Minimalist Full-Grain Calfskin Leather Low-Top Sneakers 1.jpg',
     ],
     hardware: 'Concealed Blind Eyelets & Waxed Cotton Laces',
     soling: '5mm Vegetable-Tanned Sole Leather with Brass Toe Taps',
@@ -367,8 +364,8 @@ export const RAW_ARUTEMIKA_FEED: RawArutemikaProduct[] = [
     wholesalePriceUSD: 78.0,
     moq: 30,
     images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
+      '/Rapid Turnaround Edition • ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag .jpg',
+      '/ARUTEMIKA Origami Triangle Slouch Bovine Calfskin Leather Shoulder Tote Bag 1.jpg',
     ],
     hardware: 'Solid Forged British Brass Quick-Release Tuck Locks',
     soling: 'Reinforced Suede Lining with 16-inch Laptop Divider',

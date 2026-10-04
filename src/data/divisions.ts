@@ -151,10 +151,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Plummy Fashions Ltd. (LEED Platinum)',
     supplierVerified: true,
     supplierRating: 4.97,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(1).jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Yarn Count', value: '24/1 Ne Super Combed' },
       { label: 'Weight', value: '240 GSM Compact Jersey' },
@@ -208,10 +206,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Envoy Textiles Limited',
     supplierVerified: true,
     supplierRating: 4.95,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/rawx-stealth-jacket-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-denim-jeans-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Weave', value: '3x1 RHT Shuttle-Loom Selvedge' },
       { label: 'Indigo', value: '12-Dip Pure Vegetable Rope Dye' },
@@ -264,11 +260,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Janata Jute Mills Ltd.',
     supplierVerified: true,
     supplierRating: 4.91,
-    images: [
-      '/catalog/jute/jute-card-hero.jpg',
-      '/catalog/jute/golden-jute-burlap.jpg',
-      '/catalog/jute/raw-golden-fiber.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Fiber Grade', value: 'Bangla Tossa Grade-A' },
       { label: 'Oil Type', value: '100% Vegetable Batching Oil' },
@@ -321,10 +314,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Apex Footwear & Arutemika Atelier',
     supplierVerified: true,
     supplierRating: 4.98,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-sneakers-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Construction', value: '360° Goodyear Storm Welt' },
       { label: 'Upper', value: '1.8mm Oily Full-Grain Pull-Up Cowhide' },
@@ -377,10 +368,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Bengal Artisan Metal & Leather Craft',
     supplierVerified: true,
     supplierRating: 4.93,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-braided-magnetic-bracelet-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-01.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Leather Width', value: '12mm Double Wrap' },
       { label: 'Hardware', value: '316L Surgical Grade CNC Steel' },
@@ -433,10 +422,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Dhaka Tactical & Harness Guild',
     supplierVerified: true,
     supplierRating: 4.89,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-base.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-leather-bracelet-alt.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Leather Thickness', value: '10-11 oz Heavy Latigo' },
       { label: 'Rivets', value: '#9 Pure Copper Hand-Set Burrs' },
@@ -489,10 +476,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Zaber & Zubair Fabrics Ltd.',
     supplierVerified: true,
     supplierRating: 4.97,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/rawx/rawx-activewear-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Loop Type', value: 'Zero-Twist Micro Spun Cotton' },
       { label: 'Absorbency Rate', value: '< 2.5 seconds DIN standard' },
@@ -546,10 +531,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'Savar Ecological Tannery Estate (CETP)',
     supplierVerified: true,
     supplierRating: 4.92,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-01.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/arutemika/arutemika-origami-tote-02.jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Tannage', value: '100% Vegetable Chestnut/Mimosa' },
       { label: 'Selection', value: 'TR Selection A/B Grade' },
@@ -602,10 +585,8 @@ export const FEDERATED_PRODUCTS: Product[] = [
     supplierName: 'DBL Group Wholesale Division',
     supplierVerified: true,
     supplierRating: 4.94,
-    images: [
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/catalog/club-football/club-06.jpg',
-      'https://a8fd2c76b4d3e6bbb74ce313746d2cbf.r2.cloudflarestorage.com/b2b/football_club%20(6).jpg',
-    ],
+    images: [],
+    image: null,
     specifications: [
       { label: 'Weight', value: '300 GSM 100% Combed Cotton' },
       { label: 'Neckline', value: 'Seamless 2x2 Lycra Reinforced Rib' },

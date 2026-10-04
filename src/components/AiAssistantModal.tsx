@@ -269,6 +269,17 @@ What product line, textile vertical, or factory requirement are you sourcing tod
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isTyping, isOpen, activeTab]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   // Derived calculation values
   const basePriceUSD = activeProduct
     ? activeProduct.priceTiers[0].priceUSD
@@ -388,64 +399,68 @@ What product line, textile vertical, or factory requirement are you sourcing tod
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/85 backdrop-blur-xl animate-in fade-in duration-200">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-3 md:p-4 bg-black/85 backdrop-blur-md overflow-hidden animate-in fade-in duration-200"
+        onClick={onClose}
+      >
         <motion.div
           id="ai-mode-masterpiece-modal"
-          initial={{ opacity: 0, scale: 0.94, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.94, y: 20 }}
-          transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-5xl bg-[#090a0f] text-slate-100 rounded-3xl shadow-[0_25px_90px_rgba(0,0,0,0.95)] border border-white/15 overflow-hidden flex flex-col h-[94vh] max-h-[860px]"
+          exit={{ opacity: 0, scale: 0.95, y: 15 }}
+          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative w-full max-w-5xl bg-[#090a0f] text-slate-100 rounded-2xl sm:rounded-3xl shadow-[0_25px_90px_rgba(0,0,0,0.95)] border border-white/15 overflow-hidden flex flex-col h-[92vh] sm:h-[86vh] max-h-[780px] my-auto"
         >
-          {/* Super Dynamic Ambient Radial Lights */}
+          {/* Ambient Radial Lights */}
           <div className="absolute -top-24 left-1/4 w-96 h-48 bg-rose-600/20 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -top-24 right-1/4 w-96 h-48 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-rose-950/30 rounded-full blur-3xl pointer-events-none" />
 
           {/* =========================================================================
-              HEADER SECTION: Super Dynamic Visual Masterpiece Header
+              HEADER SECTION: Responsive Visual Desk Header
               ========================================================================= */}
-          <div className="relative px-4 sm:px-6 py-3.5 bg-[#0f1017]/90 backdrop-blur-md border-b border-white/10 flex items-center justify-between gap-3 shrink-0">
-            <div className="flex items-center space-x-3 min-w-0">
-              {/* Glowing Dynamic Masterpiece Crest */}
-              <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#e11d48] via-[#be123c] to-[#4c0519] p-0.5 shadow-xl shadow-rose-950/60 shrink-0 flex items-center justify-center">
-                <div className="w-full h-full rounded-[14px] bg-[#0c0d12]/80 flex items-center justify-center relative overflow-hidden">
-                  <Sparkles className="w-5 h-5 text-amber-300 animate-pulse relative z-10" />
+          <div className="relative px-3.5 sm:px-5 py-2.5 sm:py-3 bg-[#0f1017]/95 backdrop-blur-md border-b border-white/10 flex items-center justify-between gap-2.5 shrink-0">
+            <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0">
+              {/* Glowing Dynamic Crest */}
+              <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#e11d48] via-[#be123c] to-[#4c0519] p-0.5 shadow-lg shadow-rose-950/60 shrink-0 flex items-center justify-center">
+                <div className="w-full h-full rounded-[10px] sm:rounded-[14px] bg-[#0c0d12]/90 flex items-center justify-center relative overflow-hidden">
+                  <Sparkles className="w-4 h-4 text-amber-300 animate-pulse relative z-10" />
                   <span className="absolute inset-0 bg-gradient-to-tr from-rose-500/20 via-transparent to-emerald-500/20 animate-pulse" />
                 </div>
                 {/* Live Online Beacon */}
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5 sm:h-3 sm:w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-400 border-2 border-[#090a0f]"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-emerald-400 border-2 border-[#090a0f]"></span>
                 </span>
               </div>
 
               <div className="min-w-0">
                 <div className="flex items-center space-x-2">
-                  <h2 className="font-black text-base sm:text-lg text-white tracking-tight flex items-center">
+                  <h2 className="font-black text-sm sm:text-base text-white tracking-tight flex items-center">
                     <span className="bg-gradient-to-r from-white via-rose-100 to-rose-400 bg-clip-text text-transparent">
                       AI Mode
                     </span>
                     <span className="text-slate-500 font-normal mx-1.5 hidden sm:inline">·</span>
-                    <span className="text-xs font-mono font-bold text-rose-400 tracking-wider hidden sm:inline uppercase">
+                    <span className="text-[11px] font-mono font-bold text-rose-400 tracking-wider hidden sm:inline uppercase">
                       Autonomous Sourcing Desk
                     </span>
                   </h2>
 
                   {/* Equalizer audio-visual bar representation */}
-                  <div className="hidden md:flex items-center space-x-0.5 px-2 py-1 rounded-md bg-white/5 border border-white/10">
-                    <span className="w-0.5 h-3 bg-rose-500 rounded-full animate-pulse" />
-                    <span className="w-0.5 h-4 bg-emerald-400 rounded-full animate-pulse delay-75" />
+                  <div className="hidden md:flex items-center space-x-0.5 px-2 py-0.5 rounded-md bg-white/5 border border-white/10">
+                    <span className="w-0.5 h-2.5 bg-rose-500 rounded-full animate-pulse" />
+                    <span className="w-0.5 h-3.5 bg-emerald-400 rounded-full animate-pulse delay-75" />
                     <span className="w-0.5 h-2 bg-amber-400 rounded-full animate-pulse delay-150" />
-                    <span className="w-0.5 h-3.5 bg-rose-400 rounded-full animate-pulse delay-100" />
-                    <span className="text-[10px] font-mono font-bold text-slate-300 ml-1.5">
+                    <span className="w-0.5 h-3 bg-rose-400 rounded-full animate-pulse delay-100" />
+                    <span className="text-[9.5px] font-mono font-bold text-slate-300 ml-1.5">
                       126 Mills Live
                     </span>
                   </div>
                 </div>
 
                 {/* Sub-bar context pill */}
-                <p className="text-[11.5px] text-slate-400 truncate max-w-lg mt-0.5 flex items-center space-x-1.5">
+                <p className="text-[10.5px] sm:text-[11px] text-slate-400 truncate max-w-xs sm:max-w-md md:max-w-lg mt-0.5 flex items-center space-x-1.5">
                   {activeProduct ? (
                     <>
                       <span className="text-rose-400 font-bold">Focus:</span>
@@ -470,7 +485,7 @@ What product line, textile vertical, or factory requirement are you sourcing tod
             </div>
 
             {/* Quick Actions & Close */}
-            <div className="flex items-center space-x-2 shrink-0">
+            <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
               {onOpenRfqWithContext && (
                 <button
                   type="button"
@@ -481,7 +496,7 @@ What product line, textile vertical, or factory requirement are you sourcing tod
                       } at ~$${calculatedUnitPriceUSD.toFixed(2)} USD FOB CGP.`
                     )
                   }
-                  className="hidden sm:flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white text-xs font-bold transition-all shadow-md shadow-rose-950/50 cursor-pointer"
+                  className="hidden sm:flex items-center space-x-1 px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white text-xs font-bold transition-all shadow-md shadow-rose-950/50 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Formal RFQ</span>
@@ -491,25 +506,26 @@ What product line, textile vertical, or factory requirement are you sourcing tod
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                title="Close AI Mode"
+                className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 transition-colors cursor-pointer"
+                title="Close AI Mode (Esc)"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
 
           {/* =========================================================================
-              NAVIGATION TABS: Dynamic Super-Switcher Bar
+              NAVIGATION TABS: Dynamic Super-Switcher Bar (Horizontally Scrollable)
               ========================================================================= */}
-          <div className="px-4 sm:px-6 py-2 bg-[#0c0d14] border-b border-white/10 flex items-center justify-between gap-2 overflow-x-auto shrink-0 scrollbar-none">
-            <div className="flex items-center space-x-1 sm:space-x-1.5">
+          <div className="px-3 sm:px-5 py-1.5 sm:py-2 bg-[#0c0d14] border-b border-white/10 flex items-center justify-between gap-2 shrink-0">
+            {/* Scrollable Tab Strip */}
+            <div className="flex items-center space-x-1 sm:space-x-1.5 overflow-x-auto no-scrollbar scrollbar-none py-0.5 min-w-0 flex-1">
               <button
                 type="button"
                 onClick={() => setActiveTab('chat')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
                   activeTab === 'chat'
-                    ? 'bg-gradient-to-r from-rose-600/30 to-rose-500/20 text-white border border-rose-500/40 shadow-sm'
+                    ? 'bg-gradient-to-r from-rose-600/30 to-rose-500/20 text-white border border-rose-500/40 shadow-xs'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
@@ -520,9 +536,9 @@ What product line, textile vertical, or factory requirement are you sourcing tod
               <button
                 type="button"
                 onClick={() => setActiveTab('calculator')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
                   activeTab === 'calculator'
-                    ? 'bg-gradient-to-r from-amber-500/30 to-amber-400/20 text-white border border-amber-500/40 shadow-sm'
+                    ? 'bg-gradient-to-r from-amber-500/30 to-amber-400/20 text-white border border-amber-500/40 shadow-xs'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
@@ -533,9 +549,9 @@ What product line, textile vertical, or factory requirement are you sourcing tod
               <button
                 type="button"
                 onClick={() => setActiveTab('freight')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
                   activeTab === 'freight'
-                    ? 'bg-gradient-to-r from-sky-500/30 to-sky-400/20 text-white border border-sky-500/40 shadow-sm'
+                    ? 'bg-gradient-to-r from-sky-500/30 to-sky-400/20 text-white border border-sky-500/40 shadow-xs'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
@@ -546,9 +562,9 @@ What product line, textile vertical, or factory requirement are you sourcing tod
               <button
                 type="button"
                 onClick={() => setActiveTab('compliance')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
                   activeTab === 'compliance'
-                    ? 'bg-gradient-to-r from-emerald-500/30 to-emerald-400/20 text-white border border-emerald-500/40 shadow-sm'
+                    ? 'bg-gradient-to-r from-emerald-500/30 to-emerald-400/20 text-white border border-emerald-500/40 shadow-xs'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
@@ -559,9 +575,9 @@ What product line, textile vertical, or factory requirement are you sourcing tod
               <button
                 type="button"
                 onClick={() => setActiveTab('techpack')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
+                className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center space-x-1.5 shrink-0 ${
                   activeTab === 'techpack'
-                    ? 'bg-gradient-to-r from-purple-500/30 to-purple-400/20 text-white border border-purple-500/40 shadow-sm'
+                    ? 'bg-gradient-to-r from-purple-500/30 to-purple-400/20 text-white border border-purple-500/40 shadow-xs'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                 }`}
               >
@@ -570,9 +586,9 @@ What product line, textile vertical, or factory requirement are you sourcing tod
               </button>
             </div>
 
-            {/* Port & Latency telemetry indicator */}
-            <div className="hidden lg:flex items-center space-x-2 text-[11px] font-mono text-slate-400 shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            {/* Port & Latency telemetry indicator - cleanly separated on wide screens, never overlaps */}
+            <div className="hidden xl:flex items-center space-x-2 text-[10.5px] font-mono text-slate-400 shrink-0 pl-2.5 border-l border-white/10">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>Port: <strong className="text-white">Chattogram (CGP)</strong></span>
               <span className="text-slate-600">|</span>
               <span>FX: <strong className="text-rose-400">1 USD = {currency.rate} {currency.code}</strong></span>
@@ -676,40 +692,40 @@ What product line, textile vertical, or factory requirement are you sourcing tod
                 </div>
 
                 {/* Quick Prompts Bar */}
-                <div className="px-4 sm:px-6 py-2 bg-[#0e0f16] border-t border-white/10 flex items-center space-x-2 overflow-x-auto scrollbar-none shrink-0">
-                  <span className="text-[10.5px] font-mono text-slate-400 shrink-0">Prompts:</span>
+                <div className="px-3 sm:px-5 py-1.5 bg-[#0e0f16] border-t border-white/10 flex items-center space-x-1.5 sm:space-x-2 overflow-x-auto no-scrollbar scrollbar-none shrink-0">
+                  <span className="text-[10px] font-mono text-slate-400 shrink-0 font-bold uppercase">Prompts:</span>
                   <button
                     type="button"
                     onClick={() => handleSendMessage(`What is the FOB price and timeline for 10,000 units shipping to ${selectedDestination}?`)}
-                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[11px] whitespace-nowrap cursor-pointer transition-colors"
+                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[10.5px] sm:text-[11px] whitespace-nowrap cursor-pointer transition-colors shrink-0"
                   >
                     ⚡ FOB for 10,000 pcs
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSendMessage(`Explain Bangladesh's 0% duty privilege for exports entering ${currentRoute.country}.`)}
-                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[11px] whitespace-nowrap cursor-pointer transition-colors"
+                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[10.5px] sm:text-[11px] whitespace-nowrap cursor-pointer transition-colors shrink-0"
                   >
                     🌍 0% Duty & Customs HS Code
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSendMessage('Check Accord/RSC fire and structural safety audits for this manufacturer.')}
-                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[11px] whitespace-nowrap cursor-pointer transition-colors"
+                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[10.5px] sm:text-[11px] whitespace-nowrap cursor-pointer transition-colors shrink-0"
                   >
                     🌿 LEED Platinum & RSC Safety
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSendMessage(`Calculate CBM and ocean container capacity for ${simQuantity.toLocaleString()} units.`)}
-                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[11px] whitespace-nowrap cursor-pointer transition-colors"
+                    className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-[10.5px] sm:text-[11px] whitespace-nowrap cursor-pointer transition-colors shrink-0"
                   >
                     🚢 Container CBM Allocation
                   </button>
                 </div>
 
                 {/* Input Bar */}
-                <div className="p-3.5 sm:p-4 bg-[#111219] border-t border-white/10 shrink-0">
+                <div className="p-2.5 sm:p-3.5 bg-[#111219] border-t border-white/10 shrink-0">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -727,19 +743,19 @@ What product line, textile vertical, or factory requirement are you sourcing tod
                         }
                         value={inputText}
                         onChange={(e) => setInputText(e.target.value)}
-                        className="w-full bg-[#181924] border border-white/15 rounded-xl px-4 py-3 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500 pr-10 shadow-inner"
+                        className="w-full bg-[#181924] border border-white/15 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500 pr-10 shadow-inner"
                       />
                     </div>
                     <button
                       type="submit"
                       disabled={!inputText.trim() || isTyping}
-                      className="px-4 sm:px-5 py-3 bg-gradient-to-r from-rose-600 via-rose-500 to-red-600 hover:from-rose-500 hover:to-red-500 disabled:opacity-40 text-white rounded-xl text-xs sm:text-sm font-bold flex items-center space-x-1.5 shadow-md shadow-rose-950/50 transition-all cursor-pointer shrink-0"
+                      className="px-3.5 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-rose-600 via-rose-500 to-red-600 hover:from-rose-500 hover:to-red-500 disabled:opacity-40 text-white rounded-xl text-xs sm:text-sm font-bold flex items-center space-x-1.5 shadow-md shadow-rose-950/50 transition-all cursor-pointer shrink-0"
                     >
-                      <Send className="w-4 h-4" />
+                      <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       <span className="hidden sm:inline">Submit</span>
                     </button>
                   </form>
-                  <div className="mt-2 flex items-center justify-between text-[10px] text-slate-500 font-mono">
+                  <div className="mt-1.5 flex flex-col sm:flex-row sm:items-center justify-between text-[9.5px] sm:text-[10px] text-slate-500 font-mono gap-0.5 sm:gap-1">
                     <span>Direct Factory Sourcing Engine · Connected to Bangladesh EPB Registry</span>
                     <span>126 Factories · Real-Time Port Feed</span>
                   </div>
