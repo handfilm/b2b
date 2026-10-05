@@ -197,7 +197,7 @@ export const B2bCatalogCard: React.FC<B2bCatalogCardProps> = ({
               <div className="flex items-center justify-between text-[9px] font-mono text-emerald-400 mb-0.5">
                 <span className="uppercase font-bold flex items-center gap-1">
                   <Sparkles className="w-2.5 h-2.5 text-emerald-400" />
-                  <span>{product.division || 'Export RMG Cluster'}</span>
+                  <span>{product.divisionTitle || product.divisionSlug || 'Export RMG Cluster'}</span>
                 </span>
                 <span className="text-slate-400">HS {product.hsCode || '6109.10'}</span>
               </div>
@@ -206,7 +206,7 @@ export const B2bCatalogCard: React.FC<B2bCatalogCardProps> = ({
               </h4>
               <div className="text-[10px] text-slate-300 font-mono flex items-center justify-between mt-0.5">
                 <span className="truncate max-w-[200px] text-slate-300">
-                  {product.specs?.weight || product.specs?.fabric || 'Export Lot 240 GSM'}
+                  {product.specifications?.[0]?.value || product.materials?.[0] || 'Export Lot 240 GSM'}
                 </span>
                 <span className="text-emerald-400 shrink-0">Lead: {product.leadTimeDays || 25}d</span>
               </div>

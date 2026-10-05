@@ -466,8 +466,8 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
             </div>
           </div>
 
-          {/* Right Column: COMPACT LOWER SPACE DETAILS (lg:col-span-5 xl:col-span-4) */}
-          <div className="lg:col-span-5 xl:col-span-4 space-y-4 flex flex-col justify-between">
+          {/* Right Column: COMPACT LOWER SPACE DETAILS (lg:col-span-4 xl:col-span-4 2xl:col-span-3) */}
+          <div className="lg:col-span-4 xl:col-span-4 2xl:col-span-3 space-y-3.5 flex flex-col justify-between">
             <div className="space-y-3.5">
               <div>
                 <div className="flex items-center gap-1.5 flex-wrap mb-1.5">
