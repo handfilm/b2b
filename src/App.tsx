@@ -37,6 +37,12 @@ import { RequestSpecDrawer } from './components/RequestSpecDrawer';
 import { BuyerDashboardShell } from './pages/BuyerDashboard';
 import { SellerDashboardShell } from './pages/SellerDashboard';
 import { B2bCatalogPage } from './pages/B2bCatalogPage';
+import { WingNavigationBar } from './components/WingNavigationBar';
+import { B2bWingView } from './components/B2bWingView';
+import { UnifiedWingsOverviewStrip } from './components/UnifiedWingsOverviewStrip';
+import { EcosystemOsBadge } from './components/EcosystemOsBadge';
+import { resolveWingFromPath } from './config/wings';
+import { useSeoHead } from './hooks/useSeoHead';
 import {
   saveRfqToFirestore,
   saveSampleToFirestore,
@@ -170,9 +176,19 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // Unified B2B Wing Resolution (/rmg, /leather, /jacket, /hardware, /d2c, /admin)
+  const activeWing = useMemo(() => resolveWingFromPath(currentPath), [currentPath]);
+
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
   const { lang, setLang, t, toDigits } = useI18n();
   const [activeView, setActiveView] = useState<'products' | 'suppliers' | 'customers' | 'insights'>('products');
+
+  // Dynamic Technical SEO & OpenGraph / Twitter Head Synchronization
+  useSeoHead({
+    currentPath,
+    activeWing,
+    activeView,
+  });
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
   const [supplierViewMode, setSupplierViewMode] = useState<'list' | 'map' | 'google_map'>('google_map');
@@ -737,8 +753,8 @@ const AppContent: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full max-w-full overflow-x-clip flex flex-col font-sans transition-colors duration-200 selection:bg-[#e11d48] selection:text-white ${
-        theme === 'dark' ? 'bg-[#0a0a0a] text-white' : 'bg-[#f8fafc] text-slate-900'
+      className={`min-h-screen w-full max-w-full overflow-x-clip flex flex-col font-sans transition-colors duration-200 selection:bg-[#E50914] selection:text-white ${
+        theme === 'dark' ? 'bg-[#0A0B0D] text-white' : 'bg-[#f8fafc] text-slate-900'
       }`}
     >
       {/* Toast Notification */}
@@ -819,7 +835,15 @@ const AppContent: React.FC = () => {
             onNavigateToBuyerDashboard={() => navigate('/buyer/dashboard')}
             onNavigateToSellerDashboard={() => navigate('/seller/dashboard')}
             onNavigateToCatalog={(path) => navigate(path || '/catalog')}
+            onNavigate={navigate}
             currentPath={currentPath}
+          />
+
+          <WingNavigationBar
+            activeWing={activeWing}
+            currentPath={currentPath}
+            onNavigate={navigate}
+            theme={theme}
           />
 
           <B2bCatalogPage
@@ -833,10 +857,132 @@ const AppContent: React.FC = () => {
               showNotification(`Added "${prod.title}" (${prod.moq || 50} pcs) to B2B Inquiry Cart`);
             }}
           />
+
+          <Footer
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+            onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+            onOpenAiAssistant={() => handleOpenAiAssistant()}
+            onNavigate={navigate}
+            theme={theme}
+          />
+        </>
+      ) : activeWing ? (
+        <>
+          <Header
+            currentCurrency={currency}
+            onCurrencyChange={setCurrency}
+            lang={lang}
+            onLanguageChange={setLang}
+            selectedCategory={selectedCategory}
+            onSelectCategory={(cat) => {
+              navigate('/');
+              setSelectedCategory(cat);
+            }}
+            selectedDivision={selectedDivision}
+            onSelectDivision={(div) => {
+              navigate('/');
+              setSelectedDivision(div);
+            }}
+            searchQuery={searchQuery}
+            onSearchChange={(q) => {
+              setSearchQuery(q);
+              if (q.trim()) navigate('/');
+            }}
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+            onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+            onOpenAutomation={() => setIsAutomationModalOpen(true)}
+            inquiryCount={rfqs.length + samples.length}
+            activeView={activeView}
+            onViewChange={(v) => {
+              navigate('/');
+              setActiveView(v);
+              setActiveHeroTab(v === 'suppliers' ? 'suppliers' : v === 'customers' ? 'customers' : 'products');
+              setSupplierFilter(null);
+            }}
+            persona={persona}
+            onPersonaChange={(p) => {
+              setPersona(p);
+              if (p === 'seller') navigate('/admin');
+              else navigate('/');
+            }}
+            authUser={authUser}
+            onOpenAuth={() => setIsAuthModalOpen(true)}
+            onLogout={handleLogout}
+            onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+            activeRfqCount={rfqs.length}
+            onOpenAiAssistant={() => handleOpenAiAssistant()}
+            theme={theme}
+            onToggleTheme={toggleTheme}
+            onOpenPipeline={() => setIsPipelineModalOpen(true)}
+            onNavigateToBuyerDashboard={() => navigate('/buyer/dashboard')}
+            onNavigateToSellerDashboard={() => navigate('/seller/dashboard')}
+            onNavigateToCatalog={(path) => navigate(path || '/catalog')}
+            onNavigate={navigate}
+            currentPath={currentPath}
+          />
+
+          <WingNavigationBar
+            activeWing={activeWing}
+            currentPath={currentPath}
+            onNavigate={navigate}
+            theme={theme}
+          />
+
+          <main
+            id="main-content"
+            className="flex-1 w-full"
+            style={{
+              paddingBottom: isMobileScreen
+                ? `calc(${mobileDockHeight}px + env(safe-area-inset-bottom, 0px) + 1rem)`
+                : undefined,
+            }}
+          >
+            <B2bWingView
+              wingId={activeWing}
+              products={nexosCatalog}
+              currency={currentCurrencyConfig}
+              rfqs={rfqs}
+              authUser={authUser}
+              onNavigate={navigate}
+              onSelectProduct={setSelectedProduct}
+              onRequestSample={handleOpenSampleModal}
+              onInquireProduct={handleInquireProduct}
+              onOpenAiAssistant={(p) => handleOpenAiAssistant(p)}
+              onOpenRfq={() => setIsRfqModalOpen(true)}
+              onOpenTechPack={() => setIsTechPackModalOpen(true)}
+              onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+              onOpenPipeline={() => setIsPipelineModalOpen(true)}
+              onRespondToRfq={handleFactoryRespondToRfq}
+              onForceSync={handleForceSync}
+              isSyncing={isSyncing}
+              theme={theme}
+            />
+          </main>
+
+          <FloatingRightDock
+            onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
+            onOpenAiAssistant={() => handleOpenAiAssistant()}
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+            inquiryCount={rfqs.length + samples.length > 0 ? rfqs.length + samples.length : 64}
+            activeWing={activeWing}
+            theme={theme}
+          />
+
+          <Footer
+            onOpenRfq={() => setIsRfqModalOpen(true)}
+            onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
+            onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
+            onOpenAiAssistant={() => handleOpenAiAssistant()}
+            onNavigate={navigate}
+            theme={theme}
+          />
         </>
       ) : (
         <>
-          {/* 1. TOP BAR: Consolidated 3-Tier Alibaba/Etsy Hybrid Header */}
+          {/* 1. TOP BAR: Consolidated Header */}
           <Header
             currentCurrency={currency}
             onCurrencyChange={setCurrency}
@@ -873,8 +1019,26 @@ const AppContent: React.FC = () => {
             onNavigateToBuyerDashboard={() => navigate('/buyer/dashboard')}
             onNavigateToSellerDashboard={() => navigate('/seller/dashboard')}
             onNavigateToCatalog={(path) => navigate(path || '/catalog')}
+            onNavigate={navigate}
             currentPath={currentPath}
           />
+
+          {/* 1.5 UNIFIED B2B WINGS INSTANT SWITCHER BAR */}
+          <WingNavigationBar
+            activeWing={activeWing}
+            currentPath={currentPath}
+            onNavigate={navigate}
+            theme={theme}
+          />
+
+          {/* 1.75 HIGH-CONVERSION UNIFIED B2B WINGS HERO & TRUST GUARANTEES */}
+          {persona === 'buyer' && activeView === 'products' && !searchQuery && !supplierFilter && (
+            <UnifiedWingsOverviewStrip
+              onNavigate={navigate}
+              onOpenRfq={() => setIsRfqModalOpen(true)}
+              theme={theme}
+            />
+          )}
 
       {/* 2. HERO SECTION: AI Mode, Products, BD Exporters, Global Buyer with Big Search Bar */}
       {persona === 'buyer' && (
@@ -990,6 +1154,7 @@ const AppContent: React.FC = () => {
                       setSelectedDivision(slug);
                       setSelectedDomainSource('all');
                     }}
+                    onNavigate={navigate}
                     selectedDivision={selectedDivision}
                     onOpenAiAssistant={() => handleOpenAiAssistant()}
                     theme={theme}
@@ -1836,26 +2001,31 @@ const AppContent: React.FC = () => {
         )}
       </main>
 
-      {/* Floating Right Dock (Alibaba Style) */}
+      {/* Floating Right Dock */}
       <FloatingRightDock
         onOpenInquiries={() => setIsInquiryDrawerOpen(true)}
         onOpenAiAssistant={() => handleOpenAiAssistant()}
         onOpenRfq={() => setIsRfqModalOpen(true)}
         onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
         inquiryCount={rfqs.length + samples.length > 0 ? rfqs.length + samples.length : 64}
+        activeWing={activeWing}
         theme={theme}
       />
 
-      {/* 5. FOOTER: Like Alibaba but relevant to handsandhead.com */}
+      {/* 5. FOOTER: Unified B2B Wings & HANDS & HEAD OS Ecosystem */}
       <Footer
         onOpenRfq={() => setIsRfqModalOpen(true)}
         onOpenShippingCalc={() => setIsShippingCalcOpen(true)}
         onOpenTechPackStudio={() => setIsTechPackModalOpen(true)}
         onOpenAiAssistant={() => handleOpenAiAssistant()}
+        onNavigate={navigate}
         theme={theme}
       />
         </>
       )}
+
+      {/* Persistent Subtle Ecosystem Attribution Badge (Desktop) */}
+      <EcosystemOsBadge variant="floating" />
 
       {/* Product Detail Modal */}
       <ProductDetailModal
@@ -2008,6 +2178,8 @@ const AppContent: React.FC = () => {
           onOpenAiAssistant={() => handleOpenAiAssistant()}
           onOpenRfq={() => setIsRfqModalOpen(true)}
           onOpenPipeline={() => setIsPipelineModalOpen(true)}
+          activeWing={activeWing}
+          onNavigate={navigate}
           theme={theme}
           onHeightChange={(height) => setMobileDockHeight(height)}
         />

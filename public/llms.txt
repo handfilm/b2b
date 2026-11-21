@@ -1,0 +1,40 @@
+# HANDS & HEAD × RAWx B2B — Direct-From-Source Dhaka Manufacturing Portal
+
+> https://b2b.handsandhead.com is the unified industrial & B2B export manufacturing engine of the **HANDS & HEAD** ecosystem ("One Core, Many Worlds."), founded by **Rakib Himon (Shaikh Rakibuzzaman Himon)** in Dhaka, Bangladesh. Built for international fashion labels, streetwear brands, and leather buyers across the **USA, Saudi Arabia, Bahrain, the European Union, the UK, and Japan**, it delivers direct-from-source heavyweight RMG streetwear, bespoke vintage-distressed & full-grain leather jackets and bags (**RAWx** & **Arutemika**), and precision CNC-milled 316L/516SS surgical stainless steel hardware with low MOQs and rapid global DHL Express swatches.
+
+- **Canonical B2B Portal**: https://b2b.handsandhead.com
+- **Full Technical Fact-Sheet**: https://b2b.handsandhead.com/llms-full.txt
+- **XML Sitemap**: https://b2b.handsandhead.com/sitemap.xml
+- **Master Ecosystem OS Hub**: https://handsandhead.com
+- **Flagship WebGL2 AI Video Platform (HandFilm Studio)**: https://storyboard.handsandhead.com
+- **Founder & Systems Architect**: Rakib Himon (Shaikh Rakibuzzaman Himon)
+- **Headquarters**: Dhaka, Bangladesh (Direct RMG & Savar Tannery Leather Ateliers)
+- **Direct Export Desk (WhatsApp)**: https://wa.me/8801974518600 (+880 1974-518600)
+- **Last Automated Build Sync**: 2026-11-21
+
+## Core Manufacturing Specifications
+
+- **Low MOQ Program**: **120 pcs/style** (**40 pcs/color** across mixed size ratios S–XXL).
+- **Sampling Timeline**: **7–12 days** via Dhaka in-house pattern makers, grading, and Pantone TCX lab dips.
+- **Global Swatch Dispatch**: **3–4 days worldwide via DHL Express** from Dhaka (DAC) — physical cotton GSM swatches, Savar full-grain leather hide cards, and 316L PVD hardware boxes.
+- **Quality Control Guarantee**: Dhaka direct-from-source **4-Point AQL 1.5** inline & pre-shipment inspection plus Tokyo JIS shrinkage (<3%) and stitching tolerances.
+- **Commercial Terms & Freight**: 50% deposit / 50% against Bill of Lading (B/L) escrow or irrevocable L/C at sight; FOB Chattogram ocean freight and DAC Express air cargo.
+
+## Unified Single-Domain B2B Wings
+
+- [RMG & Heavyweight Streetwear Wing](https://b2b.handsandhead.com/rmg): 240–300 GSM 100% combed ring-spun cotton boxy tees, double-layer 1.2" ribbed collars, 380–460 GSM loopback French terry hoodies, mercerized polos, and casual/formal woven shirts. MOQ 120 pcs/style (40/color). WhatsApp tag: `[Via B2B - RMG Wing]`.
+- [Bespoke Leather & Full-Grain Goods Wing](https://b2b.handsandhead.com/leather): Savar CETP & LWG-audited full-grain cowhide, aniline lambskin, vegetable-tanned weekender duffles, executive briefcases, Arutemika origami calfskin totes, and 360° Goodyear welted boots. WhatsApp tag: `[Via B2B - Leather & Jacket Wing]`.
+- [RAWx Custom Leather Jackets & Outerwear Wing](https://b2b.handsandhead.com/jacket): Vintage-distressed & stealth matte technical leather bombers (1.0–1.4mm hides), cropped moto coats, waxed leather pants, and 13.5–14.5 oz shuttle-loom selvedge denim outerwear. WhatsApp tag: `[Via B2B - Leather & Jacket Wing]`.
+- [316L / 516SS Surgical Hardware & CNC Trims Wing](https://b2b.handsandhead.com/hardware): Precision CNC-milled (±0.05mm) 316L & 516SS surgical stainless clasps, magnetic locks, heavy #8/#10 metal zippers, solid forged brass shackles, laser logo engraving, and zero-tarnish PVD Matte Obsidian & Brushed Gold finishes. WhatsApp tag: `[Via B2B - Hardware Wing]`.
+- [D2C Drops & Rapid Wholesale Blanks Wing](https://b2b.handsandhead.com/d2c): Ready-to-ship 260–300 GSM print-ready blanks, selvedge denim capsules, and 5–10 day fast private-label relabeling (MOQ 40–120 pcs).
+- [NexOS Supplier & Production Gateway](https://b2b.handsandhead.com/admin): Centralized ERP connecting 3,105+ verified factory nodes, 15,420+ buyer ledger, live RFQ pipeline, and customs compliance telemetry.
+
+## Three Pillars of the HANDS & HEAD Ecosystem
+
+1. [HANDS & HEAD Central OS Hub](https://handsandhead.com): Master brand identity ("One Core, Many Worlds.") unifying all 24 venture and software modules.
+2. [HANDS & HEAD × RAWx B2B Export Engine](https://b2b.handsandhead.com): Direct-from-source Dhaka RMG, Leather, Jacket & 316L Hardware manufacturing portal.
+3. [HandFilm Studio & Storyboard](https://storyboard.handsandhead.com): Browser-native WebGL2 AI Video Editor, Cinema Player & Cloudflare Workers/Stream Video Hosting platform.
+
+## Deep Technical Reference
+
+- [Complete Manufacturing Dossier & Buyer Q&A](https://b2b.handsandhead.com/llms-full.txt): Detailed GSM/hide/metallurgy tolerances, indicative FOB pricing ranges, compliance certifications, and verified citation facts.

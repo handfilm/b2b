@@ -18,8 +18,10 @@ import {
   AlertCircle,
   Copy,
   ExternalLink,
+  MessageCircle,
 } from 'lucide-react';
 import { CurrencyConfig, RFQThreadDocument } from '../types';
+import { WingId, buildWhatsAppUrl } from '../config/wings';
 
 export interface RequestSpecDrawerProps {
   isOpen: boolean;
@@ -106,6 +108,31 @@ export const RequestSpecDrawer: React.FC<RequestSpecDrawerProps> = ({
   // Total valuation calculation
   const totalValuationUSD = requestedQuantity * targetFob;
   const totalValuationLocal = totalValuationUSD * currency.rate;
+
+  const activeWingId: WingId =
+    category === 'leather_goods'
+      ? 'leather'
+      : category === 'accessories'
+      ? 'hardware'
+      : 'rmg';
+
+  const whatsAppFastTrackHref = buildWhatsAppUrl({
+    wing: activeWingId,
+    intent: requestType === 'SAMPLE_DISPATCH' ? 'sample' : 'sku',
+    productTitle,
+    sku: skuId,
+    quantity: requestedQuantity,
+    destination: country,
+    notes: buyerNotes || `Target FOB $${targetFob} · ${requestType}`,
+  });
+
+  const whatsAppSwatchHref = buildWhatsAppUrl({
+    wing: activeWingId,
+    intent: 'swatch',
+    productTitle,
+    sku: skuId,
+    destination: country,
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -224,40 +251,37 @@ export const RequestSpecDrawer: React.FC<RequestSpecDrawerProps> = ({
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
           transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-          className="relative w-full max-w-xl bg-[#0d0f15] border-l border-white/10 text-white shadow-2xl flex flex-col h-full overflow-hidden"
+          className="relative w-full max-w-xl bg-[#0A0B0D] border-l border-white/10 text-white shadow-2xl flex flex-col h-full overflow-hidden"
         >
           {/* 1. TOP HEADER */}
-          <div className="px-6 py-4 border-b border-white/10 bg-[#12151e] flex items-center justify-between">
+          <div className="px-6 py-4 border-b border-white/10 bg-[#14161A] flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+              <div className="w-10 h-10 rounded-xl bg-[#E50914]/15 border border-[#E50914]/35 flex items-center justify-center text-[#E50914]">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-white flex items-center space-x-2">
-                  <span>Request TechPack &amp; Sample Dossier</span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                    JIS Tokyo Ready
-                  </span>
+                  <span>Request Sample Pack &amp; Spec Dossier</span>
                 </h3>
-                <p className="text-xs text-slate-400">
-                  Direct factory requisition pipeline • 72h sample dispatch SLA
+                <p className="text-xs text-zinc-400">
+                  MOQ 120 pcs/style (40/color) · 7–12d sampling · 3–4d DHL Express swatches
                 </p>
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          {/* 2. TRUST BANNER (Strict Requirement) */}
-          <div className="px-6 py-3 bg-gradient-to-r from-rose-950/40 via-purple-950/30 to-slate-900 border-b border-rose-500/20 flex items-start space-x-3">
-            <ShieldCheck className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
-            <p className="text-xs text-rose-100/90 leading-relaxed font-sans">
-              <strong>Manufactured via our family-owned export atelier</strong> meeting Tokyo retail JIS compliance standards. Counter-samples dispatched worldwide within 72 hours via DHL Express.
+          {/* 2. TRUST BANNER */}
+          <div className="px-6 py-3 bg-[#14161A] border-b border-[#C9A24B]/25 flex items-start space-x-3">
+            <ShieldCheck className="w-5 h-5 text-[#E2C275] shrink-0 mt-0.5" />
+            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
+              <strong className="text-white">Dhaka Direct-From-Source QC Guarantee (4-Point AQL 1.5).</strong> Sampling completed in 7–12 days; physical fabric, leather hide &amp; 316L hardware swatch kits dispatch globally via DHL Express in 3–4 days to USA, KSA, Bahrain &amp; EU.
             </p>
           </div>
 
@@ -592,25 +616,47 @@ export const RequestSpecDrawer: React.FC<RequestSpecDrawerProps> = ({
                   </div>
                 </div>
 
-                {/* Submit Action Button */}
-                <div className="pt-2">
+                {/* Submit Action Buttons + Wing-Attributed WhatsApp Fast-Track */}
+                <div className="pt-2 space-y-2.5">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 via-rose-700 to-purple-700 hover:from-rose-500 hover:to-purple-600 text-white font-bold text-xs tracking-wide transition-all shadow-lg shadow-rose-950/50 flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-3 rounded-xl bg-[#E50914] hover:bg-[#ff1a26] text-white font-black text-xs tracking-wide transition-all shadow-lg shadow-[#E50914]/30 flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>Transmitting to Tokyo Desk...</span>
+                        <span>Transmitting to Dhaka Export Desk...</span>
                       </>
                     ) : (
                       <>
                         <Send className="w-4 h-4" />
-                        <span>Submit RFQ &amp; Dispatch 72h Counter-Sample</span>
+                        <span>Submit Commercial Requisition</span>
                       </>
                     )}
                   </button>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <a
+                      href={whatsAppFastTrackHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-[#14161A] hover:bg-white/10 border border-[#E50914]/40 text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-[#E50914]" />
+                      <span>Send Directly via WhatsApp</span>
+                    </a>
+
+                    <a
+                      href={whatsAppSwatchHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="py-2.5 px-3 rounded-xl bg-[#C9A24B]/15 hover:bg-[#C9A24B]/25 border border-[#C9A24B]/40 text-[#E2C275] font-bold text-xs flex items-center justify-center space-x-1.5 transition-colors"
+                    >
+                      <Truck className="w-3.5 h-3.5 text-[#E2C275]" />
+                      <span>Book 3–4d DHL Swatch Kit</span>
+                    </a>
+                  </div>
                 </div>
               </form>
             )}

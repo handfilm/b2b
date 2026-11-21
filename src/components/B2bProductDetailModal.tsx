@@ -23,9 +23,11 @@ import {
   ZoomOut,
   Maximize2,
   Minimize2,
+  MessageCircle,
 } from 'lucide-react';
 import { B2bCatalogProduct, CurrencyConfig } from '../types';
 import { getCatalogImageUrl, handleImageFallback } from '../utils/imageUrl';
+import { inferWingFromProduct, buildWhatsAppUrl } from '../config/wings';
 
 interface B2bProductDetailModalProps {
   product: B2bCatalogProduct | null;
@@ -86,6 +88,26 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
   const priceConv = (product.price * currency.rate).toFixed(2);
   const validImages = (product.images || []).filter((img): img is string => Boolean(img && typeof img === 'string' && img.trim()));
   const currentImg = validImages[selectedImgIdx] || validImages[0] || (product.image && typeof product.image === 'string' && product.image.trim() ? product.image : null);
+
+  const productWing = inferWingFromProduct({
+    categorySlug: product.categorySlug,
+    title: product.title,
+  });
+
+  const whatsAppQuoteHref = buildWhatsAppUrl({
+    wing: productWing,
+    intent: 'sku',
+    productTitle: product.title,
+    sku: product.slug || product.id,
+    quantity: product.moq || 120,
+  });
+
+  const whatsAppSwatchHref = buildWhatsAppUrl({
+    wing: productWing,
+    intent: 'swatch',
+    productTitle: product.title,
+    sku: product.slug || product.id,
+  });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!imageContainerRef.current) return;
@@ -250,11 +272,11 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
 
       {/* STANDARD MODAL CONTAINER */}
       <div
-        className="relative w-full max-w-6xl xl:max-w-7xl bg-[#11141c] border border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh] text-slate-100"
+        className="relative w-full max-w-6xl xl:max-w-7xl bg-[#0A0B0D] border border-white/12 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh] text-slate-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header bar */}
-        <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 border-b border-white/10 bg-[#161a24]/90 backdrop-blur-md">
+        <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 border-b border-white/10 bg-[#14161A]/95 backdrop-blur-md">
           <div className="flex items-center space-x-2 text-xs font-mono text-slate-400">
             <span className="text-emerald-400 font-bold uppercase">b2b.handsandhead.com</span>
             <span>/</span>
@@ -585,22 +607,42 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
 
             {/* Direct Action Buttons Footer */}
             <div className="pt-4 border-t border-white/10 space-y-2">
+              <a
+                href={whatsAppQuoteHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-3 rounded-xl bg-[#E50914] hover:bg-[#ff1a26] text-white font-black text-xs shadow-xl shadow-[#E50914]/25 transition-all flex items-center justify-center gap-1.5"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Request Quote on WhatsApp</span>
+              </a>
+
+              <a
+                href={whatsAppSwatchHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2 px-3 rounded-xl bg-[#C9A24B] hover:bg-[#E2C275] text-[#0A0B0D] font-black text-xs transition-all flex items-center justify-center gap-1.5"
+              >
+                <Truck className="w-4 h-4" />
+                <span>Book Swatch Kit (3–4d DHL Express)</span>
+              </a>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => onRequestSample(product)}
-                  className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-xs shadow-xl shadow-rose-950/50 hover:shadow-rose-600/30 transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98]"
+                  className="w-full py-2 px-3 rounded-xl bg-[#14161A] hover:bg-white/10 border border-white/15 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <FileCheck className="w-4 h-4" />
-                  <span>Request Sample</span>
+                  <FileCheck className="w-3.5 h-3.5 text-[#E50914]" />
+                  <span>Order Sample Pack</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => onRequestTechPack(product)}
-                  className="w-full py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98]"
+                  className="w-full py-2 px-3 rounded-xl bg-[#14161A] hover:bg-white/10 border border-white/15 text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <Layers className="w-4 h-4 text-cyan-400" />
+                  <Layers className="w-3.5 h-3.5 text-[#E2C275]" />
                   <span>TechPack Spec</span>
                 </button>
               </div>
@@ -609,7 +651,7 @@ export const B2bProductDetailModal: React.FC<B2bProductDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={() => onAddToCart(product)}
-                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-2 px-4 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/35 text-emerald-300 font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   <span>Add to B2B Sourcing RFQ List</span>

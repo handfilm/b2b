@@ -17,12 +17,14 @@ import {
   X,
   SlidersHorizontal,
   Eye,
+  MessageCircle,
 } from 'lucide-react';
 import { Product, CurrencyConfig } from '../types';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
 import { useInquiryCart } from '../context/InquiryCartContext';
 import { useI18n } from '../context/I18nContext';
 import { ProductImageCarousel } from './ProductImageCarousel';
+import { inferWingFromProduct, buildWhatsAppUrl } from '../config/wings';
 
 interface ProductCardProps {
   product: Product;
@@ -56,23 +58,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
   const { addToCart } = useInquiryCart();
 
-  const handleOutboundSourcing = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onProcureDirect) {
-      onProcureDirect(product);
-      return;
-    }
-    const target =
-      product.targetRoutingUrl ||
-      `https://${product.sourceDomain || 'b2b.handsandhead.com'}/order?sku=${encodeURIComponent(
-        product.sku || product.id
-      )}&ref=b2b_portal&utm_source=b2b_hub`;
-    try {
-      window.open(target, '_blank', 'noopener,noreferrer');
-    } catch {
-      onInquire(product);
-    }
-  };
+  const productWing = inferWingFromProduct({
+    divisionSlug: product.divisionSlug,
+    categoryId: product.categoryId,
+    title: product.title,
+    sourceDomain: product.sourceDomain,
+  });
+
+  const whatsAppQuoteHref = buildWhatsAppUrl({
+    wing: productWing,
+    intent: 'sku',
+    productTitle: product.title,
+    sku: product.sku || product.id,
+    quantity: product.moq || 120,
+  });
 
   // Available fabric / color swatches for Shein/Etsy instant selector
   const swatches: { name: string; hex: string }[] = product.colorVariants?.length
@@ -177,10 +176,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       aria-label={`${product.title} - ${currency.symbol}${lowestConverted}`}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
-      className={`relative aspect-square rounded-2xl overflow-hidden cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#e11d48] transition-shadow duration-300 transform-gpu ${
+      className={`relative aspect-square rounded-2xl overflow-hidden cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#E50914] transition-shadow duration-300 transform-gpu ${
         isDark
-          ? 'bg-[#141414] border border-white/10 hover:border-[#e11d48]/70 shadow-lg hover:shadow-2xl hover:shadow-[#e11d48]/15'
-          : 'bg-white border border-slate-200 hover:border-[#e11d48]/60 shadow-xs hover:shadow-xl'
+          ? 'bg-[#14161A] border border-white/10 hover:border-[#E50914]/70 shadow-lg hover:shadow-2xl hover:shadow-[#E50914]/15'
+          : 'bg-white border border-slate-200 hover:border-[#E50914]/60 shadow-xs hover:shadow-xl'
       }`}
     >
       {/* 1. PRODUCT MEDIA: High-Fidelity Carousel or Premium Brutalist Fallback UI */}
@@ -473,40 +472,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
             {/* Quick-Action Buttons */}
             <div className="grid grid-cols-4 gap-1 pt-1.5 border-t border-white/10">
+              <a
+                id={`btn-wa-${product.id}`}
+                href={whatsAppQuoteHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="py-1.5 px-1 rounded-lg bg-[#E50914] hover:bg-[#ff1a26] text-white text-[10px] font-black shadow-md flex items-center justify-center gap-1 cursor-pointer transition-transform active:scale-95"
+                title={`Instant WhatsApp Quote (${productWing.toUpperCase()} Wing)`}
+              >
+                <MessageCircle className="w-2.5 h-2.5" />
+                <span>Quote</span>
+              </a>
+
               <motion.button
                 type="button"
                 id={`btn-inquire-${product.id}`}
-                whileHover={{ scale: 1.04 }}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.stopPropagation();
                   onInquire(product);
                 }}
-                className="py-1.5 px-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[10px] font-black shadow-md flex items-center justify-center gap-1 cursor-pointer"
+                className="py-1.5 px-1 rounded-lg bg-[#C9A24B] hover:bg-[#E2C275] text-[#0A0B0D] text-[10px] font-black flex items-center justify-center gap-1 cursor-pointer shadow-sm"
                 title="Send Direct Factory RFQ"
               >
                 <Send className="w-2.5 h-2.5" />
                 <span>{isBn ? 'কোটেশন' : 'RFQ'}</span>
-              </motion.button>
-
-              <motion.button
-                type="button"
-                id={`btn-chat-agent-${product.id}`}
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (onOpenAiAssistant) {
-                    onOpenAiAssistant(product);
-                  } else {
-                    onInquire(product);
-                  }
-                }}
-                className="py-1.5 px-1 rounded-lg bg-[#10b981] hover:bg-[#059669] text-slate-950 text-[10px] font-black flex items-center justify-center gap-1 cursor-pointer shadow-sm"
-                title="Chat with AI Sourcing Agent"
-              >
-                <Sparkles className="w-2.5 h-2.5 text-slate-950" />
-                <span>AI</span>
               </motion.button>
 
               <motion.button
@@ -521,7 +513,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 className="py-1.5 px-1 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white text-[9.5px] font-bold flex items-center justify-center gap-1 cursor-pointer"
                 title="Add to B2B Inquiry Cart"
               >
-                <ShoppingCart className="w-2.5 h-2.5 text-rose-400" />
+                <ShoppingCart className="w-2.5 h-2.5 text-[#E50914]" />
                 <span>+Cart</span>
               </motion.button>
 
@@ -534,14 +526,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                   e.stopPropagation();
                   if (onAddToTechPack) {
                     onAddToTechPack(product);
+                  } else if (onOpenAiAssistant) {
+                    onOpenAiAssistant(product);
                   } else {
                     onSelectProduct(product);
                   }
                 }}
-                className="py-1.5 px-1 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-slate-200 text-[9.5px] font-bold flex items-center justify-center gap-1 cursor-pointer"
+                className="py-1.5 px-1 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-zinc-200 text-[9.5px] font-bold flex items-center justify-center gap-1 cursor-pointer"
                 title="View TechPack CAD"
               >
-                <FileText className="w-2.5 h-2.5 text-emerald-400" />
+                <FileText className="w-2.5 h-2.5 text-[#E2C275]" />
                 <span>CAD</span>
               </motion.button>
             </div>

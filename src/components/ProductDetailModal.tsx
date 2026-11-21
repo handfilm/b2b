@@ -24,11 +24,13 @@ import {
   ChevronLeft,
   ChevronRight,
   Eye,
+  MessageCircle,
 } from 'lucide-react';
 import { Product, Supplier, CurrencyConfig } from '../types';
 import { useInquiryCart } from '../context/InquiryCartContext';
 import { useI18n } from '../context/I18nContext';
 import { getCatalogImageUrl, handleImageFallback } from '../utils/imageUrl';
+import { inferWingFromProduct, buildWhatsAppUrl } from '../config/wings';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -128,6 +130,36 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
   const totalConverted = (totalUSD * currency.rate).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+  });
+
+  const productWing = inferWingFromProduct({
+    divisionSlug: product.divisionSlug,
+    categoryId: product.categoryId,
+    title: product.title,
+    sourceDomain: product.sourceDomain,
+  });
+
+  const whatsAppQuoteHref = buildWhatsAppUrl({
+    wing: productWing,
+    intent: 'sku',
+    productTitle: product.title,
+    sku: product.sku || product.id,
+    quantity: calculatorQty,
+    notes: quickMsg.trim() ? `${selectedIncoterm} · ${quickMsg.trim()}` : `Incoterm: ${selectedIncoterm}`,
+  });
+
+  const whatsAppSampleHref = buildWhatsAppUrl({
+    wing: productWing,
+    intent: 'sample',
+    productTitle: product.title,
+    sku: product.sku || product.id,
+  });
+
+  const whatsAppSwatchHref = buildWhatsAppUrl({
+    wing: productWing,
+    intent: 'swatch',
+    productTitle: product.title,
+    sku: product.sku || product.id,
   });
 
   const handleSendQuickInquiry = (e: React.FormEvent) => {
@@ -291,10 +323,10 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
       {/* STANDARD MODAL CONTAINER */}
       <div
         id="product-detail-modal-container"
-        className="relative w-full max-w-6xl xl:max-w-7xl bg-[#0e0e11] text-white rounded-3xl shadow-2xl border border-white/15 overflow-hidden my-auto max-h-[94vh] flex flex-col"
+        className="relative w-full max-w-6xl xl:max-w-7xl bg-[#0A0B0D] text-white rounded-2xl shadow-2xl border border-white/12 overflow-hidden my-auto max-h-[94vh] flex flex-col"
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 border-b border-white/10 bg-[#141418]/95 backdrop-blur-md">
+        <div className="flex items-center justify-between px-5 sm:px-7 py-3.5 border-b border-white/10 bg-[#14161A]/95 backdrop-blur-md">
           <div className="flex items-center space-x-2 text-xs font-mono">
             <span className="text-emerald-400 font-bold uppercase tracking-wider">b2b.handsandhead.com</span>
             <span className="text-slate-500">/</span>
@@ -661,46 +693,80 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 )}
               </form>
 
+              {/* Manufacturing Trust Specs */}
+              <div className="grid grid-cols-2 gap-1.5 text-[10px] font-mono pt-1">
+                <div className="p-2 rounded-lg bg-[#14161A] border border-white/10">
+                  <span className="text-zinc-500 block uppercase">Sampling</span>
+                  <span className="text-white font-bold">7–12 Days (Dhaka)</span>
+                </div>
+                <div className="p-2 rounded-lg bg-[#14161A] border border-white/10">
+                  <span className="text-zinc-500 block uppercase">DHL Swatches</span>
+                  <span className="text-[#E2C275] font-bold">3–4 Days Worldwide</span>
+                </div>
+              </div>
+
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
-                <button
-                  type="button"
-                  id="modal-add-to-inquiry-cart-btn"
-                  onClick={() => {
-                    addToCart(product, {
-                      requestedQty: calculatorQty,
-                      targetPrice: currentUnitPriceUSD,
-                      itemMessage: quickMsg.trim() || `Commercial inquiry for ${calculatorQty} ${product.unit} under ${selectedIncoterm}`,
-                    });
-                    onClose();
-                  }}
-                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-[#e11d48] to-[#ff1e42] hover:opacity-95 text-white text-xs font-black flex items-center justify-center space-x-2 transition-all cursor-pointer shadow-md shadow-[#e11d48]/20"
+              <div className="space-y-2 pt-2 border-t border-white/10">
+                <a
+                  href={whatsAppQuoteHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-[#E50914] hover:bg-[#ff1a26] text-white text-xs font-black flex items-center justify-center space-x-2 transition-all shadow-md shadow-[#E50914]/25"
                 >
-                  <ShoppingCart className="w-4 h-4 text-white" />
-                  <span>Add to RFQ Cart</span>
-                </button>
+                  <MessageCircle className="w-4 h-4 text-white" />
+                  <span>Request Quote on WhatsApp</span>
+                </a>
 
-                {product.sampleAvailable && (
-                  <button
-                    onClick={() => onRequestSample(product)}
-                    className="py-2.5 px-3 rounded-xl border border-white/10 hover:border-[#e11d48]/50 text-white bg-[#17171c] hover:bg-[#202028] text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer"
-                  >
-                    <Box className="w-3.5 h-3.5 text-[#e11d48]" />
-                    <span>Sample ({currency.symbol}${(product.samplePriceUSD * currency.rate).toFixed(2)})</span>
-                  </button>
-                )}
-
-                {product.targetRoutingUrl && (
+                <div className="grid grid-cols-2 gap-2">
                   <a
-                    href={product.targetRoutingUrl}
+                    href={whatsAppSampleHref}
                     target="_blank"
-                    rel="noreferrer"
-                    className="py-2.5 px-3 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:text-white text-xs font-bold flex items-center space-x-1.5 transition-all cursor-pointer"
+                    rel="noopener noreferrer"
+                    className="py-2 px-2.5 rounded-xl bg-[#C9A24B] hover:bg-[#E2C275] text-[#0A0B0D] text-[11px] font-black flex items-center justify-center space-x-1 transition-all"
                   >
-                    <span>Origin Checkout</span>
-                    <ExternalLink className="w-3 h-3" />
+                    <Box className="w-3.5 h-3.5" />
+                    <span>Order Sample Pack</span>
                   </a>
-                )}
+
+                  <a
+                    href={whatsAppSwatchHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2 px-2.5 rounded-xl bg-[#14161A] hover:bg-white/10 border border-[#C9A24B]/40 text-[#E2C275] text-[11px] font-bold flex items-center justify-center space-x-1 transition-all"
+                  >
+                    <Truck className="w-3.5 h-3.5" />
+                    <span>Book Swatch Kit</span>
+                  </a>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    id="modal-add-to-inquiry-cart-btn"
+                    onClick={() => {
+                      addToCart(product, {
+                        requestedQty: calculatorQty,
+                        targetPrice: currentUnitPriceUSD,
+                        itemMessage: quickMsg.trim() || `Commercial inquiry for ${calculatorQty} ${product.unit} under ${selectedIncoterm}`,
+                      });
+                      onClose();
+                    }}
+                    className="flex-1 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-bold flex items-center justify-center space-x-1.5 transition-all cursor-pointer"
+                  >
+                    <ShoppingCart className="w-3.5 h-3.5 text-[#E50914]" />
+                    <span>Add to RFQ Cart</span>
+                  </button>
+
+                  {product.sampleAvailable && (
+                    <button
+                      type="button"
+                      onClick={() => onRequestSample(product)}
+                      className="py-2 px-3 rounded-xl border border-white/10 hover:border-[#E50914]/50 text-zinc-200 bg-[#14161A] hover:bg-white/10 text-xs font-bold flex items-center space-x-1 transition-all cursor-pointer"
+                    >
+                      <span>Spec Form</span>
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

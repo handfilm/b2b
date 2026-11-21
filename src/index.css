@@ -1,8 +1,14 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --brand-crimson: #e11d48;
-  --brand-crimson-hover: #ff1e42;
+  --canvas-obsidian: #0a0b0d;
+  --surface-card: #14161a;
+  --surface-elevated: #1b1e24;
+  --brand-crimson: #e50914;
+  --brand-crimson-hover: #ff1e2b;
+  --brand-gold: #c9a24b;
+  --brand-gold-soft: #e2c275;
   --brand-lime: #10b981;
   --brand-lime-hover: #22c55e;
 }
@@ -24,11 +30,11 @@ body {
   overflow-x: clip;
 }
 
-/* Dark Mode (Default Obsidian Deep Black) */
+/* Dark Mode (Default Matte-Obsidian Industrial UI) */
 html.dark,
 body.dark {
-  background-color: #0a0a0a;
-  color: #f8fafc;
+  background-color: #0a0b0d;
+  color: #f4f5f7;
 }
 
 /* Light Mode (Architectural Canvas) */
@@ -43,52 +49,104 @@ body.light {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     transition: background-color 0.2s ease, color 0.2s ease;
   }
+
+  h1,
+  h2 {
+    text-wrap: balance;
+  }
 }
 
-/* Electric Crimson & Neon Lime Utility Buttons */
+/* High-Contrast Matte-Obsidian Industrial Surfaces */
+.obsidian-canvas {
+  background-color: #0a0b0d;
+  color: #f4f5f7;
+}
+
+.obsidian-card {
+  background-color: #14161a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.obsidian-card:hover {
+  border-color: rgba(201, 162, 75, 0.42);
+}
+
+/* Electric Crimson & Brushed Gold Industrial Buttons */
 .btn-crimson {
-  background-color: #e11d48;
+  background-color: #e50914;
   color: #ffffff;
   font-weight: 700;
-  transition: all 0.15s ease;
+  transition: background-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
 .btn-crimson:hover {
-  background-color: #ff1e42;
-  box-shadow: 0 4px 14px -2px rgba(225, 29, 72, 0.45);
+  background-color: #ff1e2b;
+  box-shadow: 0 6px 20px -4px rgba(229, 9, 20, 0.5);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #c9a24b 0%, #e2c275 50%, #b58d38 100%);
+  color: #0a0b0d;
+  font-weight: 800;
+  transition: filter 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+}
+.btn-gold:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 20px -4px rgba(201, 162, 75, 0.4);
 }
 
 .btn-lime {
   background-color: #10b981;
   color: #042f2e;
   font-weight: 700;
-  transition: all 0.15s ease;
+  transition: background-color 0.16s ease, box-shadow 0.16s ease;
 }
 .btn-lime:hover {
   background-color: #22c55e;
   box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.4);
 }
 
+.text-gold {
+  color: #c9a24b;
+}
+
+.border-gold {
+  border-color: rgba(201, 162, 75, 0.35);
+}
+
 /* Interactive Card Base */
 .portal-card-dark {
-  background-color: #121212;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #f8fafc;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: #14161a;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #f4f5f7;
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .portal-card-dark:hover {
-  border-color: rgba(225, 29, 72, 0.5);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7), 0 0 16px -2px rgba(225, 29, 72, 0.25);
+  border-color: rgba(229, 9, 20, 0.5);
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.75), 0 0 18px -4px rgba(229, 9, 20, 0.22);
 }
 
 .portal-card-light {
   background-color: #ffffff;
   border: 1px solid rgba(226, 232, 240, 0.9);
   color: #0f172a;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .portal-card-light:hover {
-  border-color: rgba(225, 29, 72, 0.45);
-  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 0 12px -2px rgba(225, 29, 72, 0.15);
+  border-color: rgba(229, 9, 20, 0.45);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 0 12px -2px rgba(229, 9, 20, 0.15);
+}
+
+/* Hide scrollbars cleanly for horizontal wing strips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Custom refined scrollbar */
@@ -97,16 +155,26 @@ body.light {
   height: 6px;
 }
 .dark ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #0a0b0d;
 }
 .light ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: #333842;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #e11d48;
+  background: #e50914;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

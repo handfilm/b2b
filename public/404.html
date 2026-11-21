@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=/" />
-    <title>B2B Global Market Place - Made in BD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HANDS &amp; HEAD × RAWx | Redirecting to B2B Wing...</title>
     <script>
-      // Single Page Application redirect for GitHub Pages
-      sessionStorage.redirect = location.href;
-      window.location.replace('/');
+      (function () {
+        var path = window.location.pathname || '/';
+        var search = window.location.search ? '&' + window.location.search.slice(1) : '';
+        var hash = window.location.hash || '';
+        window.location.replace('/?p=' + encodeURIComponent(path) + search + hash);
+      })();
     </script>
   </head>
-  <body>
-    <p>Redirecting to B2B Global Market Place...</p>
+  <body style="background:#0A0B0D;color:#F4F5F7;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
+    <p style="font-size:14px;letter-spacing:0.04em;">Routing to HANDS &amp; HEAD × RAWx B2B Portal…</p>
   </body>
 </html>

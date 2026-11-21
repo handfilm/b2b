@@ -33,6 +33,12 @@ import {
 } from '../types';
 import { CURRENCIES } from '../data/mockData';
 import { FEDERATED_DIVISIONS } from '../data/divisions';
+import {
+  B2B_WINGS,
+  ECOSYSTEM_HOME_URL,
+  buildWhatsAppUrl,
+  resolveWingFromPath,
+} from '../config/wings';
 
 interface HeaderProps {
   currentCurrency: CurrencyCode;
@@ -69,6 +75,7 @@ interface HeaderProps {
   onNavigateToBuyerDashboard?: (tab?: string) => void;
   onNavigateToSellerDashboard?: () => void;
   onNavigateToCatalog?: (path?: string) => void;
+  onNavigate?: (path: string) => void;
   currentPath?: string;
 }
 
@@ -102,6 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateToBuyerDashboard,
   onNavigateToSellerDashboard,
   onNavigateToCatalog,
+  onNavigate,
   currentPath,
 }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -178,38 +186,25 @@ export const Header: React.FC<HeaderProps> = ({
       id="main-header"
       className={`sticky top-0 z-40 transition-colors duration-200 border-b ${
         isDark
-          ? 'bg-[#0a0a0a]/95 backdrop-blur-md border-white/10 text-white'
+          ? 'bg-[#0A0B0D]/95 backdrop-blur-md border-white/10 text-white'
           : 'bg-white/95 backdrop-blur-md border-slate-200 text-slate-900 shadow-xs'
       }`}
     >
       {/* =========================================================================
           TIER 1: TOP STRIP
-          ECOSYSTEM (Dropdown) | Light/Dark | EN/বাংলা | USD ($) | RFQ (Dropdown)
+          WINGS & ECOSYSTEM (Dropdown) | Light/Dark | EN/বাংলা | USD ($) | RFQ (Dropdown)
           ========================================================================= */}
       <div
         id="header-top-strip"
         className={`text-xs py-1.5 px-3 sm:px-4 border-b transition-colors ${
           isDark
-            ? 'bg-[#111111]/90 border-white/10 text-slate-300'
+            ? 'bg-[#101216]/95 border-white/10 text-slate-300'
             : 'bg-slate-100 border-slate-200 text-slate-700'
         }`}
       >
         <div className="w-full max-w-[1720px] mx-auto flex items-center justify-between gap-2 sm:gap-4 px-1 sm:px-2">
-          {/* Left: ECOSYSTEM Dropdown Menu */}
+          {/* Left: Unified Wings & Ecosystem Dropdown Menu */}
           <div className="flex items-center space-x-2.5">
-            <button
-              type="button"
-              onClick={onOpenPipeline}
-              className="flex items-center space-x-1.5 shrink-0 cursor-pointer group"
-              title="Click to inspect NexOS Data Ingestion Pipeline"
-            >
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
-              </span>
-            </button>
-
-            {/* ECOSYSTEM Dropdown Button */}
             <div className="relative">
               <button
                 type="button"
@@ -217,69 +212,67 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => setIsEcosystemOpen(!isEcosystemOpen)}
                 className={`flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
                   isDark
-                    ? 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-200'
+                    ? 'bg-[#14161A] hover:bg-white/10 border-[#C9A24B]/35 text-[#E2C275]'
                     : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-800 shadow-2xs'
                 }`}
               >
-                <span className="font-extrabold uppercase tracking-wider text-[11px]">ECOSYSTEM</span>
-                <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform ${isEcosystemOpen ? 'rotate-180' : ''}`} />
+                <span className="font-extrabold uppercase tracking-wider text-[11px] whitespace-nowrap">
+                  B2B WINGS
+                </span>
+                <ChevronDown className={`w-3 h-3 text-[#C9A24B] transition-transform ${isEcosystemOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {isEcosystemOpen && (
                 <div
                   onMouseLeave={() => setIsEcosystemOpen(false)}
-                  className={`absolute left-0 top-full mt-1 w-56 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
-                    isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+                  className={`absolute left-0 top-full mt-1 w-64 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
+                    isDark ? 'bg-[#14161A] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
                   }`}
                 >
-                  <div className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1 border-b border-inherit">
-                    NexOS Ecosystem
+                  <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#C9A24B] px-2.5 py-1.5 border-b border-inherit">
+                    Unified Wings · b2b.handsandhead.com
                   </div>
                   <div className="py-1 space-y-0.5 text-xs">
+                    {B2B_WINGS.map((wing) => (
+                      <button
+                        key={wing.id}
+                        type="button"
+                        onClick={() => {
+                          setIsEcosystemOpen(false);
+                          if (onNavigate) {
+                            onNavigate(wing.path);
+                          }
+                        }}
+                        className="w-full text-left flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#E50914]/15 hover:text-white transition-colors cursor-pointer"
+                      >
+                        <span>{wing.navLabel}</span>
+                        <span className="font-mono text-[10px] text-[#C9A24B]">{wing.path}</span>
+                      </button>
+                    ))}
+                    <div className="my-1 border-t border-white/10" />
                     <a
-                      href="https://admin.handsandhead.com"
+                      href={ECOSYSTEM_HOME_URL}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       onClick={() => setIsEcosystemOpen(false)}
-                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
+                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold text-[#E2C275] hover:bg-white/10 transition-colors"
                     >
-                      <span>Admin Nexus</span>
-                      <ExternalLink className="w-3 h-3 text-slate-400" />
-                    </a>
-                    <a
-                      href="https://shop.handsandhead.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => setIsEcosystemOpen(false)}
-                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
-                    >
-                      <span>D2C Portal</span>
-                      <ExternalLink className="w-3 h-3 text-slate-400" />
-                    </a>
-                    <a
-                      href="https://rmg.handsandhead.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => setIsEcosystemOpen(false)}
-                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
-                    >
-                      <span>Commercial RMG</span>
-                      <ExternalLink className="w-3 h-3 text-slate-400" />
-                    </a>
-                    <a
-                      href="https://arutemika.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => setIsEcosystemOpen(false)}
-                      className="flex items-center justify-between px-2.5 py-2 rounded-lg font-semibold hover:bg-[#e11d48]/10 hover:text-[#ff1e42] transition-colors"
-                    >
-                      <span>Leather Atelier</span>
-                      <ExternalLink className="w-3 h-3 text-slate-400" />
+                      <span>HANDS &amp; HEAD OS Hub</span>
+                      <ExternalLink className="w-3 h-3 text-[#C9A24B]" />
                     </a>
                   </div>
                 </div>
               )}
             </div>
+
+            <button
+              type="button"
+              onClick={onOpenPipeline}
+              className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer whitespace-nowrap"
+              title="Inspect NexOS Live Sync Pipeline"
+            >
+              <span>Dhaka Direct QC · MOQ 120 pcs/style</span>
+            </button>
           </div>
 
           {/* Right: Light/Dark + EN/বাংলা + USD ($) + RFQ Dropdown */}
@@ -398,30 +391,57 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* RFQ Dropdown Menu (Contains TechPack, Post RFQ, Freight Matrix) */}
+            {/* RFQ Dropdown Menu (Wing-Attributed WhatsApp + TechPack + Formal RFQ + Freight) */}
             <div className="relative">
               <button
                 type="button"
                 id="header-rfq-dropdown-btn"
                 onClick={() => setIsRfqMenuOpen(!isRfqMenuOpen)}
-                className="flex items-center space-x-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#e11d48] hover:bg-[#ff1e42] text-white text-[11px] sm:text-xs font-black transition-all cursor-pointer shadow-xs"
+                className="flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-[#E50914] hover:bg-[#ff1e2b] text-white text-[11px] sm:text-xs font-black transition-all cursor-pointer shadow-xs whitespace-nowrap"
               >
                 <FileText className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                <span>RFQ</span>
+                <span>Quote / RFQ</span>
                 <ChevronDown className={`w-2.5 h-2.5 sm:w-3 sm:h-3 text-white/80 transition-transform ${isRfqMenuOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {isRfqMenuOpen && (
                 <div
                   onMouseLeave={() => setIsRfqMenuOpen(false)}
-                  className={`absolute right-0 top-full mt-1 w-52 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
-                    isDark ? 'bg-[#141414] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
+                  className={`absolute right-0 top-full mt-1 w-60 rounded-xl shadow-2xl border p-1.5 z-50 animate-in fade-in ${
+                    isDark ? 'bg-[#14161A] border-white/15 text-white' : 'bg-white border-slate-200 text-slate-900'
                   }`}
                 >
-                  <div className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-slate-400 px-2.5 py-1 border-b border-inherit">
-                    Commercial RFQ Suite
+                  <div className="text-[9.5px] font-mono font-bold uppercase tracking-wider text-[#C9A24B] px-2.5 py-1 border-b border-inherit">
+                    Direct Export Desk
                   </div>
                   <div className="py-1 space-y-0.5 text-xs">
+                    <a
+                      href={buildWhatsAppUrl({
+                        wing: resolveWingFromPath(currentPath || '/') || 'rmg',
+                        intent: 'quote',
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsRfqMenuOpen(false)}
+                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold bg-[#E50914]/15 text-white hover:bg-[#E50914] transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>WhatsApp Instant Quote</span>
+                    </a>
+                    <a
+                      href={buildWhatsAppUrl({
+                        wing: resolveWingFromPath(currentPath || '/') || 'swatch',
+                        intent: 'swatch',
+                      })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsRfqMenuOpen(false)}
+                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold text-[#E2C275] hover:bg-white/10 transition-colors"
+                    >
+                      <Package className="w-3.5 h-3.5 text-[#C9A24B]" />
+                      <span>Book Swatch Kit (3–4d DHL)</span>
+                    </a>
+                    <div className="my-1 border-t border-white/10" />
                     <button
                       type="button"
                       onClick={() => {
@@ -439,9 +459,9 @@ export const Header: React.FC<HeaderProps> = ({
                         setIsRfqMenuOpen(false);
                         onOpenRfq();
                       }}
-                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-[#e11d48]/15 hover:text-[#ff1e42] transition-colors cursor-pointer"
+                      className="w-full text-left flex items-center space-x-2 px-2.5 py-2 rounded-lg font-bold hover:bg-[#E50914]/15 hover:text-[#ff4b55] transition-colors cursor-pointer"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-[#e11d48]" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#E50914]" />
                       <span>{t.postRfq}</span>
                     </button>
                     <button
@@ -478,23 +498,24 @@ export const Header: React.FC<HeaderProps> = ({
             <div
               id="brand-logo"
               onClick={() => {
+                if (onNavigate) onNavigate('/');
                 onViewChange('products');
                 handleDivisionClick('all');
                 onSearchChange('');
               }}
               className="flex items-center space-x-1.5 sm:space-x-2 cursor-pointer group shrink-0"
-              title="Made in BD"
+              title="HANDS & HEAD × RAWx — B2B Portal"
             >
-              {/* Red circle badge with ONLY "&" */}
-              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-[#e11d48] flex items-center justify-center text-white font-black text-sm sm:text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e42] transition-all shrink-0">
+              {/* Crimson circle badge with "&" */}
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-[#E50914] flex items-center justify-center text-white font-black text-sm sm:text-lg shadow-md group-hover:scale-105 group-hover:bg-[#ff1e2b] transition-all shrink-0">
                 &amp;
               </div>
               <span
-                className={`font-black text-base sm:text-xl tracking-tight ${
+                className={`font-black text-base sm:text-xl tracking-tight whitespace-nowrap ${
                   isDark ? 'text-white' : 'text-slate-950'
                 }`}
               >
-                Made in BD
+                HANDS &amp; HEAD <span className="text-[#C9A24B]">× RAWx</span>
               </span>
             </div>
 

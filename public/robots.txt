@@ -1,0 +1,43 @@
+# HANDS & HEAD × RAWx B2B Portal (https://b2b.handsandhead.com)
+# Master Ecosystem: HANDS & HEAD — "One Core, Many Worlds." (https://handsandhead.com)
+# AI Discovery Knowledge Bases:
+#   https://b2b.handsandhead.com/llms.txt
+#   https://b2b.handsandhead.com/llms-full.txt
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://b2b.handsandhead.com/sitemap.xml
