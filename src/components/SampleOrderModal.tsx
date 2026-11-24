@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Product, SampleInquiry, CurrencyConfig } from '../types';
 import { useI18n } from '../context/I18nContext';
+import { preCreateOrder, trackEvent } from '../services/analytics/handsAndHeadTracker';
 
 interface SampleOrderModalProps {
   product: Product | null;
@@ -65,6 +66,25 @@ export const SampleOrderModal: React.FC<SampleOrderModalProps> = ({
     };
 
     onConfirmSampleOrder(newOrder);
+    void trackEvent('checkout_click', {
+      channel: 'sample',
+      product_title: product.title,
+      sku: product.sku || product.id,
+      quantity,
+      amount: totalUSD,
+      currency: 'USD',
+    });
+    void preCreateOrder({
+      channel: 'sample',
+      productTitle: product.title,
+      sku: product.sku || product.id,
+      quantity,
+      amount: totalUSD,
+      currency: 'USD',
+      customerEmail: buyerEmail,
+      shippingCountry,
+      notes: customNotes || `DHL Express sample dispatch to ${shippingAddress}`,
+    });
     setIsSuccess(true);
   };
 

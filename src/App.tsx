@@ -43,6 +43,7 @@ import { UnifiedWingsOverviewStrip } from './components/UnifiedWingsOverviewStri
 import { EcosystemOsBadge } from './components/EcosystemOsBadge';
 import { resolveWingFromPath } from './config/wings';
 import { useSeoHead } from './hooks/useSeoHead';
+import { initHandsAndHeadTracker } from './services/analytics/handsAndHeadTracker';
 import {
   saveRfqToFirestore,
   saveSampleToFirestore,
@@ -189,6 +190,11 @@ const AppContent: React.FC = () => {
     activeWing,
     activeView,
   });
+
+  // Multi-Subdomain Dual-Beacon Attribution, Failover Queue & WhatsApp Pre-Order Interceptor
+  useEffect(() => {
+    initHandsAndHeadTracker();
+  }, []);
   const [persona, setPersona] = useState<PersonaMode>('buyer');
   const [supplierFilter, setSupplierFilter] = useState<string | null>(null);
   const [supplierViewMode, setSupplierViewMode] = useState<'list' | 'map' | 'google_map'>('google_map');

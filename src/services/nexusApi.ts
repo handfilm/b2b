@@ -36,9 +36,10 @@ import {
 } from '../utils/syncTransformers';
 import { collection, getDocs, addDoc, query, where, limit } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { fetchPublicCatalogWithFailover } from './analytics/handsAndHeadTracker';
 
 const PRIMARY_ADMIN_URL =
-  ((import.meta as any).env?.VITE_NEXUS_API_URL as string) || 'https://handsandhead.ai.studio/api';
+  ((import.meta as any).env?.VITE_NEXUS_API_URL as string) || 'https://admin.handsandhead.com/api';
 
 const LOCAL_FALLBACK_URL = '/api/nexus';
 
@@ -314,7 +315,38 @@ export const nexusApi = {
       }
     }
 
-    // Try fetching from admin.handsandhead.com or local proxy
+    // Try fetching live catalog from PRIMARY_API (/api/catalog/public) -> BACKUP_API -> localStorage snapshot
+    try {
+      const failoverCatalog = await fetchPublicCatalogWithFailover<B2BProduct>({
+        page,
+        limit,
+        division: params.division || 'all',
+        category: params.category && params.category !== 'all' ? params.category : undefined,
+        q: params.query || undefined,
+      });
+
+      if (failoverCatalog.items.length > 0) {
+        const result: B2BCatalogResponse = {
+          products: failoverCatalog.items,
+          totalCount: failoverCatalog.totalCount || failoverCatalog.items.length,
+          hasMore: page * limit < (failoverCatalog.totalCount || failoverCatalog.items.length),
+          page,
+          source: failoverCatalog.source === 'cache' ? 'cached' : 'live',
+          metrics: {
+            activeBuyers: 15420,
+            verifiedSuppliers: 3105,
+            totalTradeVol: '6.5 Crore+',
+            bdtSalesVolume: '65,000,000 BDT',
+          },
+        };
+        setCached(cacheKey, result);
+        return result;
+      }
+    } catch {
+      // Fall through to local express gateway & normalized catalog
+    }
+
+    // Try fetching from local express gateway if running full-stack locally
     try {
       const qParams = new URLSearchParams({
         page: String(page),
@@ -324,14 +356,7 @@ export const nexusApi = {
       if (params.category && params.category !== 'all') qParams.append('category', params.category);
       if (params.query) qParams.append('q', params.query);
 
-      // Query live express gateway first (connected directly to handsandhead.ai.studio)
-      let liveResponse: Response | null = null;
-      try {
-        liveResponse = await fetchWithTimeout(`${LOCAL_FALLBACK_URL}/catalog?${qParams.toString()}`, { method: 'GET' }, 2500);
-      } catch {
-        // Fallback to direct backend URL
-        liveResponse = await fetchWithTimeout(`${PRIMARY_ADMIN_URL}/products?${qParams.toString()}`, { method: 'GET' }, 2500);
-      }
+      const liveResponse = await fetchWithTimeout(`${LOCAL_FALLBACK_URL}/catalog?${qParams.toString()}`, { method: 'GET' }, 2500);
 
       if (liveResponse && liveResponse.ok) {
         const json = await liveResponse.json();

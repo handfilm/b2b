@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { CurrencyConfig, RFQThreadDocument } from '../types';
 import { WingId, buildWhatsAppUrl } from '../config/wings';
+import { preCreateOrder, trackEvent } from '../services/analytics/handsAndHeadTracker';
 
 export interface RequestSpecDrawerProps {
   isOpen: boolean;
@@ -152,6 +153,28 @@ export const RequestSpecDrawer: React.FC<RequestSpecDrawerProps> = ({
     }
 
     setIsSubmitting(true);
+
+    void trackEvent('checkout_click', {
+      channel: requestType === 'SAMPLE_DISPATCH' ? 'sample' : 'rfq',
+      wing: activeWingId,
+      product_title: productTitle.trim(),
+      sku: skuId.trim(),
+      quantity: Number(requestedQuantity),
+      amount: totalValuationUSD,
+      currency: 'USD',
+    });
+    void preCreateOrder({
+      channel: requestType === 'SAMPLE_DISPATCH' ? 'sample' : 'rfq',
+      wing: activeWingId,
+      productTitle: productTitle.trim(),
+      sku: skuId.trim(),
+      quantity: Number(requestedQuantity),
+      amount: totalValuationUSD,
+      currency: 'USD',
+      customerEmail: workEmail.trim(),
+      shippingCountry: country.trim(),
+      notes: buyerNotes.trim() || `${requestType} · Target FOB $${targetFob}`,
+    });
 
     const generatedTracking = `DHL-BD-${Date.now().toString().slice(-6)}`;
 

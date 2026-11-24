@@ -19,6 +19,7 @@ import { useInquiryCart } from '../context/InquiryCartContext';
 import { useI18n } from '../context/I18nContext';
 import { AuthUser, CurrencyConfig } from '../types';
 import { createRfqThread } from '../services/rfqService';
+import { preCreateOrder, trackEvent } from '../services/analytics/handsAndHeadTracker';
 
 interface InquiryCartProps {
   authUser?: AuthUser | null;
@@ -96,6 +97,25 @@ export const InquiryCart: React.FC<InquiryCartProps> = ({
       });
 
       setSubmissionSuccess(threadId);
+
+      void trackEvent('checkout_click', {
+        channel: 'rfq',
+        product_title: primaryItem.product.title,
+        sku: primaryItem.sku,
+        quantity: totalPcs,
+        amount: totalTargetValUSD,
+        currency: 'USD',
+      });
+      void preCreateOrder({
+        channel: 'rfq',
+        productTitle: `${primaryItem.product.title}${cartItems.length > 1 ? ` (+${cartItems.length - 1} lots)` : ''}`,
+        sku: primaryItem.sku,
+        quantity: totalPcs,
+        amount: totalTargetValUSD,
+        currency: 'USD',
+        customerEmail: authUser?.email,
+        notes: combinedInitialMessage,
+      });
 
       // Brief pause to allow user to observe feedback before opening RAWx Bot
       setTimeout(() => {
